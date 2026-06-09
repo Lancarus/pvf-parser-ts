@@ -1,0 +1,62 @@
+# PVF Code (pvf-parser-ts)
+
+在 VS Code 中打开、浏览和编辑 **PVF** 封包文件——DNF（地下城与勇士）的游戏资源包格式。
+
+同时支持解析 **NPK**（Neople Pack）和 **IMG**（Neople Image）格式，并为游戏的多种脚本文件类型提供自定义语言支持。
+
+## 功能特性
+
+- **PVF 资源浏览器** — 侧边栏树形视图，可浏览 PVF 包内文件。支持新建、删除、重命名、剪切/复制/粘贴文件和文件夹。
+- **虚拟文件系统** — 将包内文件以常规编辑器标签页（`pvf://` 协议）打开。编辑会被跟踪，可保存回封包。
+- **原地保存 / 另存为** — 支持直接保存或另存为新 PVF 文件。
+- **脚本语言支持** — 语法高亮、自动补全、悬停提示和格式化，覆盖以下文件类型：
+  - `.act`（动作）、`.ani`（动画）、`.skl`（技能）
+  - `.lst`（列表）、`.str`（结构）、`.equ`（装备）
+  - `.ai`（AI）、`.aic`（AI 编译）、`.key`（键值）
+- **ANI 动画预览** — 在 Webview 面板中基于 Canvas 预览 `.ani` 动画文件。
+- **APC 编辑器** — `.aic` 文件的可视化角色动画编辑器，与源文档实时同步。
+- **NPK / IMG 解析** — 打开 NPK 容器并查看 IMG 精灵表（含索引颜色表）。
+- **统一搜索**（`Ctrl+Alt+P`）— 三种搜索模式：
+  - 默认：模糊文件名路径搜索
+  - `@` 前缀：搜索字符串引用（覆盖所有文件）
+  - `#` 前缀：搜索物品代码（来自 `.lst` 映射）
+- **差异对比** — 在资源树中选择两个文件进行左右对比。
+- **String Table 内联提示** — 在 `stringtable.bin` 视图中显示字符串引用的 CodeLens。
+- **文件引用查找** — 右键文件查找包内所有引用该文件的位置。
+- **元数据解析** — 自动解析 `[name]` 和 `[icon]` 标签，用于显示文件别名和自定义图标。
+- **多编码支持** — 支持韩文（cp949）、繁体中文（cp950）、简体中文（gb18030）、日文（shift_jis）和 UTF8，并可自动检测。
+
+## 环境要求
+
+- VS Code 1.100.0 或更高版本
+- 在设置中配置 `pvf.npkRoot` 指向游戏目录下的 `ImagePacks2`（可选，NPK 索引功能需要）
+
+## 插件配置
+
+| 设置项 | 默认值 | 说明 |
+|---------|---------|------|
+| `pvf.npkRoot` | `""` | NPK 文件根目录（通常为游戏目录下的 `ImagePacks2`） |
+| `pvf.encodingMode` | `AUTO` | 文本编码：`AUTO`（自动检测）、`KR`（cp949）、`TW`（cp950）、`CN`（gb18030）、`JP`（shift_jis）、`UTF8` |
+| `pvf.showScriptDisplayName` | `true` | 在资源树中文件后显示脚本别名（来自 `.lst` 解析） |
+| `pvf.showScriptCode` | `true` | 在资源树中文件后显示物品代码（来自 `.lst` 解析） |
+| `pvf.metadata.excludeExtensions` | （见默认值） | 扫描 `[name]` 标签时要排除的扩展名 |
+| `pvf.script.convertStringLink` | `true` | 自动将字符串链接 `<id::name\`text\`>` 转换为 `text` |
+| `pvf.closeVirtualEditorsOnStartup` | `true` | 启动时自动关闭上次遗留的 `pvf:` 虚拟文件标签页 |
+
+## 开发
+
+```powershell
+# 安装依赖
+npm install
+
+# 监视模式（仅 TypeScript 编译）
+npm run watch
+
+# 完整开发构建
+npm run build:all
+
+# 生产构建
+npm run vscode:prepublish
+```
+
+扩展先将 TypeScript 编译至 `dist/` 目录，然后运行后置脚本复制脚本标签定义文件，并通过 esbuild 将 Webview React 应用打包到 `media/webview/`。
