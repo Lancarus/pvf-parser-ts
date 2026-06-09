@@ -24,7 +24,7 @@
 - **String Table 内联提示** — 在 `stringtable.bin` 视图中显示字符串引用的 CodeLens。
 - **文件引用查找** — 右键文件查找包内所有引用该文件的位置。
 - **元数据解析** — 自动解析 `[name]` 和 `[icon]` 标签，用于显示文件别名和自定义图标。
-- **多编码支持** — 支持韩文（cp949）、繁体中文（cp950）、简体中文（gb18030）、日文（shift_jis）和 UTF8，并可自动检测。
+- **多编码支持** — 支持韩文（cp949）、繁体中文（big5）、简体中文（gb18030）、日文（shift_jis）和 UTF8，并可自动检测。
 
 ## 环境要求
 
@@ -36,7 +36,7 @@
 | 设置项 | 默认值 | 说明 |
 |---------|---------|------|
 | `pvf.npkRoot` | `""` | NPK 文件根目录（通常为游戏目录下的 `ImagePacks2`） |
-| `pvf.encodingMode` | `AUTO` | 文本编码：`AUTO`（自动检测）、`KR`（cp949）、`TW`（cp950）、`CN`（gb18030）、`JP`（shift_jis）、`UTF8` |
+| `pvf.encodingMode` | `AUTO` | 文本编码：`AUTO`（自动检测）、`KR`（cp949）、`TW`（big5）、`CN`（gb18030）、`JP`（shift_jis）、`UTF8` |
 | `pvf.showScriptDisplayName` | `true` | 在资源树中文件后显示脚本别名（来自 `.lst` 解析） |
 | `pvf.showScriptCode` | `true` | 在资源树中文件后显示物品代码（来自 `.lst` 解析） |
 | `pvf.metadata.excludeExtensions` | （见默认值） | 扫描 `[name]` 标签时要排除的扩展名 |

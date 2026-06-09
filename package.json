@@ -198,7 +198,7 @@
             "UTF8"
           ],
           "default": "AUTO",
-          "description": "文本解码基准：KR=cp949, TW=cp950, CN=gb18030, JP=shift_jis, UTF8=utf8；AUTO 时保持原逻辑 (.nut=cp949 其他=cp950)。影响读取/写入文本与 stringtable。"
+          "description": "文本解码基准：KR=cp949, TW=big5, CN=gb18030, JP=shift_jis, UTF8=utf8；AUTO 时保持原逻辑 (.nut=cp949 其他=big5)。影响读取/写入文本与 stringtable。"
         },
         "pvf.closeVirtualEditorsOnStartup": {
           "type": "boolean",
@@ -338,6 +338,16 @@
       ,{
         "command": "pvf.openAicEditor",
         "title": "预览编辑 APC"
+      },
+      {
+        "command": "pvf.unpackPack",
+        "title": "解封PVF到目录",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "pvf.repackPack",
+        "title": "将目录封装为PVF",
+        "icon": "$(repo-create)"
       }
     ],
     "keybindings": [
@@ -373,6 +383,16 @@
           "command": "pvf.searchInPack",
           "when": "view == pvfExplorerView && pvf.hasOpenPack",
           "group": "navigation@4"
+        },
+        {
+          "command": "pvf.unpackPack",
+          "when": "view == pvfExplorerView && pvf.hasOpenPack",
+          "group": "navigation@5"
+        },
+        {
+          "command": "pvf.repackPack",
+          "when": "view == pvfExplorerView",
+          "group": "navigation@6"
         }
       ],
       "editor/context": [
@@ -427,6 +447,11 @@
         }
       ],
       "view/item/context": [
+        {
+          "command": "pvf.unpackPack",
+          "when": "view == pvfExplorerView",
+          "group": "navigation@0"
+        },
         {
           "command": "pvf.exportFile",
           "when": "view == pvfExplorerView && viewItem == pvf.file",

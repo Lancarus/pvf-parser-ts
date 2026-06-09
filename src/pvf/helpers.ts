@@ -6,7 +6,7 @@ let runtimeEncodingOverride: string | null = null;
 export function setRuntimeEncodingOverride(enc: string | null) { runtimeEncodingOverride = enc; }
 export function getRuntimeEncodingOverride(): string | null { return runtimeEncodingOverride; }
 
-// Return preferred encoding by key (nut -> cp949, otherwise cp950)
+// Return preferred encoding by key (nut -> cp949, otherwise big5)
 export function encodingForKey(key: string): string {
   try {
     const cfg = vscode.workspace.getConfiguration();
@@ -15,21 +15,21 @@ export function encodingForKey(key: string): string {
     if (mode === 'AUTO') {
   if (lower.endsWith('.nut')) return 'cp949';
   if (runtimeEncodingOverride) return runtimeEncodingOverride;
-  return 'cp950';
+  return 'big5';
     }
     switch (mode) {
       case 'KR': return 'cp949';
-      case 'TW': return 'cp950';
+      case 'TW': return 'big5';
       case 'CN': return 'gb18030';
       case 'JP': return 'shift_jis';
       case 'UTF8': return 'utf8';
-      default: return 'cp950';
+      default: return 'big5';
     }
   } catch {
     // 回退旧逻辑
     const lower = key.toLowerCase();
     if (lower.endsWith('.nut')) return 'cp949';
-    return 'cp950';
+    return 'big5';
   }
 }
 
@@ -70,7 +70,7 @@ export function detectEncoding(key: string, bytes: Uint8Array): string {
 }
 
 export function isTextEncoding(enc: string): boolean {
-  return enc === 'utf16le' || enc === 'utf16be' || enc === 'cp949' || enc === 'cp950' || enc === 'utf8' || enc === 'gb18030' || enc === 'shift_jis';
+  return enc === 'utf16le' || enc === 'utf16be' || enc === 'cp949' || enc === 'big5' || enc === 'utf8' || enc === 'gb18030' || enc === 'shift_jis';
 }
 
 export function isPrintableText(text: string): boolean {

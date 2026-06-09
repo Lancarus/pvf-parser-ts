@@ -1,5 +1,74 @@
 import * as vscode from 'vscode';
+import * as fs from 'fs/promises';
+import * as path from 'path';
+import * as iconv from 'iconv-lite';
 import { Deps } from './types';
+import { PvfFile } from '../pvf/pvfFile';
+import { saveImpl } from '../pvf/modelIO';
+import { getFileNameHashCode } from '../pvf/util';
+import { PvfModel } from '../pvf/model';
+
+/** 将磁盘目录重新封装为 .pvf 文件 */
+async function repackDirectory(
+  srcDir: string,
+  destPath: string,
+  progress?: (current: number, total: number, key: string) => void,
+) {
+  // 1. 读取 manifest（如果存在）
+  let guid = Buffer.alloc(0);
+  let guidLen = 0;
+  let fileVersion = 0;
+  try {
+    const manifestRaw = await fs.readFile(path.join(srcDir, '.pvfmanifest.json'), 'utf8');
+    const m = JSON.parse(manifestRaw);
+    if (m.guid) guid = Buffer.from(m.guid, 'hex');
+    guidLen = m.guidLen ?? guid.length;
+    fileVersion = m.fileVersion ?? 0;
+  } catch { /* 使用默认值 */ }
+
+  // 2. 递归收集所有文件（排除 .pvfmanifest.json）
+  const files: { key: string; diskPath: string }[] = [];
+  async function walk(dir: string) {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      const rel = path.relative(srcDir, full).replace(/\\/g, '/').toLowerCase();
+      if (e.name === '.pvfmanifest.json') continue;
+      if (e.isDirectory()) {
+        await walk(full);
+      } else if (e.isFile()) {
+        files.push({ key: rel, diskPath: full });
+      }
+    }
+  }
+  await walk(srcDir);
+
+  // 3. 创建临时 PvfModel 并填充
+  const tempModel = new PvfModel();
+  (tempModel as any).guid = guid;
+  (tempModel as any).guidLen = guidLen;
+  (tempModel as any).fileVersion = fileVersion;
+  (tempModel as any).pvfPath = ''; // 无原始路径
+
+  for (let i = 0; i < files.length; i++) {
+    const { key, diskPath } = files[i];
+    const raw = new Uint8Array(await fs.readFile(diskPath));
+    const nameBytes = iconv.encode(key, 'cp949');
+    const fileNameChecksum = getFileNameHashCode(nameBytes);
+    const pf = new PvfFile(fileNameChecksum, nameBytes, raw.length, 0, 0);
+    pf.writeFileData(raw); // 自动计算 checksum 并设置 blockLength
+    // PvfFile 初始化后 checksum 和 dataLen 已正确；存到 fileList 中
+    (tempModel as any).fileList.set(key, pf);
+    if (progress) progress(i + 1, files.length, key);
+  }
+
+  // 4. 调用 saveImpl 写出 .pvf
+  await saveImpl.call(tempModel, destPath, (n: number) => {
+    if (progress) {
+      progress(Math.floor((n / 100) * files.length), files.length, '写入中...');
+    }
+  });
+}
 
 export function registerPvfFileOps(context: vscode.ExtensionContext, deps: Deps) {
   const { model, tree, deco, output } = deps;
@@ -56,5 +125,36 @@ export function registerPvfFileOps(context: vscode.ExtensionContext, deps: Deps)
     vscode.commands.registerCommand('pvf.createFolder', async (node) => { const base = node && !node.isFile ? node.key : ''; const name = await vscode.window.showInputBox({ prompt: '输入新文件夹名称', placeHolder: '例如: new_folder' }); if (!name) return; model.createFolder(base ? `${base}/${name}` : name); tree.refresh(); deco.refreshAll(); }),
     vscode.commands.registerCommand('pvf.deleteFolder', async (node) => { if (!node || node.isFile) return; const ok = await vscode.window.showWarningMessage(`确定删除文件夹 ${node.name} 及其所有子项吗？`, { modal: true }, '删除'); if (ok !== '删除') return; model.deleteFolder(node.key); tree.refresh(); deco.refreshAll(); }),
     vscode.commands.registerCommand('pvf.createFile', async (node) => { const base = node && !node.isFile ? node.key : ''; const name = await vscode.window.showInputBox({ prompt: '输入新文件名（含扩展名）', placeHolder: '例如: readme.txt' }); if (!name) return; const key = base ? `${base}/${name}` : name; model.createEmptyFile(key); tree.refresh(); deco.refreshUris([vscode.Uri.parse(`pvf:/${key}`)]); }),
+    // ===== 解封 / 封装 =====
+    vscode.commands.registerCommand('pvf.unpackPack', async () => {
+      if (!model.pvfPath) { vscode.window.showWarningMessage('请先打开一个 PVF 文件'); return; }
+      const dirs = await vscode.window.showOpenDialog({ canSelectFiles: false, canSelectFolders: true, canSelectMany: false, openLabel: '选择解封目标目录' });
+      if (!dirs || dirs.length === 0) return;
+      const destDir = dirs[0].fsPath;
+      const total = model.getAllKeys().length;
+      await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '正在解封 PVF…' }, async (p) => {
+        let lastReport = 0;
+        await model.unpackTo(destDir, (current, _total, key) => {
+          const pct = Math.floor((current / _total) * 100);
+          if (pct !== lastReport) { const inc = pct - lastReport; lastReport = pct; p.report({ increment: inc, message: `(${current}/${_total}) ${key.split('/').pop()}` }); }
+        });
+      });
+      vscode.window.showInformationMessage(`解封完成：${total} 个文件 → ${destDir}`);
+    }),
+    vscode.commands.registerCommand('pvf.repackPack', async () => {
+      const dirs = await vscode.window.showOpenDialog({ canSelectFiles: false, canSelectFolders: true, canSelectMany: false, openLabel: '选择要封装的目录' });
+      if (!dirs || dirs.length === 0) return;
+      const srcDir = dirs[0].fsPath;
+      const dest = await vscode.window.showSaveDialog({ filters: { 'PVF': ['pvf'] }, defaultUri: vscode.Uri.file(srcDir + '.pvf') });
+      if (!dest) return;
+      await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '正在封装 PVF…' }, async (p) => {
+        let lastReport = 0;
+        await repackDirectory(srcDir, dest.fsPath, (current, total, _key) => {
+          const pct = Math.floor((current / total) * 100);
+          if (pct !== lastReport) { const inc = pct - lastReport; lastReport = pct; p.report({ increment: inc, message: `${current}/${total}` }); }
+        });
+      });
+      vscode.window.showInformationMessage(`封装完成 → ${dest.fsPath}`);
+    }),
   );
 }

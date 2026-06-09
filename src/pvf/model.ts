@@ -45,7 +45,7 @@ export class PvfModel {
 
   async open(filePath: string, progress?: Progress) {
     await openImpl.call(this, filePath, progress);
-    // AUTO 模式：尝试基于 stringtable.bin 的可解析度推断区域编码（gb18030 / cp950 / cp949 / shift_jis / utf8）
+    // AUTO 模式：尝试基于 stringtable.bin 的可解析度推断区域编码（gb18030 / big5 / cp949 / shift_jis / utf8）
     try {
       const vscodeMod = await import('vscode');
       const cfg = vscodeMod.workspace.getConfiguration();
@@ -57,7 +57,7 @@ export class PvfModel {
           if (stFile) {
             const raw = await this.readAndDecrypt(stFile);
             const slice = raw.subarray(0, stFile.dataLen);
-            const candidates = ['gb18030', 'cp950', 'cp949', 'shift_jis', 'utf8'];
+            const candidates = ['gb18030', 'big5', 'cp949', 'shift_jis', 'utf8'];
             let bestEnc: string | null = null; let bestScore = -1;
             for (const enc of candidates) {
               try {
@@ -74,7 +74,7 @@ export class PvfModel {
                 if (score > bestScore) { bestScore = score; bestEnc = enc; }
               } catch { /* ignore enc */ }
             }
-            if (bestEnc && bestEnc !== 'cp950') {
+            if (bestEnc && bestEnc !== 'big5') {
               setRuntimeEncodingOverride(bestEnc);
               // 重新加载 stringtable 以使用新编码
               try { await this.loadStringAssets(); } catch { }
@@ -376,7 +376,7 @@ export class PvfModel {
       // parse UTF-8 with BOM optionally
       let text = Buffer.from(content).toString('utf8');
       if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
-      if (!this.strtable) this.strtable = new StringTable('cp950');
+      if (!this.strtable) this.strtable = new StringTable('big5');
       this.strtable.parseFromText(text);
       const bin = this.strtable.createBinary();
       f.writeFileData(new Uint8Array(bin.buffer, bin.byteOffset, bin.byteLength));
@@ -455,7 +455,7 @@ export class PvfModel {
       f.changed = true;
       return true;
     }
-    // 其他已知文本类型：UTF-8 -> 封包默认编码（通常 cp950）
+    // 其他已知文本类型：UTF-8 -> 封包默认编码（通常 big5）
     if (isTextByExtension(lower)) {
       let text = Buffer.from(content).toString('utf8');
       if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
@@ -518,6 +518,36 @@ export class PvfModel {
     if (!f) return;
     const data = await this.readAndDecrypt(f);
     await fs.writeFile(dest, Buffer.from(data.subarray(0, f.dataLen)));
+  }
+
+  /** 将整个封包解封到指定目录，保留目录结构，写入原始解密字节 */
+  async unpackTo(
+    destDir: string,
+    progress?: (current: number, total: number, key: string) => void,
+  ) {
+    const keys = this.getAllKeys();
+    const total = keys.length;
+    for (let i = 0; i < total; i++) {
+      const key = keys[i];
+      const f = this.fileList.get(key)!;
+      const data = await this.readAndDecrypt(f);
+      const raw = data.subarray(0, f.dataLen);
+      const diskPath = path.join(destDir, ...key.split('/'));
+      await fs.mkdir(path.dirname(diskPath), { recursive: true });
+      await fs.writeFile(diskPath, Buffer.from(raw));
+      if (progress) progress(i + 1, total, key);
+    }
+    // 写入 manifest 供 repack 使用
+    const manifest = {
+      guid: this.guid.toString('hex'),
+      guidLen: this.guidLen,
+      fileVersion: this.fileVersion,
+      fileCount: total,
+    };
+    await fs.writeFile(
+      path.join(destDir, '.pvfmanifest.json'),
+      Buffer.from(JSON.stringify(manifest, null, 2), 'utf8'),
+    );
   }
 
   async replaceFile(key: string, srcPath: string) {
