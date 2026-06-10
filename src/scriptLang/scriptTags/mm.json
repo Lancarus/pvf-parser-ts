@@ -1,0 +1,29 @@
+{
+  "tags": [
+    {
+      "name": "image",
+      "description": "图片",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "image number",
+      "description": "图像编号",
+      "authors": "无名氏"
+    },
+    {
+      "name": "index",
+      "description": "对应城镇.twn的区域：\n\n[area]\n    0-------------对应这个区域\n    `xxxxxxxx.map`\n    `[gate]`\n[/area]\n-------\n城镇索引，对应Town.lst中的城镇编号。",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "project rect",
+      "description": "角色在地图中小头像的位置\n\n在region（区域）文件夹中，代表着角色在地图中小头像的位置\n第一个数值代表 长\n第二个数值代表 高\n\n在mm文件中为X/Y轴坐标。不知道怎么获取坐标的就用QQ截图游戏窗口然后就能看到坐标了。",
+      "authors": "by：夜白1229998088"
+    },
+    {
+      "name": "real rect",
+      "description": "游戏中的角色城镇活动区域范围（X,Y）\n使用城镇坐标工具填写",
+      "authors": "by：夜白1229998088"
+    }
+  ]
+}

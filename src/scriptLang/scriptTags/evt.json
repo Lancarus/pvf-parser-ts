@@ -1,0 +1,69 @@
+{
+  "tags": [
+    {
+      "name": "condition reward",
+      "description": "奖励条件",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "end",
+      "description": "结束时间",
+      "authors": "释然"
+    },
+    {
+      "name": "entry",
+      "description": "条目",
+      "authors": "无名氏"
+    },
+    {
+      "name": "event info",
+      "description": "活动资​​讯",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "idx",
+      "description": "开启活动的 ID",
+      "authors": "释然"
+    },
+    {
+      "name": "mail content",
+      "description": "邮件内容",
+      "authors": "无名氏"
+    },
+    {
+      "name": "monster id",
+      "description": "怪物ID",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ON",
+      "description": "显示什么公告\n在下面有公告ID",
+      "authors": "烟辰"
+    },
+    {
+      "name": "reward",
+      "description": "完成获得获得的奖励",
+      "authors": "释然"
+    },
+    {
+      "name": "Seria Blessing",
+      "description": "赛丽亚的祝福活动",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "start",
+      "description": "开始时间",
+      "authors": "释然"
+    },
+    {
+      "name": "thief",
+      "description": "[thief]=暗夜使者",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "url hyperlink",
+      "description": "URL超级链接",
+      "authors": "Xiti Fox"
+    }
+  ]
+}

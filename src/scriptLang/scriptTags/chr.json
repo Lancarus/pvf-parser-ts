@@ -1,0 +1,59 @@
+{
+  "tags": [
+    {
+      "name": "劍影",
+      "description": "待翻译，请编辑！",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "awakening 1",
+      "description": "唤醒1",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "creator mage",
+      "description": "外传职业：缔造者",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "fighter",
+      "description": "女格斗",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "growtype name",
+      "description": "[growtype name] `基本的角色` `转职1` `转职2` `转职3` // 每种职业类型的名称。",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "gunner",
+      "description": "男枪手",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "mage",
+      "description": "女魔法",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "priest",
+      "description": "男圣职",
+      "authors": "麻豆传媒|Xiti Fox"
+    },
+    {
+      "name": "weapon hit info",
+      "description": "武器命中信息\n\n//示例：\n\t`[cut]`\n\t`[blood]`\t90\t1.0\t0.0\t0.0\n\n`[cut]` = 武器打击类型为`切割`，就像太刀一样\n`[blood]` = 武器命中时`有出血视觉效果`\n\n`出血视觉效果开关`的右边第1个数字也就是90代表普攻卡肉时间为0.09秒\n——————————————————————\n//示例2：\n\t`[blow]`\n\t`[no blood]`\t100\t1.2\t0.1\t-0.95\n\n`[blow]` = 武器打击类型为`钝击`，就像钝器一样\n`[no blood]` = 武器命中时`无出血视觉效果`\n——————————————————————\n补充：第二个数值是命中硬直比率，比如卡肉时间0.2秒，\n           命中硬直比率为2.0，那么实际造成的硬直是0.4秒",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "weapon skill info",
+      "description": "武器技能信息",
+      "authors": "无名氏"
+    },
+    {
+      "name": "width",
+      "description": "[width] 40 10\t\t// X轴，Y轴宽度顺序（像素值）",
+      "authors": "FreyaGrace"
+    }
+  ]
+}

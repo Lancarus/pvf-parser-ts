@@ -1,0 +1,464 @@
+{
+  "tags": [
+    {
+      "name": "3choro enchant",
+      "description": "异次元属性赋予",
+      "authors": "unMen"
+    },
+    {
+      "name": "A condition item",
+      "description": "[A condition item]（A项）\n  物品代码1  数量  物品代码2  数量  .........\n[/A condition item]",
+      "authors": "内脏没坏"
+    },
+    {
+      "name": "action type",
+      "description": "強化器类型",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "active status recovery",
+      "description": "解除异常效果\n\n//示例：\n[active status recovery]\n\t`poison`\t70\n\t`party`\n//以上代表最高可以解除70级的中毒异常效果，且对身边友军也会生效\n\n感电：`lightning`\n束缚：`hold`\n减速：`slow`\n灼伤：`burn`\n中毒：`poison`\n眩晕：`stun`\n睡眠：`sleep`\n石化：`stone`\n失明：`blind`\n疾病：`disease`\n混乱：`confuse`\n出血：`bleeding`\n沉默：`silence`\n冰冻：`freeze`\n诅咒：`curse`\n所有异常效果：`all`\n所有异常效果：`any`\n\n仅对自身生效：`myself`\n对身边友军也会生效：`party`",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "add fatigue",
+      "description": "疲劳",
+      "authors": "zed"
+    },
+    {
+      "name": "amplification random value",
+      "description": "3→50→4→30→5→15→6→5→\n3=增幅等级\n50=50%几率--以此类推\n总几率为100%",
+      "authors": "By：春秋"
+    },
+    {
+      "name": "amulet",
+      "description": "装备：项链",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "any",
+      "description": "所有异常状态效果",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "attach type",
+      "description": "交易类型\n`[free]` = 不限制\n`[sealing]` = 封装\n`[trade]` = 不可交易\n`[account]` = 帐号绑定\n`[trade delete]` = 无法交易、删除\n`[sealing trade]` = 封装且不可交易",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "avatar select ability change",
+      "description": "装扮属性调整\n后面的数字2对应装扮文件里的[grade] 2 属性为高级\n数字3对应装扮文件里的[grade] 3 属性为稀有\n一一对应才可调整!",
+      "authors": "unMen"
+    },
+    {
+      "name": "B condition item",
+      "description": "[B condition item]（回收需要的条件）\n    物品代码   数量\n\n[result item] （回收后给的道具）\n物品代码\t数量   概率   （可多选项随机）\n[/result item]",
+      "authors": "内脏没坏"
+    },
+    {
+      "name": "bleeding",
+      "description": "异常效果：出血",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "blind",
+      "description": "异常效果：失明",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "booster random",
+      "description": "随机魔盒",
+      "authors": "天盗狂人"
+    },
+    {
+      "name": "booster select category",
+      "description": "助推器选择类别",
+      "authors": "无名氏"
+    },
+    {
+      "name": "booster selection num",
+      "description": "礼盒中，控制物品选择数量。\n“0”为不可选择\n“1”为只能选择一个\n以此类推",
+      "authors": "uMen-13925489110"
+    },
+    {
+      "name": "buff",
+      "description": "增益状态",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "cash",
+      "description": "购买所花费点券",
+      "authors": "无名氏"
+    },
+    {
+      "name": "coat",
+      "description": "装备：上衣",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "confuse",
+      "description": "异常效果：混乱",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "creation rate",
+      "description": "掉落概率",
+      "authors": "Cai"
+    },
+    {
+      "name": "dark attack",
+      "description": "暗属性强化\n光属性强化\n[light attack]\n火属性强化\n[fire attack]\n水属性强化\n[water attack]\n暗属性强化\n[dark attack]\n\n独立攻击\n[separate attack]",
+      "authors": "Cai|麻子"
+    },
+    {
+      "name": "deadlystrike",
+      "description": "异常效果：致命一击\n\n//字面意思，直接清空血条的异常效果",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "deadlystrike resistance",
+      "description": "致命一击抗性",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "deelement resistance",
+      "description": "元素属性剥离抗性",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "default list",
+      "description": "默认列表",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "disease",
+      "description": "异常效果：疾病",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "equipment amplify reinforcement ticket",
+      "description": "增幅的等级与成功几率\n例如\n→7→90\n7代表等级\n90代表几率",
+      "authors": "By：别叫我小阿叶"
+    },
+    {
+      "name": "etc",
+      "description": "礼盒类道具的模块\n[etc]\n1-道具代码1-概率-数量\n   道具代码2-概率\t-数量\n[/etc]",
+      "authors": "暖阳"
+    },
+    {
+      "name": "exp bonus rate",
+      "description": "经验倍率例如\n3.0=300%经验倍率也就是三倍经验",
+      "authors": "陌梦轩"
+    },
+    {
+      "name": "expiration date",
+      "description": "有效期限\n\n* 使用 Unix 时间戳转换。\n\n* 1609344000 = 2020-12-31 00:00:00",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "expUp",
+      "description": "增加经验",
+      "authors": "挽辞"
+    },
+    {
+      "name": "fail output",
+      "description": "失效输出",
+      "authors": "无名氏"
+    },
+    {
+      "name": "field image",
+      "description": "掉落图标\n该路径下img的第几帧",
+      "authors": "by：黑桃K"
+    },
+    {
+      "name": "fire attack",
+      "description": "火属性强化\n光属性强化 = [light attack]\n火属性强化 = [fire attack]\n冰属性强化 = [water attack]\n暗属性强化 = [dark attack]\n所有属性强化 = [all elemental attack]",
+      "authors": "Cai|大狮纸q1925229848|Xiti Fox"
+    },
+    {
+      "name": "freeze",
+      "description": "异常效果：冰冻",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "hold",
+      "description": "异常效果：束缚",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "icon",
+      "description": "游戏中展示的图标\n\n调用客户端的ImagePacks2文件夹的NPK文件里面图像，\n需借助ExtractorSharp工具查看",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "increase status type",
+      "description": "使用此道具后获得的状态：\n`[expUp]` = 获得经验",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "magic stone",
+      "description": "装备：魔法石",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "magical attack bonus",
+      "description": "魔法攻击力",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "magical critical hit",
+      "description": "魔法暴击率",
+      "authors": "巳月-1322276685|Xiti Fox"
+    },
+    {
+      "name": "magical defense bonus",
+      "description": "魔法防御力",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "maintain ability",
+      "description": "维持能力",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "medal",
+      "description": "需要的胜点",
+      "authors": "星月-867592445"
+    },
+    {
+      "name": "minimum fame value",
+      "description": "最低名望值",
+      "authors": "赵三岁376421898"
+    },
+    {
+      "name": "minimum itemmaking level",
+      "description": "最低物品制作等级",
+      "authors": "麻豆传媒"
+    },
+    {
+      "name": "minimum level",
+      "description": "等级限制\n装备、物品最低可使用的等级",
+      "authors": "Cai|Xiti Fox"
+    },
+    {
+      "name": "monster card id",
+      "description": "[monster card id]\n\t589\n宝珠指向卡片的标签，宝珠属性在卡片里修改，这个标签下的编号就是卡片的代码",
+      "authors": "徐丧彪2952411669"
+    },
+    {
+      "name": "my status",
+      "description": "赋予自身异常状态\n\n//示例：\n[my status]\n\t`confuse`\t10\t7000\t40\t1\n\n以上为暗黑城特产干酪的效果，1%的几率为自身赋予40级的混乱异常状态，持续7秒",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "npc gift disallowance",
+      "description": "不可赠送给npc，用于npc好感度系统，无用",
+      "authors": "无名氏"
+    },
+    {
+      "name": "package data",
+      "description": "包含的物品，格式为代码-数量-代码-数量-代码-数量",
+      "authors": "无名氏"
+    },
+    {
+      "name": "pants",
+      "description": "装备：下装",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "party",
+      "description": "对身边友军也会生效",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "physical attack bonus",
+      "description": "物理攻击力",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "physical critical hit",
+      "description": "物理暴击率",
+      "authors": "巳月-1322276685|Xiti Fox"
+    },
+    {
+      "name": "physical defense bonus",
+      "description": "物理防御力",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "poison",
+      "description": "异常效果：中毒",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "POTION_TOUCH",
+      "description": "药水类",
+      "authors": "挽辞"
+    },
+    {
+      "name": "price",
+      "description": "[price] 金币购买的价格\n\n//除了金币购买还可以添加如下词条：\n[value]                售出价格（实际出售价为标写的1/5）\n[cash]                 点券购买\n[need material]  道具购买（左道具编号，右道具数量）",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "random",
+      "description": "随机",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "random list",
+      "description": "礼盒随机列项目\n四组数值为一组\n第一组数值为垫底数值\n代码/几率/数量/格式",
+      "authors": "Aoran傲然"
+    },
+    {
+      "name": "rigidity",
+      "description": "硬直",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "ring",
+      "description": "装备：戒指",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "sealing removal item",
+      "description": "开启所需物品代码",
+      "authors": "小初心"
+    },
+    {
+      "name": "shoes",
+      "description": "装备：鞋子",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "shoulder",
+      "description": "装备：头肩",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "silence",
+      "description": "异常效果：沉默",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "skill super armor",
+      "description": "使用技能霸体",
+      "authors": "无名氏"
+    },
+    {
+      "name": "sleep",
+      "description": "异常效果：睡眠",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "stack limit",
+      "description": "道具叠加上限",
+      "authors": "Cai"
+    },
+    {
+      "name": "stackable",
+      "description": "可堆叠\n42  2000   1",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "stackable type",
+      "description": "[recipe] = 设计图\n[upgradable legacy] = 罐子类\n[quest]=任务物品（被放在背包的任务物品栏）\n\n[booster random] = 随机魔盒\n[multi upgradable legacy] = 幸运礼盒\n[booster] = 礼包：使用后获得(所有/随机)物品\n[booster selection] = 礼包：可选\n[cera booster] = 礼包：自动使用\n[unlimited waste]=重复使用\n[material]=材料\n[usable cera package] 0=时装礼包开启后可自己选择属性",
+      "authors": "菱云-3204170464"
+    },
+    {
+      "name": "stat change",
+      "description": "道具效果：\n一般和[stat change duration]联动使用\n`———————————————————————————`\n//示例①：\n[stat change]\n\t`%` 10\n\t`physical critical hit`\n[/stat change]\n//以上为使用道具之后在已有物理暴击率的基础上增加10%的物理暴击率\n`———————————————————————————`\n//示例②：\n[stat change]\n\t`%` 10\n\t`physical critical hit`\n\t`+`\t7\n\t`physical attack bonus`\n[/stat change]\n//以上为使用道具之后增加10%的物理暴击率和7点物理攻击力\n`———————————————————————————`\n//上方：\n`+` = 固定数值\n`%` = 百分比数值\n\n//提醒：\n使用`+`时，若为暴击率、命中率、闪避率、三速，则按百分比增加，也就是说0暴击率吃了一个为`+`的暴击药，效果是10，则实际增加到10%暴击率\n\n使用`%`时，暴击率、命中率、闪避率、三速只会按当前数值增幅，比如自带50%暴击率，用`%`增加50%暴击率只会在此基础上增加一半的暴击率，也就是实际使用道具达到75%暴击率\n`———————————————————————————`\n//下方：\n`stuck` = 命中率（负数增加命中率，正数减少命中率）\n`stuck resistance` = 闪避率\n`attack speed` = 攻击速度\n`cast speed` = 施法速度\n`move speed` = 移动速度\n`physical critical hit` = 物理暴击率\n`magical critical hit` = 法术暴击率\n`physical attack bonus` = 物理攻击力\n`magical attack bonus` = 法术攻击力\n`physical defense bonus` = 物理防御力\n`magical defense bonus` = 法术防御力\n`separate attack` = 独立攻击力\n`physical attack` = 力量\n`magical attack` = 智力\n`physical defense` = 体力\n`magical defense` = 精神\n`HP MAX` = 生命值上限\n`MP MAX` = 魔法值上限\n`all elemental resistance` = 所有属性抗性\n`fire resistance` = 火属性抗性\n`light resistance` = 光属性抗性\n`water resistance` = 冰属性抗性\n`dark resistance` = 暗属性抗性\n`all elemental attack` = 所有属性强化\n`fire attack` = 火属性强化\n`light attack` = 光属性强化\n`water attack` = 冰属性强化\n`dark attack` = 暗属性强化\n`weight` = 重量\n`hit recovery` = 硬直恢复\n`jump power` = 跳跃力\n`jump speed` = 跳跃速度\n`HP regen speed` = 生命值恢复速度\n`MP regen speed` = 魔法值恢复速度\n`hold resistance` = 束缚抗性\n`slow resistance` = 减速抗性\n`burn resistance` = 灼伤抗性\n`poison resistance` = 中毒抗性\n`stun resistance` = 眩晕抗性\n`sleep resistance` = 睡眠抗性\n`stone resistance` = 石化抗性\n`blind resistance` = 失明抗性\n`disease resistance` = 疾病抗性\n`confuse resistance` = 混乱抗性\n`bleeding resistance` = 出血抗性\n`silence resistance` = 沉默抗性\n`freeze resistance` = 冰冻抗性\n`curse resistance` = 诅咒抗性\n`lightning resistance` = 感电抗性\n`weakness resistance` = 虚弱抗性\n`weapon break resistance` = 武器损坏抗性\n`armor break resistance` = 防具损坏抗性\n`piercing resistance` = 破甲抗性\n`deelement resistance` = 属性剥离抗性\n`deadlystrike resistance` = 致命一击抗性\n`———————————————————————————`\n//补充：\n搭配下方这个标签可以隐藏道具自带的介绍文本 ↓\n[use effect explain]\n\t0\n\n隐藏完之后，可以使用下方这个标签自己写一个效果介绍文本 ↓\n[explain]\n\t`（文本）`",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "stat change duration",
+      "description": "道具效果持续时间：\n一般与[stat change]联动使用\n\n//示例：\n[stat change duration]\n\t7000\n\t`myself`\n//以上为使用道具之后效果持续7秒，且仅对自身生效\n\n1000 = 1秒\n\n`myself` = 仅对自身生效\n`party` = 对周边友军也会生效",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "stat desc",
+      "description": "统计数据",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "stone",
+      "description": "异常效果：石化",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "string data",
+      "description": "宝珠可镶嵌的部位：\n称号      `[title name]`\n武器      `[weapon]`\n上衣      `[coat]`\n下装      `[pants]`\n头肩      `[shoulder]`\n腰带      `[waist]`\n鞋子      `[shoes]`\n手镯      `[wrist]`\n项链      `[amulet]`\n戒指      `[ring]`\n魔法石  `[magic stone]`\n护石      `[support]`\n\n字符串工艺\n精湛工艺\t\t`[craftmanship]`\n\n串数据（相关）：\n工艺：craftmanship （制作：炼金、人偶）\n机械：machinary\n编织：weaving\n三种都可以制作装备，具体对应未知",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "success rate",
+      "description": "[success rate]\n100\n\n100成功率为百分百\n改成50为 百分之50",
+      "authors": "by巳月—QQ1322276685"
+    },
+    {
+      "name": "suitable job",
+      "description": "允许使用的角色\n-----------------------------------------\n[all] = 所有角色\n[swordman] = 鬼剑士\n[demonic swordman] = 黑暗武士\n[fighter] = 格斗家(女)\n[at fighter] = 格斗家(男)\n[gunner] = 神枪手(男)\n[at gunner] = 神枪手(女)\n[mage] = 魔法师(女)\n[at mage] = 魔法师(男)\n[thief] = 女鬼剑//暗夜使者\n[priest] =圣骑士\n\n [creator mage]=缔造者",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "support",
+      "description": "装备：护石",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "teleport potion",
+      "description": "传送药水 移动药剂",
+      "authors": "秋不得"
+    },
+    {
+      "name": "title name",
+      "description": "装备：称号",
+      "authors": "奶甜味儿的小颜颜|Xiti Fox"
+    },
+    {
+      "name": "usable job",
+      "description": "[usable job]在道具里为可以使用的职业\n\n`[all]` = 所有职业\n`[creator mage]` = 缔造者\n`[swordman]` = 鬼剑士(男)\n`[at swordman]` = 鬼剑士(女)\n`[demonic swordman]` = 黑暗武士\n`[fighter]` = 格斗家(女)\n`[at fighter]` = 格斗家(男)\n`[gunner]` = 神枪手(男)\n`[at gunner]` = 神枪手(女)\n`[mage]` = 魔法师(女)\n`[at mage]` = 魔法师(男)\n`[priest]` = 圣职者(男)\n`[thief]` = 暗夜使者",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "usable world",
+      "description": "[usable world]\n宝珠下面这个标签是只能附魔PK公平装备，删除即可任意附魔正常刷图装备",
+      "authors": "徐丧彪2952411669"
+    },
+    {
+      "name": "use effect explain",
+      "description": "道具自带的使用效果介绍开关\n\n//隐藏或显示都不影响实际使用\n改为0隐藏          改为1显示\n\n隐藏过后就可以用下方这个标签自己编辑道具效果的介绍文本\n\n[explain]\n\t`（文本）`",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "waist",
+      "description": "装备：腰带",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "weapon",
+      "description": "装备：武器",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "weight",
+      "description": "重量\n此数值越高，角色或怪物被击飞后的下落速度越快\n若为装备或物品时，将减少物品栏或金库的容量",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "wrist",
+      "description": "装备：手环",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "material",
+      "description": "所需材料",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "output",
+      "description": "4个一组，分别为道具ID、抽中几率（最大100W），数量，是否公告（0不公告，1公告）",
+      "authors": "网瘾少年"
+    }
+  ]
+}

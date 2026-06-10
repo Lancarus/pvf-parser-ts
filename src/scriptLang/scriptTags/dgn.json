@@ -1,0 +1,224 @@
+{
+  "tags": [
+    {
+      "name": "ancient dungeon",
+      "description": "是否远古图",
+      "authors": "feirnova"
+    },
+    {
+      "name": "background pos",
+      "description": "背景POS",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "basis level",
+      "description": "副本内怪物的平均等级",
+      "authors": "FreyaGrace|Xiti Fox"
+    },
+    {
+      "name": "boss map",
+      "description": "这个标签是boss房间\n先x后y，从0开始\n\n比如最后一个房间是\n[map specification]\n     3     0      xxxxxx\n[/map specification]\n那么它对应的map房间xxxxxx应该有[boss]标签要注意哦~\n[boss map]\n     3     0\n[/boss map]",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "boss map specification",
+      "description": "随机BOSS房间",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "champion",
+      "description": "[champion]\n100\t100\t100\t100\t100\n\n普通级、冒险级、勇士级、王者级、英雄级\n出现精英怪的几率\n\n1=1%\n也就是说赋予100时，每个房间必出1个",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "clear reward item",
+      "description": "通关时获得物品\n* 6 个数值为一组数据。\n1 0 1002 3 17 -1\t\t// 副本编号, 副本难度, 物品编号,最大数量，出现概率 (%), 最大拥有数量(如果为-1，则表示无限制)\n2 0 1003 2 100 30\t\t// 如果副本难度为-1，则表示所有难度, 0:EASY 1:NORMAL 2:HARD 3:VERYHARD 普通,冒险,勇士,王者",
+      "authors": "Cai|unMen"
+    },
+    {
+      "name": "coin info",
+      "description": "复活币限制",
+      "authors": "unMen"
+    },
+    {
+      "name": "coin limit",
+      "description": "副本内的复活次数\n[coin limit]\n      6\n上面这种代表副本内生命值耗尽时可复活6次\n通过移除此标签或将数字改为-1即可不限制复活次数",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "cutscene image",
+      "description": "进入新城镇时的过场动画图像\n进图画面",
+      "authors": "阿董-137735017|Xiao哩"
+    },
+    {
+      "name": "designate dungeon difficulty",
+      "description": "设定地图难度01234",
+      "authors": "by：月初-771706233"
+    },
+    {
+      "name": "dimension dungeon",
+      "description": "[dimension dungeon]\n1\t30\n1 意思是对应数据库编号，每个图不一样，理论上最大是6，可以看成编号，不能乱改\n30 意思就是 一天可以进入的次数\n这个就是30次的意思",
+      "authors": "By:小妖|糖糖QQ6494667"
+    },
+    {
+      "name": "entering title",
+      "description": "进入城镇时的标题动画\n例如：埃尔文防线，赫顿马尔，这些大字",
+      "authors": "王良一"
+    },
+    {
+      "name": "escape hell",
+      "description": "逃脱地狱",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "evil high level",
+      "description": "邪恶的高水平",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "evil rate",
+      "description": "第一个是最低值，第二个是减少属性，第三个是最高值，第四个是增加属性，如果想要抗磨不够就减少99的属性，抗磨够就增加0的属性就等于99~1~100~100（最后这个100表示百分之1）",
+      "authors": "凛冬-QQ439076736"
+    },
+    {
+      "name": "experience increasing point",
+      "description": "副本内的经验值获取倍率\n0.5代表只有50%的获取效率",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "greed",
+      "description": "贪吃蛇小游戏。\n副本房间的连接顺序，显示副本网格形状\nBB\t=\t右\nMM\t=\t左下\nDD\t=\t右上\nGG\t=\t左上\nJJ\t=\t右下\nFF\t=\t左右\nEE\t=\t左\nNN\t=\t左下右\nCC\t=\t上\nII\t=\t下\nKK\t=\t上下\nPP\t=\t十字\nHH\t=\t左上右\nAA\t=\t无法通过",
+      "authors": "阿董-137735017"
+    },
+    {
+      "name": "heaven dungeon",
+      "description": "天堂地牢",
+      "authors": "无名氏"
+    },
+    {
+      "name": "hit count",
+      "description": "命中次数",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "individual map movement",
+      "description": "进图之后可以独立进图移动",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "limit inout count",
+      "description": "限制inout count.",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "map specification",
+      "description": "副本指向的map房间",
+      "authors": "夜白-1229998088"
+    },
+    {
+      "name": "maze info",
+      "description": "地图走势",
+      "authors": "Xiao哩"
+    },
+    {
+      "name": "minimap image",
+      "description": "副本中显示的小地图\n小地图图像包的文件名",
+      "authors": "释然"
+    },
+    {
+      "name": "minimum required level",
+      "description": "开启地下城的等级",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "monster difficulty bonus",
+      "description": "整个副本怪物属性按倍数翻倍\n五个数值一组代表五个难度\n普通\t冒险\t王者\t地狱级\t未知难度\n[monster difficulty bonus]\n500\t500\t500\t500\t500(好战性?)\n500\t500\t500\t500\t500(视野?)\n1\t1\t1\t1\t1(命中)\n0.1\t0.1\t0.1\t0.1\t0.1(回避率)\n5\t5\t5\t5\t5(血量)\n1\t1\t1\t1\t1(攻速)\n1\t1\t1\t1\t1(移动速度)\n100\t100\t100\t100\t100(异常状态抗性?)\n200\t200\t200\t200\t200(攻击伤害)\n1\t1\t1\t1\t1(防御)\n200\t200\t200\t200\t200(硬直)\n0.1\t0.1\t0.1\t0.1\t0.1(百分比忽略玩家带来的无视攻击力)\n200\t200\t200\t200\t200(对玩家额外伤害)\n[/monster difficulty bonus]",
+      "authors": "羡鱼3313140229"
+    },
+    {
+      "name": "monsterapc diff table",
+      "description": "副本单独调用全局tbl",
+      "authors": "夜白-1229998088"
+    },
+    {
+      "name": "necessary party",
+      "description": "地下城进入人数需求",
+      "authors": "冉默QQ:932962233"
+    },
+    {
+      "name": "no fatigue",
+      "description": "不消耗疲劳值",
+      "authors": "老于"
+    },
+    {
+      "name": "pathgate object",
+      "description": "副本中的门，其实是obj指向，真正的门ani在obj中。一般为10个数据，每个数据代表着一个门，-1代表没有门。",
+      "authors": "Xiao哩"
+    },
+    {
+      "name": "re required skill",
+      "description": "学习技能后才可学此技能\n技能代码\t    1",
+      "authors": "空"
+    },
+    {
+      "name": "recommended level",
+      "description": "推荐级别",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "required item",
+      "description": "进图门票\n分别为  物品代碼，数量，消耗量\n在etc/accountcargo.etc中\n表示升级账号金库所需材料",
+      "authors": "丞哥-37358891"
+    },
+    {
+      "name": "risk dungeon",
+      "description": "是否魂图",
+      "authors": "feirnova"
+    },
+    {
+      "name": "schedule",
+      "description": "时间表\n周一到周日\n`MON`\n`TUE`\n`WED`\n`THU`\n`FRI`\n`SAT`\n`SUN`\n`ALL`  代表每天",
+      "authors": "Vang-z"
+    },
+    {
+      "name": "seal door map index",
+      "description": "指向深渊派对map房间",
+      "authors": "夜白-1229998088"
+    },
+    {
+      "name": "seal door pos",
+      "description": "深渊房间的位置",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "size",
+      "description": "这个在副本中代表 这个副本小地图的大小\n\n[size]\n     4     1\n\n横坐标是4纵坐标是1\n+----------------------+\n|  口  口  口  口   |\n+----------------------+\n副本地图就是一条直线",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "special passive object item",
+      "description": "特别被动对象项目\n建筑物掉落\n以格蓝迪为例\n[special passive object item]\n\t0\t-1\t1\t3341（魔刹石）\t2500（目测是概率）\n[/special passive object item]\n\n前三个属性不知道\n自己测试",
+      "authors": "Xiao哩"
+    },
+    {
+      "name": "tournament dungeon",
+      "description": "比赛地牢",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "tower limit of stackable item",
+      "description": "堆叠的物品的塔极限",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "use zoom rate",
+      "description": "副本内镜头缩放倍率\n\n1.0=100%",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "worldmap pattern info",
+      "description": "世界地图模式信息",
+      "authors": "lostluna1"
+    }
+  ]
+}

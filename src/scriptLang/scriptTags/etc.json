@@ -1,0 +1,629 @@
+{
+  "tags": [
+    {
+      "name": "account restrict",
+      "description": "[account restrict]表示账号限制，用于限制账号只能购买多少次。\n[character restrict]表示角色限制，用于限制单个角色只能购买多少次。\n格式都一样，自行复制即可\n\n30008 商城排序号\n1 限制次数\n0 保留\n2013  年\n3 月\n2 日起\n0保留\n2013 年\n4 月\n10日止\n23 保留\n50000 保留",
+      "authors": "By：小小白-770141757|unMen"
+    },
+    {
+      "name": "active status duration",
+      "description": "活动状态的持续时间",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "add selectAble equipment list",
+      "description": "[add selectAble equipment list] 晶体契约效果配置",
+      "authors": "feirnova"
+    },
+    {
+      "name": "additional result",
+      "description": "分解物品结果",
+      "authors": "Yasashiikaze"
+    },
+    {
+      "name": "additional result const",
+      "description": "分解出额外结晶的概率",
+      "authors": "Yasashiikaze"
+    },
+    {
+      "name": "AI LIST",
+      "description": "ai列表\n\n0      // 0.PVP_Practice_APC.img 图片编号\n305  //1.AI 脚本字符编号\n40   //2. 等级\n<4::pvp_apc_job1`鬼剑士`>  //3.职业\n<4::pvp_apc_name1`苍白的阴影狄尔`> //4.角色名\n1  //5.难度 (1-5)",
+      "authors": "飞飞"
+    },
+    {
+      "name": "apply area list",
+      "description": "应用区域列表！",
+      "authors": "a123123"
+    },
+    {
+      "name": "apply buff index",
+      "description": "应用缓冲指数",
+      "authors": "a123123"
+    },
+    {
+      "name": "apply dungeon type",
+      "description": "应用地牢类型",
+      "authors": "a123123"
+    },
+    {
+      "name": "apply ultimate",
+      "description": "若此标签在\n{ etc/ultimatedungeonlist.etc }\n路径内，则将副本编号写入即可开放王者级难度",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "armor grade rate",
+      "description": "装甲级率",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "attacked map info",
+      "description": "攻击地图信息\n// 村庄索引、区域索引、最大怪物数量、重生时间（秒）\n2\t0\t50\t2",
+      "authors": "飞飞"
+    },
+    {
+      "name": "avatar",
+      "description": "时装\n\n商城里是装扮购买界面",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "avatar coin info",
+      "description": "头像硬币信息",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "basis of rarity dicision",
+      "description": "2代表两个难度 爆率顺序分别是白 蓝 紫 粉 史诗， 1000001和1000002是深渊的困难和非常困难\n\n2   210000   610000   755000   931000   1000000   1000001\n\n史诗的爆率=史诗减粉的数值 1000000-931000=69000，再除以一百万，也就是说，史诗的爆率=6.9%\n\n粉的爆率=粉的数值减去紫的数值 931000-755000=176000，再除以一百万，粉的爆率=17.6%",
+      "authors": "法海"
+    },
+    {
+      "name": "cart disallowance",
+      "description": "禁止购物车",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "cerapoint disallowance",
+      "description": "[cerapoint disallowance]\n商城道具D点无法购买，只可点券购买\n注意下方不是道具代码，是道具在商城里的编号",
+      "authors": "by巳月~QQ1322276685"
+    },
+    {
+      "name": "character restrict",
+      "description": "[character restrict]表示角色限制，用于限制单个角色只能购买多少次。\n\n30008 商城排序号\n1 限制次数\n0 保留\n2013  年\n3 月\n2 日起\n0保留\n2013 年\n4 月\n10日止\n23 保留\n50000 保留",
+      "authors": "巳月~1322276685"
+    },
+    {
+      "name": "clear rank exp bonusrate",
+      "description": "通关评分的经验加成率",
+      "authors": "巳月：1322276685"
+    },
+    {
+      "name": "cnt",
+      "description": "道具数量",
+      "authors": "小小白 770141757"
+    },
+    {
+      "name": "coin",
+      "description": "复活币\n\n商城里是道具→复活币购买界面",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "common cool time",
+      "description": "公共冷却时间",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "cost weights by rarity",
+      "description": "由稀有成本的权重",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "creature",
+      "description": "宠物\n\n商城里是宠物→消耗品购买界面",
+      "authors": "宠物|Xiti Fox"
+    },
+    {
+      "name": "cube creation const",
+      "description": "无色暴出倍率",
+      "authors": "Yasashiikaze"
+    },
+    {
+      "name": "cube index",
+      "description": "立方体指数",
+      "authors": "无名氏"
+    },
+    {
+      "name": "default term in town",
+      "description": "在镇默认项",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "dialog",
+      "description": "对话",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "difficulty",
+      "description": "在任务(*.qst)中，设置难度级别参数。\n* 详情参考路径 : { n_quest/questparameter.etc }\n————————<分割线>————————\n该词条位于 : { etc/hellparty.etc }的路径里时，代表：\n\n第1竖排 : [深渊难度] : 传奇、英雄、王者、勇士、冒险\n     //对应地下城难度：英雄、王者、勇士、冒险、普通\n\n第2竖排 : 各个难度下击杀深渊房最终怪物时，所掉落[装备]数量\n\n第3竖排 : 各个难度下击杀深渊房最终怪物时，所掉落[道具]数量\n              `（可能是，等后续测试完成会重新追加注释）`\n\n第4竖排 : 各个难度下击杀深渊房最终怪物时，\n                对掉落[更好品质装备]的{概率}或{权重}的增幅\n             `（可能是，等后续测试完成会重新追加注释）`\n\n第5竖排 : 同4\n\n第6竖排 : （等待后续测试以追加标签注释）\n\n`最后编辑时间 : 2026/3/18`",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "drop prob",
+      "description": "下降的概率",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "dungeon",
+      "description": "在副本接口处代表\n第一个数为副本ID\n第二个为任务ID 假如是-1就代表该副本无前置任务\n如果不为-1 则代表需完成指定任务ID才可开启该副本我",
+      "authors": "白糖-193284563"
+    },
+    {
+      "name": "dungeon difficulty drop bonusrate",
+      "description": "地下城难度掉落加成率",
+      "authors": "巳月：1322276685"
+    },
+    {
+      "name": "dungeon difficulty gold drop bonusrate",
+      "description": "地下城难度翻牌获得金币倍率",
+      "authors": "轩大爷i"
+    },
+    {
+      "name": "dungeon drop rate balance",
+      "description": "地牢下降率平衡",
+      "authors": "无名氏"
+    },
+    {
+      "name": "dungeon inout time",
+      "description": "地牢陷入困境\n//是时候打开地牢了。\n//（极端祭坛，进入中国一定要放出来！！）\n//时间：0~23，分钟：0~59\n//[地牢进入时间]\n//开始结束开始结束\n//索引时间时间分分\n//11007 0 23 0 10 //从0到23小时（即每小时）在0到50分钟之间打开。\n//[/dungeon inout time]",
+      "authors": "飞飞"
+    },
+    {
+      "name": "dungeon npc",
+      "description": "地牢NPC",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "dungeonindex",
+      "description": "副本索引\n新手体验中指副本的相对lst中的索引",
+      "authors": "琉璃娃娃"
+    },
+    {
+      "name": "each layer matching dungeon",
+      "description": "[each layer matching dungeon]，绝望之塔的副本数据\n例如1是第一层，11008是指向的副本，后面也是这样类推，1到100，对应100层，11008到11107对应副本编号，可在副本列表找到对应的编号。",
+      "authors": "老徐的梦想"
+    },
+    {
+      "name": "effect equipment part set",
+      "description": "effect equipment part set\n控制时装触发的ani动画，1是编号，下面是equ是指向套装的，需要多少件时装",
+      "authors": "老徐的梦想"
+    },
+    {
+      "name": "emblem compound cost",
+      "description": "徽章合成成本",
+      "authors": "feirnova"
+    },
+    {
+      "name": "emblem compound info",
+      "description": "徽章信息",
+      "authors": "巳月：1322276685"
+    },
+    {
+      "name": "emblem compound result",
+      "description": "徽章合成结果",
+      "authors": "feirnova"
+    },
+    {
+      "name": "emblem list",
+      "description": "徽章列表",
+      "authors": "feirnova"
+    },
+    {
+      "name": "equipment index",
+      "description": "设备指数\n\n`defaultEquipment`  基础角色外形：头发--上衣--下装--鞋子--皮肤--武器  -1则表示原始角色的基础外貌",
+      "authors": "无名氏"
+    },
+    {
+      "name": "equipment part set",
+      "description": "套装开始",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "event button on item",
+      "description": "// 如果下面的物品（索引）在库存中，则事件按钮会闪烁。",
+      "authors": "飞飞"
+    },
+    {
+      "name": "exp",
+      "description": "黑钻经验+xx%",
+      "authors": "无名氏"
+    },
+    {
+      "name": "exp bonus",
+      "description": "冒险团各等级的经验BUFF奖励",
+      "authors": "阿晓"
+    },
+    {
+      "name": "first channel server info",
+      "description": "第一频道服务器信息",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "gift disallowance",
+      "description": "商城道具不可赠送",
+      "authors": "By：小小白-770141757"
+    },
+    {
+      "name": "give emotion",
+      "description": "发放心情状态",
+      "authors": "unMen"
+    },
+    {
+      "name": "gold bonus",
+      "description": "冒险团金币奖励\n//两个一组，分别是等级和金币倍率",
+      "authors": "feirnova"
+    },
+    {
+      "name": "gold card cost table",
+      "description": "以副本等级为基准等级来决定收费翻牌的价格",
+      "authors": "By:春秋-745373814|轩大爷i"
+    },
+    {
+      "name": "gold drop ref table",
+      "description": "等级掉落金币表格\n\n共有3个参数\n1  等级  2  最高掉落   3   最少掉落",
+      "authors": "BY：春秋"
+    },
+    {
+      "name": "gold limit from level",
+      "description": "[gold limit from level]每个等级可容纳的金币上限\n\n左边是等级                  右边是金币上限",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "group",
+      "description": "组",
+      "authors": "无名氏"
+    },
+    {
+      "name": "group index",
+      "description": "深渊派对组\n0为怪物-1为APC",
+      "authors": "夜白-1229998088"
+    },
+    {
+      "name": "guild create cost",
+      "description": "创建公会要花的费用",
+      "authors": "unMen"
+    },
+    {
+      "name": "hell table",
+      "description": "",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "hellparty basic values",
+      "description": "深渊派对基本设定",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "hidden npc",
+      "description": "隐藏的NPC",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "high link character exp bonus",
+      "description": "高于70级的经验加成",
+      "authors": "pvf"
+    },
+    {
+      "name": "high link character gold bonus",
+      "description": "高于70级的金币加成",
+      "authors": "pvf"
+    },
+    {
+      "name": "in game advertisement expose condition of teen",
+      "description": "在游戏中的广告暴露青少年的条件",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "independent drop",
+      "description": "[独立掉落]\n首行十七个数字\n3种写法，第十七位数字写0就是掉落一种物品，写1就是下面跟掉落列表，写2就说明是外部掉落文件, 比如异界掉落\n\n-----\n独立掉落写法1 掉落一种物品的\n0 61424(怪物) 1(掉落物品) 100000 100000 100000 100000 100000(五种难度掉落, 几率一百万为100%) 1 1 1 1 1(对应五种难度掉落个数) 0 0 -1 0\n\n独立掉落写法2 掉落一组物品的\n 0 2 0 50000 50000 50000 50000 50000 1 1 1 1 1 0 0 -1 1\n掉落一组物品的，那么掉落物品就写0，然后增加 [list]...[/list] 标签, 在里面写掉落的物品\n [list]\n  10564 1000 //物品代码-掉落权重(1000等于100% ?)\n  12561 1000\n [/list]\n\n独立掉落写法3 调用外部独立掉落文件的 比如异界装备的掉落\n 0 59009 0 0 0 140000 285920 0 1 1 1 1 1 70 90 -1 2\n [list]\n  116 //数字为外部独立掉落文件的编号 编号在etc/independentdrop.lst\n [/list]",
+      "authors": "pvf"
+    },
+    {
+      "name": "inventory limit",
+      "description": "增加负重\n\n* 10000 = 10kg",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "item drop ref table",
+      "description": "掉落物品参见詳細物品請查看代碼表格",
+      "authors": "神王"
+    },
+    {
+      "name": "key value index",
+      "description": "关键价值指数",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "legacy info",
+      "description": "传统的信息",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "link level",
+      "description": "MP槽上面的冒险团支援兵出现等级\n50=50级出现\n隐藏则是 比如你的版本满级是70版本 输入71即可隐藏",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "list",
+      "description": "独立掉落中表示：\n\n物品代码-掉落权重",
+      "authors": "pvf"
+    },
+    {
+      "name": "low link character exp bonus",
+      "description": "//低于70级有10%经验加成",
+      "authors": "阿晓"
+    },
+    {
+      "name": "low link character gold bonus",
+      "description": "//低于70级增加10%金币加成",
+      "authors": "阿晓"
+    },
+    {
+      "name": "manage basic explain",
+      "description": "每个等级的冒险团名称",
+      "authors": "feirnova"
+    },
+    {
+      "name": "manage level max",
+      "description": "冒险团最大等级",
+      "authors": "阿晓"
+    },
+    {
+      "name": "manage level point",
+      "description": "冒险团升级所需经验",
+      "authors": "阿晓"
+    },
+    {
+      "name": "manage option",
+      "description": "冒险团各等级的四围加成",
+      "authors": "pvf"
+    },
+    {
+      "name": "material",
+      "description": "所需材料",
+      "authors": "雪花 2524501757"
+    },
+    {
+      "name": "max fatigue",
+      "description": "最大疲劳",
+      "authors": "a123123"
+    },
+    {
+      "name": "normal table",
+      "description": "正常的表",
+      "authors": "无名氏"
+    },
+    {
+      "name": "notice",
+      "description": "注意\n// 如果强化高于以下级别，则通知在公屏显示通知。",
+      "authors": "飞飞"
+    },
+    {
+      "name": "notice legacy with upgrade",
+      "description": "通知遗留升级",
+      "authors": "无名氏"
+    },
+    {
+      "name": "npc info",
+      "description": "人大信息",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "option type",
+      "description": "选项类型",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "package",
+      "description": "礼包\n\n商城里是礼包购买界面",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "party member drop bonusrate",
+      "description": "地下城通关结算时免费翻牌金币掉落控制（根据组队人数获得金钱倍率）",
+      "authors": "BY:春秋|轩大爷i"
+    },
+    {
+      "name": "pickRatio",
+      "description": "抓取几率\n\n如果是100就是抓到之后百分百上钩",
+      "authors": "Yuchin 289177531"
+    },
+    {
+      "name": "piece reward",
+      "description": "阶段奖励",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "piece reward table",
+      "description": "达成阶段时的奖励表",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "point bonus",
+      "description": "//↑这个应该是到达等级冒险团获得的经验(40级以上角色才能提供经验)↑",
+      "authors": "阿晓"
+    },
+    {
+      "name": "position",
+      "description": "位置坐标(X,Y,Z)",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "premium",
+      "description": "时效道具\n\n商城里是道具→优惠的购买界面",
+      "authors": "西门庆|Xiti Fox"
+    },
+    {
+      "name": "premium rarity dicision",
+      "description": "类似深渊掉落一样的数据\n// 出现在高级金卡上的装备等级概率",
+      "authors": "巳月：1322276685|飞飞"
+    },
+    {
+      "name": "premium service",
+      "description": "[premium service] 契约效果\n`[type]` 类型\n`[main preminum image index]` 主契约图片索引\n`[additional preminum image index]`增加契约图片索引\n`[add selectAble equipment list]` 增加可用装备列表",
+      "authors": "feirnova"
+    },
+    {
+      "name": "protect of upgrade down",
+      "description": "设置强化增幅保护券\n四个数字为一组\n1、保护券代码\n2、最低保护等级\n3、最高保护的等级\n4、失败是否掉级\n(填1就是掉1级，填多少就是掉多少级，填0为不掉级)\n例：10~13保护券 = 8239\t10\t13\t0\n例：10~13掉级保护券 = 8239\t10\t13\t-31",
+      "authors": "巳月：1322276685"
+    },
+    {
+      "name": "pvp deathmatch battle time",
+      "description": "PVP战斗中死亡竞赛时间\n//死斗决斗时间限制：毫秒单位",
+      "authors": "飞飞"
+    },
+    {
+      "name": "pvp experience loss",
+      "description": "PVP经验损失\n//当等级高于第一个数字时在仪表栏上显示MAX\n29\n//第二个数字是每天扣除的决斗经验量\n7000",
+      "authors": "飞飞"
+    },
+    {
+      "name": "pvp map order",
+      "description": "PVP地图订单\n//这是选择决斗地图时使用的顺序。\n  确保【pvp地图基础数据】与列出的顺序相同！",
+      "authors": "飞飞"
+    },
+    {
+      "name": "pvp normal battle time",
+      "description": "PVP战斗正常时间\n//普通决斗时限：毫秒单位",
+      "authors": "飞飞"
+    },
+    {
+      "name": "pvp relay battle time",
+      "description": "PVP继电器战斗时间\n// 队长战斗时间限制：毫秒单位",
+      "authors": "飞飞"
+    },
+    {
+      "name": "refill item",
+      "description": "三个数据一组\n物品代码   数量    发送时间\n此处是游戏全角色发送",
+      "authors": "酸辣白菜"
+    },
+    {
+      "name": "require party num",
+      "description": "要求党NUM",
+      "authors": "无名氏"
+    },
+    {
+      "name": "required item",
+      "description": "进图门票\n分别为  物品代碼，数量，消耗量\n在etc/accountcargo.etc中\n表示升级账号金库所需材料",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "reward exp weight",
+      "description": "奖励exp重量",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "section icon",
+      "description": "称号簿普通成就各块的图标",
+      "authors": "unMen"
+    },
+    {
+      "name": "section name",
+      "description": "称号簿升级名",
+      "authors": "unMen"
+    },
+    {
+      "name": "separate upgrade effect",
+      "description": "单独升级效果",
+      "authors": "无名氏"
+    },
+    {
+      "name": "skill damage base parameter dungeon",
+      "description": "技能损伤基地参数地牢\n可修改成长独立攻击\n1.2.3.4.5.6......100数字后面跟着的第一个数字就是成长独立攻击",
+      "authors": "灰色大尾猫"
+    },
+    {
+      "name": "skill prob",
+      "description": "技能概率",
+      "authors": "无名氏"
+    },
+    {
+      "name": "sp table",
+      "description": "[sp table]\n左边是职业等级      右边是升到当前等级可获得的sp点",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "stage difficulty",
+      "description": "阶段难度",
+      "authors": "请叫我靓仔"
+    },
+    {
+      "name": "stat weights by rarity",
+      "description": "[stat weights by rarity]\n\t0.4\t0.7\t1\t1.25\t1.4\t1.1\n[/stat weights by rarity]\n控制强化附加的无视攻击（物理，魔法）比率，\n6个数值对应[普通]-[高级]-[稀有]-[神器]-[史诗]-[异界（勇者）]6种类型，\n例如修改第一个数值0.4改1.4，相应的游戏里强化[普通]级装备的无视攻击也会提高\n同理控制增幅的路径{ etc/amplifyupgrade.etc }也有这个标签，对应增幅附加的四维",
+      "authors": "徐丧彪2952411669|Xiti Fox"
+    },
+    {
+      "name": "striker combo",
+      "description": "支援兵连击",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "striker dungeon impossible",
+      "description": "禁用支援兵的副本，下面是副本编号",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "striker module impossible",
+      "description": "禁用支援兵功能的区域",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "striker skill attack penalty",
+      "description": "支援兵技能伤害惩罚(相当于原技能伤害的比例)",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "striker skill cooltime penalty",
+      "description": "支援兵技能冷却时间惩罚",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "striker skill macro",
+      "description": "支援兵技能宏",
+      "authors": "萨日朗"
+    },
+    {
+      "name": "table",
+      "description": "强化/增幅属性（从左到右）\n\n1、\n2、\n3、\n4、\n5、\n6、\n7、概率 [计算公式]：(100000-X) / 100000\n    （人话就是数字越小成功率越大，设置0就是100%成功）\n8、失败时（1保级  2降级  3损坏）\n9、保级时：写0\n      降级时：写多少就掉多少级\n      损坏时：写0\n10、需求材料编号\n11、需求材料消耗数量\n12、\n13、\n14、\n15、\n16、\n17、",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "title collection info",
+      "description": "70\t         0\t0\t 6501\t       1\t26596\n表示一共有70个   未知  第0个称号\t对应的任务编号  未知\t对应的称号编号 这里是怪兽猎杀者\n································\n我们来到这里→\t5\t0\t6506\t1\t26601\t6\t-1\t7\t-1\t8\t-1\t9\t-1\n这里后面的6 7 8 9 是因为称号簿每个块得有10个称号才会切到下一个块 -1表示为空白\n\n`general`\t普通成就\n`specific` 特殊成就\n`despair` 绝望之塔",
+      "authors": "unMen"
+    },
+    {
+      "name": "unusable items",
+      "description": "禁止使用的物品",
+      "authors": "巳月：1322276685"
+    },
+    {
+      "name": "upgrade machine frame rate",
+      "description": "升级机帧率",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "viewRatio",
+      "description": "视线比例\n抓取的范围 就是能不能抓到 而不是能不能抓上来\n\n抓取几率",
+      "authors": "小宝 1307813456|Yuchin 289177531"
+    },
+    {
+      "name": "white ip",
+      "description": "白色的IP\n/*\n这是 Dunpa 使用的 ip 和端口列表。\n修改日期：08 03 07\n*/\n\n//\n// 如果 211 189 29 128 255 呢？\n// 允许的 IP 从 211.189.29.128 到 211.189.29.255\n//\n// 并且如果属于白ip，则无条件传递任何端口号。\n//",
+      "authors": "飞飞"
+    },
+    {
+      "name": "world drop",
+      "description": "[world drop]全局掉落\n与使怪物专门掉落材料的独立掉落[item]不同，全局掉落是根据怪物等级来决定掉落材料的，\n全局掉落分3部分组成：\n\nA、怪物等级\n\nB、左边为击杀该等级怪物之后随机掉落材料，\n     右边为掉落材料的权重\n\nC、-1（写-1为该等级收尾）",
+      "authors": "Xiti Fox"
+    }
+  ]
+}

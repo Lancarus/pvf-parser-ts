@@ -1,0 +1,39 @@
+{
+  "tags": [
+    {
+      "name": "at gunner",
+      "description": "神枪手",
+      "authors": "pvfUtility"
+    },
+    {
+      "name": "message",
+      "description": "商店橱窗上的消息",
+      "authors": "吧哥"
+    },
+    {
+      "name": "one a day start time",
+      "description": "每天一个启动时间",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "sell item",
+      "description": "出售的项目\n-1代表空格-2代表翻页",
+      "authors": "李云溪"
+    },
+    {
+      "name": "spending item",
+      "description": "支出项目",
+      "authors": "无名氏"
+    },
+    {
+      "name": "tab name",
+      "description": "标签名称",
+      "authors": "无名氏"
+    },
+    {
+      "name": "weapon shop",
+      "description": "商店类型:武器商店,此写法开启商店修理权限",
+      "authors": "墨白"
+    }
+  ]
+}

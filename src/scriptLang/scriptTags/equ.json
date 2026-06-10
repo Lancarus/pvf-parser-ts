@@ -1,983 +1,1589 @@
 {
-    "tags": [
-        {
-            "name": "packagable",
-            "description": "可打包/邮寄标记: 0=不可寄送(默认可)"
-        },
-        {
-            "name": "avatar select ability",
-            "closing": true,
-            "description": "角色选择附加能力块：行内 `[STAT]` `+|*` 数值；或 SKILL_LEVEL 职业 索引 等级\n`[HP MAX]`\n`[MP MAX]`\n`[PHYSICAL_ATTACK]`\n`[PHYSICAL_DEFENSE]`\n`[MAGICAL_ATTACK]`\n`[MAGICAL_DEFENSE]`\n`[EQUIPMENT_PHYSICAL_ATTACK]`\n`[EQUIPMENT_PHYSICAL_DEFENSE]`\n`[EQUIPMENT_MAGICAL_ATTACK]`\n`[EQUIPMENT_MAGICAL_DEFENSE]`\n`[ELEMENT_TOLERANCE_FIRE]`\n`[ELEMENT_TOLERANCE_WATER]`\n`[ELEMENT_TOLERANCE_DARK]`\n`[ELEMENT_TOLERANCE_LIGHT]`\n`[ELEMENT_TOLERANCE_ALL]`\n`[ACTIVESTATUS_TOLERANCE_SLOW]`\n`[ACTIVESTATUS_TOLERANCE_FREEZE]`\n`[ACTIVESTATUS_TOLERANCE_POISON]`\n`[ACTIVESTATUS_TOLERANCE_STUN]`\n`[ACTIVESTATUS_TOLERANCE_CURSE]`\n`[ACTIVESTATUS_TOLERANCE_BLIND]`\n`[ACTIVESTATUS_TOLERANCE_LIGHTNING]`\n`[ACTIVESTATUS_TOLERANCE_STONE]`\n`[ACTIVESTATUS_TOLERANCE_SLEEP]`\n`[ACTIVESTATUS_TOLERANCE_DEELEMENT]`\n`[ACTIVESTATUS_TOLERANCE_DEADLYSTRIKE]`\n`[ACTIVESTATUS_TOLERANCE_BLEEDING]`\n`[ACTIVESTATUS_TOLERANCE_PIERCE]`\n`[ACTIVESTATUS_TOLERANCE_STUCK]`\n`[ACTIVESTATUS_TOLERANCE_CONFUSE]`\n`[ACTIVESTATUS_TOLERANCE_HOLD]`\n`[ACTIVESTATUS_TOLERANCE_ALL]`\n`[INVENTORY_MAX_WEIGHT]`\n`[HP_REGENRATE]`\n`[MP_REGENRATE]`\n`[MP_REGENRATE_PERCENT_UP]`\n`[MOVE_SPEED]`\n`[ATTACK_SPEED]`\n`[CAST_SPEED]`\n`[HIT_RECOVERY]`\n`[JUMP_POWER]`\n`[CRITICAL]`\n`[SKILL_LEVEL]`"
-        },
-        {
-            "name": "PHYSICAL_ATTACK",
-            "description": "力量加成"
-        },
-        {
-            "name": "PHYSICAL_DEFENSE",
-            "description": "物理防御加成"
-        },
-        {
-            "name": "MAGICAL_ATTACK",
-            "description": "智力加成"
-        },
-        {
-            "name": "MAGICAL_DEFENSE",
-            "description": "魔法防御加成"
-        },
-        {
-            "name": "EQUIPMENT_PHYSICAL_ATTACK",
-            "description": "物理攻击加成"
-        },
-        {
-            "name": "EQUIPMENT_PHYSICAL_DEFENSE",
-            "description": "物理防御加成"
-        },
-        {
-            "name": "EQUIPMENT_MAGICAL_ATTACK",
-            "description": "魔法攻击加成"
-        },
-        {
-            "name": "EQUIPMENT_MAGICAL_DEFENSE",
-            "description": "魔法防御加成"
-        },
-        {
-            "name": "ELEMENT_TOLERANCE_FIRE",
-            "description": "火属性抗性加成"
-        },
-        {
-            "name": "ELEMENT_TOLERANCE_WATER",
-            "description": "水属性抗性加成"
-        },
-        {
-            "name": "ELEMENT_TOLERANCE_DARK",
-            "description": "暗属性抗性加成"
-        },
-        {
-            "name": "ELEMENT_TOLERANCE_LIGHT",
-            "description": "光属性抗性加成"
-        },
-        {
-            "name": "ELEMENT_TOLERANCE_ALL",
-            "description": "所有属性抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_SLOW",
-            "description": "减速抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_FREEZE",
-            "description": "冰冻抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_POISON",
-            "description": "中毒抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_STUN",
-            "description": "眩晕抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_CURSE",
-            "description": "诅咒抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_BLIND",
-            "description": "失明抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_LIGHTNING",
-            "description": "感电抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_STONE",
-            "description": "石化抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_SLEEP",
-            "description": "睡眠抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_DEELEMENT",
-            "description": "元素剥离抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_DEADLYSTRIKE",
-            "description": "致命打击抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_BLEEDING",
-            "description": "出血抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_PIERCE",
-            "description": "贯通抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_STUCK",
-            "description": "命中相关加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_CONFUSE",
-            "description": "混乱抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_HOLD",
-            "description": "束缚抗性加成"
-        },
-        {
-            "name": "ACTIVESTATUS_TOLERANCE_ALL",
-            "closing": true,
-            "description": "所有状态异常抗性加成"
-        },
-        {
-            "name":"INVENTORY_MAX_WEIGHT",
-            "description": "背包最大重量加成"
-        },
-        {
-            "name":"HP_REGENRATE",
-            "description": "HP 回复速度加成"
-        },
-        {
-            "name":"MP_REGENRATE",
-            "description": "MP 回复速度加成"
-        },
-        {
-            "name":"MP_REGENRATE_PERCENT_UP",
-            "description": "MP 回复速度百分比加成"
-        },
-        {
-            "name":"MOVE_SPEED",
-            "description": "移动速度加成"
-        },
-        {
-            "name":"ATTACK_SPEED",
-            "description": "攻击速度加成"
-        },
-        {
-            "name":"CAST_SPEED",
-            "description": "施法速度加成"
-        },
-        {
-            "name":"HIT_RECOVERY",
-            "description": "击中恢复速度加成"
-        },
-        {
-            "name":"JUMP_POWER",
-            "description": "跳跃力加成"
-        },
-        {
-            "name":"CRITICAL",
-            "description": "暴击率加成"
-        },
-        {
-            "name":"SKILL_LEVEL",
-            "description": "技能等级加成"
-        },
-        {
-            "name": "usable job",
-            "closing": true,
-            "description": "可使用职业\n`[swordman]`\n`[fighter]`\n`[at fighter]`\n`[demonic swordman]`\n`[creatormage]`\n`[gunner]`\n`[at gunner]`\n`[mage]`\n`[at mage]`\n`[priest]`\n`[all]`"
-        },
-        {
-            "name": "swordman",
-            "description": "鬼剑士"
-        },
-        {
-            "name": "fighter",
-            "description": "格斗家(女)"
-        },
-        {
-            "name": "at fighter",
-            "description": "格斗家(男)"
-        },
-        {
-            "name": "demonic swordman",
-            "description": "黑暗武士"
-        },
-        {
-            "name": "creatormage",
-            "description": "缔造者"
-        },
-        {
-            "name": "gunner",
-            "description": "神枪手(男)"
-        },
-        {
-            "name": "at gunner",
-            "description": "神枪手(女)"
-        },
-        {
-            "name": "mage",
-            "description": "魔法师(女)"
-        },
-        {
-            "name": "at mage",
-            "description": "魔法师(男)"
-        },
-        {
-            "name": "priest",
-            "description": "圣职者"
-        },
-        {
-            "name": "all",
-            "description": "所有职业"
-        },
-        {
-            "name": "minimum level",
-            "description": "使用所需最低等级"
-        },
-        {
-            "name": "required skill",
-            "description": "使用所需技能索引 (无则 -1)"
-        },
-        {
-            "name": "custom animation",
-            "closing": true,
-            "description": "自定义动画(.ani)文件列表，仅用于称号"
-        },
-        {
-            "name": "usable even peace",
-            "description": "和平/待机区域也触发特殊效果 (1 开启)"
-        },
-        {
-            "name": "equipment type",
-            "description": "装备类型 + 价格表索引\n`[weapon]`\n`[hat avatar]`\n`[hair avatar]`\n`[breast avatar]`\n`[face avatar]`\n`[waist avatar]`\n`[coat avatar]`\n`[pants avatar]`\n`[shoes avatar]`\n`[weapon]`\n`[title name]`\n`[coat]`\n`[shoulder]`\n`[pants]`\n`[shoes]`\n`[waist]`\n`[amulet]`\n`[wrist]`\n`[ring]`"
-        },
-        {
-            "name": "weapon",
-            "description": "武器"
-        },
-        {
-            "name": "hat avatar",
-            "description": "帽子(时装)"
-        },
-        {
-            "name": "hair avatar",
-            "description": "发型(时装)"
-        },
-        {
-            "name": "breast avatar",
-            "description": "上衣(时装)"
-        },
-        {
-            "name": "face avatar",
-            "description": "脸部(时装)"
-        },
-        {
-            "name": "waist avatar",
-            "description": "腰带(时装)"
-        },
-        {
-            "name": "coat avatar",
-            "description": "外套(时装)"
-        },
-        {
-            "name": "pants avatar",
-            "description": "裤子(时装)"
-        },
-        {
-            "name": "shoes avatar",
-            "description": "鞋子(时装)"
-        },
-        {
-            "name": "title name",
-            "description": "称号"
-        },
-        {
-            "name": "coat",
-            "description": "外套"
-        },
-        {
-            "name": "shoulder",
-            "description": "肩部"
-        },
-        {
-            "name": "pants",
-            "description": "裤子"
-        },
-        {
-            "name": "shoes",
-            "description": "鞋子"
-        },
-        {
-            "name": "waist",
-            "description": "腰带"
-        },
-        {
-            "name": "amulet",
-            "description": "项链"
-        },
-        {
-            "name": "wrist",
-            "description": "手镯"
-        },
-        {
-            "name": "ring",
-            "description": "戒指"
-        },
-        {
-            "name": "hide equipment",
-            "description": "穿戴时需要隐藏的其他装备部位"
-        },
-        {
-            "name": "hide layer",
-            "closing": true,
-            "description": "需隐藏图层编号列表"
-        },
-        {
-            "name": "sub type",
-            "description": "子类型/子分类 (武器细分或特殊用途)"
-        },
-        {
-            "name": "durability",
-            "description": "耐久 (0=无限)"
-        },
-        {
-            "name": "price",
-            "description": "基础价格"
-        },
-        {
-            "name": "value",
-            "description": "出售回收价"
-        },
-        {
-            "name": "repair price",
-            "description": "修理费用 (默认 value -> price)"
-        },
-        {
-            "name": "need material",
-            "description": "所需材料: 物品索引 数量"
-        },
-        {
-            "name": "cash",
-            "description": "点券/现金价格"
-        },
-        {
-            "name": "medal",
-            "description": "勋章价格"
-        },
-        {
-            "name": "finish point price",
-            "description": "FP 价格"
-        },
-        {
-            "name": "cool time",
-            "description": "装备整体冷却(ms)"
-        },
-        {
-            "name": "icon",
-            "description": "主图标文件 + 帧"
-        },
-        {
-            "name": "icon mark",
-            "description": "图标外框(品级框) + 帧"
-        },
-        {
-            "name": "extra icon",
-            "description": "额外/复制态图标文件 + 帧"
-        },
-        {
-            "name": "field image",
-            "description": "掉落在地面时的图像文件 + 帧"
-        },
-        {
-            "name": "custom wav",
-            "closing": true,
-            "description": "自定义音效标识列表"
-        },
-        {
-            "name": "move wav",
-            "description": "移动/拾取/装备时音效标识"
-        },
-        {
-            "name": "use wav",
-            "description": "使用/激活时音效标识"
-        },
-        {
-            "name": "expand ani",
-            "closing": true,
-            "description": "扩展/替换部位动画块，含变体、路径与自定义 wav"
-        },
-        {
-            "name": "expand path",
-            "description": "expand ani 内的资源基路径"
-        },
-        {
-            "name": "animation job",
-            "description": "动画所属职业"
-        },
-        {
-            "name": "variation",
-            "description": "动画变体索引"
-        },
-        {
-            "name": "layer variation",
-            "description": "图层索引 + 层目录名"
-        },
-        {
-            "name": "equipment ani script",
-            "description": "动画列表脚本 (.lay)"
-        },
-        {
-            "name": "name",
-            "description": "主名称"
-        },
-        {
-            "name": "name2",
-            "description": "副/英文名称"
-        },
-        {
-            "name": "basic explain",
-            "description": "简要描述(反引号多行)"
-        },
-        {
-            "name": "detail explain",
-            "description": "详细描述(反引号多行)"
-        },
-        {
-            "name": "flavor text",
-            "description": "趣味文本"
-        },
-        {
-            "name": "grade",
-            "description": "品级"
-        },
-        {
-            "name": "spectrum",
-            "description": "残影效果\n255 0 0 255 1000 // R G B A 时长"
-        },
-        {
-            "name": "attach type",
-            "description": "绑定/交易类型 \n`[trade]` //无法交易\n`[free]` //自由交易 \n`[sealing]` //封装 \n`[trade delete]` //无法删除"
-        },
-        {
-            "name": "creation rate",
-            "description": "生成/产出比率"
-        },
-        {
-            "name": "rarity",
-            "description": "稀有度(0~5)"
-        },
-        {
-            "name": "anti evil",
-            "description": "抗魔值"
-        },
-        {
-            "name": "weight",
-            "description": "重量(g)"
-        },
-        {
-            "name": "HP MAX",
-            "description": "最大 HP 增减"
-        },
-        {
-            "name": "MP MAX",
-            "description": "最大 MP 增减"
-        },
-        {
-            "name": "physical attack",
-            "description": "力量/物攻(示例注释中说明)"
-        },
-        {
-            "name": "physical defense",
-            "description": "体力/物防"
-        },
-        {
-            "name": "magical attack",
-            "description": "智力/魔攻"
-        },
-        {
-            "name": "magical defense",
-            "description": "精神/魔防"
-        },
-        {
-            "name": "equipment physical attack",
-            "description": "装备物理攻击(冒险/决斗)"
-        },
-        {
-            "name": "equipment physical defense",
-            "description": "装备物理防御(冒险/决斗)"
-        },
-        {
-            "name": "equipment magical attack",
-            "description": "装备魔法攻击(冒险/决斗)"
-        },
-        {
-            "name": "equipment magical defense",
-            "description": "魔法防御力"
-        },
-        {
-            "name": "physical absolute damage",
-            "description": "物理绝对伤害"
-        },
-        {
-            "name": "physical damage reduce",
-            "description": "物理伤害修正/减免"
-        },
-        {
-            "name": "physical absolute defense",
-            "description": "物理绝对防御(百分比)"
-        },
-        {
-            "name": "magical absolute damage",
-            "description": "魔法绝对伤害"
-        },
-        {
-            "name": "magical damage reduce",
-            "description": "魔法伤害修正/减免"
-        },
-        {
-            "name": "magical absolute defense",
-            "description": "魔法绝对防御(百分比)"
-        },
-        {
-            "name": "fire resistance",
-            "description": "火属性抗性"
-        },
-        {
-            "name": "water resistance",
-            "description": "水属性抗性"
-        },
-        {
-            "name": "dark resistance",
-            "description": "暗属性抗性"
-        },
-        {
-            "name": "light resistance",
-            "description": "光属性抗性"
-        },
-        {
-            "name": "all elemental resistance",
-            "description": "全元素抗性"
-        },
-        {
-            "name": "fire attack",
-            "description": "火属性强化"
-        },
-        {
-            "name": "water attack",
-            "description": "水属性强化"
-        },
-        {
-            "name": "dark attack",
-            "description": "暗属性强化"
-        },
-        {
-            "name": "light attack",
-            "description": "光属性强化"
-        },
-        {
-            "name": "slow resistance",
-            "description": "减速抗性"
-        },
-        {
-            "name": "freeze resistance",
-            "description": "冰冻抗性"
-        },
-        {
-            "name": "poison resistance",
-            "description": "中毒抗性"
-        },
-        {
-            "name": "stun resistance",
-            "description": "眩晕抗性"
-        },
-        {
-            "name": "curse resistance",
-            "description": "诅咒抗性"
-        },
-        {
-            "name": "blind resistance",
-            "description": "失明抗性"
-        },
-        {
-            "name": "lightning resistance",
-            "description": "感电抗性"
-        },
-        {
-            "name": "stone resistance",
-            "description": "石化抗性"
-        },
-        {
-            "name": "sleep resistance",
-            "description": "睡眠抗性"
-        },
-        {
-            "name": "bleeding resistance",
-            "description": "出血抗性"
-        },
-        {
-            "name": "confuse resistance",
-            "description": "混乱抗性"
-        },
-        {
-            "name": "hold resistance",
-            "description": "束缚抗性"
-        },
-        {
-            "name": "burn resistance",
-            "description": "灼烧抗性"
-        },
-        {
-            "name": "weapon break resistance",
-            "description": "武器破坏抗性"
-        },
-        {
-            "name": "armor break resistance",
-            "description": "防具破坏抗性"
-        },
-        {
-            "name": "deelement resistance",
-            "description": "元素剥离抗性(未使用)"
-        },
-        {
-            "name": "deadlystrike resistance",
-            "description": "致命打击抗性(未使用)"
-        },
-        {
-            "name": "all activestatus resistance",
-            "description": "全状态异常抗性"
-        },
-        {
-            "name": "piercing resistance",
-            "description": "贯通/穿刺抗性"
-        },
-        {
-            "name": "stuck resistance",
-            "description": "命中/回避相关(示例说明为回避率)"
-        },
-        {
-            "name": "active status control info",
-            "description": "状态控制收益配置: 名称 概率 提升 持续 额外参数\n`bleeding` 10 20 30 n //流血几率增加（10%）等级增加（20）持续时间增加（30%）其他信息（对于流血的情况，伤害增加率 n%）\n"
-        },
-        {
-            "name": "inventory limit",
-            "description": "背包容量增加 (重量)"
-        },
-        {
-            "name": "HP regen speed",
-            "description": "HP 回复速度原始值"
-        },
-        {
-            "name": "MP regen speed",
-            "description": "MP 回复速度原始值"
-        },
-        {
-            "name": "MP regen speed rate",
-            "description": "MP 回复速度百分比加成"
-        },
-        {
-            "name": "move speed",
-            "description": "移动速度 (0.1% 单位)"
-        },
-        {
-            "name": "x move dash speed",
-            "description": "横向冲刺速度倍率"
-        },
-        {
-            "name": "y move dash speed",
-            "description": "纵向冲刺速度倍率"
-        },
-        {
-            "name": "attack speed",
-            "description": "攻击速度 (0.1% 单位)"
-        },
-        {
-            "name": "cast speed",
-            "description": "施法速度 (0.1% 单位)"
-        },
-        {
-            "name": "hit recovery",
-            "description": "硬直恢复/Hit Recovery"
-        },
-        {
-            "name": "rigidity",
-            "description": "僵直"
-        },
-        {
-            "name": "jump power",
-            "description": "跳跃力"
-        },
-        {
-            "name": "room list move speed rate",
-            "description": "城镇/房间列表移动速度"
-        },
-        {
-            "name": "elemental property",
-            "description": "赋予元素属性 \n`[no element]`\n`[fire element]`\n`[water element]`\n`[dark element]`\n`[light element]`"
-        },
-        {
-            "name": "item aura",
-            "description": "装备光环: 元素方式 + 数值 + 范围"
-        },
-        {
-            "name": "active status",
-            "description": "旧式状态异常设置(已弃用)"
-        },
-        {
-            "name": "push aside",
-            "description": "击退强度"
-        },
-        {
-            "name": "lift up",
-            "description": "浮空强度"
-        },
-        {
-            "name": "physical critical hit",
-            "description": "物理暴击率增量"
-        },
-        {
-            "name": "magical critical hit",
-            "description": "魔法暴击率增量"
-        },
-        {
-            "name": "stuck",
-            "description": "命中修正(负数表示增加)"
-        },
-        {
-            "name": "ignore defense",
-            "description": "忽略防御(未使用时可忽略)"
-        },
-        {
-            "name": "human damage rate",
-            "description": "对人型伤害比率(%)."
-        },
-        {
-            "name": "fort damage rate",
-            "description": "对要塞/破坏物伤害比率(%)."
-        },
-        {
-            "name": "monster damage rate",
-            "description": "对怪物伤害比率(%)."
-        },
-        {
-            "name": "HP drain",
-            "description": "HP 吸收"
-        },
-        {
-            "name": "MP drain",
-            "description": "MP 吸收"
-        },
-        {
-            "name": "skill data up",
-            "closing": true,
-            "description": "技能数据调整块\n`[fighter]` 12 `[dungeon]` `[static]` 2 `+` 20"
-        },
-        {
-            "name": "skill levelup",
-            "closing": true,
-            "description": "技能等级提升块"
-        },
-        {
-            "name": "if",
-            "closing": true,
-            "description": "条件块包含 cooltime/attack success 等"
-        },
-        {
-            "name": "cooltime",
-            "description": "条件触发冷却时间 (ms)"
-        },
-        {
-            "name": "attack success",
-            "description": "攻击成功触发次数/条件"
-        },
-        {
-            "name": "then",
-            "closing": true,
-            "description": "条件满足执行效果块"
-        },
-        {
-            "name": "target",
-            "description": "效果目标 (myself 等)"
-        },
-        {
-            "name": "duration",
-            "description": "效果持续时间(ms)"
-        },
-        {
-            "name": "probability",
-            "description": "触发概率(1 = 100%)"
-        },
-        {
-            "name": "stat",
-            "description": "状态修改: 名称 `+|%` 数值"
-        },
-        {
-            "name": "character name y revision",
-            "description": "角色名称 Y 坐标修正"
-        },
-        {
-            "name": "effect",
-            "closing": true,
-            "description": "效果块：可多次；内部: attach target/type/pos/index/option/module/file name"
-        },
-        {
-            "name": "attach target",
-            "description": "effect 内附着目标 (delegator/target)"
-        },
-        {
-            "name": "type",
-            "description": "effect 类型 (animation/particle/range)"
-        },
-        {
-            "name": "attach pos",
-            "description": "附着位置 (bottom/middle/top)"
-        },
-        {
-            "name": "z revision",
-            "description": "Z 高度修正"
-        },
-        {
-            "name": "index",
-            "description": "动画附着层索引"
-        },
-        {
-            "name": "option",
-            "closing": true,
-            "description": "effect 可选项列表块"
-        },
-        {
-            "name": "module",
-            "description": "限定出现模块(room list等)"
-        },
-        {
-            "name": "file name",
-            "description": "效果资源路径 (.ani)"
-        },
-        {
-            "name": "item category",
-            "closing": true,
-            "description": "物品分类标记块: monster card / cannot bind / boss drop"
-        },
-        {
-            "name": "limit upgradable level",
-            "closing": true,
-            "description": "强化/增幅/精炼 等等级限制定义块"
-        },
-        {
-            "name": "level linear ability",
-            "closing": true,
-            "description": "等级线性成长能力块"
-        },
-        {
-            "name": "level section ability",
-            "closing": true,
-            "description": "等级分段成长能力块"
-        },
-        {
-            "name": "level section ani",
-            "closing": true,
-            "description": "等级/职业条件的动画覆盖块"
-        },
-        {
-            "name": "set name",
-            "description": "套装名称"
-        },
-        {
-            "name": "set item",
-            "closing": true,
-            "description": "套装物品索引列表"
-        },
-        {
-            "name": "set item master",
-            "description": "主套装物品索引(被其他 set item 引用时)"
-        },
-        {
-            "name": "set ability",
-            "closing": true,
-            "description": "全套装备后附加能力块"
-        },
-        {
-            "name": "fullset basic explain",
-            "description": "全套基本描述"
-        },
-        {
-            "name": "fullset detail explain",
-            "description": "全套详细描述"
-        },
-        {
-            "name": "piece set ability",
-            "closing": true,
-            "description": "部分套装效果定义块"
-        },
-        {
-            "name": "parameter basic explain",
-            "description": "部分套装基本描述"
-        },
-        {
-            "name": "parameter detail explain",
-            "description": "部分套装详细描述"
-        },
-        {
-            "name": "part set index",
-            "description": "部位套装索引"
-        },
-        {
-            "name": "hardcoding cooltime",
-            "description": "硬编码额外冷却"
-        },
-        {
-            "name": "int data",
-            "closing": true,
-            "description": "整型数据列表"
-        },
-        {
-            "name": "string data",
-            "closing": true,
-            "description": "字符串数据列表"
-        },
-        {
-            "name": "attack info",
-            "description": "附加攻击信息(.atk)"
-        },
-        {
-            "name": "change type ultimateSkillCurScene",
-            "description": "觉醒技能 CutScene 类型设置"
-        },
-        {
-            "name": "item group name",
-            "description": "物品所属分组名称/显示分组若 EQU 中引用分组掉落或套装整理，用此指示"
-        },
-        {
-            "name": "Force Result Item Rule",
-            "description": "强制结果物品规则块：内部定义特定条件下产出/合成/升级的结果物品条目"
-        },
-        {
-            "name": "separate attack",
-            "description": "独立攻击(成长用攻击基值)在 [level linear ability]/[level section ability] 中出现；表示冒险/决斗分途或拆分的基础攻击"
-        },
-        {
-            "name": "physical attack",
-            "description": "物理攻击(历史拼写错误/兼容标签)等价于 physical attack；为兼容旧脚本保留"
-        },
-        {
-            "name": "subtype",
-            "description": "子类型标签的无空格形式；在 [level section ani] 内使用功能同 'sub type'"
-        },
-        {"name": "dungeon check", "closing": true, "description": "地下城检查?"},
-        {"name": "change status", "description": "改变状态"},
-        {"name": "stat by condition", "description": "按条件调整状态"},
-        {"name": "multiple then", "closing": true, "description": "多个 then 块"},
-        {"name": "then probability", "description": "then 块内的概率"},
-        {"name": "passive object", "closing": true, "description": "被动对象块"},
-        {"name": "impossible contents", "closing": true, "description": "不能进行的操作 \n示例 \n `disjoint`\n`gift`"},
-        {"name": "target active status", "description": "目标状态异常"},
-        {"name": "add absolute damage", "description": "增加绝对伤害"},
-        {"name": "disjoint", "description": "不能进行的操作-附魔"},
-        {"name": "gift", "description": "不能进行的操作-送礼"},
-        {"name": "upgrade", "description": "不能进行的操作-强化"},
-        {"name": "amplify upgrade", "description": "不能进行的操作-强化"},
-        {"name": "separate upgrade", "description": "不能进行的操作-锻造"},
-        {"name": "charac cargo", "description": "不能进行的操作-角色仓库"},
-        {"name": "possible kiri protect", "description": "可以使用凯莉的保护券"},
-        {"name": "reduce probability to human armor at pvp module", "description": "在 PVP 模块中减少对人型防具的概率"},
-        {"name": "routing priority", "closing": true, "description": "路由优先级"},
-        {"name": "pvp", "closing": true, "description": "PVP内的属性"},
-        {"name": "not amplify", "description": ""},
-        {"name": "attack condition", "description": "攻击条件"},
-        {"name": "event attack success", "description": "攻击成功时"},
-        {"name": "increase damage", "description": "增加伤害 \n示例 \n `%`  14 //增加14%伤害"},
-        {"name": "skill", "closing": true, "description": "使用技能时(if块内) \n示例 \n `demonic swordman`  72 //黑暗武士使用id为72的技能"}
-    ]
+  "tags": [
+    {
+      "name": "packagable",
+      "description": "可打包/邮寄标记: 0=不可寄送(默认可)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "avatar select ability",
+      "closing": true,
+      "description": "时装：可选择能力\n//待补充\n[ELEMENT_TOLERANCE_FIRE]火属性抗性\n[ELEMENT_TOLERANCE_WATER]冰属性抗性\n[ELEMENT_TOLERANCE_DARK]暗属性抗性\n[ELEMENT_TOLERANCE_LIGHT]光属性抗性\n[ACTIVESTATUS_TOLERANCE_STUCK]回避率\n[INVENTORY_MAX_WEIGHT]最大负重\n[PHYSICAL_ATTACK]力量\n[PHYSICAL_DEFENSE]体力\n[MAGICAL_ATTACK]智力\n[MAGICAL_DEFENSE]精神\n[HP MAX]HP最大值\n[MP MAX]MP最大值\n[HP_REGENRATE]每分钟恢复HP\n[MP_REGENRATE]每分钟恢复MP\n[ATTACK_SPEED]攻击速度\n[CAST_SPEED]施放速度\n[MOVE_SPEED]移动速度\n[HIT_RECOVERY]硬直\n[JUMP_POWER]跳跃力\n[EQUIPMENT_PHYSICAL_DEFENSE]物理防御力\n[EQUIPMENT_MAGICAL_DEFENSE]魔法防御力\n[ACTIVESTATUS_TOLERANCE_ALL]所有异常状态抗性\n[PHYSICAL ABSOLUTE DEFENSE]物理伤害追加减少\n[MAGICAL ABSOLUTE DEFENSE]魔法伤害追加减少",
+      "authors": "BieNao"
+    },
+    {
+      "name": "PHYSICAL_ATTACK",
+      "description": "力量",
+      "authors": "BieNao"
+    },
+    {
+      "name": "PHYSICAL_DEFENSE",
+      "description": "体力",
+      "authors": "BieNao"
+    },
+    {
+      "name": "MAGICAL_ATTACK",
+      "description": "智力",
+      "authors": "BieNao"
+    },
+    {
+      "name": "MAGICAL_DEFENSE",
+      "description": "精神",
+      "authors": "BieNao"
+    },
+    {
+      "name": "EQUIPMENT_PHYSICAL_ATTACK",
+      "description": "物理攻击加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "EQUIPMENT_PHYSICAL_DEFENSE",
+      "description": "物理防御加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "EQUIPMENT_MAGICAL_ATTACK",
+      "description": "魔法攻击加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "EQUIPMENT_MAGICAL_DEFENSE",
+      "description": "魔法防御加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ELEMENT_TOLERANCE_FIRE",
+      "description": "火属性抗性",
+      "authors": "BieNao"
+    },
+    {
+      "name": "ELEMENT_TOLERANCE_WATER",
+      "description": "冰属性抗性",
+      "authors": "BieNao"
+    },
+    {
+      "name": "ELEMENT_TOLERANCE_DARK",
+      "description": "暗属性抗性",
+      "authors": "BieNao"
+    },
+    {
+      "name": "ELEMENT_TOLERANCE_LIGHT",
+      "description": "光属性抗性",
+      "authors": "BieNao"
+    },
+    {
+      "name": "ELEMENT_TOLERANCE_ALL",
+      "description": "所有属性抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_SLOW",
+      "description": "减速抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_FREEZE",
+      "description": "冰冻抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_POISON",
+      "description": "中毒抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_STUN",
+      "description": "眩晕抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_CURSE",
+      "description": "诅咒抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_BLIND",
+      "description": "失明抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_LIGHTNING",
+      "description": "感电抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_STONE",
+      "description": "石化抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_SLEEP",
+      "description": "睡眠抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_DEELEMENT",
+      "description": "元素剥离抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_DEADLYSTRIKE",
+      "description": "致命打击抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_BLEEDING",
+      "description": "出血抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_PIERCE",
+      "description": "贯通抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_STUCK",
+      "description": "回避率",
+      "authors": "BieNao"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_CONFUSE",
+      "description": "混乱抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_HOLD",
+      "description": "束缚抗性加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ACTIVESTATUS_TOLERANCE_ALL",
+      "closing": true,
+      "description": "所有异常状态抗性",
+      "authors": "BieNao"
+    },
+    {
+      "name": "INVENTORY_MAX_WEIGHT",
+      "description": "最大负重",
+      "authors": "BieNao"
+    },
+    {
+      "name": "HP_REGENRATE",
+      "description": "每分钟恢复生命值",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "MP_REGENRATE",
+      "description": "每分钟恢复魔法值",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "MP_REGENRATE_PERCENT_UP",
+      "description": "MP 回复速度百分比加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "MOVE_SPEED",
+      "description": "移动速度加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ATTACK_SPEED",
+      "description": "攻击速度",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "CAST_SPEED",
+      "description": "施放速度",
+      "authors": "BieNao"
+    },
+    {
+      "name": "HIT_RECOVERY",
+      "description": "硬直",
+      "authors": "BieNao"
+    },
+    {
+      "name": "JUMP_POWER",
+      "description": "跳跃力",
+      "authors": "BieNao"
+    },
+    {
+      "name": "CRITICAL",
+      "description": "暴击率加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "SKILL_LEVEL",
+      "description": "技能\n[avatar select ability]\n\t`[SKILL_LEVEL]`\n\t`[swordman]`\t38\t1\n[/avatar select ability]\n\n鬼剑士38号技能破极兵刃技能+1",
+      "authors": "BieNao"
+    },
+    {
+      "name": "usable job",
+      "closing": true,
+      "description": "可使用职业\n`[swordman]`\n`[fighter]`\n`[at fighter]`\n`[demonic swordman]`\n`[creatormage]`\n`[gunner]`\n`[at gunner]`\n`[mage]`\n`[at mage]`\n`[priest]`\n`[all]`",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "swordman",
+      "description": "鬼剑士",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "fighter",
+      "description": "格斗家(女)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "at fighter",
+      "description": "格斗家(男)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "demonic swordman",
+      "description": "黑暗武士",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "creatormage",
+      "description": "缔造者",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "gunner",
+      "description": "神枪手(男)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "at gunner",
+      "description": "神枪手(女)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "mage",
+      "description": "魔法师(女)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "at mage",
+      "description": "魔法师(男)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "priest",
+      "description": "圣职者",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "all",
+      "description": "所有职业",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "minimum level",
+      "description": "使用所需最低等级",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "required skill",
+      "description": "需要掌握的技能\n\n佩戴装备时需要掌握的技能，填写技能 ID。\n\n* 通常用在武器里，比如“光剑”、“拳套”",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "custom animation",
+      "closing": true,
+      "description": "自定义动画(.ani)文件列表，仅用于称号",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "usable even peace",
+      "description": "和平/待机区域也触发特殊效果 (1 开启)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "equipment type",
+      "description": "==========[装备]==========\n[title name] = 称号\n[weapon] = 武器\n[coat] = 上衣\n[pants] = 下衣\n[hat] = 帽子\n[shoulder] = 护肩\n[waist] = 腰带\n[shoes] = 鞋子\n[amulet] = 项链\n[wrist] = 手镯\n[ring] = 戒指\n[support] = 辅助装备\n[aurora avatar] = 光环\n[magic stone] = 魔法石\n[creature]=寵物\n[artifact red] = 宠物装备 红\n[artifact blue] = 宠物装备 蓝\n[artifact green] = 宠物装备 绿\n[skin avatar] = 皮肤\n[face avatar] = 脸部装扮\n[pants avatar] = 下衣时装",
+      "authors": "pvf"
+    },
+    {
+      "name": "weapon",
+      "description": "武器",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "hat avatar",
+      "description": "帽子(时装)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "hair avatar",
+      "description": "发型(时装)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "breast avatar",
+      "description": "上衣(时装)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "face avatar",
+      "description": "脸部(时装)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "waist avatar",
+      "description": "腰带(时装)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "coat avatar",
+      "description": "外套(时装)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "pants avatar",
+      "description": "裤子(时装)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "shoes avatar",
+      "description": "鞋子(时装)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "title name",
+      "description": "称号",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "coat",
+      "description": "外套",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "shoulder",
+      "description": "肩部",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "pants",
+      "description": "裤子",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "shoes",
+      "description": "鞋子",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "waist",
+      "description": "腰带",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "amulet",
+      "description": "项链",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "wrist",
+      "description": "手镯",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ring",
+      "description": "戒指",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "hide equipment",
+      "description": "穿戴时需要隐藏的其他装备部位",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "hide layer",
+      "closing": true,
+      "description": "需隐藏图层编号列表",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "sub type",
+      "description": "子类型/子分类 (武器细分或特殊用途)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "durability",
+      "description": "耐久度",
+      "authors": "by：黑桃K"
+    },
+    {
+      "name": "price",
+      "description": "基础价格",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "value",
+      "description": "[value] 售出价格，   实际出售价为标写的1/5\n通过移除此标签可取消售出价格，即游戏内售出不会获得金币\n\n//装备里为增加的数量\n\n//以及：\n[price]                 金币购买\n[cash]                  点券购买\n[need material]   道具购买（左道具编号，右道具数量）",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "repair price",
+      "description": "维修价格",
+      "authors": "by：黑桃K"
+    },
+    {
+      "name": "need material",
+      "description": "购买所需道具\n添加到 NPC 商店时购买所需道具\n//示例：\n[need material]\n\t3037\t20\n左边是道具代码      右边是数量\n\n//以及：\n[price]      金币购买\n[value]     售出价格（左道具编号，右道具数量）\n[cash]       点券购买",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "cash",
+      "description": "点券/现金价格",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "medal",
+      "description": "勋章价格",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "finish point price",
+      "description": "FP 价格",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "cool time",
+      "description": "装备整体冷却(ms)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "icon",
+      "description": "主图标文件 + 帧",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "icon mark",
+      "description": "图标边框\t`Item/IconMark.img`\t数值\n62白装 63蓝装 64紫装 65勇者 66神器 67传说 68史诗",
+      "authors": "by：小小白"
+    },
+    {
+      "name": "extra icon",
+      "description": "额外/复制态图标文件 + 帧",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "field image",
+      "description": "掉落图标\n该路径下img的第几帧",
+      "authors": "by：黑桃K"
+    },
+    {
+      "name": "custom wav",
+      "closing": true,
+      "description": "自定义音效列表",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "move wav",
+      "description": "// 跌落到地面或移动物品（包括安装件）时发出的声音\n`POTION_TOUCH` 药水\n\n//饰品：\n`NECKLACE_TOUCH`  项链\n`BRACELET_TOUCH`   手镯\n`RING_TOUCH`          戒指\n\n//防具：\n`BONE_TOUCH`      轻甲\n`SCRAP_TOUCH`    板甲\n`CLOTH_TOUCH`    布甲\n`CLOTH_TOUCH`    皮甲同布甲\n\n//武器：\n`MINERALSWD_TOUCH`     短剑",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "use wav",
+      "description": "使用时播放的音效。",
+      "authors": "Cai"
+    },
+    {
+      "name": "expand ani",
+      "closing": true,
+      "description": "扩展/替换部位动画块，含变体、路径与自定义 wav",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "expand path",
+      "description": "拓展路径",
+      "authors": "慧慧"
+    },
+    {
+      "name": "animation job",
+      "description": "职业动画\n[swordman] = 鬼剑士\n[demonic swordman] = 黑暗武士\n[fighter] = 格斗家(女)\n[at fighter] = 格斗家(男)\n[gunner] = 神枪手(男)\n[at gunner] = 神枪手(女)\n[mage] = 魔法师(女)\n[at mage]\t= 魔法师（男）\n[thief] = 暗夜使者\n[at swordman]= 女鬼剑",
+      "authors": "Cai - 263007544|Xiti Fox"
+    },
+    {
+      "name": "variation",
+      "description": "武器文件的贴图编号，可用这个编号查找到此武器的外观所对应的npk文件内的img文件。（-号代表制表符）\n-1-2意思就是0102\n\n-0-0意思就是0000\n\n-13-9意思就是1309\n那么这个编号有什么用？\n\n以（阿甘左的浪人巨剑）为例，（阿甘左的浪人人巨剑）的贴图编号是-1-2那么编号转换一下就是0102\n\n那么它的对应的img文件路径就是\nCharacter/Swordman/E",
+      "authors": "释然"
+    },
+    {
+      "name": "layer variation",
+      "description": "数字的意思是图层，数字越大图层就越显示在前面。\n数字下面的英文意思是会调用同文件夹下这个英文名称的文件夹内所有ani文件。",
+      "authors": "王良一-85431480"
+    },
+    {
+      "name": "equipment ani script",
+      "description": "武器的lay文件\nlay文件就是根据一定算法，这个算法需要结合[layer variation]与[variation]这两个标签下面的代码对武器进行贴图的匹配\nlay文件不需要修改。\n如果武器的文件目录下没有lay文件，那么武器就会没有贴图，很多人新建一个武器文件没有贴图就是因为没有相应的lay文件\nlay文件解释结合[layer variation]和[variatio",
+      "authors": "释然"
+    },
+    {
+      "name": "name",
+      "description": "主名称",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "name2",
+      "description": "装备、物品的别名\n\n在一些 dnf.exe 程序中会显示出该标签。\n\n* 通常是该装备、物品的英文名。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "basic explain",
+      "description": "简单说明\n\n装备中显示的蓝色文本说明，和 [detail explain] 关联的，此时在游戏中按 F4(默认键) 可切换简单/详细说明。\n\n* 通常在装备上使用。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "detail explain",
+      "description": "详细说明\n\n装备中显示的蓝色文本说明，和 [basic explain] 关联的，此时在游戏中按 F4(默认键) 可切换简单/详细说明。\n\n* 通常在装备上使用。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "flavor text",
+      "description": "装备、物品等底部灰色描述文本。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "grade",
+      "description": "[grade]\n在装备、道具中为掉落等级，史诗装备则为对应等级的深渊\n掉落区间为±5级，也就是说写10时，有概率从击杀的5—15级怪物身上掉落\n深渊派对的文件路径：{ etc/hellparty.etc }\n深渊怪物爆率的文件路径：{ etc/itemdropinfo_monster_hell.etc }\n\n另外此值影响增幅强化所加的具体数值，与增幅强化的数值成正比",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "spectrum",
+      "description": "残影\n\n跟传承武器一样，走路有拖影\n\n代码前面三个数字就是控制颜色，打开【开始】【所有程序】【附件】【画图】【编辑颜色】左下角那三个值，你选择好自己要的颜色，把数值换到刚刚的代码写入装备即可\n\n前面三个值是颜色，至于后面那两个，应该是残影的产生间隔和残影残留时间",
+      "authors": "By：短腿猫不吃鱼-694326115"
+    },
+    {
+      "name": "attach type",
+      "description": "绑定/交易类型 \n`[trade]` //无法交易\n`[free]` //自由交易 \n`[sealing]` //封装 \n`[trade delete]` //无法删除",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "creation rate",
+      "description": "掉落概率\n\t0\t代表永不掉落",
+      "authors": "释然"
+    },
+    {
+      "name": "rarity",
+      "description": "装备类型 0.普通 1.高级 2.稀有 3.神器 4.史诗 5.勇者 6.传说 7.神话",
+      "authors": "圣心语&老王|老夫|Xiti Fox"
+    },
+    {
+      "name": "anti evil",
+      "description": "抗魔值",
+      "authors": "释然"
+    },
+    {
+      "name": "weight",
+      "description": "重量(g)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "HP MAX",
+      "description": "最大生命值",
+      "authors": "思持c|Xiti Fox"
+    },
+    {
+      "name": "MP MAX",
+      "description": "最大魔法值",
+      "authors": "beinao|Xiti Fox"
+    },
+    {
+      "name": "physical attack",
+      "description": "力量",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "physical defense",
+      "description": "体力",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "magical attack",
+      "description": "智力",
+      "authors": "释然"
+    },
+    {
+      "name": "magical defense",
+      "description": "精神",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "equipment physical attack",
+      "description": "装备物理攻击",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "equipment physical defense",
+      "description": "装备物理防御力",
+      "authors": "Cai|Xiti Fox"
+    },
+    {
+      "name": "equipment magical attack",
+      "description": "装备魔法攻击",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "equipment magical defense",
+      "description": "装备魔法防御力",
+      "authors": "Cai|Xiti Fox"
+    },
+    {
+      "name": "physical absolute damage",
+      "description": "物理绝对伤害",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "physical damage reduce",
+      "description": "物理伤害修正",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "physical absolute defense",
+      "description": "物理伤害追加减少",
+      "authors": "BieNao"
+    },
+    {
+      "name": "magical absolute damage",
+      "description": "魔法绝对伤害",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "magical damage reduce",
+      "description": "魔法伤害修正",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "magical absolute defense",
+      "description": "魔法伤害追加减少",
+      "authors": "BieNao"
+    },
+    {
+      "name": "fire resistance",
+      "description": "火属性抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "water resistance",
+      "description": "冰属性抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "dark resistance",
+      "description": "暗属性抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "light resistance",
+      "description": "光属性抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "all elemental resistance",
+      "description": "所有属性抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "fire attack",
+      "description": "火属性强化",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "water attack",
+      "description": "冰属性强化\n光属性强化\n[light attack]\n火属性强化\n[fire attack]\n水属性强化\n[water attack]\n暗属性强化\n[dark attack]",
+      "authors": "Cai|大狮纸q1925229848"
+    },
+    {
+      "name": "dark attack",
+      "description": "暗属性强化\n光属性强化\n[light attack]\n火属性强化\n[fire attack]\n水属性强化\n[water attack]\n暗属性强化\n[dark attack]",
+      "authors": "Cai|大狮纸q1925229848"
+    },
+    {
+      "name": "light attack",
+      "description": "光属性强化\n光属性强化\n[light attack]\n\n火属性强化\n[fire attack]\n\n水属性强化\n[water attack]\n\n暗属性强化\n[dark attack]",
+      "authors": "Cai|大狮纸q1925229848"
+    },
+    {
+      "name": "slow resistance",
+      "description": "减速抗性",
+      "authors": "同创"
+    },
+    {
+      "name": "freeze resistance",
+      "description": "冰冻抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "poison resistance",
+      "description": "中毒异常抗性",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "stun resistance",
+      "description": "眩晕抗性",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "curse resistance",
+      "description": "诅咒抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "blind resistance",
+      "description": "失明抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "lightning resistance",
+      "description": "感电抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "stone resistance",
+      "description": "石化抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "sleep resistance",
+      "description": "睡眠抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "bleeding resistance",
+      "description": "出血异常抗性",
+      "authors": "Cai|Xiti Fox"
+    },
+    {
+      "name": "confuse resistance",
+      "description": "混乱抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "hold resistance",
+      "description": "束缚抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "burn resistance",
+      "description": "灼伤抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "weapon break resistance",
+      "description": "武器破坏抗性",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "armor break resistance",
+      "description": "防具破坏抗性",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "deelement resistance",
+      "description": "元素剥离抗性(未使用)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "deadlystrike resistance",
+      "description": "致命打击抗性(未使用)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "all activestatus resistance",
+      "description": "所有异常状态抗性",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "piercing resistance",
+      "description": "贯通/穿刺抗性",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "stuck resistance",
+      "description": "回避率\n\n* 100 = 10%",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "active status control info",
+      "description": "状态控制收益配置: 名称 概率 提升 持续 额外参数\n`bleeding` 10 20 30 n //流血几率增加（10%）等级增加（20）持续时间增加（30%）其他信息（对于流血的情况，伤害增加率 n%）\n",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "inventory limit",
+      "description": "增加负重\n\n* 10000 = 10kg",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "HP regen speed",
+      "description": "HP恢复速度\n游戏中\n【写100=每分钟恢复60HP(实际效果230左右)】",
+      "authors": "BieNao"
+    },
+    {
+      "name": "MP regen speed",
+      "description": "魔法回复速度\n游戏中\n【写100=每分钟恢复300MP(实际效果1070左右)】",
+      "authors": "BieNao"
+    },
+    {
+      "name": "MP regen speed rate",
+      "description": "MP 回复速度百分比加成",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "move speed",
+      "description": "移动速度\n* 100 = 10%",
+      "authors": "释然"
+    },
+    {
+      "name": "x move dash speed",
+      "description": "横向冲刺速度倍率",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "y move dash speed",
+      "description": "纵向冲刺速度倍率",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "attack speed",
+      "description": "[attack speed]   //攻击速度\n100=10%",
+      "authors": "等风来"
+    },
+    {
+      "name": "cast speed",
+      "description": "施放速度\n\n* 100 = 10%",
+      "authors": "Cai - 263007544|Xiti Fox"
+    },
+    {
+      "name": "hit recovery",
+      "description": "硬直恢复/Hit Recovery",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "rigidity",
+      "description": "僵直",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "jump power",
+      "description": "跳跃力",
+      "authors": "Cai"
+    },
+    {
+      "name": "room list move speed rate",
+      "description": "城镇移动速度。\n\n[room list move speed rate]\n\t1.0\n\n1.0 等于 100%",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "elemental property",
+      "description": "赋予元素属性 \n`[no element]`\n`[fire element]`\n`[water element]`\n`[dark element]`\n`[light element]`",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "item aura",
+      "description": "装备光环: 元素方式 + 数值 + 范围",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "active status",
+      "description": "旧式状态异常设置(已弃用)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "push aside",
+      "description": "击退强度",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "lift up",
+      "description": "浮空强度",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "physical critical hit",
+      "description": "物理暴击率增量",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "magical critical hit",
+      "description": "魔法暴击率增量",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "stuck",
+      "description": "命中修正(负数表示增加)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ignore defense",
+      "description": "忽略防御(未使用时可忽略)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "human damage rate",
+      "description": "对人型伤害比率(%).",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "fort damage rate",
+      "description": "对要塞/破坏物伤害比率(%).",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "monster damage rate",
+      "description": "对怪物伤害比率(%).",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "HP drain",
+      "description": "HP 吸收",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "MP drain",
+      "description": "MP 吸收",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "skill data up",
+      "closing": true,
+      "description": "技能加成——主要出现在异界或者侍魂装备中",
+      "authors": "牧野-QQ1320113373"
+    },
+    {
+      "name": "skill levelup",
+      "closing": true,
+      "description": "技能等级提升\n[skill levelup]\n\n[/skill levelup]\n此为一段，中间3个一组，分别为：\n 使用职业，职业技能ID，提升等级数",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "if",
+      "closing": true,
+      "description": "如果\n\n作为特效或效果的某种触发条件使用",
+      "authors": "牧野1320113373|Xiti Fox"
+    },
+    {
+      "name": "cooltime",
+      "description": "冷却时间\n10000*10",
+      "authors": "释然"
+    },
+    {
+      "name": "attack success",
+      "description": "攻击成功",
+      "authors": "无名氏"
+    },
+    {
+      "name": "then",
+      "closing": true,
+      "description": "然后\n\n与[if]词条搭配使用\n\n[if]词条作为前置词条，也就是触发条件\n[then]作为触发效果",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "target",
+      "description": "效果目标 (myself 等)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "duration",
+      "description": "持续时间\n10000*10",
+      "authors": "释然"
+    },
+    {
+      "name": "probability",
+      "description": "可能性 触发几率\n100*100",
+      "authors": "释然"
+    },
+    {
+      "name": "stat",
+      "description": "状态修改: 名称 `+|%` 数值",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "character name y revision",
+      "description": "角色名称 Y 坐标修正",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "effect",
+      "closing": true,
+      "description": "效果块：可多次；内部: attach target/type/pos/index/option/module/file name",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "attach target",
+      "description": "effect 内附着目标 (delegator/target)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "type",
+      "description": "effect 类型 (animation/particle/range)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "attach pos",
+      "description": "附着位置 (bottom/middle/top)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "z revision",
+      "description": "Z 高度修正",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "index",
+      "description": "对应城镇.twn的区域：\n\n[area]\n    0-------------对应这个区域\n    `xxxxxxxx.map`\n    `[gate]`\n[/area]\n鸣谢：Cai - 263007544\n-------\n城镇索引，对应Town.lst中的城镇编号。",
+      "authors": "FreyaGrace"
+    },
+    {
+      "name": "option",
+      "closing": true,
+      "description": "effect 可选项列表块",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "module",
+      "description": "限定出现模块(room list等)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "file name",
+      "description": "效果资源路径 (.ani)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "item category",
+      "closing": true,
+      "description": "物品分类标记块: monster card / cannot bind / boss drop",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "limit upgradable level",
+      "closing": true,
+      "description": "强化/增幅/精炼 等等级限制定义块",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "level linear ability",
+      "closing": true,
+      "description": "装备属性成长等级范围例如\n1→99\n1级到99级为有效等级",
+      "authors": "陌梦轩"
+    },
+    {
+      "name": "level section ability",
+      "closing": true,
+      "description": "等级分段成长能力块",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "level section ani",
+      "closing": true,
+      "description": "等级/职业条件的动画覆盖块",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "set name",
+      "description": "设置套装的名字\n\n[set name]\n\t`秒天·秒地·秒空气  套装`\n\n* 与 [set item] 和 [set ability] 搭配，完成套装属性设置。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "set item",
+      "closing": true,
+      "description": "设置套装\n\n[set item]\n\t10537\t12534\t14524\t16523\t18533\n[/set item]\n\n* 由装备代码组成，一个代码代表一件装备。首个装备代码和后面的装备代码组成父子关系，在后面的装备代码中需要使用 [set item master] 填写父装备代码。\n\n* 与 [set name] 和 [set ability] 搭配，完成套装属性设置。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "set item master",
+      "description": "套装属性 - 父装备代码",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "set ability",
+      "closing": true,
+      "description": "设置套装的属性\n\n[set ability]\n\t[magical attack]\n\t\t250\n/[set ability]\n\n* 与 [set name] 和 [set ability] 搭配，完成套装属性设置。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "fullset basic explain",
+      "description": "在套装属性中，蓝色文字描述。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "fullset detail explain",
+      "description": "全套详细描述",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "piece set ability",
+      "closing": true,
+      "description": "套装属性内容",
+      "authors": "137735017"
+    },
+    {
+      "name": "parameter basic explain",
+      "description": "参数基本解释",
+      "authors": "无名氏"
+    },
+    {
+      "name": "parameter detail explain",
+      "description": "部分套装详细描述",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "part set index",
+      "description": "套装属性 - 套装ID",
+      "authors": "Cai"
+    },
+    {
+      "name": "hardcoding cooltime",
+      "description": "硬编码额外冷却",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "int data",
+      "closing": true,
+      "description": "整型数据列表",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "string data",
+      "closing": true,
+      "description": "字符串数据列表",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "attack info",
+      "description": "附加攻击信息(.atk)",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "change type ultimateSkillCurScene",
+      "description": "觉醒技能 CutScene 类型设置",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "item group name",
+      "description": "`ssword`   = 短剑\n` totem`    =    图腾\n`axe`  = 巨斧\n`katana`   = 太刀\n `automatic`=自动步枪\n`club`      = 钝器\n`lswd`      = 巨剑\n`beamswd`= 光剑\n`knuckle`  = 手套\n`claw`      = 爪\n`tonfa`     = 东方棍\n`gauntlet` = 臂铠\n`hcannon`=               手炮\n`wrist`      =              手镯\n`la coat`   =              上衣\n`lt pants`  =              褲子\n`la waist`  =              腰帶\n\n`magic stone` =魔法石(左右槽)\n---------------------------------\n`mt pants` = 板甲下装\n`mt waist` = 板甲腰带\n`mt coat` = 板甲上衣\n`mt shoes` = 板甲鞋子\n`mt shoulder` = 板甲护肩\n---------------------------------\n`ha pants` = 重甲下装\n`ha waist` = 重甲腰带\n`ha coat` = 重甲上衣\n`ha shoes` = 重甲鞋子\n`ha shoulder` = 重甲护肩\n---------------------------------\n`lt pants` = 皮甲下装\n`lt waist` = 皮甲腰带\n`lt coat` = 皮甲上衣\n`lt shoes` = 皮甲鞋子\n`lt shoulder` = 皮甲护肩\n---------------------------------\n`la pants` = 轻甲下装\n`la waist` = 轻甲腰带\n`la coat` = 轻甲上衣\n`la shoes` = 轻甲鞋子\n`la shoulder` = 轻甲护肩\n---------------------------------\n`cl pants` = 布甲下装\n`cl waist` = 布甲腰带\n`cl coat` = 布甲上衣\n`cl shoes` = 布甲鞋子\n`cl shoulder` = 布甲护肩\n---------------------------------\n`amulet` = 项链",
+      "authors": "囫囵"
+    },
+    {
+      "name": "Force Result Item Rule",
+      "description": "强制结果物品规则块：内部定义特定条件下产出/合成/升级的结果物品条目",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "separate attack",
+      "description": "独立攻击力",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "physical attack",
+      "description": "力量",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "subtype",
+      "description": "子类型标签的无空格形式；在 [level section ani] 内使用功能同 'sub type'",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "dungeon check",
+      "closing": true,
+      "description": "地下城检查?",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "change status",
+      "description": "改变状态",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "stat by condition",
+      "description": "按条件调整状态",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "multiple then",
+      "closing": true,
+      "description": "多个 then 块",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "then probability",
+      "description": "then 块内的概率",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "passive object",
+      "closing": true,
+      "description": "被调用的特效obj文件\n48118\t0\t0\t0\t0\t0\t`特效名字`",
+      "authors": "牧野1320113373"
+    },
+    {
+      "name": "impossible contents",
+      "closing": true,
+      "description": "这个标签下的动作不能进行\nupgrade   强化\namplify upgrade  增幅\ndisjoint  分解\ngift  赠送\nseparate upgrade  锻造\ncharac cargo  仓库存储",
+      "authors": "乐乐-QQ906127695"
+    },
+    {
+      "name": "target active status",
+      "description": "目标状态异常",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "add absolute damage",
+      "description": "增加绝对伤害",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "disjoint",
+      "description": "分解",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "gift",
+      "description": "不能进行的操作-送礼",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "upgrade",
+      "description": "不能进行的操作-强化",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "amplify upgrade",
+      "description": "不能进行的操作-强化",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "separate upgrade",
+      "description": "不能进行的操作-锻造",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "charac cargo",
+      "description": "不能进行的操作-角色仓库",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "possible kiri protect",
+      "description": "可以使用凯莉的保护券",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "reduce probability to human armor at pvp module",
+      "description": "在 PVP 模块中减少对人型防具的概率",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "routing priority",
+      "closing": true,
+      "description": "优先显示",
+      "authors": "释然"
+    },
+    {
+      "name": "pvp",
+      "closing": true,
+      "description": "PVP内的属性",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "not amplify",
+      "description": "",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "attack condition",
+      "description": "攻击条件",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "event attack success",
+      "description": "事件进攻成功\n\n可以理解某某攻击或触发成功",
+      "authors": "释然"
+    },
+    {
+      "name": "increase damage",
+      "description": "增加伤害 \n示例 \n `%`  14 //增加14%伤害",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "skill",
+      "closing": true,
+      "description": "使用技能时(if块内) \n示例 \n `demonic swordman`  72 //黑暗武士使用id为72的技能",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "aura active",
+      "description": "equipment magical defense 防御减少",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "upgrade prob increase",
+      "description": "强化增幅几率增加",
+      "authors": "小小白"
+    },
+    {
+      "name": "upgrade cost discount",
+      "description": "强化增幅费用折扣",
+      "authors": "小小白"
+    },
+    {
+      "name": "use skill",
+      "description": "使用技能\n`swordman`\n73 \t职业+技能编号",
+      "authors": "牧野1320113373"
+    },
+    {
+      "name": "hit",
+      "description": "被击中",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "creature species",
+      "description": "宠物 ID\n\n* 链接到宠物所在 ID，宠物属性所在。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "character item check",
+      "description": "检查可否精炼异界气息\n\n[character item check]\n\t0\t1\t`waist`\n[/character item check]\n\n三个数据为一组：\n\n* 第一个为角色编号；\n\n* 第二个为角色职业(非数据库中的17、18、19、20，而是使用 1 到 4 来代表)。\n\n* 第三个为装备部位，参考 [equipment type]。",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "aurora graphic effects",
+      "description": "极光图形效果\n示例：\n[aurora graphic effects]\n    1（调用ani的数量）\t0（这里没有怎么搞懂，有写1的有写0的）\n    `ani路径`     0（0表示图层在人物模型后，1表示覆盖人物模型）\n[/aurora graphic effects]",
+      "authors": "内脏没坏"
+    },
+    {
+      "name": "aura hud icon",
+      "description": "光环HUD图标\nsprite/interface2/aura/aura_icon.img\n[aura hud icon]\n具体数字就是img序号",
+      "authors": "飞飞"
+    },
+    {
+      "name": "all elemental element",
+      "description": "所有属性抵抗",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "emancipate",
+      "description": "解除魔法封印",
+      "authors": "unMen"
+    },
+    {
+      "name": "explain",
+      "description": "附加内容\n\n* 在装备和道具类所展示的蓝色文本内容。\n\n* 在副本(.dgn)里展示该副本的描述内容。\n\n* 在 QP 商店里展示的属性内容。\n\n* 在活动(.evt)里展示活动的描述内容。\n\n* 在技能(.skl)里展示技能的描述内容。",
+      "authors": "Cai"
+    },
+    {
+      "name": "equipment duration",
+      "description": "效果续时间",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "effect part set index",
+      "description": "套装特效",
+      "authors": "无名氏"
+    },
+    {
+      "name": "avatar func filter",
+      "description": "0 - 无法分解\n2  -可以分解",
+      "authors": "无名氏"
+    },
+    {
+      "name": "add stat at once",
+      "description": "一次添加统计",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "casting",
+      "description": "铸件\n釋放技能",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "party death",
+      "description": "队友死亡",
+      "authors": "春秋"
+    },
+    {
+      "name": "[explain]",
+      "description": "附加内容\n\n* 在装备和道具类所展示的蓝色文本内容。\n\n* 在副本(.dgn)里展示该副本的描述内容。\n\n* 在 QP 商店里展示的属性内容。\n\n* 在活动(.evt)里展示活动的描述内容。\n\n* 在技能(.skl)里展示技能的描述内容。",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "[basic explain]",
+      "description": "简单说明\n\n装备中显示的蓝色文本说明，和 [detail explain] 关联的，此时在游戏中按 F4(默认键) 可切换简单/详细说明。\n\n* 通常在装备上使用。",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "npc gift disallowance",
+      "description": "不可赠送给npc，用于npc好感度系统，无用",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "output",
+      "description": "产量",
+      "authors": "无名氏"
+    },
+    {
+      "name": "avatar type select",
+      "description": "控制时装天数、价格\n==============================\n时效(天)                               价格:（点券）\n7\t0\t0\t1000\t0\n30\t0\t0\t2000\t0\n0\t0\t0\t4000\t0\n0\t0\t0\t4500\t2\n(第一个数值为0表示无期限时装的价格)\n==============================\n`[",
+      "authors": "菜菜"
+    },
+    {
+      "name": "usable period",
+      "description": "//可用时间，以天为单位，从获得这个装备开始计算时间\n[usable period]\n\t7      //代表可以用7天",
+      "authors": "乐乐-QQ906127695"
+    },
+    {
+      "name": "daily delete item",
+      "description": "每天6点删除",
+      "authors": "By:小小白：770141757"
+    },
+    {
+      "name": "add absolute defense percent",
+      "description": "添加绝对防御百分比\n免伤",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "replace avatar ani",
+      "description": "更换头像ANI",
+      "authors": "无名氏"
+    },
+    {
+      "name": "stuck 100",
+      "description": "命中",
+      "authors": "zed"
+    },
+    {
+      "name": "emblem socket default",
+      "description": "默认开启镶嵌槽",
+      "authors": "zed"
+    },
+    {
+      "name": "event use skill",
+      "description": "使用技能",
+      "authors": "奶甜味儿的小颜颜"
+    },
+    {
+      "name": "vent use skill",
+      "description": "释放技能",
+      "authors": "奶甜味儿的小颜颜"
+    },
+    {
+      "name": "all elemental attack",
+      "description": "所有属性强化\n\t1\t就代表1",
+      "authors": "释然"
+    },
+    {
+      "name": "separate attack 80 80",
+      "description": "待翻译，请编辑！",
+      "authors": "独立攻击力"
+    },
+    {
+      "name": "expertjob only",
+      "description": "仅限副职业等级操作\n例如：\n’disjointer‘\t11\ndisjointer为分解师  11为副职业等级",
+      "authors": "雨雾"
+    },
+    {
+      "name": "upper bound level",
+      "description": "宠物等级上限",
+      "authors": "等风来"
+    },
+    {
+      "name": "prof compound rate",
+      "description": "副职业制作物品成功概率",
+      "authors": "feirnova"
+    },
+    {
+      "name": "prof material variation",
+      "description": "副职业材料改变",
+      "authors": "feirnova"
+    },
+    {
+      "name": "summon monster",
+      "description": "召唤怪物\n怪物编号-怪物等级-怪物至数",
+      "authors": "oppser"
+    },
+    {
+      "name": "creature magical critical hit",
+      "description": "命中率",
+      "authors": "落雪哥哥"
+    },
+    {
+      "name": "creature stuck",
+      "description": "闪避",
+      "authors": "落雪哥哥"
+    },
+    {
+      "name": "myself",
+      "description": "自己",
+      "authors": "奶茶Bot QQ8002263"
+    },
+    {
+      "name": "equipment/character/atfighter/weapon/boxglove/",
+      "description": "武器外观指向文件夹路径",
+      "authors": "墨白"
+    },
+    {
+      "name": "camoflage",
+      "description": "伪装",
+      "authors": "卧底"
+    },
+    {
+      "name": "superarmor",
+      "description": "霸体",
+      "authors": "卧底"
+    },
+    {
+      "name": "skill cool time",
+      "description": "技能冷却的时间",
+      "authors": "卧底"
+    },
+    {
+      "name": "solo teleport",
+      "description": "单人传送  后面数字是时间 毫秒计算",
+      "authors": "一只鱼2"
+    },
+    {
+      "name": "party teleport",
+      "description": "组队传送  后面数字是时间 毫秒计算",
+      "authors": "一只鱼2"
+    },
+    {
+      "name": "M socket",
+      "description": "彩色槽",
+      "authors": "zed"
+    },
+    {
+      "name": "trade",
+      "description": "不可交易",
+      "authors": "诗仙"
+    },
+    {
+      "name": "enemy",
+      "description": "敌人",
+      "authors": "释然"
+    },
+    {
+      "name": "all enemy",
+      "description": "所有敌人",
+      "authors": "麻豆传媒"
+    },
+    {
+      "name": "mt waist",
+      "description": "板甲腰带",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "random enemy",
+      "description": "随机敌人",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "stun",
+      "description": "异常效果：眩晕",
+      "authors": "Xiti Fox"
+    }
+  ]
 }

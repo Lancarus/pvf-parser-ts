@@ -1,0 +1,34 @@
+{
+  "tags": [
+    {
+      "name": "g3 max angle",
+      "description": "G3角度",
+      "authors": "浮浮浮"
+    },
+    {
+      "name": "g3 max radius",
+      "description": "G3旋转最大半径",
+      "authors": "浮浮浮"
+    },
+    {
+      "name": "g3 max round time",
+      "description": "G3旋转时长",
+      "authors": "浮浮浮"
+    },
+    {
+      "name": "g3 move time",
+      "description": "G3移动时长（越小就越快）",
+      "authors": "浮浮浮"
+    },
+    {
+      "name": "g3 transform time",
+      "description": "G3 变形时间",
+      "authors": "浮浮浮"
+    },
+    {
+      "name": "int",
+      "description": "INT",
+      "authors": "lostluna1"
+    }
+  ]
+}

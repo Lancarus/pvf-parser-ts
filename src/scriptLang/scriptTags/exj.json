@@ -1,0 +1,59 @@
+{
+  "tags": [
+    {
+      "name": "additional result",
+      "description": "分解得出的结果 6个一组",
+      "authors": "一梦"
+    },
+    {
+      "name": "big win result",
+      "description": "分解得出的最大值结果 6个一组",
+      "authors": "一梦"
+    },
+    {
+      "name": "disjoint result",
+      "description": "分解结果 是否红字 0否 1是",
+      "authors": "青山工作室"
+    },
+    {
+      "name": "disjoint self service",
+      "description": "分解机零件",
+      "authors": "青山工作室"
+    },
+    {
+      "name": "endurance initial value",
+      "description": "分解商店初始耐久",
+      "authors": "青山工作室"
+    },
+    {
+      "name": "endurance reduce",
+      "description": "分解商店耐久消耗",
+      "authors": "青山工作室"
+    },
+    {
+      "name": "expertness exp",
+      "description": "各等级升级所需经验",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "gain exp",
+      "description": "收益经验值（修改升级经验在这里）",
+      "authors": "青山工作室"
+    },
+    {
+      "name": "items",
+      "description": "175\t2600646\t3786\t11\n編號 捲軸 卡片 副職業等級",
+      "authors": "思持c"
+    },
+    {
+      "name": "limit disjoint gold",
+      "description": "分解商店价格上限",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "shop doll info",
+      "description": "人偶商店的格子\n[shop doll info]\n        0        3        1        6        2        9\n[/shop doll info]\n这个文件就是调整人偶商店的格子了\n\n0 3 意思是 最低级 3个  1 6 是中级6个 29 就是最高级9个 懂了么？",
+      "authors": "酸辣白菜"
+    }
+  ]
+}

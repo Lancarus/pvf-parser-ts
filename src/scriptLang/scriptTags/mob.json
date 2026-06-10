@@ -1,0 +1,494 @@
+{
+  "tags": [
+    {
+      "name": "ability category",
+      "description": "[HP MAX]为怪物血量\n[EQUIPMENT_PHYSICAL_ATTACK]为物理攻击\n[EQUIPMENT_PHYSICAL_DEFENSE]为物理防御\n[EQUIPMENT_MAGICAL_ATTACK]为魔法攻击\n[EQUIPMENT_MAGICAL_DEFENSE]为魔法防御",
+      "authors": "by：白糖"
+    },
+    {
+      "name": "appear sound",
+      "description": "出现声音",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "atk super on scr",
+      "description": "[atk super on scr]使用指定攻击动作时进入霸体\n\n上方选择攻击动作（0为第1个，1为第2个，以此类推）\n下方选择霸体类型：\n`[breakable]`\t = 可以被破坏\n`[unbreakable]` = 不可被破坏\n\n`[breakable]`\t和`[unbreakable]`通用写法介绍：\n1、护盾耐久值，     根据最大生命值百分比决定，写多少就是多少百分比\n2、护盾恢复效率，  写多少就是每秒恢复多少百分比（或许是）\n3、近战防御力（固定值）\n4、远程防御力（固定值）",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "attack delay",
+      "description": "攻击延迟\n300=0.3秒",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "attack info",
+      "description": "[attack info]攻击信息\n//使用攻击动作时会调用的ATK信息\n//若要调整远程攻击需前往被动对象\n\n//以下是可以在ATK中调整的内容\n伤害比率、伤害类型、适用装备攻击力加成、敌和友伤判定、赋予属性、伤害判定、浮空值、平推值、击退值、命中音效、攻击方向、打击类型、异常状态",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "attack kind",
+      "description": "怪物的攻击类型",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "attack motion",
+      "description": "[attack motion]攻击动作\n0为第1个，1为第2个，以此类推\n\n同理的，控制攻击动作台词的[speech on situation]标签也跟这个一样",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "beast",
+      "description": "野兽",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "breakable",
+      "description": "霸体：可以被破坏",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "burn resistance",
+      "description": "灼伤抗性",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "category",
+      "description": "[category]怪物类型\n\n//拓展添加\n`[fort armor]` [建筑护甲]\n`[divine armor]`[神圣护甲]\n`[human armor]`[人形护甲]\n`[fixture]` [固定位置]（比如罗特斯或斯卡萨）\n\n//种族\n `[human]` [人形]                `[beast]` [野兽]\n  `[plant]` [植物]                  `[insect]` [昆虫]\n`[machine]` [机械]              `[hybrid]` [组合体]\n `[undead]` [不死族]           `[devil]` [恶魔]\n   `[spirit]` [精灵]                `[dragon]` [龙族]\n    `[tau]` [牛头族]              `[goblin]` [哥布林族]\n `[lugaru]` [猫妖族]\n//攻击模式（2选1）\n`[melee combat]` [近战攻击]\n`[range combat]` [远程攻击]\n\n//攻击逻辑（4选1）\n`[close-passive]` [被动攻击]\n`[close-carefully]` [游击]\n`[close-tough]` [主动靠近攻击]\n`[close-manace]` [施压]\n\n逻辑讲解：\n[被动攻击]：一般不会主动攻击，进入攻击范围会触发反击，\n                    同时也跟游击差不多，会寻找合适的偷袭位置\n[游击]：近战怪物会走位寻找合适的偷袭位置，最常见的就是\n             走位偷背身，也会抓玩家的攻击后摇；\n             远程怪物跟近战的差不多，在此基础上会在玩家靠近以后逃跑，\n             也就是会风筝玩家的意思\n[主动靠近攻击]：字面意思，会主动靠近玩家进行攻击\n[施压]：实际体感跟[主动靠近攻击]差不多，为数不多的区别是身在远处也会发起攻击，无论近战远程，也无论是否进入攻击范围",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "close-carefully",
+      "description": "游击",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "close-manace",
+      "description": "施压",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "close-passive",
+      "description": "被动攻击",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "close-tough",
+      "description": "贴身",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "common champion drop item",
+      "description": "普通精英怪的[独立掉落]\n左边物品代码      右边权重（也就是概率占比的意思）\n\n与独立掉落对应的是根据怪物等级来决定掉落材料的全局掉落[world drop]\n全局掉落路径{ etc/worlddrop.etc }",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "common champion elemental property",
+      "description": "普通精英怪的属性\n//若不选择，则随机分配属性\n\n`[fire element]` = 火属性\n`[water element]` = 冰属性\n`[light element]` = 光属性\n`[dark element]` = 暗属性\n`[no element]` = 无属性",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "counter",
+      "description": "破招",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "damage action 1",
+      "description": "损害行动1",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "damage motion 1",
+      "description": "受击动作",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "damage motion 2",
+      "description": "处于地面的受击动作",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "destroy count damage",
+      "description": "怪物受到攻击时的固定伤害值，不受任务攻击力影响",
+      "authors": "大白"
+    },
+    {
+      "name": "die effect",
+      "description": "[die effect]怪物被击杀时的特效\n\n第1个：启用死亡特效（写0启用）\n第2个：死亡时的碎块颜色编号\n第3个：死亡时隐藏部分特效\n// 0 : 全部显示（碎块 + 血液 + 烟雾 + 闪光特效）\n// 1 : 隐藏碎块\n// 2 : 隐藏血液\n// 4 : 隐藏烟雾\n// 8 : 隐藏闪光特效",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "divine armor",
+      "description": "神圣护甲",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "down motion",
+      "description": "倒地动作",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "dragon",
+      "description": "龙族",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "easy",
+      "description": "普通模式执行的ai模式",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "EQUIPMENT_MAGICAL_ATTACK",
+      "description": "装备魔法攻击",
+      "authors": "思持c|Xiti Fox"
+    },
+    {
+      "name": "EQUIPMENT_MAGICAL_DEFENSE",
+      "description": "装备魔法防御",
+      "authors": "思持c|Xiti Fox"
+    },
+    {
+      "name": "EQUIPMENT_PHYSICAL_ATTACK",
+      "description": "装备物理攻击",
+      "authors": "思持c|Xiti Fox"
+    },
+    {
+      "name": "EQUIPMENT_PHYSICAL_DEFENSE",
+      "description": "装备物理防御",
+      "authors": "思持c|Xiti Fox"
+    },
+    {
+      "name": "event super on scr",
+      "description": "[event super on scr]怪物在一定条件下触发霸体\n\n上方4选1触发条件：\n`[on time]` = 破坏后间隔一定时间刷新\n`[on hp]` = 由剩余生命值触发\n`[always]` = 到时间自动刷新，无论是否被破坏\n`[counter]` = 破招时触发\n\n下方2选1触发霸体类型：\n`[unbreakable]` = 不可被破坏\n`[breakable]` = 可以被破坏\n\n拓展机制，不写也不影响：\n`[with blast]` = 与霸体一起触发的狂龙之吼\n————————————————————\n//1000 = 1秒\n————————————————————\n\t`[on time]`\t5000\t20000\t1\n//以上代表消失后间隔5秒刷新，护盾存在时间20秒，护盾存在期间受到投技不会导致霸体消失（写1不导致，写-1会导致）\n\n\t`[on hp]`\t70\t-1\t-1\n//以上代表减少70%最大生命值时触发（对会回血的目标则是剩余30%生命值触发），护盾永久存在（写-1就是永久），受到投技会导致霸体消失（写1不导致，写-1会导致）\n\n\t`[counter]`\t1\t10000\t1\n//以上代表受到破招时触发（写1触发，写-1不触发），护盾存在时间10秒，护盾存在期间受到投技不会导致霸体消失（写1不导致，写-1会导致）\n\n\t`[always]`\t10000\t5000\n//以上代表每隔10秒刷新，护盾存在时间5秒\n————————————————————\n\t`[breakable]`\t和`[unbreakable]`通用写法介绍：\n1、护盾耐久值，     根据最大生命值百分比决定，写多少就是多少百分比\n2、护盾恢复效率，  写多少就是每秒恢复多少百分比（或许是）\n3、近战防御力（固定值）\n4、远程防御力（固定值）",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "face image",
+      "description": "怪物在血条位置的头像\n\n以下为npk文件调用链接，后面数字写多少就是调用多少号的头像\n（比如写0调用0号头像）",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "fixture",
+      "description": "固定位置",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "fort armor",
+      "description": "建筑护甲",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "freeze resistance",
+      "description": "冰冻抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "goblin",
+      "description": "哥布林族",
+      "authors": "召唤师|Xiti Fox"
+    },
+    {
+      "name": "hell monster",
+      "description": "地狱怪物",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "hit recovery",
+      "description": "硬直（数值越高，受到攻击的硬直时间越短）",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "hitstun resistance",
+      "description": "hitstun阻力",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "hp regen rate",
+      "description": "每分钟恢复生命值\n\n该标签位于BOSS面板时，左边为战斗状态回复量，右边为脱战回复量（大概是）\n\n0.3 = 每分钟回复30%",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "human",
+      "description": "人形",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "human armor",
+      "description": "人形护甲",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "hybrid",
+      "description": "组合体",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "immune active status",
+      "description": "免疫激活状态",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "insect",
+      "description": "昆虫",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "intelligence",
+      "description": "情报",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "item",
+      "description": "该标签位于怪物面板时，代表该怪物的[独立掉落]，击杀该怪物以后有概率会从专门设置的掉落材料里随机掉落1个：\n左边物品代码      右边权重（也就是概率占比的意思）\n\n与独立掉落对应的是根据怪物等级来决定掉落材料的全局掉落[world drop]\n全局掉落路径{ etc/worlddrop.etc }\n\n娃娃机中：下面跟物品编号即可\n\n商城里是道具→道具购买界面\n商城编号→道具编号→购买条件（金币）→购买条件（胜点）→\n购买条件（点券）→名称\n商城的道具购买条件最好是3选1，否则会出现多个资源一起消耗的情况，比如设置50金币+50胜点购买某个道具，但金币够胜点不够，就会购买失败",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "level",
+      "description": "在任务里代表接取任务角色的等级区间，若超过最大等级，任务将不显示\n\n在怪物里代表怪物等级",
+      "authors": "FreyaGrace|Xiti Fox"
+    },
+    {
+      "name": "level of difficulty",
+      "description": "难易程度",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "lugaru",
+      "description": "猫妖族",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "machine",
+      "description": "机械",
+      "authors": "飞过半边天|Xiti Fox"
+    },
+    {
+      "name": "medium",
+      "description": "王者模式执行的ai模式",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "move action",
+      "description": "移动动作",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "move motion",
+      "description": "移动动作",
+      "authors": "FreyaGrace|Xiti Fox"
+    },
+    {
+      "name": "Never gonna give you up~~",
+      "description": "（歌词翻译）永远不会抛弃你♪♪",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "Never gonna see——goodbye~~",
+      "description": "（歌词翻译）永远不轻言再见♪♪",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "on appear",
+      "description": "出现在自身附近时",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "on etc",
+      "description": "特殊触发",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "on revenge",
+      "description": "产生仇恨目标时",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "on village",
+      "description": "处于【怪物攻城战】期间时",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "overturn motion",
+      "description": "受到浮空效果的动作",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "piercing resistance",
+      "description": "破甲抗性",
+      "authors": "unMen"
+    },
+    {
+      "name": "plant",
+      "description": "植物",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "range combat",
+      "description": "远程攻击",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "sight",
+      "description": "视力\n此数值越高，就越不容易因为距离过远而丢失目标",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "sit action",
+      "description": "静坐行动",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "sit motion",
+      "description": "倒地起身动画",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "sleep resistance",
+      "description": "睡眠抗性",
+      "authors": "Cai"
+    },
+    {
+      "name": "speech on situation",
+      "description": "[speech on situation]台词信息\n登场的APC或怪物在做出特定动作和攻击动作[attack motion]时，头上会浮现的对话气泡\n—————————————————————————————\n                              //当赋予台词对象为怪物时\n发起攻击:\n\t`[on attack]`\t`（台词）`\t0\n//0是第1个攻击动作，1是第2个，以此类推\n\n受到攻击:\n\t`[on damage]`\t`（台词）`\t0\n\n产生仇恨目标时:\n\t`[on revenge]`\t`（台词）`\t0\n\n出现在自身附近时:\n\t`[on appear]`\t`（台词）`\t0\n//这个实际上跟revenge用法差不多\n\n特殊触发:\n\t`[on etc]`\t`（台词）`\t0\n//比如艾力斯的吐口水，或者僵尸识别到附近有被施加出血异常的敌军\n\n生命值耗尽:\n\t`[on die]`\t`（台词）`\t0\n\n处于【怪物攻城战】期间时：\n\t`[on village]`\t`（台词）`\t0\n—————————————————————————————\n                              //当赋予台词对象为APC时\n//需要注意的是APC台词是目标动作在上方，台词在下方\n处于站立状态时：\n\t[on stand]\n\t\t`（台词）`\t0\n\n受到攻击:\n\t[on damage]\n\t\t`（台词）`\t0\n\n生命值耗尽：\n\t[on die]\n\t\t`（台词）`\t0\n\n出现在自身附近时：\n\t[on appear]\n\t\t`（台词）`\t0\n\n联动台词：\n\t[on disappear]\n\t\t`（第二句台词）`\t0\n—————————————————————————————\n[on disappear]一般与[on appear]搭配使用，也可以修改最后一个数字以达到分组的效果，就像这样↓\n\t[on appear]\n\t\t`我小熊丢了......`\t1\n\t[on disappear]\n\t\t`能帮我找找嘛？`\t1\n\t[on appear]\n\t\t`呀哈!`\t2\n\t[on disappear]\n\t\t`我的火焰厉害嘛？`\t2\n那么第2组的[on disappear]就不会接上第1组的[on appear]\n—————————————————————————————\n使用快捷栏技能[quick skill]：\n\t[on attack]\n\t\t`（台词）`\t50\t0\n\n使用快捷栏道具[quick item]：\n\t[on attack]\n\t\t`（台词）`\t100\t0",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "spirit",
+      "description": "精灵族",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "strong",
+      "description": "这个便签经过测试，应该是减少怪物受到的攻击伤害，例如1000伤害减少99%",
+      "authors": "BailongQ52721712"
+    },
+    {
+      "name": "stuck resistance",
+      "description": "回避率\n\n* 100 = 10%",
+      "authors": "Cai - 263007544"
+    },
+    {
+      "name": "stuckbonus on damage",
+      "description": "两个数值为1组：\n受到远程攻击的受击硬直比率，最小值/最大值\n受到近战攻击的受击硬直比率，最小值/最大值",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "stun resistance",
+      "description": "眩晕抗性",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "summon skill status up type",
+      "description": " 如果按照魔法师(召唤师)召唤的怪物的专用能力值设定的话则是 1 ,默认为0",
+      "authors": "unMen"
+    },
+    {
+      "name": "superarmor on attack",
+      "description": "[superarmor on attack]发起攻击时进入霸体\n\t1\t50\n\n左边改1为进入霸体，改0则不进入",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting attacker",
+      "description": "怪物AI逻辑：优先锁定最后攻击自身的敌人\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting downed",
+      "description": "怪物AI逻辑：优先锁定倒地的敌人\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting from direction",
+      "description": "怪物AI逻辑：优先锁定当前朝向的敌人\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting high HP",
+      "description": "怪物AI逻辑：优先锁定最高生命值\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting high level",
+      "description": "怪物AI逻辑：优先锁定最高等级\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting low HP",
+      "description": "怪物AI逻辑：优先锁定最低生命值\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting low level",
+      "description": "怪物AI逻辑：优先锁定最低等级\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting low magical attack",
+      "description": "怪物AI逻辑：优先锁定最低魔攻\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting low magical defense",
+      "description": "怪物AI逻辑：优先锁定最低魔防\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting low physical attack",
+      "description": "怪物AI逻辑：优先锁定最低物攻\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting low physical defense",
+      "description": "怪物AI逻辑：优先锁定最低物防\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting nearest",
+      "description": "怪物AI逻辑：优先锁定最近的敌人\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting on attack",
+      "description": "怪物AI逻辑：攻击后重新判定目标\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting on damage",
+      "description": "怪物AI逻辑：受到攻击后重新判定目标\n        1开启        0关闭\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "targeting time term",
+      "description": "怪物AI逻辑：锁定目标后，持续一定时长会重新寻找目标\n1000 = 1秒（写0则永久锁定）\n\n//其他AI逻辑：\n[targeting time term]// 锁定目标后，持续一定时长会重新寻找目标\n[targeting on attack]// 攻击后重新判定目标\n[targeting on damage]// 受到攻击后重新判定目标\n[targeting high level]// 优先锁定最高等级\n[targeting low level]// 优先锁定最低等级\n[targeting high HP]// 优先锁定最高生命值\n[targeting low HP]// 优先锁定最低生命值\n[targeting nearest]// 优先锁定最近的敌人\n[targeting attacker]// 优先锁定最后攻击自身的敌人\n[targeting from direction]// 优先锁定当前朝向的敌人\n[targeting low physical attack]// 优先锁定最低物攻\n[targeting low physical defense]// 优先锁定最低物防\n[targeting low magical attack]// 优先锁定最低魔攻\n[targeting low magical defense]// 优先锁定最低魔防\n[targeting downed]// 优先锁定倒地的敌人",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "tau",
+      "description": "牛头族",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "unbreakable",
+      "description": "霸体：不可被破坏",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "undead",
+      "description": "不死族",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "waiting action",
+      "description": "等待行动",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "waiting motion",
+      "description": "静止动作",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "with blast",
+      "description": "大概是狂龙之吼？",
+      "authors": "Xiti Fox"
+    }
+  ]
+}

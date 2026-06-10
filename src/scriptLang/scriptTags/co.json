@@ -1,0 +1,129 @@
+{
+  "tags": [
+    {
+      "name": "asura",
+      "description": "待翻译，请编辑！",
+      "authors": "阿修罗"
+    },
+    {
+      "name": "avenger",
+      "description": "圣骑士转职：复仇者\n\n台改暗夜使者转职：影舞者",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "battlemage",
+      "description": "战斗法师",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "berserker",
+      "description": "狂战士！",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "character job",
+      "description": "拥有此词条对象为技能树时，代表这是技能树坐标标签\n//建议搭配工具修改坐标\n\n//示例：\n[character job]\n\t`[gunner]`        //选择职业\n\t`none`\t          //选择职业分支\n\t[skill info]\n\t\t[index]\n\t\t\t4         //技能编号\n\t\t[icon pos]\n\t\t\t235\t0  //技能坐标\n\t[/skill info]\n[/character job]\n以上代表男枪手的未转职职业拥有1个`膝撞（编号4）`技能，\n该技能位于 X轴235，Y轴0 的技能树位置\n\n职业：\n\t`[swordman]`//男鬼剑\n\t`[gunner]`//男枪手\n\t`[mage]`//女魔法\n\t`[fighter]`//女格斗\n\t`[priest]`//男圣职\n\t`[thief]`//暗夜使者\n\n职业分支：\n\t`none`//\t未转职\n\n\t`weaponmaster`//剑魂\n\t`soulbringer`//鬼泣\n\t`berserker`//狂战士\n\t`asura`//阿修罗\n\n\t`ranger`//漫游枪手\n\t`launcher`//枪炮师\n\t`mechanic`//机械师\n\t`spitfire`//弹药专家\n\n\t`elementalmaster`//元素师\n\t`summoner`//召唤师\n\t`battlemage`//战斗法师\n\t`witch`//魔道学者\n\n\t`nenmaster`//气功师\n\t`striker`//散打\n\t`streetfighter`//街霸\n\t`grappler`//柔道家\n\n\t`crusader`//圣骑士\n\t`infighter`//蓝拳圣使\n\t`exorcist`//驱魔师\n\t`avenger`//复仇者\n\n\t`rogue`//刺客\n\t`necromancer`//死灵术士\n\t`exorcist`//忍者（台改）\n\t`avenger`//影舞者（台改）",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "common skill",
+      "description": "职业通用技能，蹲伏，后跳一类的技能编号",
+      "authors": "老徐的梦想"
+    },
+    {
+      "name": "crusader",
+      "description": "圣骑士",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "elementalmaster",
+      "description": "元素师",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "exorcist",
+      "description": "圣骑士转职：驱魔师\n\n台改暗夜使者转职：忍者",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "grappler",
+      "description": "柔道家",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "icon pos",
+      "description": "在技能窗口显示的坐标",
+      "authors": "青山工作室"
+    },
+    {
+      "name": "index",
+      "description": "对应城镇.twn的区域：\n\n[area]\n    0-------------对应这个区域\n    `xxxxxxxx.map`\n    `[gate]`\n[/area]\n鸣谢：Cai - 263007544\n-------\n城镇索引，对应Town.lst中的城镇编号。\n\n在技能树里：\n\n[index] - 技能代码\n[icon pos] 技能树的坐标\n｛参考技能树坐标图｝",
+      "authors": "青山工作室"
+    },
+    {
+      "name": "infighter",
+      "description": "蓝拳圣使",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "necromancer",
+      "description": "暗夜使者转职：死灵术士",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "nenmaster",
+      "description": "气功师",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "next skill",
+      "description": "关联技能\n\n将该词条赋予某个技能的技能树坐标标签内并填写其他技能编号时，\n就会在游戏内技能树自动划线并显示箭头，代表这是其他技能的前置技能",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "none",
+      "description": "无\n\n该词条位于技能树时，代表未转职职业",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "rogue",
+      "description": "暗夜使者转职：刺客",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "skill info",
+      "description": "技能信息",
+      "authors": "青山工作室"
+    },
+    {
+      "name": "soulbringer",
+      "description": "鬼泣！",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "streetfighter",
+      "description": "街霸",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "striker",
+      "description": "散打",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "summoner",
+      "description": "召唤师",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "weaponmaster",
+      "description": "剑魂！",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "witch",
+      "description": "魔道学者",
+      "authors": "Xiti Fox"
+    }
+  ]
+}

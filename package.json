@@ -210,6 +210,11 @@
           "default": true,
           "description": "解析器 :: 自动转换字符串链接 <id::name`文字`> 为 `文字`。关闭后仍保留链接形式 (文本被清空为 `` )。"
         },
+        "pvf.scriptTagComment.author": {
+          "type": "string",
+          "default": "台服爱好者",
+          "description": "编辑脚本标签注释时写入 authors 字段的作者名。默认使用当前项目的 GitHub ID。"
+        },
         "pvf.unpack.writeConcurrency": {
           "type": "number",
           "default": 512,
@@ -568,6 +573,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postcompile": "node scripts/copy-script-tags.cjs && node scripts/copy-webview.cjs",
+    "sync:tab-comments": "node scripts/sync-tab-comments.cjs",
     "build:webview": "node scripts/build-webview.mjs",
     "build:all": "npm run compile && npm run postcompile && npm run build:webview",
     "vscode:prepublish": "npm run build:all -- --prod",

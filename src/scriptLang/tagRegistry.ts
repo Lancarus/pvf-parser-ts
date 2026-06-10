@@ -1,10 +1,42 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs/promises';
 
-export interface ScriptTagInfo { name: string; description?: string; closing?: boolean; }
+export interface ScriptTagInfo { name: string; description?: string; authors?: string; closing?: boolean; }
 interface TagFile { tags: ScriptTagInfo[] }
 
 const cache = new Map<string, ScriptTagInfo[]>();
+
+function sanitizeMarkdown(markdown: string): string {
+    return markdown.replace(/\]\(\s*command:[^)]+\)/gi, '](#)');
+}
+
+function escapeMarkdownTableCell(value: string): string {
+    return value.replace(/\\/g, '\\\\').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
+}
+
+function editCommentCommandUri(short: string, name: string): string {
+    const args = encodeURIComponent(JSON.stringify([{ short, name }]));
+    return `command:pvf.editScriptTagComment?${args}`;
+}
+
+function appendTagFooter(md: vscode.MarkdownString, short: string, tag: ScriptTagInfo) {
+    const author = escapeMarkdownTableCell((tag.authors || '').trim() || '未署名');
+    md.appendMarkdown(`\n\n---\n\n| 作者: ${author} | [$(edit) 编辑注释](${editCommentCommandUri(short, tag.name)}) |\n|:--|--:|\n`);
+}
+
+function tagDocumentationMarkdown(description: string | undefined, options?: { trustEditCommand?: boolean; short?: string; name?: string }): vscode.MarkdownString | undefined {
+    if (!description && !options?.trustEditCommand) return undefined;
+    const md = new vscode.MarkdownString(undefined, true);
+    if (description) {
+        md.appendMarkdown(sanitizeMarkdown(description));
+    }
+    if (options?.trustEditCommand && options.short && options.name) {
+        md.supportThemeIcons = true;
+        md.isTrusted = { enabledCommands: ['pvf.editScriptTagComment'] };
+        md.appendMarkdown(`\n\n[$(edit) 编辑注释](${editCommentCommandUri(options.short, options.name)})`);
+    }
+    return md;
+}
 
 export async function loadTags(context: vscode.ExtensionContext, short: string): Promise<ScriptTagInfo[]> {
     if (cache.has(short)) return cache.get(short)!;
@@ -183,39 +215,14 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                     const tag = tags.find(x => x.name.toLowerCase() === t.rawName.toLowerCase());
                     if (!tag) return;
                     const nameRange = new vscode.Range(pos.line, t.nameStart, pos.line, t.nameEnd);
-                    const md = new vscode.MarkdownString();
+                    const md = new vscode.MarkdownString(undefined, true);
+                    md.supportThemeIcons = true;
+                    md.isTrusted = { enabledCommands: ['pvf.editScriptTagComment'] };
                     md.appendCodeblock(tag.name, langId);
                     if (tag.description) {
-                        const lines = tag.description.split(/\r?\n/).map(l=>l.replace(/\s+$/,''));
-                        if (lines.length === 1) {
-                            md.appendMarkdown('\n' + lines[0]);
-                        } else {
-                            // 首行加粗，其余行保持原样；若后续行包含反引号或路径示例，放入代码块更清晰
-                            const first = lines[0];
-                            const rest = lines.slice(1);
-                            const needsCode = rest.some(l => /`.+`/.test(l) || /\.ani\b/i.test(l) || /^\s*\//.test(l));
-                            md.appendMarkdown(`\n**${first}**`);
-                            if (needsCode) {
-                                // 根据示例中的文件扩展名选择语言高亮
-                                const sample = rest.join('\n');
-                                const extsFound = new Set<string>();
-                                for (const m of sample.matchAll(/\.[a-zA-Z0-9_]{1,6}\b/g)) {
-                                    extsFound.add(m[0].toLowerCase());
-                                }
-                                // 默认使用当前语言语法而不是 text，保证数字/字符串等能高亮
-                                let lang = langId; // fallback to current language id
-                                const map: Record<string,string> = { '.ani':'pvf-ani', '.act':'pvf-act' };
-                                for (const ext of extsFound) {
-                                    if (map[ext]) { lang = map[ext]; break; }
-                                }
-                                md.appendCodeblock(sample, lang);
-                            } else {
-                                // 普通多行，用两个空格 + 换行维持换行
-                                const body = rest.map(l => l + '  ').join('\n');
-                                md.appendMarkdown('\n' + body);
-                            }
-                        }
+                        md.appendMarkdown('\n\n' + sanitizeMarkdown(tag.description));
                     }
+                    appendTagFooter(md, short, tag);
                     return new vscode.Hover(md, nameRange);
                 }
             }
@@ -267,7 +274,7 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                 if (short === 'act' && lower === 'trigger') dynamicClosing = depth === 0; // root-level only
                 const ci = new vscode.CompletionItem(t.name, vscode.CompletionItemKind.Keyword);
                 ci.detail = dynamicClosing ? '标签 (需闭合)' : '标签';
-                ci.documentation = t.description || '';
+                ci.documentation = tagDocumentationMarkdown(t.description);
                 if (dynamicClosing) {
                     ci.insertText = new vscode.SnippetString(`${t.name}]$0[/${t.name}]`);
                 } else {

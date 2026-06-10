@@ -1,0 +1,44 @@
+{
+  "tags": [
+    {
+      "name": "dungeon",
+      "description": "在副本接口处代表\n第一个数为副本ID\n第二个为任务ID 假如是-1就代表该副本无前置任务\n如果不为-1 则代表需完成指定任务ID才可开启该副本",
+      "authors": "白糖-193284563"
+    },
+    {
+      "name": "hell dungeon",
+      "description": "副本深渊开启指向 写1代表可以开启深渊",
+      "authors": "白糖-193284563"
+    },
+    {
+      "name": "hell freepass item",
+      "description": "深渊破魔石代码，优先扣除这里，两个数一组：物品ID\t物品数量，数量必须为1，否则会不扣门票bug",
+      "authors": "By:952696929"
+    },
+    {
+      "name": "in progress",
+      "description": "进行中",
+      "authors": "无名氏"
+    },
+    {
+      "name": "item condition",
+      "description": "在worldmap中表示  深渊门票代码，仅适用于冰雪宫殿以上的副本",
+      "authors": "依旧"
+    },
+    {
+      "name": "map image",
+      "description": "选择副本的背景图",
+      "authors": "大白：649964267"
+    },
+    {
+      "name": "ui controls",
+      "description": "UI控件\n3-1-3-81\n三个数一组-框框外形-起泡形状-副本标号",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "ui path",
+      "description": "UI路径",
+      "authors": "lostluna1"
+    }
+  ]
+}

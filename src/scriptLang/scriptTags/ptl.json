@@ -1,0 +1,34 @@
+{
+  "tags": [
+    {
+      "name": "circle",
+      "description": "圈",
+      "authors": "飞过半边天"
+    },
+    {
+      "name": "keep changing",
+      "description": "变化",
+      "authors": "飞过半边天"
+    },
+    {
+      "name": "move variable 1",
+      "description": "移动变量1",
+      "authors": "无名氏"
+    },
+    {
+      "name": "object",
+      "description": "目的",
+      "authors": "无名氏"
+    },
+    {
+      "name": "straight line",
+      "description": "直线",
+      "authors": "飞过半边天"
+    },
+    {
+      "name": "vanish",
+      "description": "消失",
+      "authors": "飞过半边天"
+    }
+  ]
+}

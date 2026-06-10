@@ -1,0 +1,94 @@
+{
+  "tags": [
+    {
+      "name": "auction_button",
+      "description": "拍卖行按钮",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "aura_gauge_lineardodge",
+      "description": "光环槽按钮（或许是）",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "balloon",
+      "description": "副本UI气泡按钮",
+      "authors": "zed"
+    },
+    {
+      "name": "cell basic data",
+      "description": "单元格基本数据\nui文件中常见\n0 0 33 34\n代表 X Y坐标偏移和X Y间距",
+      "authors": "sum665"
+    },
+    {
+      "name": "cerashop_button",
+      "description": "商城按钮",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "CHECKED NO",
+      "description": "CHECKED NO\n判定 异界金龙格子 人数",
+      "authors": "无名氏"
+    },
+    {
+      "name": "IDC_WORLDMAP_BUTTON1",
+      "description": "展示的背景\n三个数字：X坐标  Y坐标  模式1（开启）",
+      "authors": "依旧"
+    },
+    {
+      "name": "IDC_WORLDMAP_BUTTON2",
+      "description": "展示的背景",
+      "authors": "123"
+    },
+    {
+      "name": "IDC_WORLDMAP_BUTTON3",
+      "description": "展示的背景\n\n通常指的是选择副本的顺序\n\n出现相同的数字则会乱顺序\n\n按照1-9的数字排列则不会出现乱顺序",
+      "authors": "释然"
+    },
+    {
+      "name": "IDC_WORLDMAP_EXPAND_DIMENSION_BACKGROUND",
+      "description": "展示的背景",
+      "authors": "123"
+    },
+    {
+      "name": "inventory_button",
+      "description": "背包按钮",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "main_menu",
+      "description": "待翻译，请编辑！",
+      "authors": "大拿"
+    },
+    {
+      "name": "myinfo_button",
+      "description": "个人信息按钮",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "quest_button",
+      "description": "任务按钮",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "radiobutton",
+      "description": "组合按钮\nimg 对应数字\n14 2 6 7 8 9 0 0 10 11 12 13 0 0 0\n14代表总控数值\n2代表 两个按钮\n6 7 8 9代表 4个按钮状态png\n0 0代表 xy坐标偏移\n后面同理\n最后一个0 是固定值",
+      "authors": "sum665"
+    },
+    {
+      "name": "skill_button",
+      "description": "技能按钮",
+      "authors": "Xiti Fox"
+    },
+    {
+      "name": "ui controls",
+      "description": "UI控件\n3-1-3-81\n三个数一组-框框外形-起泡形状-副本标号",
+      "authors": "lostluna1"
+    },
+    {
+      "name": "window",
+      "description": "窗口",
+      "authors": "lostluna1"
+    }
+  ]
+}
