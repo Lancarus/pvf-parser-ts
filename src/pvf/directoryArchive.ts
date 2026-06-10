@@ -14,6 +14,7 @@ export interface PvfDirectoryManifest {
   fileVersion: number;
   encodingMode: string;
   defaultEncoding: string;
+  chineseConversion?: 'off' | 'tw2cn';
   fileCount: number;
   files: PvfDiskFileManifestEntry[];
 }

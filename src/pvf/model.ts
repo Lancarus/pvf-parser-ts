@@ -15,6 +15,7 @@ import { getFileNameHashCode as utilGetFileNameHashCode, renderStringTableText a
 import { decompileScript } from './scriptDecompiler';
 import { compileLstText, decompileLst } from './lstDecompiler';
 import { buildMetadataMaps, parseMetadataForKeys } from './metadata';
+import { convertTextForUnpack, normalizeChineseConversion, PvfChineseConversion } from './chineseConversion';
 import {
   PVF_DIRECTORY_MANIFEST_VERSION,
   PVF_MANIFEST_FILE,
@@ -554,6 +555,7 @@ export class PvfModel {
       workerCount?: number;
       mkdirConcurrency?: number;
       writeBatchSize?: number;
+      chineseConversion?: PvfChineseConversion;
       onStats?: (stats: PvfArchivePhaseStats) => void;
     },
   ) {
@@ -569,10 +571,14 @@ export class PvfModel {
 
     // 获取当前编码模式写入 manifest
     let encodingMode = 'AUTO';
+    let chineseConversion: PvfChineseConversion = normalizeChineseConversion(options?.chineseConversion);
     try {
       const vscodeMod = await import('vscode');
       const cfg = vscodeMod.workspace.getConfiguration();
       encodingMode = (cfg.get<string>('pvf.encodingMode', 'AUTO') || 'AUTO').toUpperCase();
+      if (options?.chineseConversion === undefined) {
+        chineseConversion = normalizeChineseConversion(cfg.get<string>('pvf.unpack.chineseConversion', 'tw2cn'));
+      }
     } catch { /* 使用默认 AUTO */ }
     const defaultEncoding = encodingForKey('stringtable.bin');
 
@@ -633,7 +639,7 @@ export class PvfModel {
         }
       }
 
-      return { kind, encoding, data: text !== undefined ? Buffer.from(text, 'utf8') : slice };
+      return { kind, encoding, data: text !== undefined ? Buffer.from(convertTextForUnpack(text, chineseConversion), 'utf8') : slice };
     };
 
     for (const key of keys) {
@@ -701,6 +707,7 @@ export class PvfModel {
       fileVersion: this.fileVersion,
       encodingMode,
       defaultEncoding,
+      chineseConversion,
       fileCount: total,
       files: manifestFiles,
     };
@@ -734,6 +741,7 @@ export class PvfModel {
         writeBatchSize,
         batchConcurrency,
         workerCount,
+        chineseConversion,
       });
     } catch { /* ignore profiling output errors */ }
   }

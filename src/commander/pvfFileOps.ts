@@ -13,6 +13,7 @@ import { StringTable } from '../pvf/stringTable';
 import { ScriptCompiler } from '../pvf/scriptCompiler';
 import { compileBinaryAni } from '../pvf/aniCompiler';
 import { compileLstText } from '../pvf/lstDecompiler';
+import { convertTextForRepack, normalizeChineseConversion, PvfChineseConversion } from '../pvf/chineseConversion';
 import {
   createManifestEntryMap,
   normalizeArchiveKey,
@@ -52,6 +53,7 @@ async function repackDirectory(
   let fileVersion = 0;
   let encodingMode = 'AUTO';
   let defaultEncoding = 'big5';
+  let chineseConversion: PvfChineseConversion = 'off';
   let manifest: Partial<PvfDirectoryManifest> | undefined;
   try {
     const manifestRaw = await fs.readFile(path.join(srcDir, PVF_MANIFEST_FILE), 'utf8');
@@ -61,8 +63,10 @@ async function repackDirectory(
     fileVersion = manifest?.fileVersion ?? 0;
     if (manifest?.encodingMode) encodingMode = manifest.encodingMode;
     if (manifest?.defaultEncoding) defaultEncoding = manifest.defaultEncoding;
+    chineseConversion = normalizeChineseConversion(manifest?.chineseConversion ?? 'off');
   } catch { /* 使用默认值 */ }
   const manifestEntries = createManifestEntryMap(manifest);
+  const unpackedTextToPvfText = (text: string): string => convertTextForRepack(stripUtf8Bom(text), chineseConversion);
   afterManifest = performance.now();
 
   // 2. 递归收集所有文件（排除 .pvfmanifest.json）
@@ -99,7 +103,7 @@ async function repackDirectory(
     try {
       const stText = await fs.readFile(stPath.diskPath, 'utf8');
       strTable = new StringTable(encodingForKeyWithMode('stringtable.bin', encodingMode, defaultEncoding));
-      strTable.parseFromText(stripUtf8Bom(stText));
+      strTable.parseFromText(unpackedTextToPvfText(stText));
     } catch { /* 解析失败则跳过 */ }
   }
   if (!strTable && files.some(f => f.kind === 'script')) {
@@ -120,6 +124,9 @@ async function repackDirectory(
   let completed = 0;
 
   const readConcurrency = clampInt(options?.readConcurrency, 192, 1, 1024);
+  const readTextForRepack = (raw: Uint8Array): string => {
+    return unpackedTextToPvfText(Buffer.from(raw).toString('utf8'));
+  };
   await runConcurrent(files, readConcurrency, async ({ key, diskPath, kind, encoding }) => {
     const raw = new Uint8Array(await fs.readFile(diskPath));
     const lower = key.toLowerCase();
@@ -136,7 +143,7 @@ async function repackDirectory(
     } else if (kind === 'binary') {
       finalBytes = raw;
     } else if (kind === 'binaryAni') {
-      const text = stripUtf8Bom(Buffer.from(raw).toString('utf8'));
+      const text = readTextForRepack(raw);
       const compiledAni = compileBinaryAni(text, key);
       if (compiledAni && compiledAni.length > 0) {
         finalBytes = compiledAni;
@@ -149,7 +156,7 @@ async function repackDirectory(
         finalBytes = raw;
       }
     } else if (kind === 'script') {
-      const text = stripUtf8Bom(Buffer.from(raw).toString('utf8'));
+      const text = readTextForRepack(raw);
       if (!manifestEntries.has(lower) && !text.trimStart().startsWith('#PVF_File')) {
         finalBytes = raw;
       } else {
@@ -168,7 +175,7 @@ async function repackDirectory(
         }
       }
     } else if (kind === 'text') {
-      const text = stripUtf8Bom(Buffer.from(raw).toString('utf8'));
+      const text = readTextForRepack(raw);
       const targetEnc = encoding || encodingForKeyWithMode(key, encodingMode, defaultEncoding);
       const encoded = iconv.encode(text, targetEnc);
       finalBytes = new Uint8Array(encoded.buffer, encoded.byteOffset, encoded.byteLength);
@@ -176,7 +183,7 @@ async function repackDirectory(
       // 尝试按 UTF-8 文本解读
       let text: string | null = null;
       try {
-        const t = stripUtf8Bom(Buffer.from(raw).toString('utf8'));
+        const t = readTextForRepack(raw);
         // 仅当内容为可打印文本时才视为 UTF-8 文本
         if (isPrintableText(t.slice(0, 4096))) text = t;
       } catch { /* 非 UTF-8，作为二进制 */ }
@@ -269,6 +276,7 @@ async function repackDirectory(
       total: stats.totalMs.toFixed(1),
       files: stats.files,
       readConcurrency,
+      chineseConversion,
     });
   } catch { /* ignore profiling output errors */ }
 }
@@ -378,6 +386,7 @@ export function registerPvfFileOps(context: vscode.ExtensionContext, deps: Deps)
       const writeConcurrency = cfg.get<number>('pvf.unpack.writeConcurrency', 512);
       const workerCount = cfg.get<number>('pvf.unpack.workerCount', 12);
       const writeBatchSize = cfg.get<number>('pvf.unpack.writeBatchSize', 64);
+      const chineseConversion = normalizeChineseConversion(cfg.get<string>('pvf.unpack.chineseConversion', 'tw2cn'));
       const mkdirConcurrency = cfg.get<number>('pvf.unpack.mkdirConcurrency', 128);
       let phaseStats: PvfArchivePhaseStats | undefined;
       await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '正在解封 PVF…' }, async (p) => {
@@ -385,12 +394,13 @@ export function registerPvfFileOps(context: vscode.ExtensionContext, deps: Deps)
         await model.unpackTo(destDir, (current, _total, key) => {
           const pct = Math.floor((current / _total) * 100);
           if (pct !== lastReport) { const inc = pct - lastReport; lastReport = pct; p.report({ increment: inc, message: `(${current}/${_total}) ${key.split('/').pop()}` }); }
-        }, { writeConcurrency, workerCount, writeBatchSize, mkdirConcurrency, onStats: stats => { phaseStats = stats; } });
+        }, { writeConcurrency, workerCount, writeBatchSize, chineseConversion, mkdirConcurrency, onStats: stats => { phaseStats = stats; } });
       });
       const seconds = Math.max(0.001, (Date.now() - t0) / 1000);
       const rate = Math.round(total / seconds);
       output.appendLine(`[PVF] unpack done: ${total} files in ${seconds.toFixed(1)}s (${rate}/s) -> ${destDir}`);
       if (phaseStats) output.appendLine(formatArchiveStats('unpack phases', phaseStats, { writeConcurrency, workerCount, writeBatchSize, mkdirConcurrency }));
+      output.appendLine(`[PVF] unpack chineseConversion=${chineseConversion}`);
       vscode.window.showInformationMessage(`解封完成：${total} 个文件，${rate} 文件/秒 → ${destDir}`);
     }),
     vscode.commands.registerCommand('pvf.repackPack', async () => {
