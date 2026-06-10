@@ -1,0 +1,60 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "PVF Generic",
+  "scopeName": "source.pvf-generic",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#blockComment" },
+    { "include": "#tag" },
+    { "include": "#string" },
+    { "include": "#number" },
+    { "include": "#operator" }
+  ],
+  "repository": {
+    "comment": {
+      "patterns": [
+        { "name": "comment.line.double-slash.pvf-generic", "match": "//.*$" },
+        { "name": "comment.line.number-sign.pvf-generic", "match": "#.*$" }
+      ]
+    },
+    "blockComment": {
+      "patterns": [
+        { "name": "comment.block.pvf-generic", "begin": "/\\*", "end": "\\*/" }
+      ]
+    },
+    "string": {
+      "patterns": [
+        { "name": "string.quoted.backtick.pvf-generic", "begin": "`", "end": "`" },
+        { "name": "string.quoted.double.pvf-generic", "begin": "\"", "end": "\"" }
+      ]
+    },
+    "number": {
+      "patterns": [
+        { "name": "constant.numeric.pvf-generic", "match": "[-+]?\\b[0-9]+(?:\\.[0-9]+)?\\b" }
+      ]
+    },
+    "operator": {
+      "patterns": [
+        { "name": "keyword.operator.pvf-generic", "match": "[+*%<>=-]" }
+      ]
+    },
+    "tag": {
+      "patterns": [
+        {
+          "name": "meta.tag.pvf-generic",
+          "begin": "\\[",
+          "beginCaptures": { "0": { "name": "punctuation.definition.tag.begin.pvf-generic" } },
+          "end": "\\]",
+          "endCaptures": { "0": { "name": "punctuation.definition.tag.end.pvf-generic" } },
+          "patterns": [
+            { "name": "entity.name.tag.pvf-generic", "match": "/?[A-Za-z_][A-Za-z0-9 _-]*" },
+            { "include": "#string" },
+            { "include": "#number" },
+            { "include": "#operator" }
+          ]
+        }
+      ]
+    }
+  },
+  "uuid": "pvf-generic-1111-4000-8000-000000000000"
+}

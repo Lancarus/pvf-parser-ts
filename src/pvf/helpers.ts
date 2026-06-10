@@ -1,6 +1,17 @@
 import * as iconv from 'iconv-lite';
 import * as vscode from 'vscode';
 
+const PVF_SCRIPT_EXTENSIONS = [
+  '.act', '.ai', '.aic', '.ani', '.atk', '.blu', '.bm', '.chr', '.co', '.cre',
+  '.dgn', '.equ', '.etc', '.evt', '.exj', '.key', '.lay', '.lst', '.map', '.mm',
+  '.mob', '.npc', '.obj', '.pos', '.ptl', '.qst', '.rgn', '.sd', '.shp', '.skl',
+  '.stk', '.stm', '.str', '.tbl', '.twn', '.ui', '.wdm'
+];
+
+export function isPvfScriptExtension(lowerKey: string): boolean {
+  return PVF_SCRIPT_EXTENSIONS.some(ext => lowerKey.endsWith(ext));
+}
+
 // 运行期（AUTO 模式下）依据包内检测出的基础编码覆盖：非 .nut 文件使用该覆盖
 let runtimeEncodingOverride: string | null = null;
 export function setRuntimeEncodingOverride(enc: string | null) { runtimeEncodingOverride = enc; }
@@ -54,6 +65,7 @@ export function encodingForKeyWithMode(key: string, mode: string, autoFallback =
 export function isTextByExtensionForExport(lowerKey: string): boolean {
   return lowerKey.endsWith('.nut')
     || lowerKey.endsWith('.als')
+    || isPvfScriptExtension(lowerKey)
     || lowerKey.endsWith('.txt')
     || lowerKey.endsWith('.cfg')
     || lowerKey.endsWith('.def')
@@ -68,8 +80,7 @@ export function isTextByExtensionForExport(lowerKey: string): boolean {
 
 // Text-like extensions
 export function isTextByExtension(lowerKey: string): boolean {
-  return lowerKey.endsWith('.skl')
-    || lowerKey.endsWith('.lst')
+  return isPvfScriptExtension(lowerKey)
     || lowerKey.endsWith('.txt')
     || lowerKey.endsWith('.cfg')
     || lowerKey.endsWith('.def')

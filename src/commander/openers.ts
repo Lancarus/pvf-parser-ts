@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { Deps } from './types';
+import { scriptTagLanguageIdForPath } from '../scriptLang/genericTags';
 
 export function registerOpeners(context: vscode.ExtensionContext, deps: Deps) {
   const { model, deco, output } = deps;
@@ -13,14 +14,19 @@ export function registerOpeners(context: vscode.ExtensionContext, deps: Deps) {
         if (!f) { vscode.window.showErrorMessage(`文件未在封包中找到: ${key}`); return; }
         const uri = vscode.Uri.parse(`pvf:/${key}`);
         try {
-          const doc = await vscode.workspace.openTextDocument(uri); output.appendLine(`[PVF] openFile: opened pvf: doc length=${doc.getText().length}`); await vscode.window.showTextDocument(doc, { preview: false });
+          const doc = await vscode.workspace.openTextDocument(uri); output.appendLine(`[PVF] openFile: opened pvf: doc length=${doc.getText().length}`);
+          const langId = scriptTagLanguageIdForPath(key);
+          if (langId && doc.languageId !== langId) {
+            try { await vscode.languages.setTextDocumentLanguage(doc, langId); } catch {}
+          }
+          await vscode.window.showTextDocument(doc, { preview: false });
           if (!doc.getText() || doc.getText().length === 0) {
             output.appendLine(`[PVF] openFile: pvf: doc empty for ${key}, falling back to model.getTextViewAsync`);
-            try { const text = await (model as any).getTextViewAsync(key); if (text && text.length > 0) { const doc2 = await vscode.workspace.openTextDocument({ content: text, language: 'plaintext' }); await vscode.window.showTextDocument(doc2, { preview: false }); } else { output.appendLine(`[PVF] openFile: model.getTextViewAsync returned empty for ${key}`); vscode.window.showWarningMessage('打开的文件内容为空'); } } catch (e) { output.appendLine(`[PVF] openFile: getTextViewAsync failed for ${key}: ${String(e)}`); vscode.window.showErrorMessage('打开文件失败'); }
+            try { const text = await (model as any).getTextViewAsync(key); if (text && text.length > 0) { const doc2 = await vscode.workspace.openTextDocument({ content: text, language: langId || 'plaintext' }); await vscode.window.showTextDocument(doc2, { preview: false }); } else { output.appendLine(`[PVF] openFile: model.getTextViewAsync returned empty for ${key}`); vscode.window.showWarningMessage('打开的文件内容为空'); } } catch (e) { output.appendLine(`[PVF] openFile: getTextViewAsync failed for ${key}: ${String(e)}`); vscode.window.showErrorMessage('打开文件失败'); }
           }
           return;
         } catch (e) { output.appendLine(`[PVF] openFile: opening pvf:/${key} failed: ${String(e)}`); }
-        try { const bytes = await (model as any).readFileBytes(key); if (bytes && bytes.length > 0) { const text = Buffer.from(bytes).toString('utf8'); const doc = await vscode.workspace.openTextDocument({ content: text, language: 'plaintext' }); await vscode.window.showTextDocument(doc, { preview: false }); return; } else { output.appendLine(`[PVF] openFile: model.readFileBytes returned empty for ${key}`); } } catch (e) { output.appendLine(`[PVF] openFile: readFileBytes failed for ${key}: ${String(e)}`); }
+        try { const bytes = await (model as any).readFileBytes(key); if (bytes && bytes.length > 0) { const text = Buffer.from(bytes).toString('utf8'); const doc = await vscode.workspace.openTextDocument({ content: text, language: scriptTagLanguageIdForPath(key) || 'plaintext' }); await vscode.window.showTextDocument(doc, { preview: false }); return; } else { output.appendLine(`[PVF] openFile: model.readFileBytes returned empty for ${key}`); } } catch (e) { output.appendLine(`[PVF] openFile: readFileBytes failed for ${key}: ${String(e)}`); }
         vscode.window.showWarningMessage('打开的文件内容为空或无法读取');
       } catch (ex) { output.appendLine(`[PVF] openFile exception: ${String(ex)}`); }
     }),

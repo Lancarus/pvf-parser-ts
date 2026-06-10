@@ -1,26 +1,21 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { clearTagCache, iterateBracketTags, ScriptTagInfo } from './tagRegistry';
+import { clearTagCache, iterateBracketTags, loadTags, ScriptTagInfo } from './tagRegistry';
+import { SHORT_BY_LANGUAGE_ID } from './genericTags';
 
 interface TagFile { tags: ScriptTagInfo[] }
 interface EditTagCommentArgs { short?: string; name?: string }
 
-const SHORT_BY_LANG: Record<string, string> = {
-    'pvf-act': 'act',
-    'pvf-ai': 'ai',
-    'pvf-aic': 'aic',
-    'pvf-ani': 'ani',
-    'pvf-equ': 'equ',
-    'pvf-key': 'key',
-    'pvf-skl': 'skl'
-};
-
-const VALID_SHORTS = new Set(Object.values(SHORT_BY_LANG));
+const VALID_SHORTS = new Set(Object.values(SHORT_BY_LANGUAGE_ID));
 const DEFAULT_AUTHOR = 'Lancarus';
 
 function normalizeTagName(value: string): string {
     return value.trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+function normalizeTagDisplayName(value: string): string {
+    return value.trim().replace(/\s+/g, ' ');
 }
 
 function normalizeAuthor(value: unknown): string {
@@ -65,40 +60,72 @@ async function readTagFile(context: vscode.ExtensionContext, short: string): Pro
     throw new Error(`找不到 ${short}.json`);
 }
 
-async function readTag(context: vscode.ExtensionContext, short: string, name: string): Promise<ScriptTagInfo> {
-    const { data } = await readTagFile(context, short);
+async function readTagForEditor(context: vscode.ExtensionContext, short: string, name: string): Promise<ScriptTagInfo> {
     const expected = normalizeTagName(name);
-    const tag = (data.tags || []).find(item => normalizeTagName(item.name) === expected);
-    if (!tag) throw new Error(`找不到标签 [${name}]`);
+    try {
+        const { data } = await readTagFile(context, short);
+        const tag = (data.tags || []).find(item => normalizeTagName(item.name) === expected);
+        if (tag) return tag;
+    } catch {
+        // loadTags below can still return fallback/global entries; save will create the file if needed.
+    }
+    const fallback = (await loadTags(context, short)).find(item => normalizeTagName(item.name) === expected);
+    if (fallback) return fallback;
+    return { name: normalizeTagDisplayName(name), description: '', authors: '' };
+}
+
+function createTagForFile(data: TagFile, seed: ScriptTagInfo): ScriptTagInfo {
+    const tag: ScriptTagInfo = { name: normalizeTagDisplayName(seed.name), description: '' };
+    if (typeof seed.closing === 'boolean') {
+        tag.closing = seed.closing;
+    } else if ((data.tags || []).some(item => Object.prototype.hasOwnProperty.call(item, 'closing'))) {
+        tag.closing = false;
+    }
+    if (seed.authors) tag.authors = seed.authors;
     return tag;
 }
 
-async function saveTagDescription(context: vscode.ExtensionContext, short: string, name: string, description: string): Promise<{ files: number; authors: string }> {
+async function saveTagDescription(context: vscode.ExtensionContext, short: string, name: string, description: string, seed?: ScriptTagInfo): Promise<{ files: number; authors: string; created: number }> {
     const expected = normalizeTagName(name);
     let saved = 0;
+    let created = 0;
     let savedAuthors = '';
     const author = configuredAuthor();
-    for (const file of tagFilePaths(context, short)) {
-        if (!await exists(file)) continue;
-        const text = await fs.readFile(file, 'utf8');
-        const data = JSON.parse(text) as TagFile;
-        const tag = (data.tags || []).find(item => normalizeTagName(item.name) === expected);
-        if (!tag) continue;
+    const paths = tagFilePaths(context, short);
+    const existingFiles: string[] = [];
+    for (const file of paths) {
+        if (await exists(file)) existingFiles.push(file);
+    }
+    const files = existingFiles.length ? existingFiles : [paths[0]];
+    for (const file of files) {
+        let data: TagFile = { tags: [] };
+        if (await exists(file)) {
+            const text = await fs.readFile(file, 'utf8');
+            data = JSON.parse(text) as TagFile;
+        } else {
+            await fs.mkdir(path.dirname(file), { recursive: true });
+        }
+        if (!Array.isArray(data.tags)) data.tags = [];
+        let tag = data.tags.find(item => normalizeTagName(item.name) === expected);
+        if (!tag) {
+            tag = createTagForFile(data, seed || { name });
+            data.tags.push(tag);
+            created++;
+        }
         tag.description = description.replace(/\r\n?/g, '\n').trimEnd();
         tag.authors = appendAuthor(tag.authors, author);
         savedAuthors = tag.authors || '';
         await fs.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8');
         saved++;
     }
-    if (saved === 0) throw new Error(`找不到标签 [${name}]`);
     clearTagCache(short);
-    return { files: saved, authors: savedAuthors };
+    return { files: saved, authors: savedAuthors, created };
 }
 
 function tagAtActiveCursor(): EditTagCommentArgs | undefined {
     const editor = vscode.window.activeTextEditor;
     if (!editor) return undefined;
-    const short = SHORT_BY_LANG[editor.document.languageId];
+    const short = SHORT_BY_LANGUAGE_ID[editor.document.languageId];
     if (!short) return undefined;
     const pos = editor.selection.active;
     const lineText = editor.document.lineAt(pos.line).text;
@@ -506,13 +533,7 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
             return;
         }
 
-        let tag: ScriptTagInfo;
-        try {
-            tag = await readTag(context, short, resolved.name);
-        } catch (err: any) {
-            vscode.window.showWarningMessage(String(err && err.message || err));
-            return;
-        }
+        const tag = await readTagForEditor(context, short, resolved.name);
 
         const panel = vscode.window.createWebviewPanel(
             'pvfScriptTagComment',
@@ -533,9 +554,12 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
             if (!msg || typeof msg !== 'object') return;
             if (msg.type !== 'save' || typeof msg.description !== 'string') return;
             try {
-                const result = await saveTagDescription(context, short, tag.name, msg.description);
+                const result = await saveTagDescription(context, short, tag.name, msg.description, tag);
+                tag.description = msg.description.replace(/\r\n?/g, '\n').trimEnd();
+                tag.authors = result.authors;
                 panel.webview.postMessage({ type: 'saved', files: result.files, authors: result.authors });
-                vscode.window.showInformationMessage(`已保存 [${tag.name}] 注释`);
+                const action = result.created ? '已创建并保存' : '已保存';
+                vscode.window.showInformationMessage(`${action} [${tag.name}] 注释`);
             } catch (err: any) {
                 const message = String(err && err.message || err);
                 panel.webview.postMessage({ type: 'error', message });

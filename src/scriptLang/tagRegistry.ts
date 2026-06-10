@@ -5,6 +5,7 @@ export interface ScriptTagInfo { name: string; description?: string; authors?: s
 interface TagFile { tags: ScriptTagInfo[] }
 
 const cache = new Map<string, ScriptTagInfo[]>();
+const GLOBAL_TAGS_SHORT = 'global';
 
 function sanitizeMarkdown(markdown: string): string {
     return markdown.replace(/\]\(\s*command:[^)]+\)/gi, '](#)');
@@ -38,8 +39,7 @@ function tagDocumentationMarkdown(description: string | undefined, options?: { t
     return md;
 }
 
-export async function loadTags(context: vscode.ExtensionContext, short: string): Promise<ScriptTagInfo[]> {
-    if (cache.has(short)) return cache.get(short)!;
+async function loadTagFile(context: vscode.ExtensionContext, short: string): Promise<ScriptTagInfo[]> {
     const candidates = [
         vscode.Uri.joinPath(context.extensionUri, 'dist', 'scriptLang', 'scriptTags', `${short}.json`),
         vscode.Uri.joinPath(context.extensionUri, 'src', 'scriptLang', 'scriptTags', `${short}.json`)
@@ -49,12 +49,28 @@ export async function loadTags(context: vscode.ExtensionContext, short: string):
             const txt = await fs.readFile(u.fsPath, 'utf8');
             const data: TagFile = JSON.parse(txt);
             const arr = data.tags || [];
-            cache.set(short, arr);
             return arr;
         } catch { }
     }
-    cache.set(short, []);
     return [];
+}
+
+export async function loadTags(context: vscode.ExtensionContext, short: string): Promise<ScriptTagInfo[]> {
+    if (cache.has(short)) return cache.get(short)!;
+    const local = await loadTagFile(context, short);
+    if (short === GLOBAL_TAGS_SHORT) {
+        cache.set(short, local);
+        return local;
+    }
+    const global = await loadTags(context, GLOBAL_TAGS_SHORT);
+    if (!global.length) {
+        cache.set(short, local);
+        return local;
+    }
+    const seen = new Set(local.map(tag => tag.name.toLowerCase()));
+    const merged = local.concat(global.filter(tag => !seen.has(tag.name.toLowerCase())));
+    cache.set(short, merged);
+    return merged;
 }
 
 export function clearTagCache(short?: string) { if (short) cache.delete(short); else cache.clear(); }
@@ -212,8 +228,7 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
             for (const t of iterateBracketTags(lineText)) {
                 if (pos.character >= t.nameStart && pos.character <= t.nameEnd) {
                     const tags = await loadTags(context, short);
-                    const tag = tags.find(x => x.name.toLowerCase() === t.rawName.toLowerCase());
-                    if (!tag) return;
+                    const tag = tags.find(x => x.name.toLowerCase() === t.rawName.toLowerCase()) || { name: t.rawName, description: '', authors: '' };
                     const nameRange = new vscode.Range(pos.line, t.nameStart, pos.line, t.nameEnd);
                     const md = new vscode.MarkdownString(undefined, true);
                     md.supportThemeIcons = true;
@@ -221,6 +236,8 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                     md.appendCodeblock(tag.name, langId);
                     if (tag.description) {
                         md.appendMarkdown('\n\n' + sanitizeMarkdown(tag.description));
+                    } else if (!tags.some(x => x.name.toLowerCase() === t.rawName.toLowerCase())) {
+                        md.appendMarkdown('\n\n未找到标签注释。');
                     }
                     appendTagFooter(md, short, tag);
                     return new vscode.Hover(md, nameRange);
@@ -287,6 +304,28 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
             });
         }
     }, '[', '/'));
+
+    context.subscriptions.push(vscode.languages.registerCodeActionsProvider(langId, {
+        provideCodeActions(doc, range, codeActionContext) {
+            const hasUnknownTagDiagnostic = codeActionContext.diagnostics.some(d => d.message.startsWith('未知标签') || d.message.startsWith('未知闭合标签'));
+            if (!hasUnknownTagDiagnostic) return [];
+            const lineText = doc.lineAt(range.start.line).text;
+            for (const tag of iterateBracketTags(lineText)) {
+                const tagRange = new vscode.Range(range.start.line, tag.matchStart, range.start.line, tag.matchEnd);
+                if (!tagRange.intersection(range)) continue;
+                const action = new vscode.CodeAction(`编辑 [${tag.rawName}] 注释`, vscode.CodeActionKind.QuickFix);
+                action.command = {
+                    title: `编辑 [${tag.rawName}] 注释`,
+                    command: 'pvf.editScriptTagComment',
+                    arguments: [{ short, name: tag.rawName }]
+                };
+                action.diagnostics = [...codeActionContext.diagnostics];
+                action.isPreferred = true;
+                return [action];
+            }
+            return [];
+        }
+    }, { providedCodeActionKinds: [vscode.CodeActionKind.QuickFix] }));
 
     context.subscriptions.push(vscode.languages.registerFoldingRangeProvider(langId, {
         async provideFoldingRanges(doc) {

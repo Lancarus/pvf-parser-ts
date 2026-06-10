@@ -8,7 +8,7 @@ import { PvfFile } from '../pvf/pvfFile';
 import { saveImpl } from '../pvf/modelIO';
 import { getFileNameHashCode } from '../pvf/util';
 import { PvfModel } from '../pvf/model';
-import { encodingForKeyWithMode, isTextByExtensionForExport, isPrintableText } from '../pvf/helpers';
+import { encodingForKeyWithMode, isPvfScriptExtension, isTextByExtensionForExport, isPrintableText } from '../pvf/helpers';
 import { StringTable } from '../pvf/stringTable';
 import { ScriptCompiler } from '../pvf/scriptCompiler';
 import { compileBinaryAni } from '../pvf/aniCompiler';
@@ -294,18 +294,6 @@ function inferDiskFileKind(key: string): PvfDiskFileKind {
   if (isPvfScriptExtension(lower)) return 'script';
   if (isTextByExtensionForExport(lower)) return 'text';
   return 'binary';
-}
-
-function isPvfScriptExtension(lowerKey: string): boolean {
-  return lowerKey.endsWith('.act')
-    || lowerKey.endsWith('.skl')
-    || lowerKey.endsWith('.lst')
-    || lowerKey.endsWith('.str')
-    || lowerKey.endsWith('.equ')
-    || lowerKey.endsWith('.ai')
-    || lowerKey.endsWith('.aic')
-    || lowerKey.endsWith('.key')
-    || lowerKey.endsWith('.ptl');
 }
 
 function formatArchiveStats(label: string, stats: PvfArchivePhaseStats, extra?: Record<string, number>): string {

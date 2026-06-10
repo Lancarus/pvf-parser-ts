@@ -11,7 +11,46 @@
     "Other"
   ],
   "activationEvents": [
-    "onFileSystem:pvf"
+    "onFileSystem:pvf",
+    "onLanguage:pvf-act",
+    "onLanguage:pvf-ani",
+    "onLanguage:pvf-skl",
+    "onLanguage:pvf-lst",
+    "onLanguage:pvf-str",
+    "onLanguage:pvf-equ",
+    "onLanguage:pvf-ai",
+    "onLanguage:pvf-aic",
+    "onLanguage:pvf-key",
+    "onLanguage:pvf-atk",
+    "onLanguage:pvf-blu",
+    "onLanguage:pvf-bm",
+    "onLanguage:pvf-chr",
+    "onLanguage:pvf-co",
+    "onLanguage:pvf-cre",
+    "onLanguage:pvf-dgn",
+    "onLanguage:pvf-etc",
+    "onLanguage:pvf-evt",
+    "onLanguage:pvf-exj",
+    "onLanguage:pvf-lay",
+    "onLanguage:pvf-map",
+    "onLanguage:pvf-mm",
+    "onLanguage:pvf-mob",
+    "onLanguage:pvf-npc",
+    "onLanguage:pvf-nut",
+    "onLanguage:pvf-obj",
+    "onLanguage:pvf-pos",
+    "onLanguage:pvf-ptl",
+    "onLanguage:pvf-qst",
+    "onLanguage:pvf-rgn",
+    "onLanguage:pvf-sd",
+    "onLanguage:pvf-shp",
+    "onLanguage:pvf-stk",
+    "onLanguage:pvf-stm",
+    "onLanguage:pvf-tbl",
+    "onLanguage:pvf-twn",
+    "onLanguage:pvf-ui",
+    "onLanguage:pvf-wdm",
+    "onCommand:pvf.editScriptTagComment"
   ],
   "icon": "media/icons8-源代码-48.png",
   "main": "./dist/extension.js",
@@ -35,7 +74,9 @@
           "pvf-ani"
         ],
         "extensions": [
-          ".ani"
+          ".ani",
+          ".als",
+          ".ani.als"
         ],
         "configuration": "./src/scriptLang/ani/language-configuration.json"
       },
@@ -115,6 +156,325 @@
           ".key"
         ],
         "configuration": "./src/scriptLang/key/language-configuration.json"
+      },
+      {
+        "id": "pvf-atk",
+        "aliases": [
+          "ATK",
+          "pvf-atk"
+        ],
+        "extensions": [
+          ".atk"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-blu",
+        "aliases": [
+          "BLU",
+          "pvf-blu"
+        ],
+        "extensions": [
+          ".blu"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-bm",
+        "aliases": [
+          "BM",
+          "pvf-bm"
+        ],
+        "extensions": [
+          ".bm"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-chr",
+        "aliases": [
+          "CHR",
+          "pvf-chr"
+        ],
+        "extensions": [
+          ".chr"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-co",
+        "aliases": [
+          "CO",
+          "pvf-co"
+        ],
+        "extensions": [
+          ".co"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-cre",
+        "aliases": [
+          "CRE",
+          "pvf-cre"
+        ],
+        "extensions": [
+          ".cre"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-dgn",
+        "aliases": [
+          "DGN",
+          "pvf-dgn"
+        ],
+        "extensions": [
+          ".dgn"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-etc",
+        "aliases": [
+          "ETC",
+          "pvf-etc"
+        ],
+        "extensions": [
+          ".etc"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-evt",
+        "aliases": [
+          "EVT",
+          "pvf-evt"
+        ],
+        "extensions": [
+          ".evt"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-exj",
+        "aliases": [
+          "EXJ",
+          "pvf-exj"
+        ],
+        "extensions": [
+          ".exj"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-lay",
+        "aliases": [
+          "LAY",
+          "pvf-lay"
+        ],
+        "extensions": [
+          ".lay"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-map",
+        "aliases": [
+          "MAP",
+          "pvf-map"
+        ],
+        "extensions": [
+          ".map"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-mm",
+        "aliases": [
+          "MM",
+          "pvf-mm"
+        ],
+        "extensions": [
+          ".mm"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-mob",
+        "aliases": [
+          "MOB",
+          "pvf-mob"
+        ],
+        "extensions": [
+          ".mob"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-npc",
+        "aliases": [
+          "NPC",
+          "pvf-npc"
+        ],
+        "extensions": [
+          ".npc"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-nut",
+        "aliases": [
+          "NUT",
+          "pvf-nut"
+        ],
+        "extensions": [
+          ".nut"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-obj",
+        "aliases": [
+          "OBJ",
+          "pvf-obj"
+        ],
+        "extensions": [
+          ".obj"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-pos",
+        "aliases": [
+          "POS",
+          "pvf-pos"
+        ],
+        "extensions": [
+          ".pos"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-ptl",
+        "aliases": [
+          "PTL",
+          "pvf-ptl"
+        ],
+        "extensions": [
+          ".ptl"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-qst",
+        "aliases": [
+          "QST",
+          "pvf-qst"
+        ],
+        "extensions": [
+          ".qst"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-rgn",
+        "aliases": [
+          "RGN",
+          "pvf-rgn"
+        ],
+        "extensions": [
+          ".rgn"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-sd",
+        "aliases": [
+          "SD",
+          "pvf-sd"
+        ],
+        "extensions": [
+          ".sd"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-shp",
+        "aliases": [
+          "SHP",
+          "pvf-shp"
+        ],
+        "extensions": [
+          ".shp"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-stk",
+        "aliases": [
+          "STK",
+          "pvf-stk"
+        ],
+        "extensions": [
+          ".stk"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-stm",
+        "aliases": [
+          "STM",
+          "pvf-stm"
+        ],
+        "extensions": [
+          ".stm"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-tbl",
+        "aliases": [
+          "TBL",
+          "pvf-tbl"
+        ],
+        "extensions": [
+          ".tbl"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-twn",
+        "aliases": [
+          "TWN",
+          "pvf-twn"
+        ],
+        "extensions": [
+          ".twn"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-ui",
+        "aliases": [
+          "UI",
+          "pvf-ui"
+        ],
+        "extensions": [
+          ".ui"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
+      },
+      {
+        "id": "pvf-wdm",
+        "aliases": [
+          "WDM",
+          "pvf-wdm"
+        ],
+        "extensions": [
+          ".wdm"
+        ],
+        "configuration": "./src/scriptLang/generic-language-configuration.json"
       }
     ],
     "grammars": [
@@ -162,8 +522,383 @@
         "language": "pvf-key",
         "scopeName": "source.pvf-key",
         "path": "./syntaxes/pvf-key.tmLanguage.json"
+      },
+      {
+        "language": "pvf-atk",
+        "scopeName": "source.pvf-atk",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-blu",
+        "scopeName": "source.pvf-blu",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-bm",
+        "scopeName": "source.pvf-bm",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-chr",
+        "scopeName": "source.pvf-chr",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-co",
+        "scopeName": "source.pvf-co",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-cre",
+        "scopeName": "source.pvf-cre",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-dgn",
+        "scopeName": "source.pvf-dgn",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-etc",
+        "scopeName": "source.pvf-etc",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-evt",
+        "scopeName": "source.pvf-evt",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-exj",
+        "scopeName": "source.pvf-exj",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-lay",
+        "scopeName": "source.pvf-lay",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-map",
+        "scopeName": "source.pvf-map",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-mm",
+        "scopeName": "source.pvf-mm",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-mob",
+        "scopeName": "source.pvf-mob",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-npc",
+        "scopeName": "source.pvf-npc",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-nut",
+        "scopeName": "source.pvf-nut",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-obj",
+        "scopeName": "source.pvf-obj",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-pos",
+        "scopeName": "source.pvf-pos",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-ptl",
+        "scopeName": "source.pvf-ptl",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-qst",
+        "scopeName": "source.pvf-qst",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-rgn",
+        "scopeName": "source.pvf-rgn",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-sd",
+        "scopeName": "source.pvf-sd",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-shp",
+        "scopeName": "source.pvf-shp",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-stk",
+        "scopeName": "source.pvf-stk",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-stm",
+        "scopeName": "source.pvf-stm",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-tbl",
+        "scopeName": "source.pvf-tbl",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-twn",
+        "scopeName": "source.pvf-twn",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-ui",
+        "scopeName": "source.pvf-ui",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+      },
+      {
+        "language": "pvf-wdm",
+        "scopeName": "source.pvf-wdm",
+        "path": "./syntaxes/pvf-generic.tmLanguage.json"
       }
     ],
+    "configurationDefaults": {
+      "[pvf-act]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-ani]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-skl]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-lst]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-str]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-equ]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-ai]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-aic]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-key]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-atk]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-blu]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-bm]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-chr]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-co]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-cre]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-dgn]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-etc]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-evt]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-exj]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-lay]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-map]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-mm]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-mob]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-npc]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-nut]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-obj]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-pos]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-ptl]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-qst]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-rgn]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-sd]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-shp]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-stk]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-stm]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-tbl]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-twn]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-ui]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      },
+      "[pvf-wdm]": {
+        "editor.renderWhitespace": "boundary",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+      }
+    },
     "configuration": {
       "title": "PVF Pack Explorer",
       "properties": {
@@ -212,7 +947,7 @@
         },
         "pvf.scriptTagComment.author": {
           "type": "string",
-          "default": "台服爱好者",
+          "default": "Lancarus",
           "description": "编辑脚本标签注释时写入 authors 字段的作者名。默认使用当前项目的 GitHub ID。"
         },
         "pvf.unpack.writeConcurrency": {
