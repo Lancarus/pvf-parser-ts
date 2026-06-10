@@ -1,0 +1,3632 @@
+{
+  "schemaVersion": 1,
+  "version": 0,
+  "comments": {
+    "aicharacter/aicharacter.lst": {
+      "comment": "所有APC列表"
+    },
+    "aicharacter": {
+      "comment": "APC"
+    },
+    "character": {
+      "comment": "职业"
+    },
+    "creature": {
+      "comment": "宠物"
+    },
+    "dungeon": {
+      "comment": "副本"
+    },
+    "equipment": {
+      "comment": "装备"
+    },
+    "event": {
+      "comment": "活动"
+    },
+    "itemshop": {
+      "comment": "NPC商店"
+    },
+    "monster": {
+      "comment": "怪物"
+    },
+    "n_quest/quest.lst": {
+      "comment": "所有任务列表"
+    },
+    "n_quest": {
+      "comment": "任务"
+    },
+    "skill": {
+      "comment": "技能"
+    },
+    "sqr": {
+      "comment": "脚本"
+    },
+    "stackable": {
+      "comment": "道具"
+    },
+    "town": {
+      "comment": "城镇"
+    },
+    "character/character.lst": {
+      "comment": "所有职业列表"
+    },
+    "monster/monster.lst": {
+      "comment": "所有怪物列表"
+    },
+    "skill/swordmanskill.lst": {
+      "comment": "男鬼剑所有技能列表"
+    },
+    "skill/priestskill.lst": {
+      "comment": "男圣职所有技能列表"
+    },
+    "skill/mageskill.lst": {
+      "comment": "女魔法所有技能列表"
+    },
+    "skill/gunnerskill.lst": {
+      "comment": "男枪手所有技能列表"
+    },
+    "skill/fighterskill.lst": {
+      "comment": "女格斗所有技能列表"
+    },
+    "itemshop/itemshop.lst": {
+      "comment": "所有NPC商店列表"
+    },
+    "itemshop/equipmentshop7.shp": {
+      "comment": "赛丽亚商店"
+    },
+    "itemshop/stackableshop1.shp": {
+      "comment": "卡妮娜商店"
+    },
+    "itemshop/equipmentshop1.shp": {
+      "comment": "林纳斯商店"
+    },
+    "itemshop/equipmentshop2.shp": {
+      "comment": "辛达商店"
+    },
+    "itemshop/equipmentshop3.shp": {
+      "comment": "卡坤商店"
+    },
+    "itemshop/stackableshop2.shp": {
+      "comment": "索西雅商店"
+    },
+    "etc/worlddrop.etc": {
+      "comment": "全局掉落"
+    },
+    "etc/itemdropinfo_clearreward.etc": {
+      "comment": "地下城通关结算时翻牌的爆率"
+    },
+    "etc/itemdropinfo_monseter.etc": {
+      "comment": "地下城怪物爆率1"
+    },
+    "etc/itemdropinfo_monseter_extra.etc": {
+      "comment": "地下城怪物爆率2"
+    },
+    "etc/itemdropinfo_monster_hell.etc": {
+      "comment": "深渊怪物爆率"
+    },
+    "event/eventlistwindow.evt": {
+      "comment": "活动描述"
+    },
+    "itemshop/equipmentshop18.shp": {
+      "comment": "异界门口NPC"
+    },
+    "etc/compoundavatar_swordman.etc": {
+      "comment": "天空合成 - 鬼剑士"
+    },
+    "etc/compoundavatar_thief.etc": {
+      "comment": "天空合成 - 盗贼"
+    },
+    "etc/compoundavatar_priest.etc": {
+      "comment": "天空合成 - 圣职者"
+    },
+    "etc/compoundavatar_mage.etc": {
+      "comment": "天空合成 - 魔法师"
+    },
+    "etc/compoundavatar_gunner.etc": {
+      "comment": "天空合成 - 神枪手-男"
+    },
+    "etc/compoundavatar_atgunner.etc": {
+      "comment": "天空合成 - 神枪手-女"
+    },
+    "etc/compoundavatar_fighter.etc": {
+      "comment": "天空合成 - 格斗家_女"
+    },
+    "etc": {
+      "comment": "杂项文件"
+    },
+    "aura": {
+      "comment": "光环"
+    },
+    "aura/aura.lst": {
+      "comment": "光环列表"
+    },
+    "dungeon/dungeon.lst": {
+      "comment": "副本列表"
+    },
+    "map": {
+      "comment": "地图"
+    },
+    "region": {
+      "comment": "区域"
+    },
+    "worldmap": {
+      "comment": "副本接口"
+    },
+    "equipment/equipment.lst": {
+      "comment": "装备列表"
+    },
+    "data": {
+      "comment": "数据"
+    },
+    "chatemoticon": {
+      "comment": "表情"
+    },
+    "npc": {
+      "comment": "NPC"
+    },
+    "passiveobject": {
+      "comment": "被动对象"
+    },
+    "ui": {
+      "comment": "界面"
+    },
+    "stagemap": {
+      "comment": "阶段图"
+    },
+    "pvp_mission": {
+      "comment": "PVP任务"
+    },
+    "etc/itemdictionary": {
+      "comment": "装备辞典"
+    },
+    "etc/questshop.etc": {
+      "comment": "QP商店"
+    },
+    "n_quest/epicquest.lst": {
+      "comment": "主线任务清单"
+    },
+    "etc/goldlimitbylevel.etc": {
+      "comment": "金币上限"
+    },
+    "etc/tw_deleteinvaliditem.etc": {
+      "comment": "非法物品"
+    },
+    "etc/titlebook.etc": {
+      "comment": "称号簿"
+    },
+    "etc/independent_drop.etc": {
+      "comment": "独立掉落"
+    },
+    "etc/independentdrop.lst": {
+      "comment": "独立掉落列表"
+    },
+    "etc/independentdrop": {
+      "comment": "独立掉落列表"
+    },
+    "etc/itemdropinfo_common.etc": {
+      "comment": "金币掉落"
+    },
+    "etc/accountcargo.etc": {
+      "comment": "账号金库"
+    },
+    "etc/ultimatedungeonlist.etc": {
+      "comment": "王者级难度副本"
+    },
+    "etc/loadingadvermessage.etc": {
+      "comment": "载入时提示"
+    },
+    "etc/etc.kor.str": {
+      "comment": "杂项描述"
+    },
+    "etc/channel_info.etc": {
+      "comment": "频道信息"
+    },
+    "etc/guild.etc": {
+      "comment": "公会"
+    },
+    "etc/pvpchannellist.etc": {
+      "comment": "决斗场列表"
+    },
+    "event/levelupreward.evt": {
+      "comment": "升级邮件"
+    },
+    "etc/hellparty.etc": {
+      "comment": "深渊派对"
+    },
+    "etc/pcroom.vm": {
+      "comment": "抽奖机"
+    },
+    "etc/disjoint.etc": {
+      "comment": "分解装备"
+    },
+    "etc/advancealtar": {
+      "comment": "守护者祭坛"
+    },
+    "etc/newcashshop.etc": {
+      "comment": "商城文件"
+    },
+    "etc/chn_schedule.etc": {
+      "comment": "周常活动时刻表"
+    },
+    "etc/dialogwindowimageindex.etc": {
+      "comment": "NPC对话立绘"
+    },
+    "etc/globaltutorialinfo": {
+      "comment": "新手体验职业教程"
+    },
+    "etc/guide/guidelist.glist": {
+      "comment": "新手指南"
+    },
+    "etc/guide": {
+      "comment": "新手指南"
+    },
+    "etc/linksystem/charactermanage.etc": {
+      "comment": "冒险团"
+    },
+    "etc/deathtowerdialog.etc": {
+      "comment": "死亡塔对话"
+    },
+    "etc/emotionexpressiondata.etc": {
+      "comment": "心情注释"
+    },
+    "etc/equipmentpartset.etc": {
+      "comment": "套装属性"
+    },
+    "etc/fairpvpstat.etc": {
+      "comment": "公平决斗场职业属性"
+    },
+    "etc/growthpowernpcdialog.etc": {
+      "comment": "成长对话"
+    },
+    "etc/growthpowerrewardbuff.etc": {
+      "comment": "成长奖励"
+    },
+    "etc/ingameadvertisementparameter.etc": {
+      "comment": "游戏内广告参数"
+    },
+    "etc/hiddennpc.etc": {
+      "comment": "隐藏NPC"
+    },
+    "etc/ingamemovielist.etc": {
+      "comment": "游戏内视频列表"
+    },
+    "cashshop": {
+      "comment": "SHP"
+    },
+    "common": {
+      "comment": "C"
+    },
+    "clientonly": {
+      "comment": "test"
+    },
+    "creature/aquajello/aquajello.cre": {
+      "comment": "test"
+    },
+    "sqr/character/atmage/brokenarrow": {
+      "comment": "冰魄弓"
+    },
+    "character/mage/atanimation/new/dragon_00_atack.ani": {
+      "comment": "怒龙爆破-攻击"
+    },
+    "sqr/character/atmage/a_new/dragon_00/dragon_00.nut": {
+      "comment": "怒龙爆破"
+    },
+    "stackable/stackable.lst": {
+      "comment": "消耗品列表"
+    },
+    "region/region.kor.str": {
+      "comment": "区域名称",
+      "detailedComment": "新加的区域必须在这里面定义才能顺利读取到,完后还有town.map都要定义出来才能添加新地图"
+    },
+    "appendage": {
+      "comment": "状态APD"
+    },
+    "pet": {
+      "comment": "宠物（被废弃）"
+    },
+    "map/kingsruins": {
+      "comment": "王的遗迹"
+    },
+    "character/expertjob.etc": {
+      "comment": "分解大成功率"
+    },
+    "character/expertjob.lst": {
+      "comment": "副职业列表"
+    },
+    "character/exptable.tbl": {
+      "comment": "职业升级经验"
+    },
+    "character/swordman": {
+      "comment": "鬼剑士"
+    },
+    "character/priest": {
+      "comment": "圣职者"
+    },
+    "character/mage": {
+      "comment": "魔法师"
+    },
+    "character/thief": {
+      "comment": "暗夜使者"
+    },
+    "character/thief/animation": {
+      "comment": "暗夜动画"
+    },
+    "character/swordman/animation": {
+      "comment": "男鬼动画"
+    },
+    "character/priest/animation": {
+      "comment": "男圣职动画"
+    },
+    "character/mage/animation": {
+      "comment": "女法动画"
+    },
+    "character/gunner": {
+      "comment": "神枪手"
+    },
+    "character/gunner/animation": {
+      "comment": "男枪动画"
+    },
+    "character/fighter": {
+      "comment": "格斗家"
+    },
+    "character/fighter/animation": {
+      "comment": "女格斗动画"
+    },
+    "skill/thiefskill.lst": {
+      "comment": "暗夜使者所有技能列表"
+    },
+    "skill/demonicswordman.lst": {
+      "comment": "黑暗武士所有技能列表"
+    },
+    "itemshop/magic2.shp": {
+      "comment": "莎兰商店"
+    },
+    "itemshop/magic1.shp": {
+      "comment": "罗莉安商店"
+    },
+    "etc/ultimateskillani": {
+      "comment": "特殊技能"
+    },
+    "character/swordman/animation/hardattack.ani": {
+      "comment": "鬼斩"
+    },
+    "character/swordman/animation/gorecross.ani": {
+      "comment": "十字斩"
+    },
+    "character/swordman/animation/hardattackchargeafter.ani": {
+      "comment": "噬灵鬼斩"
+    },
+    "character/swordman/effect/animation/weaponcombo/blade.ani": {
+      "comment": "太刀里鬼特效"
+    },
+    "character/swordman/effect/animation/weaponcombo/heavy.ani": {
+      "comment": "巨剑里鬼特效"
+    },
+    "character/swordman/effect/animation/shortswordmastery/heavyweaponcombochargedodge.ani": {
+      "comment": "巨剑里鬼蓄力特效"
+    },
+    "character/swordman/attackinfo/weaponcomboblade1.atk": {
+      "comment": "太刀里鬼一段"
+    },
+    "character/swordman/attackinfo/weaponcomboblade2.atk": {
+      "comment": "太刀里鬼二段"
+    },
+    "character/swordman/attackinfo/weaponcomboblade3.atk": {
+      "comment": "太刀里鬼三段"
+    },
+    "character/swordman/attackinfo/weaponcomboblade4.atk": {
+      "comment": "太刀里鬼四段"
+    },
+    "character/swordman/attackinfo/weaponcomboblunt1.atk": {
+      "comment": "钝器里鬼一段"
+    },
+    "character/swordman/attackinfo/weaponcomboblunt2.atk": {
+      "comment": "钝器里鬼二、三段"
+    },
+    "character/swordman/attackinfo/weaponcomboblunt3.atk": {
+      "comment": "钝器里鬼四段"
+    },
+    "character/swordman/attackinfo/weaponcomboheavy1.atk": {
+      "comment": "巨剑里鬼一段"
+    },
+    "character/swordman/attackinfo/weaponcomboheavy2.atk": {
+      "comment": "巨剑里鬼二段"
+    },
+    "character/swordman/attackinfo/weaponcombolight1.atk": {
+      "comment": "光剑里鬼一段"
+    },
+    "character/swordman/attackinfo/weaponcombolight2.atk": {
+      "comment": "光剑里鬼二段"
+    },
+    "character/swordman/attackinfo/weaponcombolight3.atk": {
+      "comment": "光剑里鬼三段"
+    },
+    "character/swordman/attackinfo/weaponcomboshort1.atk": {
+      "comment": "短剑里鬼一段"
+    },
+    "character/swordman/attackinfo/weaponcomboshort2.atk": {
+      "comment": "短剑里鬼二段"
+    },
+    "character/swordman/attackinfo/weaponcomboshort3.atk": {
+      "comment": "短剑里鬼三段"
+    },
+    "character/swordman/effect/animation/weaponcombo/blunt.ani": {
+      "comment": "钝器里鬼特效"
+    },
+    "character/swordman/effect/animation/weaponcombo/light.ani": {
+      "comment": "光剑里鬼特效"
+    },
+    "character/swordman/animation/moonlightslash1.ani": {
+      "comment": "月光斩一段"
+    },
+    "character/swordman/animation/moonlightslash2.ani": {
+      "comment": "月光斩二段"
+    },
+    "character/swordman/animation/moonlightslashfull.ani": {
+      "comment": "满月斩"
+    },
+    "character/swordman/animation/move.ani": {
+      "comment": "行走"
+    },
+    "character/swordman/animation/rest.ani": {
+      "comment": "站立"
+    },
+    "character/swordman/animation/attack1.ani": {
+      "comment": "普攻一段"
+    },
+    "character/swordman/animation/attack2.ani": {
+      "comment": "普攻二段"
+    },
+    "character/swordman/animation/attack3.ani": {
+      "comment": "普攻三段"
+    },
+    "character/swordman/animation/blachecast.ani": {
+      "comment": "怖拉修抬手"
+    },
+    "character/swordman/animation/blachesmash.ani": {
+      "comment": "怖拉修施法"
+    },
+    "character/swordman/animation/hopsmashready.ani": {
+      "comment": "崩山击蓄力"
+    },
+    "character/swordman/animation/hopsmash.ani": {
+      "comment": "崩山击"
+    },
+    "character/priest/attackinfo/highspeedslash.atk": {
+      "comment": "死亡切割"
+    },
+    "character/priest/attackinfo/highspeedslashlast.atk": {
+      "comment": "死亡切割终结式"
+    },
+    "character/priest/attackinfo/antiairupper.atk": {
+      "comment": "空斩打"
+    },
+    "character/swordman/attackinfo/hardattack.atk": {
+      "comment": "鬼斩"
+    },
+    "character/swordman/attackinfo/hardattackchargeafter.atk": {
+      "comment": "噬灵鬼斩"
+    },
+    "character/swordman/attackinfo/ashenfork.atk": {
+      "comment": "银光落刃"
+    },
+    "character/priest/attackinfo/luckystraight.atk": {
+      "comment": "直拳冲击"
+    },
+    "character/priest/animation/galesmash1.ani": {
+      "comment": "疾风打一段"
+    },
+    "character/priest/animation/galesmash2.ani": {
+      "comment": "疾风打二段"
+    },
+    "character/mage/animation/pokethrowtry.ani": {
+      "comment": "圆舞棍一段"
+    },
+    "character/mage/animation/pokethrowsmash.ani": {
+      "comment": "圆舞棍二段"
+    },
+    "character/swordman/animation/vaneslashtry.ani": {
+      "comment": "裂波斩一段"
+    },
+    "character/swordman/animation/vaneslash.ani": {
+      "comment": "裂波斩二段"
+    },
+    "equipment/character/atfighter.lay": {
+      "comment": "男格斗动作模组"
+    },
+    "equipment/character/atgunner.lay": {
+      "comment": "女枪手动作模组"
+    },
+    "equipment/character/atmage.lay": {
+      "comment": "男魔法动作模组"
+    },
+    "equipment/character/fighter.lay": {
+      "comment": "女格斗动作模组"
+    },
+    "equipment/character/gunner.lay": {
+      "comment": "男枪手动作模组"
+    },
+    "equipment/character/mage.lay": {
+      "comment": "女魔法动作模组"
+    },
+    "equipment/character/priest.lay": {
+      "comment": "男圣职动作模组"
+    },
+    "equipment/character/swordman.lay": {
+      "comment": "男鬼剑动作模组"
+    },
+    "equipment/character/thief.lay": {
+      "comment": "暗夜使者动作模组"
+    },
+    "character/gunner/animation/aerialknee.ani": {
+      "comment": "膝撞"
+    },
+    "character/gunner/animation/trytread.ani": {
+      "comment": "踏射一段"
+    },
+    "character/gunner/animation/treadshoot.ani": {
+      "comment": "踏射二段"
+    },
+    "character/priest/animation/quakearea.ani": {
+      "comment": "落凤锤"
+    },
+    "character/swordman/animation/dash.ani": {
+      "comment": "前冲"
+    },
+    "character/swordman/animation/dashattack.ani": {
+      "comment": "前冲攻击"
+    },
+    "character/swordman/animation/dashattackmultihit.ani": {
+      "comment": "连突刺"
+    },
+    "character/swordman/animation/upperslashafter.ani": {
+      "comment": "短剑上挑二段"
+    },
+    "character/swordman/animation/tripleslash1.ani": {
+      "comment": "三段斩（从这里到5）"
+    },
+    "character/swordman/animation/momentaryslash.ani": {
+      "comment": "拔刀斩"
+    },
+    "character/swordman/animation/momentaryslashex.ani": {
+      "comment": "拔刀斩蓄力"
+    },
+    "character/swordman/animation/outragebreakready.ani": {
+      "comment": "崩山裂地斩起手式"
+    },
+    "character/swordman/animation/outragebreakslash.ani": {
+      "comment": "崩山裂地斩跳砸式"
+    },
+    "character/swordman/animation/weaponcomboblade1.ani": {
+      "comment": "太刀里鬼（从这里到4）"
+    },
+    "character/swordman/animation/weaponcomboblunt1.ani": {
+      "comment": "钝器里鬼（从这里到3）"
+    },
+    "character/swordman/animation/weaponcomboheavy1.ani": {
+      "comment": "巨剑里鬼（从这里到2）"
+    },
+    "character/swordman/animation/weaponcombolight1.ani": {
+      "comment": "光剑里鬼（从这里到3）"
+    },
+    "character/swordman/animation/weaponcomboshort1.ani": {
+      "comment": "短剑里鬼（从这里到3）"
+    },
+    "character/swordman/animation/chargecrashdash.ani": {
+      "comment": "破军升龙击冲锋式"
+    },
+    "character/swordman/animation/chargecrashupper.ani": {
+      "comment": "破军升龙击挑空式"
+    },
+    "character/swordman/animation/chargecrashfinish.ani": {
+      "comment": "破军升龙击下砸式"
+    },
+    "character/swordman/animation/illusionslash1.ani": {
+      "comment": "幻影剑舞斩击（从这里到4）"
+    },
+    "character/swordman/animation/illusionslashfinal.ani": {
+      "comment": "幻影剑舞终结式"
+    },
+    "character/swordman/animation/guard.ani": {
+      "comment": "格挡"
+    },
+    "character/swordman/animation/the_stronger_guard1.ani": {
+      "comment": "排山震起手"
+    },
+    "character/swordman/animation/the_stronger_guard2.ani": {
+      "comment": "排山震反击"
+    },
+    "character/swordman/animation/thestrongerguard1.ani": {
+      "comment": "排山震起手"
+    },
+    "character/swordman/animation/thestrongerguard2.ani": {
+      "comment": "排山震反击"
+    },
+    "character/gunner/animation/countershootready.ani": {
+      "comment": "复仇反击一段"
+    },
+    "character/gunner/animation/countershootshoot.ani": {
+      "comment": "复仇反击二段"
+    },
+    "character/gunner/attackinfo/countershoot.atk": {
+      "comment": "复仇反击"
+    },
+    "character/gunner/animation/crossshoot.ani": {
+      "comment": "交叉射击"
+    },
+    "character/mage/animation/upperswing.ani": {
+      "comment": "天击"
+    },
+    "character/fighter/animation/grabexplosion.ani": {
+      "comment": "琴月阳"
+    },
+    "character/fighter/animation/grabexplosionex.ani": {
+      "comment": "猛毒琴月阳"
+    },
+    "character/fighter/animation/earthbreak.ani": {
+      "comment": "金刚碎"
+    },
+    "character/fighter/attackinfo/earthbreak.atk": {
+      "comment": "金刚碎"
+    },
+    "character/fighter/attackinfo/grabexplosion.atk": {
+      "comment": "擒月炎摆拳"
+    },
+    "character/fighter/attackinfo/damagelowkick.atk": {
+      "comment": "下段踢"
+    },
+    "character/fighter/attackinfo/dashpunch.atk": {
+      "comment": "崩拳"
+    },
+    "character/fighter/attackinfo/punchafterreturn.atk": {
+      "comment": "折颈"
+    },
+    "character/fighter/animation/throwenemyhold.ani": {
+      "comment": "抛投一段"
+    },
+    "character/fighter/animation/throwenemythrow.ani": {
+      "comment": "抛投二段"
+    },
+    "character/priest/attackinfo/duckingbodyblow.atk": {
+      "comment": "俯冲腹拳"
+    },
+    "character/priest/attackinfo/duckingstraight.atk": {
+      "comment": "俯冲直拳"
+    },
+    "character/priest/attackinfo/duckingupper.atk": {
+      "comment": "俯冲翔拳"
+    },
+    "passiveobject/character/fighter/attackinfo/throwsand.atk": {
+      "comment": "抛沙"
+    },
+    "passiveobject/character/priest/attackinfo/quakearea.atk": {
+      "comment": "落凤锤的冲击波"
+    },
+    "character/priest/animation/luckystraight.ani": {
+      "comment": "直拳冲击"
+    },
+    "character/priest/animation/groundcrash.ani": {
+      "comment": "断空锤击"
+    },
+    "passiveobject/character/priest/attackinfo/revengethunderbolt.atk": {
+      "comment": "光之复仇的闪电"
+    },
+    "passiveobject/character/priest/attackinfo/spearofvictory.atk": {
+      "comment": "胜利之矛"
+    },
+    "passiveobject/character/priest/attackinfo/willdriver.atk": {
+      "comment": "意念驱动"
+    },
+    "character/priest/animation/duckingbodyblow.ani": {
+      "comment": "俯冲腹拳"
+    },
+    "character/priest/animation/duckingstraight.ani": {
+      "comment": "俯冲直拳"
+    },
+    "character/priest/animation/duckingupper.ani": {
+      "comment": "俯冲勾拳"
+    },
+    "character/swordman/attackinfo/grabblastblood.atk": {
+      "comment": "嗜魂之手"
+    },
+    "character/swordman/attackinfo/grabblastbloodex.atk": {
+      "comment": "灭魂之手"
+    },
+    "character/swordman/attackinfo/grab.atk": {
+      "comment": "小手一伸"
+    },
+    "character/swordman/attackinfo/upperslash.atk": {
+      "comment": "上挑"
+    },
+    "character/swordman/attackinfo/upperslashafter.atk": {
+      "comment": "短剑上挑二段"
+    },
+    "character/gunner/attackinfo/dashattack.atk": {
+      "comment": "滑铲"
+    },
+    "character/gunner/attackinfo/aerialknee.atk": {
+      "comment": "膝撞"
+    },
+    "character/fighter/attackinfo/liftupper.atk": {
+      "comment": "上勾拳"
+    },
+    "character/swordman/attackinfo/frenzy1.atk": {
+      "comment": "血之狂暴一段"
+    },
+    "character/swordman/attackinfo/frenzy2.atk": {
+      "comment": "血之狂暴二段"
+    },
+    "character/swordman/attackinfo/frenzy3.atk": {
+      "comment": "血之狂暴三段"
+    },
+    "character/swordman/attackinfo/frenzy4.atk": {
+      "comment": "血之狂暴四段"
+    },
+    "character/swordman/attackinfo/flowmindone.atk": {
+      "comment": "流心刺"
+    },
+    "character/swordman/attackinfo/flowmindoneadd.atk": {
+      "comment": "流心刺追斩"
+    },
+    "character/swordman/animation/flowmindone.ani": {
+      "comment": "流心刺"
+    },
+    "character/swordman/animation/flowmindoneadd.ani": {
+      "comment": "流心刺追斩"
+    },
+    "character/swordman/animation/flowmindstay.ani": {
+      "comment": "流心"
+    },
+    "character/swordman/animation/flowmindthreeready.ani": {
+      "comment": "流心升起手式"
+    },
+    "character/swordman/animation/flowmindthreeattack.ani": {
+      "comment": "流心升"
+    },
+    "character/swordman/animation/flowmindtwolanding.ani": {
+      "comment": "流心跃前半段"
+    },
+    "character/swordman/animation/flowmindtwojump.ani": {
+      "comment": "流心跃后半段"
+    },
+    "character/swordman/animation/flowmindtwoattack2.ani": {
+      "comment": "流心跃横斩"
+    },
+    "character/swordman/animation/flowmindtwoattack1.ani": {
+      "comment": "流心跃竖劈"
+    },
+    "character/swordman/animation/flowmindstart.ani": {
+      "comment": "流心跃落地"
+    },
+    "character/swordman/attackinfo/flowmindthreeattack.atk": {
+      "comment": "流心升"
+    },
+    "character/swordman/attackinfo/flowmindtwoattack1.atk": {
+      "comment": "流心跃竖劈"
+    },
+    "character/swordman/attackinfo/flowmindtwoattack2.atk": {
+      "comment": "流心跃横斩"
+    },
+    "passiveobject/character/swordman/attackinfo/grandwave.atk": {
+      "comment": "邪光斩"
+    },
+    "passiveobject/character/swordman/attackinfo/grandwavefullcharge.atk": {
+      "comment": "修罗邪光斩"
+    },
+    "passiveobject/character/swordman/attackinfo/guardwave.atk": {
+      "comment": "格挡冲击波"
+    },
+    "character/mage/animation/doubleswing1.ani": {
+      "comment": "双重锤击一段"
+    },
+    "character/mage/animation/doubleswing2.ani": {
+      "comment": "双重锤击二段"
+    },
+    "character/mage/attackinfo/doubleswing1.atk": {
+      "comment": "双重锤击一段"
+    },
+    "character/mage/attackinfo/doubleswing2.atk": {
+      "comment": "双重锤击二段"
+    },
+    "passiveobject/character/mage/attackinfo/timerbomb.atk": {
+      "comment": "炫纹爆弹持续伤害"
+    },
+    "passiveobject/character/mage/attackinfo/timerbombexplosion.atk": {
+      "comment": "炫纹爆弹爆炸"
+    },
+    "character/fighter/attackinfo/hiddensting.atk": {
+      "comment": "毒影针"
+    },
+    "etc/sptable.etc": {
+      "comment": "每级的sp点"
+    },
+    "passiveobject/monster/goblin/attackinfo/thunderbolt.atk": {
+      "comment": "凯诺的闪电"
+    },
+    "skill/atgunnerskill.lst": {
+      "comment": "女枪手所有技能列表"
+    },
+    "character/gunner/atattackinfo/randomshoot.atk": {
+      "comment": "乱射"
+    },
+    "passiveobject/character/gunner/attackinfo/treadshootsub.atk": {
+      "comment": "踏射间接伤害"
+    },
+    "passiveobject/character/gunner/attackinfo/subweaponbulletgatlingup.atk": {
+      "comment": "格林机枪向上的子弹"
+    },
+    "passiveobject/character/gunner/attackinfo/subweaponbulletgatlingfront.atk": {
+      "comment": "格林机枪向前的子弹"
+    },
+    "passiveobject/character/gunner/attackinfo/subweaponbulletgatlingaerial.atk": {
+      "comment": "格林机枪的子弹"
+    },
+    "character/swordman/attackinfo/hitback.atk": {
+      "comment": "逆转反击"
+    },
+    "character/gunner/attackinfo/airraid.atk": {
+      "comment": "浮空截击"
+    },
+    "character/gunner/attackinfo/airraidex.atk": {
+      "comment": "回旋截击一段"
+    },
+    "character/gunner/attackinfo/airraidexwindmill.atk": {
+      "comment": "回旋截击二段"
+    },
+    "passiveobject/character/gunner/attackinfo/uraniumbomb.atk": {
+      "comment": "量子爆弹下落"
+    },
+    "passiveobject/character/gunner/attackinfo/uraniumbombexp.atk": {
+      "comment": "量子爆弹爆炸"
+    },
+    "passiveobject/character/gunner/attackinfo/crossshoot.atk": {
+      "comment": "交叉射击"
+    },
+    "passiveobject/character/mage/attackinfo/magicmissile.atk": {
+      "comment": "魔法星弹"
+    },
+    "character/mage/attackinfo/thrust.atk": {
+      "comment": "龙牙"
+    },
+    "character/mage/attackinfo/handstrike.atk": {
+      "comment": "落花掌"
+    },
+    "passiveobject/character/mage/attackinfo/launchfrosthead.atk": {
+      "comment": "冰霜雪人"
+    },
+    "character/mage/attackinfo/whiptocharacter.atk": {
+      "comment": "鞭挞打队友"
+    },
+    "character/mage/attackinfo/whiptoenemy.atk": {
+      "comment": "鞭挞打怪物"
+    },
+    "character/mage/attackinfo/whiptomonster.atk": {
+      "comment": "鞭挞打召唤兽"
+    },
+    "character/mage/animation/whip.ani": {
+      "comment": "鞭挞"
+    },
+    "monster/goblin/attackinfo/attackhodor.atk": {
+      "comment": "赫德尔轻击"
+    },
+    "monster/goblin/attackinfo/chargeattackhodor.atk": {
+      "comment": "赫德尔重击"
+    },
+    "passiveobject/monster/goblin/attackinfo/hodorbomb.atk": {
+      "comment": "赫德尔的爆弹"
+    },
+    "passiveobject/monster/goblin/attackinfo/hodorbombsub.atk": {
+      "comment": "赫德尔的爆弹爆炸"
+    },
+    "passiveobject/monster/goblin/attackinfo/hodorthrowstone.atk": {
+      "comment": "赫德尔投掷石头"
+    },
+    "skill/atmageskill.lst": {
+      "comment": "男魔法所有技能列表"
+    },
+    "skill/atfighterskill.lst": {
+      "comment": "男格斗所有技能列表"
+    },
+    "character/fighter/animation/crouch.ani": {
+      "comment": "蹲伏"
+    },
+    "passiveobject/character/swordman/attackinfo/ghoststepslash.atk": {
+      "comment": "鬼影闪"
+    },
+    "character/swordman/attackinfo/hopsmash.atk": {
+      "comment": "崩山击"
+    },
+    "character/swordman/attackinfo/outragebreak.atk": {
+      "comment": "崩山裂地斩"
+    },
+    "character/swordman/attackinfo/hopsmashfinal.atk": {
+      "comment": "崩山击最后一段"
+    },
+    "passiveobject/character/swordman/attackinfo/hopsmashsub.atk": {
+      "comment": "崩山击冲击波"
+    },
+    "passiveobject/character/swordman/attackinfo/hopsmashsub_ds.atk": {
+      "comment": "黑武的崩山击冲击波"
+    },
+    "character/swordman/animation/bloodyraveinhale.ani": {
+      "comment": "嗜魂封魔斩：吸附"
+    },
+    "character/swordman/animation/bloodyraveslash.ani": {
+      "comment": "嗜魂封魔斩"
+    },
+    "passiveobject/character/gunner/attackinfo/grenadenone.atk": {
+      "comment": "G-14手雷"
+    },
+    "passiveobject/character/gunner/attackinfo/grenadelight.atk": {
+      "comment": "G-35L感电手雷"
+    },
+    "passiveobject/character/gunner/attackinfo/grenadewater.atk": {
+      "comment": "G-18C冰冻手雷"
+    },
+    "passiveobject/character/gunner/attackinfo/flashminewait.atk": {
+      "comment": "闪击地雷"
+    },
+    "passiveobject/character/gunner/attackinfo/flashminestun.atk": {
+      "comment": "闪击地雷"
+    },
+    "passiveobject/character/fighter/attackinfo/grabcannonsub.atk": {
+      "comment": "抓轰炮"
+    },
+    "character/priest/animation/sway.ani": {
+      "comment": "摆动"
+    },
+    "character/priest/animation/ducking.ani": {
+      "comment": "俯冲"
+    },
+    "skill/thief": {
+      "comment": "暗夜使者"
+    },
+    "skill/swordman": {
+      "comment": "男鬼剑"
+    },
+    "skill/priest": {
+      "comment": "男圣职"
+    },
+    "skill/mage": {
+      "comment": "女魔法"
+    },
+    "skill/gunner": {
+      "comment": "男枪手"
+    },
+    "skill/fighter": {
+      "comment": "女格斗"
+    },
+    "skill/demonicswordman": {
+      "comment": "黑暗武士"
+    },
+    "skill/creatormage": {
+      "comment": "缔造者"
+    },
+    "skill/atmage": {
+      "comment": "男魔法"
+    },
+    "skill/atgunner": {
+      "comment": "女枪手"
+    },
+    "skill/atfighter": {
+      "comment": "男格斗"
+    },
+    "character/gunner/atanimation/aerialknee.ani": {
+      "comment": "后撩踢"
+    },
+    "character/gunner/atanimation/countershootready.ani": {
+      "comment": "复仇反击起手"
+    },
+    "character/gunner/atanimation/countershootshoot.ani": {
+      "comment": "复仇反击"
+    },
+    "character/gunner/atanimation/crossshoot.ani": {
+      "comment": "交叉射击"
+    },
+    "character/gunner/attackinfo/hitonsubweapon.atk": {
+      "comment": "重火器拔击"
+    },
+    "character/gunner/atattackinfo/hitonsubweapon.atk": {
+      "comment": "重火器拔击"
+    },
+    "passiveobject/monster/zombie/attackinfo/zombieeyeexplode.atk": {
+      "comment": "僵尸眼球的爆炸"
+    },
+    "itemshop/recipe1.shp": {
+      "comment": "诺顿商店"
+    },
+    "ui/hud/hud.ui": {
+      "comment": "血槽按钮位置"
+    },
+    "ui/hud/mainmenuwindow.ui": {
+      "comment": "菜单按钮位置"
+    },
+    "skill/creatormage.lst": {
+      "comment": "缔造者所有技能列表"
+    },
+    "passiveobject/monster/goblin/attackinfo/hillgabsizzle.atk": {
+      "comment": "赤哥布林的火焰"
+    },
+    "passiveobject/monster/goblin/attackinfo/hillgabearthfire.atk": {
+      "comment": "赤哥布林的火焰地带"
+    },
+    "passiveobject/monster/goblin/attackinfo/goblinfireexplosion.atk": {
+      "comment": "哥布林自爆"
+    },
+    "passiveobject/monster/goblin/attackinfo/flaghillgabsizzle.atk": {
+      "comment": "烈焰哥布林的火焰"
+    },
+    "passiveobject/monster/goblin/attackinfo/flaghillgabearthfire.atk": {
+      "comment": "烈焰哥布林的火焰地带"
+    },
+    "passiveobject/monster/goblin/attackinfo/seagabicicle.atk": {
+      "comment": "青哥布林的冰柱"
+    },
+    "passiveobject/monster/goblin/attackinfo/flagseagabicicle.atk": {
+      "comment": "冰霜哥布林的冰柱"
+    },
+    "monster/goblin/animation_lightningkinol2/attack1.ani": {
+      "comment": "凯诺普攻"
+    },
+    "etc/upgrade.etc": {
+      "comment": "装备强化属性"
+    },
+    "etc/amplifyupgrade.etc": {
+      "comment": "装备增幅属性"
+    },
+    "passiveobject/monster/goblin/attackinfo/throwstone.atk": {
+      "comment": "哥布林投掷石头"
+    },
+    "monster/tau/attackinfo/beast.atk": {
+      "comment": "牛头巨兽的普通攻击"
+    },
+    "monster/tau/attackinfo/roar.atk": {
+      "comment": "牛头巨兽的吼叫"
+    },
+    "passiveobject/character/swordman/attackinfo/ashenforksub.atk": {
+      "comment": "银光落刃的冲击波"
+    },
+    "character/swordman/attackinfo/dashattack.atk": {
+      "comment": "前冲攻击"
+    },
+    "passiveobject/monster/tau/attackinfo/earthquake.atk": {
+      "comment": "萨乌塔的地震攻击"
+    },
+    "passiveobject/monster/tau/attackinfo/earthquakestrong.atk": {
+      "comment": "萨乌塔的强力地震攻击"
+    },
+    "passiveobject/monster/soceress/attackinfo/iceniddle.atk": {
+      "comment": "克拉赫的冰冻针刺"
+    },
+    "passiveobject/monster/soceress/attackinfo/iceniddlegroup.atk": {
+      "comment": "克拉赫的冰冻针刺群"
+    },
+    "character/swordman/attackinfo/dashattackmultihit.atk": {
+      "comment": "连突刺"
+    },
+    "monster/soceress/attackinfo/attack.atk": {
+      "comment": "彼诺修的普通攻击"
+    },
+    "monster/soceress/action_keraha/proc_keraha.act": {
+      "comment": "克拉赫寒冰护盾"
+    },
+    "monster/soceress/action_keraha/summon_goblin_kera.act": {
+      "comment": "克拉赫召唤哥布林"
+    },
+    "monster/soceress/action_keraha/summon_goblin.act": {
+      "comment": "彼诺修召唤哥布林"
+    },
+    "monster/soceress/action_keraha/proc_vinoshu.act": {
+      "comment": "彼诺修的烈焰护盾"
+    },
+    "passiveobject/monster/soceress/attackinfo/shootingstar.atk": {
+      "comment": "彼诺修的烈焰陨石"
+    },
+    "passiveobject/monster/soceress/attackinfo/shootingstarexp.atk": {
+      "comment": "彼诺修的烈焰陨石冲击波"
+    },
+    "passiveobject/character": {
+      "comment": "职业被动对象"
+    },
+    "passiveobject/monster": {
+      "comment": "怪物被动对象"
+    },
+    "character/priest/attackinfo/galesmash1.atk": {
+      "comment": "疾风打一段"
+    },
+    "character/priest/attackinfo/galesmash2.atk": {
+      "comment": "疾风打二段"
+    },
+    "monster/goblin/attackinfo/attack1.atk": {
+      "comment": "哥布林普通攻击"
+    },
+    "monster/goblin/attackinfo/attack2.atk": {
+      "comment": "哥布林十夫长普通攻击"
+    },
+    "monster/monsterapcdifficultybonus.tbl": {
+      "comment": "全局怪物"
+    },
+    "skill/atswordmanskill.lst": {
+      "comment": "女鬼剑所有技能列表"
+    },
+    "skill/dsswordmanskill.lst": {
+      "comment": "黑暗武士所有技能列表"
+    },
+    "skill/creatormageskill.lst": {
+      "comment": "缔造者所有技能列表"
+    },
+    "skill/atswordman": {
+      "comment": "女鬼剑"
+    },
+    "character/swordman/atanimation": {
+      "comment": "女鬼动画"
+    },
+    "character/swordman/dsanimation": {
+      "comment": "黑武动画"
+    },
+    "character/swordman/attackinfo": {
+      "comment": "男鬼动作值"
+    },
+    "character/swordman/atattackinfo": {
+      "comment": "女鬼动作值"
+    },
+    "character/swordman/dsattackinfo": {
+      "comment": "黑武动作值"
+    },
+    "character/gunner/atanimation": {
+      "comment": "女枪动画"
+    },
+    "character/gunner/atattackinfo": {
+      "comment": "女枪动作值"
+    },
+    "character/gunner/attackinfo": {
+      "comment": "男枪动作值"
+    },
+    "character/fighter/atanimation": {
+      "comment": "男格斗动画"
+    },
+    "character/fighter/atattackinfo": {
+      "comment": "男格斗动作值"
+    },
+    "character/fighter/attackinfo": {
+      "comment": "女格斗动作值"
+    },
+    "character/mage/atanimation": {
+      "comment": "男法动画"
+    },
+    "character/mage/atattackinfo": {
+      "comment": "男法动作值"
+    },
+    "character/mage/attackinfo": {
+      "comment": "女法动作值"
+    },
+    "character/thief/attackinfo": {
+      "comment": "暗夜动作值"
+    },
+    "character/priest/attackinfo": {
+      "comment": "男圣职动作值"
+    },
+    "character/mage/creatoranimation": {
+      "comment": "缔造者动画"
+    },
+    "character/mage/creatorattackinfo": {
+      "comment": "缔造者动作值"
+    },
+    "asdf": {
+      "comment": "asdf"
+    },
+    "asdf2": {
+      "comment": "asdf"
+    },
+    "asdf2/fff": {
+      "comment": "asdf"
+    },
+    "cashshop/asdf": {
+      "comment": "asdf"
+    },
+    "cashshop/asdf.test": {
+      "comment": "asdf"
+    },
+    "etc/itemdropinfo_control.etc": {
+      "comment": "道具控制"
+    },
+    "etc/itemdropinfo_object.etc": {
+      "comment": "特殊掉落"
+    },
+    "etc/questmovielist.etc": {
+      "comment": "任务视频(本地打不开)"
+    },
+    "event/seriablessingnpcdialog.evt": {
+      "comment": "成长对话赛丽亚的祝福"
+    },
+    "etc/tutorialinfo.etc": {
+      "comment": "新号救赛丽亚对话"
+    },
+    "equipment/character/partset": {
+      "comment": "套装属性"
+    },
+    "equipment/character/partset2": {
+      "comment": "套装属性"
+    },
+    "etc/craneminigameitem.etc": {
+      "comment": "娃娃机"
+    },
+    "itemshop/event_npc_sao_asuna.shp": {
+      "comment": "亚丝娜"
+    },
+    "itemshop/aria.shp": {
+      "comment": "亚里亚"
+    },
+    "itemshop/lizi.shp": {
+      "comment": "理子"
+    },
+    "itemshop/equipmentshop_dungeon_ghost.shp": {
+      "comment": "贞子"
+    },
+    "itemshop/brownie.shp": {
+      "comment": "全能的汪星人"
+    },
+    "itemshop/ailika.shp": {
+      "comment": "艾丽卡"
+    },
+    "itemshop/baixue.shp": {
+      "comment": "白雪"
+    },
+    "clientonly/skilltree": {
+      "comment": "技能树"
+    },
+    "event/ingameeventlist.evt": {
+      "comment": "活动列表"
+    },
+    "event/attendance.evt": {
+      "comment": "出席活动"
+    },
+    "event/heromissionevent.evt": {
+      "comment": "夏日活动"
+    },
+    "clientonly/cancelskilllist.co": {
+      "comment": "强制技能(仅改这没用)"
+    },
+    "character/expertjob/alchemist.exj": {
+      "comment": "炼金术师"
+    },
+    "character/expertjob/disjointer.exj": {
+      "comment": "分解师"
+    },
+    "character/expertjob/doll_controller.exj": {
+      "comment": "控偶师"
+    },
+    "character/expertjob/enchanter.exj": {
+      "comment": "附魔师"
+    },
+    "character/pvppricetable.tbl": {
+      "comment": "决斗经验表"
+    },
+    "etc/itemgroupname.tbl": {
+      "comment": "道具分组表"
+    },
+    "etc/upgrade_separate.etc": {
+      "comment": "锻造"
+    },
+    "etc/secretshop.etc": {
+      "comment": "加百利商店"
+    },
+    "etc/linksystem": {
+      "comment": "冒险团支援兵"
+    },
+    "itemshop/birken2.shp": {
+      "comment": "博肯-阿法利亚"
+    },
+    "itemshop/birken.shp": {
+      "comment": "博肯-赫顿玛尔"
+    },
+    "etc/linksystem/striker.etc": {
+      "comment": "支援系统参数"
+    },
+    "etc/linksystem/characlinksystem.etc": {
+      "comment": "冒险团额外经验金币"
+    },
+    "stackable/monstercard": {
+      "comment": "怪物卡片"
+    },
+    "etc/imagecommunication.etc": {
+      "comment": "米娅的视频通话功能"
+    },
+    "etc/onlinequest.etc": {
+      "comment": "Online任务"
+    },
+    "etc/skillpreload.etc": {
+      "comment": "技能调用Ani"
+    },
+    "event/eventnotice.evt": {
+      "comment": "滚动公告"
+    },
+    "etc/advancealtar/advancealtarachievementreward.etc": {
+      "comment": "奖励"
+    },
+    "etc/advancealtar/advancealtarconfig.etc": {
+      "comment": "门票和升级花费"
+    },
+    "etc/advancealtar/advancealtarmode.etc": {
+      "comment": "模式"
+    },
+    "etc/advancealtar/advancealtarshop.etc": {
+      "comment": "召唤士兵商店"
+    },
+    "etc/advancealtar/advancealtarsummondata.etc": {
+      "comment": "召唤士兵数据"
+    },
+    "itemshop/leiji.shp": {
+      "comment": "雷姬"
+    },
+    "etc/itemdictionary/(r)itemdictionary.etc": {
+      "comment": "装备词典"
+    },
+    "etc/ultimateskillcutscene.etc": {
+      "comment": "觉醒插画"
+    },
+    "itemshop/chn_nobless.shp": {
+      "comment": "女侠七夜"
+    },
+    "itemshop/zhende.shp": {
+      "comment": "贞德"
+    },
+    "itemshop/regacy1.shp": {
+      "comment": "土罐"
+    },
+    "itemshop/regacy2.shp": {
+      "comment": "火罐"
+    },
+    "itemshop/regacy3.shp": {
+      "comment": "木罐"
+    },
+    "itemshop/regacy4.shp": {
+      "comment": "水罐"
+    },
+    "itemshop/regacy5.shp": {
+      "comment": "金罐"
+    },
+    "itemshop/regacy6.shp": {
+      "comment": "小灯笼"
+    },
+    "itemshop/siran.shp": {
+      "comment": "西岚"
+    },
+    "itemshop/equipmentshop5.shp": {
+      "comment": "凯丽"
+    },
+    "itemshop/anise.shp": {
+      "comment": "雅妮丝"
+    },
+    "itemshop/equipmentshop6.shp": {
+      "comment": "G.S.D"
+    },
+    "itemshop/creatureshop.shp": {
+      "comment": "奥兰奶奶"
+    },
+    "itemshop/aska.shp": {
+      "comment": "阿斯卡"
+    },
+    "itemshop/wuun.shp": {
+      "comment": "乌恩"
+    },
+    "itemshop/zhiye.shp": {
+      "comment": "直叶"
+    },
+    "itemshop/recipe2.shp": {
+      "comment": "梅尔文"
+    },
+    "itemshop/equipmentshop15.shp": {
+      "comment": "歌兰蒂斯"
+    },
+    "itemshop/wuun_norma.shp": {
+      "comment": "乌恩"
+    },
+    "itemshop/runa.shp": {
+      "comment": "梦娜"
+    },
+    "etc/amplifyitem.etc": {
+      "comment": "红字相关道具"
+    },
+    "etc/serverparameter.etc": {
+      "comment": "基佬的信任相关"
+    },
+    "itemshop/mingli.shp": {
+      "comment": "明理"
+    },
+    "itemshop/equipmentshop4.shp": {
+      "comment": "风振"
+    },
+    "etc/jobexplanation.etc": {
+      "comment": "职业介绍"
+    },
+    "etc/premiumlist_new.etc": {
+      "comment": "霸王契约（黑钻）"
+    },
+    "etc/cerashop.etc": {
+      "comment": "乱码旧商城文件"
+    },
+    "etc/timelimiteditemslist.etc": {
+      "comment": "契约列表进游戏时"
+    },
+    "etc/dolltutorial.etc": {
+      "comment": "复活时人偶护卫"
+    },
+    "equipment/chongwuzhuangbei": {
+      "comment": "寵物裝備"
+    },
+    "equipment/chenghao": {
+      "comment": "物品店出售的称号"
+    },
+    "dungeon/stormofmetastasis/abnoba/title": {
+      "comment": "亚诺法森林"
+    },
+    "dungeon/stormofmetastasis/meltdown": {
+      "comment": "厄运之城"
+    },
+    "dungeon/stormofmetastasis": {
+      "comment": "大转移地图"
+    },
+    "dungeon/stormofmetastasis/driftcave": {
+      "comment": "漂流洞穴"
+    },
+    "dungeon/stormofmetastasis/falls_to_the_sky": {
+      "comment": "逆流瀑布"
+    },
+    "dungeon/stormofmetastasis/icewall": {
+      "comment": "绝望冰崖"
+    },
+    "dungeon/event/chn_3kingdoms": {
+      "comment": "三国"
+    },
+    "equipment/ancient": {
+      "comment": "SS毕业套装"
+    },
+    "equipment/creature": {
+      "comment": "NPC卖的宠物"
+    },
+    "equipment/character/common": {
+      "comment": "防具.首饰"
+    },
+    "equipment/character/common/amulet": {
+      "comment": "項鏈"
+    },
+    "equipment/character/common/belt": {
+      "comment": "腰帶"
+    },
+    "equipment/character/common/jacket": {
+      "comment": "上衣"
+    },
+    "equipment/character/common/pants": {
+      "comment": "護腿"
+    },
+    "equipment/character/common/ring": {
+      "comment": "戒指"
+    },
+    "equipment/character/common/shoes": {
+      "comment": "鞋子"
+    },
+    "equipment/character/common/shoulder": {
+      "comment": "護甲"
+    },
+    "equipment/character/common/support": {
+      "comment": "輔助裝備"
+    },
+    "equipment/character/common/title": {
+      "comment": "稱號"
+    },
+    "equipment/character/common/wrist": {
+      "comment": "手鐲"
+    },
+    "equipment/character/fighter": {
+      "comment": "格斗家"
+    },
+    "equipment/character/gunner/avatar": {
+      "comment": "神槍手"
+    },
+    "equipment/character/gunner/avatar/weapon": {
+      "comment": "神槍手武器"
+    },
+    "equipment/character/swordman/avatar/aura": {
+      "comment": "光環腰帶"
+    },
+    "equipment/cike_dingzhi": {
+      "comment": "武道"
+    },
+    "stackable/recipe": {
+      "comment": "设计图"
+    },
+    "equipment/character/swordman/avatar/skin/avatar_swordman_skin_15950.equ": {
+      "comment": "天空之城"
+    },
+    "equipment/character/common/title/titleanimation": {
+      "comment": "称号ANI"
+    },
+    "equipment/character/swordman/avatar/skin": {
+      "comment": "鬼剑士皮肤"
+    },
+    "equipment/character/swordman/avatar/weapon": {
+      "comment": "鬼剑士武器装扮"
+    },
+    "equipment/character/swordman/weapon/beamsword/hellkariumswdc1": {
+      "comment": "光剑"
+    },
+    "equipment/character/swordman/avatar": {
+      "comment": "鬼剑士系列"
+    },
+    "equipment/character/thief/avatar/skin": {
+      "comment": "盗贼皮肤"
+    },
+    "equipment/character/thief/avatar/shoes": {
+      "comment": "女盗贼"
+    },
+    "equipment/character/thief": {
+      "comment": "盗贼"
+    },
+    "equipment/character/gunner": {
+      "comment": "神枪手"
+    },
+    "equipment/character/mage": {
+      "comment": "魔法师"
+    },
+    "itemshop/chn_3kingdoms2.shp": {
+      "comment": "诸葛亮"
+    },
+    "n_quest/new_quest/metrocenter/title": {
+      "comment": "中央公园"
+    },
+    "n_quest/new_quest": {
+      "comment": "魔界中央公会任务"
+    },
+    "equipment/c": {
+      "comment": "伪毕业套装"
+    },
+    "equipment/c/partset2/set_item_32005.equ": {
+      "comment": "改命者：吞食日月 套裝"
+    },
+    "equipment/c/partset2/set_item_32205.equ": {
+      "comment": "改命者：毒瘴顱骨 套裝"
+    },
+    "equipment/c/partset2/set_item_32305.equ": {
+      "comment": "改命者：混噸初分 套裝"
+    },
+    "equipment/c/partset2/set_item_32405.equ": {
+      "comment": "改命者：三首形態 套裝"
+    },
+    "equipment/c/partset2/set_item_38019.equ": {
+      "comment": "改命者：孽鱗套裝"
+    },
+    "equipment/c/partset2/set_item_39018.equ": {
+      "comment": "8人改命者：不朽之王套裝"
+    },
+    "equipment/c/partset2/set_item_39218.equ": {
+      "comment": "8人改命者：耶羅之血套裝"
+    },
+    "town/town.lst": {
+      "comment": "城镇编号"
+    },
+    "equipment/shoushi": {
+      "comment": "首饰"
+    },
+    "itemshop/srzxm5011.shp": {
+      "comment": "兽人族熊猫"
+    },
+    "worldmap/45.wdm": {
+      "comment": "兽人王国"
+    },
+    "itemshop/stackableshp28.shp": {
+      "comment": "福胖胖"
+    },
+    "equipment/zhiyetao": {
+      "comment": "半毕业职业套"
+    },
+    "equipment/guapiss": {
+      "comment": "瓜皮SS"
+    },
+    "equipment/fangju": {
+      "comment": "顶级SS和职业异界套"
+    },
+    "equipment/fangju/zhiyetao": {
+      "comment": "职业异界套"
+    },
+    "equipment/wqzb": {
+      "comment": "自制武器"
+    },
+    "equipment/zhizhipifu": {
+      "comment": "皮肤"
+    },
+    "equipment/guanghuang": {
+      "comment": "光环"
+    },
+    "equipment/pifu": {
+      "comment": "皮肤"
+    },
+    "equipment/wuqizhuangban": {
+      "comment": "武器装扮"
+    },
+    "equipment/fuwen": {
+      "comment": "符文宠物异界装备"
+    },
+    "itemshop/magic4.shp": {
+      "comment": "吟游詩人艾丽丝"
+    },
+    "stackable/cdklibao": {
+      "comment": "CDK天空"
+    },
+    "equipment/character/swordman": {
+      "comment": "鬼剑士"
+    },
+    "equipment/character/priest": {
+      "comment": "圣职者"
+    },
+    "stackable/zzsjt": {
+      "comment": "自己设置的设计图"
+    },
+    "stackable/zzdj": {
+      "comment": "自己做的道具"
+    },
+    "etc/chn_servercheckschedule.etc": {
+      "comment": "服务时间表？"
+    },
+    "n_quest/zzrw": {
+      "comment": "自己制作的任务"
+    },
+    "itemshop/zelbaerica.shp": {
+      "comment": "卢克NPC"
+    },
+    "itemshop/chn_0927_mage_shop01.shp": {
+      "comment": "亚瑟王物品店"
+    },
+    "itemshop/chn_aska.shp": {
+      "comment": "巨龙NPC"
+    },
+    "itemshop/chn_dayofdungeon_shop.shp": {
+      "comment": "南部溪谷NPC"
+    },
+    "itemshop/dnfrider.shp": {
+      "comment": "骑士装备NPC"
+    },
+    "itemshop/emblem.shp": {
+      "comment": "达芙妮"
+    },
+    "itemshop/jiulong334.shp": {
+      "comment": "巨龙NPC"
+    },
+    "itemshop/luther.shp": {
+      "comment": "船长NPC"
+    },
+    "itemshop/recipe3.shp": {
+      "comment": "特仑苏NPC"
+    },
+    "stackable/fubenmenpiao": {
+      "comment": "副本门票"
+    },
+    "itemshop/equipmentshop21.shp": {
+      "comment": "米内尔"
+    },
+    "stackable/suipian": {
+      "comment": "SS碎片"
+    },
+    "equipment/antuenfangju": {
+      "comment": "安图恩防具"
+    },
+    "itemshop/wayne.shp": {
+      "comment": "发电站NPC"
+    },
+    "equipment/texiaowuqi": {
+      "comment": "特效武器"
+    },
+    "stackable/90sssuipian": {
+      "comment": "史诗碎片"
+    },
+    "dungeon/castleofthedead": {
+      "comment": "卢克下面的地图"
+    },
+    "dungeon/luke_normal": {
+      "comment": "卢克地图"
+    },
+    "itemshop/hunter_pon.shp": {
+      "comment": "90SSNPC"
+    },
+    "equipment/character/swordman/at_avatar/weapon": {
+      "comment": "黑武士武器装扮"
+    },
+    "equipment/character/fighter/avatar/weapon": {
+      "comment": "女格斗武器装扮"
+    },
+    "equipment/xwcwzb": {
+      "comment": "雪舞宠物装备"
+    },
+    "equipment/xunzhang": {
+      "comment": "勋章"
+    },
+    "stackable/zzcailiao": {
+      "comment": "装备打造的材料"
+    },
+    "equipment/character/swordman/at_avatar": {
+      "comment": "黑武士系列"
+    },
+    "itemshop/jeep.shp": {
+      "comment": "小黑NPC"
+    },
+    "stackable/qmdof": {
+      "comment": "宠物"
+    },
+    "equipment/creature/artifact_blue": {
+      "comment": "宠物装备"
+    },
+    "equipment/creature/artifact_green": {
+      "comment": "宠物装备2"
+    },
+    "equipment/creature/artifact_red": {
+      "comment": "宠物装备3"
+    },
+    "equipment/dzdzb": {
+      "comment": "定制装备"
+    },
+    "equipment/character/priest/avatar/skin": {
+      "comment": "皮肤"
+    },
+    "equipment/character/priest/avatar/weapon": {
+      "comment": "武器装扮"
+    },
+    "equipment/character/thief/avatar/weapon": {
+      "comment": "女盗贼武器装扮"
+    },
+    "equipment/character/mage/at_avatar/skin": {
+      "comment": "男法皮肤"
+    },
+    "equipment/character/mage/at_avatar/weapon": {
+      "comment": "男法装扮"
+    },
+    "equipment/character/mage/avatar/weapon": {
+      "comment": "女法武器装扮"
+    },
+    "equipment/character/gunner/avatar/skin": {
+      "comment": "男枪皮肤"
+    },
+    "equipment/character/gunner/at_avatar/skin": {
+      "comment": "女枪皮肤"
+    },
+    "equipment/character/gunner/at_avatar/weapon": {
+      "comment": "女枪手武器装扮"
+    },
+    "equipment/character/fighter/at_avatar/skin": {
+      "comment": "男格斗皮肤"
+    },
+    "equipment/character/fighter/at_avatar/weapon": {
+      "comment": "男格斗武器装扮"
+    },
+    "equipment/character/fighter/avatar/skin": {
+      "comment": "女格斗皮肤"
+    },
+    "equipment/character/mage/at_avatar": {
+      "comment": "男法"
+    },
+    "equipment/character/mage/avatar": {
+      "comment": "女法"
+    },
+    "equipment/chongwu": {
+      "comment": "梦太晓宠物"
+    },
+    "creature/script": {
+      "comment": "宠物喊话 脚本"
+    },
+    "creature/fairytale": {
+      "comment": "妖精的尾巴"
+    },
+    "creature/sao": {
+      "comment": "sao宠物"
+    },
+    "creature/saver": {
+      "comment": "阿爾托莉亞"
+    },
+    "stackable/xinssshejitu": {
+      "comment": "鸽子自制设计图"
+    },
+    "dungeon/timegate": {
+      "comment": "时空之门"
+    },
+    "stackable/cwzb": {
+      "comment": "宠物装备礼盒"
+    },
+    "stackable/erjue": {
+      "comment": "二觉宠物装备"
+    },
+    "equipment/character/swordman/avatar/belt": {
+      "comment": "腰带武器方面时装"
+    },
+    "etc/chn_server_limititemusageinfo.etc": {
+      "comment": "每天重置的门票"
+    },
+    "equipment/character/gunner/at_avatar": {
+      "comment": "女枪手"
+    },
+    "equipment/character/fighter/at_avatar": {
+      "comment": "男格斗"
+    },
+    "dungeon/riskdungeon": {
+      "comment": "魂副本"
+    },
+    "dungeon/southerndale": {
+      "comment": "南部溪谷"
+    },
+    "dungeon/impossible": {
+      "comment": "异界6图"
+    },
+    "dungeon/anton": {
+      "comment": "安图恩"
+    },
+    "dungeon/ancient": {
+      "comment": "远古地图"
+    },
+    "dungeon/anton/phase2": {
+      "comment": "安图恩二"
+    },
+    "dungeon/event": {
+      "comment": "活动副本"
+    },
+    "stackable/event/common": {
+      "comment": "皮肤大全"
+    },
+    "map/165_roters_nest": {
+      "comment": "罗特斯宫殿"
+    },
+    "map/timespiral": {
+      "comment": "鸽子研究所"
+    },
+    "equipment/character/common/etc": {
+      "comment": "契约效果"
+    },
+    "equipment/character/mage/avatar/skin": {
+      "comment": "女法皮肤"
+    },
+    "equipment/character/fighter/avatar": {
+      "comment": "女格斗"
+    },
+    "monster/dragondungeon": {
+      "comment": "巨龙怪物"
+    },
+    "clientonly/skilltree/swordman_sp.co": {
+      "comment": "鬼剑士"
+    },
+    "clientonly/skilltree/gunner_sp.co": {
+      "comment": "男枪手"
+    },
+    "equipment/character/common/skin": {
+      "comment": "皮肤"
+    },
+    "equipment/character/creature": {
+      "comment": "低级异界SS宠物装备"
+    },
+    "character/fighter/fighter.chr": {
+      "comment": "女格斗"
+    },
+    "character/fighter/atfighter.chr": {
+      "comment": "男格斗"
+    },
+    "clientonly/skilltree/atfighter_sp.co": {
+      "comment": "男格斗"
+    },
+    "clientonly/skilltree/atgunner_sp.co": {
+      "comment": "女枪手"
+    },
+    "clientonly/skilltree/atmage_sp.co": {
+      "comment": "男魔法师"
+    },
+    "clientonly/skilltree/fighter_sp.co": {
+      "comment": "女格斗家"
+    },
+    "clientonly/skilltree/mage_sp.co": {
+      "comment": "女魔法师"
+    },
+    "clientonly/skilltree/圣职者": {
+      "comment": "圣职者"
+    },
+    "clientonly/skilltree/priest_sp.co": {
+      "comment": "圣职者"
+    },
+    "clientonly/skilltree/thief_sp.co": {
+      "comment": "女盗贼"
+    },
+    "dungeon/anton_awakening": {
+      "comment": "团队"
+    },
+    "itemshop/nea.shp": {
+      "comment": "领主之塔NPC"
+    },
+    "itemshop/nessman.shp": {
+      "comment": "马蒂亚斯"
+    },
+    "equipment/character/swordman/swordman": {
+      "comment": "时装"
+    },
+    "equipment/character/swordman/weapon": {
+      "comment": "武器"
+    },
+    "equipment/character/common/etc/bravery.equ": {
+      "comment": "成长契约"
+    },
+    "character/gunner/atgunner.chr": {
+      "comment": "女枪手"
+    },
+    "character/gunner/gunner.chr": {
+      "comment": "男枪手"
+    },
+    "character/mage/atmage.chr": {
+      "comment": "男法"
+    },
+    "character/mage/mage.chr": {
+      "comment": "女法"
+    },
+    "equipment/character/dsswordman.lay": {
+      "comment": "黑武士"
+    },
+    "map/event/170413_hell_party": {
+      "comment": "深渊刷刷乐"
+    },
+    "itemshop/gezifangju.shp": {
+      "comment": "鸽子防具设计图"
+    },
+    "stackable/event/weapon": {
+      "comment": "神秘设计图"
+    },
+    "itemshop/gezifangju.shp(copy)": {
+      "comment": "中将尼贝尔"
+    },
+    "itemshop/zhongjiangnibeier.shp": {
+      "comment": "中将尼贝尔"
+    },
+    "n_quest/zizhirenwu": {
+      "comment": "自制任务"
+    },
+    "worldmap/3kingdomsguild.wdm": {
+      "comment": "三国副本接口"
+    },
+    "itemshop/sdsnpc.shp": {
+      "comment": "圣诞树NPC"
+    },
+    "stackable/sywq": {
+      "comment": "深渊武器礼盒"
+    },
+    "itemshop/dashu.shp": {
+      "comment": "发电站大佬喝茶NPC"
+    },
+    "etc/premiumlist.etc": {
+      "comment": "待定"
+    },
+    "ui/event/pcbang/pcbangdata_notice.ui": {
+      "comment": "網咖活動"
+    },
+    "ui/event/pcbang": {
+      "comment": "網咖活動"
+    },
+    "ui/event/pcbangbenefitplaytime": {
+      "comment": "網咖活動2"
+    },
+    "ui/event/pandoraboxpopupwindow": {
+      "comment": "潘多拉魔盒"
+    },
+    "ui/event": {
+      "comment": "活动UI"
+    },
+    "creature/anton": {
+      "comment": "安图恩"
+    },
+    "event/purchasecashitembonus.evt": {
+      "comment": "出席活动"
+    },
+    "map/chn_dragondungeon_01_holy": {
+      "comment": "鸽子的藏身之地"
+    },
+    "dungeon/event/chn_dragon_dungeon": {
+      "comment": "巨龙副本"
+    },
+    "etc/worlddroppcroom.etc": {
+      "comment": "黑钻掉落"
+    },
+    "etc/worlddroppcroom2.etc": {
+      "comment": "黑钻掉落"
+    },
+    "etc/premiumserviceeffect.etc": {
+      "comment": "契约相关的东西"
+    },
+    "stackable/zixuancangqiong": {
+      "comment": "自选苍穹"
+    },
+    "stackable/gezifangju": {
+      "comment": "鸽子自制防具"
+    },
+    "n_quest/title": {
+      "comment": "称号成就任务"
+    },
+    "n_quest/elvengard": {
+      "comment": "洛兰NPC的怪物"
+    },
+    "equipment/character/common/shoulder/larmor": {
+      "comment": "轻甲护肩"
+    },
+    "sqr/character/swordman/leiyun": {
+      "comment": "阿修罗小技能"
+    },
+    "sqr/character/swordman/lightninggod": {
+      "comment": "阿修罗二觉"
+    },
+    "sqr/character/swordman/vajra": {
+      "comment": "阿修罗小技能"
+    },
+    "stackable/85zhen": {
+      "comment": "真85史诗设计图"
+    },
+    "itemshop/mojieren.shp": {
+      "comment": "数年后的肝王"
+    },
+    "sqr/character/swordman/swordman16": {
+      "comment": "被动"
+    },
+    "creature/2018newyear": {
+      "comment": "好像很牛逼的宠物"
+    },
+    "equipment/character/swordman/weapon/beamsword": {
+      "comment": "光剑"
+    },
+    "equipment/character/swordman/weapon/club": {
+      "comment": "钝器"
+    },
+    "equipment/character/swordman/weapon/hsword": {
+      "comment": "巨剑"
+    },
+    "equipment/character/swordman/weapon/katana": {
+      "comment": "太刀"
+    },
+    "equipment/character/swordman/weapon/ssword": {
+      "comment": "短剑"
+    },
+    "stackable/yhwqsjt": {
+      "comment": "淵虹"
+    },
+    "stackable/tianci": {
+      "comment": "90散件职业加强防具"
+    },
+    "dungeon/zygy1": {
+      "comment": "95史诗副本"
+    },
+    "dungeon/metrocenter": {
+      "comment": "90副本"
+    },
+    "dungeon/mengtaixiao": {
+      "comment": "95副本"
+    },
+    "dungeon/legend": {
+      "comment": "95"
+    },
+    "dungeon/event/180201": {
+      "comment": "95"
+    },
+    "equipment/character/swordman/avatar/belt/belt_a/meteorsworddrop.ani": {
+      "comment": "流星落"
+    },
+    "stackable/xunzhang": {
+      "comment": "勋章"
+    },
+    "stackable/erhuan": {
+      "comment": "耳环"
+    },
+    "map/town/underfoot/(r)gate.map": {
+      "comment": "活动区域赛利亚"
+    },
+    "itemshop/dashu1.shp": {
+      "comment": "安图恩"
+    },
+    "map/hendonmyre/(r)hendon.map": {
+      "comment": "赫顿玛尔正街"
+    },
+    "itemshop/iris2.shp": {
+      "comment": "镇魂地图NPC"
+    },
+    "npc/xinjiyuan_2.npc": {
+      "comment": "哥布林"
+    },
+    "npc/xinjiyuan_3.npc": {
+      "comment": "鬼剑士"
+    },
+    "npc/xinjiyuan_4.npc": {
+      "comment": "格斗家"
+    },
+    "itemshop/dashu2.shp": {
+      "comment": "安图恩杂货"
+    },
+    "stackable/85xrzb": {
+      "comment": "鑲嵌"
+    },
+    "map/hendonmyre/(r)gate_hendon.map": {
+      "comment": "赛丽亚房间"
+    },
+    "stackable/fzxiangqian": {
+      "comment": "造物装备"
+    },
+    "stackable/hsxq": {
+      "comment": "荒古幻生镶嵌"
+    },
+    "monster/event/bluemarble/headlessknight": {
+      "comment": "无头骑士"
+    },
+    "map/slough/slough_powerstation.map": {
+      "comment": "大佬请喝茶"
+    },
+    "map/event/2018_epicroad2_town/2018_epicroad2_town.map": {
+      "comment": "海流"
+    },
+    "map/sao_tower": {
+      "comment": "sao 塔"
+    },
+    "etc/randomoption": {
+      "comment": "魔法封印相关"
+    },
+    "map/event/16_epicroad/80018.map": {
+      "comment": "有bug的门"
+    },
+    "map/event/16_epicroad/80019.map": {
+      "comment": "怪物在下面不会动"
+    },
+    "equipment/character/common/magicstone": {
+      "comment": "魔法石"
+    },
+    "stackable/tongguang": {
+      "comment": "通关证明"
+    },
+    "itemshop/natalia.shp": {
+      "comment": "圣者NPC"
+    },
+    "stackable/professional/common": {
+      "comment": "魔法封印"
+    },
+    "etc/randomoption/optiongrouping.etc": {
+      "comment": "魔法封印几率属性"
+    },
+    "etc/randomoption/optiongroupselection.etc": {
+      "comment": "魔法封印装备品级 缺失物品关键修改地方"
+    },
+    "etc/randomoption/randomizedoptionoverall1.etc": {
+      "comment": "魔法封印无法解除物品的关键地方"
+    },
+    "etc/randomoption/optionquantity.etc": {
+      "comment": "品级"
+    },
+    "etc/randomoption/randomizedoptionoverall2.etc": {
+      "comment": "魔法封印成本"
+    },
+    "etc/randomoption/options": {
+      "comment": "装备属性"
+    },
+    "etc/randomoption/regenerationrandomoption.etc": {
+      "comment": "属性数量增加几率提升"
+    },
+    "ui/optiongraphic.ui": {
+      "comment": "Esc菜单"
+    },
+    "ui/itemtool": {
+      "comment": "怪物卡片"
+    },
+    "ui/inventory": {
+      "comment": "装备UI"
+    },
+    "ui/soloteleport": {
+      "comment": "光环传送"
+    },
+    "ui/usecoin": {
+      "comment": "死亡复活币的UI"
+    },
+    "ui/twdf": {
+      "comment": "类似夏日活动NPK"
+    },
+    "ui/test/uiscriptpopupwindowsample.ui": {
+      "comment": "解除魔法封印UI"
+    },
+    "ui/amplify": {
+      "comment": "异次元力量"
+    },
+    "ui/boosterselect": {
+      "comment": "邮箱UI"
+    },
+    "ui/chat": {
+      "comment": "聊天的UI"
+    },
+    "ui/craneminigame": {
+      "comment": "起重机"
+    },
+    "ui/cubecontract": {
+      "comment": "晶体契约"
+    },
+    "ui/genuinedamageupgrade": {
+      "comment": "锻造"
+    },
+    "ui/randombox": {
+      "comment": "史诗获取道具"
+    },
+    "ui/randomoptionregeneration": {
+      "comment": "魔法封印UI"
+    },
+    "event/bluemarble": {
+      "comment": "蓝色 地下城 直接boss 不明"
+    },
+    "dungeon/event/bluemarble": {
+      "comment": "龙之路地牢"
+    },
+    "itemshop/hailiu.shp": {
+      "comment": "海流NPC"
+    },
+    "itemshop/hailiu1.shp": {
+      "comment": "湍流NPC"
+    },
+    "stackable/erjue/cwzb": {
+      "comment": "二觉职业宠物装备"
+    },
+    "ui/hotkey": {
+      "comment": "热键"
+    },
+    "ui/cashshop": {
+      "comment": "商场 时装"
+    },
+    "etc/etcparameter.etc": {
+      "comment": "额外参数PVP比赛用？"
+    },
+    "map/event/2018_epicroad2_town/(r)gate_2018_epicroad2_town.map": {
+      "comment": "赛丽亚房间"
+    },
+    "ui/event/informationbuttoninfo.evn": {
+      "comment": "活动UI字体修改"
+    },
+    "equipment/character/partset2/set_item_12577.equ": {
+      "comment": "一个不知道什么的特效套装"
+    },
+    "map/hendonmyre/hendon_pub_pvp v2.map": {
+      "comment": "月光酒馆"
+    },
+    "map/slough/slough_down_street.map": {
+      "comment": "智能娃娃机"
+    },
+    "map/slough/(f)gate_slough.map": {
+      "comment": "赛丽亚房间"
+    },
+    "map/slough/slough_up_street.map": {
+      "comment": "中将"
+    },
+    "map/town/origin_arad/animation/passgate_down.ani": {
+      "comment": "光圈1"
+    },
+    "map/town/origin_arad/animation/passgate_up.ani": {
+      "comment": "光圈2"
+    },
+    "map/town/origin_arad/animation/gatedown.ani": {
+      "comment": "光圈01"
+    },
+    "map/town/origin_arad/animation/gateup.ani": {
+      "comment": "光圈02"
+    },
+    "map/town/origin_arad/animation/fdzslyfj.ani": {
+      "comment": "工业区"
+    },
+    "map/town/origin_arad/animation/slycqgzh.ani": {
+      "comment": "贵族号"
+    },
+    "map/town/origin_arad/animation/baozouate.ani": {
+      "comment": "暴走安徒恩"
+    },
+    "map/town/origin_arad/animation/shengzhe.ani": {
+      "comment": "圣者"
+    },
+    "map/town/origin_arad/animation/yijiequyu.ani": {
+      "comment": "异界区域"
+    },
+    "map/town/origin_arad/animation/zhenhunqu.ani": {
+      "comment": "镇魂曲"
+    },
+    "map/town/origin_arad/animation/nengyuanzhongxin.ani": {
+      "comment": "能源中心"
+    },
+    "map/town/origin_arad/animation/zhatianbang.ani": {
+      "comment": "史诗之路"
+    },
+    "map/town/kor_dragon_shonan_holyland/(r)gate_shonan_holy01.map": {
+      "comment": "赛利亚房间"
+    },
+    "map/town/origin_arad/animation/yuexiz.ani": {
+      "comment": "越溪镇"
+    },
+    "map/town/origin_arad/animation/yuelunshan.ani": {
+      "comment": "月轮山"
+    },
+    "map/town/origin_arad/animation/wurenzhidou.ani": {
+      "comment": "武人之都"
+    },
+    "sqr/character/new_swordman.nut": {
+      "comment": "花花目录的nut"
+    },
+    "sqr/character/swordman_load_state.nut": {
+      "comment": "鬼剑士的nut"
+    },
+    "stackable/zhuayao": {
+      "comment": "抓"
+    },
+    "equipment/ztbeh": {
+      "comment": "耳环"
+    },
+    "equipment/ztbehxz": {
+      "comment": "勋章"
+    },
+    "stackable/90sqcz": {
+      "comment": "90神器重铸"
+    },
+    "equipment/character/partset/svp3thtm.equ": {
+      "comment": "心悦3的时装模板属性"
+    },
+    "equipment/character/partset/svp2thtm.equ": {
+      "comment": "心悦2的时装模板属性"
+    },
+    "equipment/character/partset/svp1thtm.equ": {
+      "comment": "心悦1的时装模板属性"
+    },
+    "equipment/character/partset/shishijitaozhuang.equ": {
+      "comment": "3"
+    },
+    "equipment/character/partset/guoduol.equ": {
+      "comment": "2"
+    },
+    "equipment/character/partset/rareset.equ": {
+      "comment": "天空套装属性"
+    },
+    "equipment/character/partset/rareset22.equ": {
+      "comment": "0"
+    },
+    "stackable/cqbljue": {
+      "comment": "苍穹碧落觉"
+    },
+    "sqr/character/swordman/bloodboom": {
+      "comment": "剑圣真伤血爆"
+    },
+    "creature/akela": {
+      "comment": "巨大蜘蛛"
+    },
+    "stackable/sansheng": {
+      "comment": "三生"
+    },
+    "etc/iteminfo.dat": {
+      "comment": "拍卖行修复"
+    },
+    "map/seatrainretaking/hell_(6,0)named.map": {
+      "comment": "深渊"
+    },
+    "etc/pcroom3.vm": {
+      "comment": "抽奖机2"
+    },
+    "etc/pcroom4.vm": {
+      "comment": "赛丽亚贩卖机"
+    },
+    "ui/cargo": {
+      "comment": "金庫UI"
+    },
+    "ui/characterinfowindow": {
+      "comment": "个人信息欄"
+    },
+    "ui/titlebook": {
+      "comment": "称号簿"
+    },
+    "stackable/chongzhu": {
+      "comment": "重铸"
+    },
+    "map/town/origin_arad/animation/antuentb.ani": {
+      "comment": "团本安图恩"
+    },
+    "sqr/character/swordman/stateoflimit": {
+      "comment": "剑圣被动"
+    },
+    "etc/阿加雷斯": {
+      "comment": "阿加雷斯"
+    },
+    "map/hendonmyre/hendon_auction.map": {
+      "comment": "赫顿玛尔后街"
+    },
+    "stackable/ydssfzzb": {
+      "comment": "辅助装备"
+    },
+    "ui/selectcharacter": {
+      "comment": "ui服务器背景动图"
+    },
+    "dungeon/act1/sunderlanddark1.dgn": {
+      "comment": "僵尸王"
+    },
+    "map/hendonmyre/d_hendon2.map": {
+      "comment": "格林之森山麓副本门口"
+    },
+    "map/hendonmyre/hendon_city.map": {
+      "comment": "前街（歌兰蒂斯那条）"
+    },
+    "ui/skill": {
+      "comment": "技能UI"
+    },
+    "ui/avatrarchangeoption": {
+      "comment": "時裝屬性變更券"
+    },
+    "ui/aura": {
+      "comment": "光環"
+    },
+    "ui/blooddungeon": {
+      "comment": "副本结算经验"
+    },
+    "ui/bluemarble": {
+      "comment": "龙之路UI"
+    },
+    "ui/cartelcommand": {
+      "comment": "忘记什么副本了"
+    },
+    "ui/cerashopinventory": {
+      "comment": "装备栏UI"
+    },
+    "ui/channel": {
+      "comment": "频道选择"
+    },
+    "ui/charactercreate": {
+      "comment": "创建角色UI"
+    },
+    "ui/actionsample": {
+      "comment": "选择副本背景/按钮"
+    },
+    "ui/advancealtar": {
+      "comment": "祭坛奖励结算"
+    },
+    "ui/antievilwarning": {
+      "comment": "HUD"
+    },
+    "ui/assault": {
+      "comment": "不知道啥玩意"
+    },
+    "ui/characterslot": {
+      "comment": "选择频道背景啥的"
+    },
+    "ui/chronicle": {
+      "comment": "物品栏的UI"
+    },
+    "stackable/cash/randomcerabox_event1.stk": {
+      "comment": "魔盒"
+    },
+    "ui/selectdungeon/ultimatenoticewindow.ui": {
+      "comment": "高難度"
+    },
+    "ui/common/randomimagelist.ui": {
+      "comment": "夏日活动指向图片"
+    },
+    "map/hendonmyre/(r)westcoast.map": {
+      "comment": "赫顿玛尔公国西海岸"
+    },
+    "map/alfhlyra/alfhlyra.map": {
+      "comment": "阿尔法利亚主街道"
+    },
+    "map/alfhlyra/d_alfhlyra3.map": {
+      "comment": "异界（门口）"
+    },
+    "etc/newcashshop_restrict.etc": {
+      "comment": "限制购买"
+    },
+    "creature/reva": {
+      "comment": "SD"
+    },
+    "creature/sdcharacterkr": {
+      "comment": "迷你角色宠物"
+    },
+    "creature/sdcharacter": {
+      "comment": "迷你职业宠物"
+    },
+    "ui/cashshop/changeavatarcolorwindow.ui": {
+      "comment": "时装染色"
+    },
+    "ui/cashshop/selectavatarcolorpass.ui": {
+      "comment": "商城界面"
+    },
+    "ui/inventory/inventory_item.ui": {
+      "comment": "背包"
+    },
+    "ui/inventory/inventory_bottom.ui": {
+      "comment": "背包下面的复活/点券框"
+    },
+    "stackable/zzdj/professional": {
+      "comment": "宝珠"
+    },
+    "stackable/zzdj/zengfu": {
+      "comment": "增幅"
+    },
+    "stackable/zzdj/yjtb": {
+      "comment": "异界团本"
+    },
+    "stackable/zzdj/xslb": {
+      "comment": "新手礼包"
+    },
+    "stackable/zzdj/xinshouwuqi": {
+      "comment": "新手武器"
+    },
+    "stackable/zzdj/xingyunxingxing": {
+      "comment": "幸运星星"
+    },
+    "stackable/zzdj/tongguang": {
+      "comment": "证明"
+    },
+    "stackable/zzdj/sc": {
+      "comment": "商场"
+    },
+    "stackable/zzdj/qianghua": {
+      "comment": "强化"
+    },
+    "ui/quest": {
+      "comment": "任务"
+    },
+    "stackable/zzdj/wlh": {
+      "comment": "增幅强化伪礼盒"
+    },
+    "stackable/zzdj/yhwqsjt": {
+      "comment": "渊虹武器设计图"
+    },
+    "stackable/zzdj/ydssfzzb": {
+      "comment": "传说辅助装备"
+    },
+    "stackable/zzdj/xunzhang": {
+      "comment": "公会勋章"
+    },
+    "stackable/zzdj/tianci": {
+      "comment": "天赐防具"
+    },
+    "stackable/zzdj/erjue": {
+      "comment": "职业勋章装备"
+    },
+    "stackable/zzdj/cqbljue": {
+      "comment": "苍穹碧落 觉"
+    },
+    "stackable/zzdj/cdklibao": {
+      "comment": "CDK道具"
+    },
+    "stackable/zzdj/90sssuipian": {
+      "comment": "碎片 百炼石"
+    },
+    "stackable/zzdj/szwqzb": {
+      "comment": "武器装扮"
+    },
+    "stackable/zzdj/boosbzk": {
+      "comment": "宝藏卡"
+    },
+    "stackable/zzdj/boosbzk/90000000.stk": {
+      "comment": "每日九点福利"
+    },
+    "stackable/zzdj/paodian": {
+      "comment": "代币券"
+    },
+    "equipment/character/partset/zurareset.equ": {
+      "comment": "新手"
+    },
+    "equipment/character/swordman/avatar/cap": {
+      "comment": "头部"
+    },
+    "stackable/zzdj/jinengyouhua": {
+      "comment": "技能优化"
+    },
+    "stackable/zzdj/leijichongzhi": {
+      "comment": "累计充值"
+    },
+    "equipment/fangju/jianjia": {
+      "comment": "毕业防具"
+    },
+    "npc/577_board_mission.npc": {
+      "comment": "格蓝迪区域"
+    },
+    "sqr/character/priest_load_state.nut": {
+      "comment": "圣职者的nut"
+    },
+    "sqr/character/newpriest_load_state.nut": {
+      "comment": "圣职者的大锤子"
+    },
+    "dungeon/event/dragon_kurun_kor": {
+      "comment": "天空之城的"
+    },
+    "monster/newmonsters/anton/phase3/mateka/mateka.mob": {
+      "comment": "暴走 瓜皮"
+    },
+    "monster/newmonsters/anton_awakening/phase3/mateka/mateka.mob": {
+      "comment": "团本"
+    },
+    "etc/randomoption/options/randomoptions_15_physicalattack.etc": {
+      "comment": "武器"
+    },
+    "itemshop/jun.shp": {
+      "comment": "安图恩队长"
+    },
+    "map/hendonmyre/sky_westcoast2.map": {
+      "comment": "天界传送NPC"
+    },
+    "map/hendonmyre": {
+      "comment": "旧版本赫顿玛尔城区（地图）"
+    },
+    "ui/aura/aura_accepted.ani": {
+      "comment": "光环小图标"
+    },
+    "itemshop/simona.shp": {
+      "comment": "占卜师希莫娜史诗罐子"
+    },
+    "etc/avatar_roulette_jar.etc": {
+      "comment": "时装轮盘 转盘设置"
+    },
+    "n_quest/active": {
+      "comment": "勇者异界任务"
+    },
+    "dungeon/act3": {
+      "comment": "天帷巨兽副本"
+    },
+    "dungeon/act2": {
+      "comment": "天空之城副本"
+    },
+    "dungeon/act4": {
+      "comment": "阿法利亚副本"
+    },
+    "map/hendonmyre/hendon_ura.map": {
+      "comment": "米内特地区"
+    },
+    "ui/skill/skillshopwindow.ui": {
+      "comment": "学习技能图"
+    },
+    "ui/common": {
+      "comment": "登入弹窗夏日活动"
+    },
+    "etc/compoundavatar_atfighter.etc": {
+      "comment": "天空合成-男格斗"
+    },
+    "itemshop/rare1.shp": {
+      "comment": "夏洛特55CC图纸"
+    },
+    "passiveobject/kcontents3/crypt_of_pain/map/buff_manager/action/map_start.act": {
+      "comment": "自动召唤怪物"
+    },
+    "passiveobject/kcontents3/crypt_of_pain/map": {
+      "comment": "自动召唤怪物"
+    },
+    "passiveobject/kcontents3/crypt_of_pain": {
+      "comment": "自动召唤怪物"
+    },
+    "monster/newmonsters/screamingcave/skullkane/skullkane.mob": {
+      "comment": "魔剑掉落凯恩"
+    },
+    "n_quest/gent/gentsouthgate": {
+      "comment": "天界南门任务（57级）"
+    },
+    "n_quest/gent/outergent": {
+      "comment": "天界根特（55级）"
+    },
+    "n_quest/gent/genteastgate": {
+      "comment": "天界东门任务（56级）"
+    },
+    "ui/hud": {
+      "comment": "血槽文件"
+    },
+    "etc/equipmenteffectset.etc": {
+      "comment": "时装成套增加特效 写法不明"
+    },
+    "ui/mercenary": {
+      "comment": "冒险团"
+    },
+    "ui/messenger": {
+      "comment": "工会"
+    },
+    "monster/newmonsters/screamingcave/kingnugol/kingnugol.mob": {
+      "comment": "悲鸣领主"
+    },
+    "uniquebeast": {
+      "comment": "龙袍"
+    },
+    "clientonly/skilltree/atswordman_sp.co": {
+      "comment": "（女鬼剑）"
+    },
+    "equipment/character/partset/2choroset41.equ": {
+      "comment": "魔之掌控者"
+    },
+    "dungeon/act7": {
+      "comment": "天界副本"
+    },
+    "n_quest/gent": {
+      "comment": "天界任务"
+    },
+    "dungeon/act5": {
+      "comment": "雪域副本"
+    },
+    "dungeon/advancealtar": {
+      "comment": "守护者祭坛"
+    },
+    "n_quest/lufthafen/ghosttrain": {
+      "comment": "幽灵列车任务"
+    },
+    "map/shonan": {
+      "comment": "素南地区（城镇）"
+    },
+    "map/noirpera/map7(4,0)_boss.map": {
+      "comment": "诺伊佩拉领主"
+    },
+    "map/timegaterequiem": {
+      "comment": "镇魂曲"
+    },
+    "appendage/huanghu": {
+      "comment": "恍惚"
+    },
+    "etc/quickparty.etc": {
+      "comment": "快速组队"
+    },
+    "itemshop/kiri.shp": {
+      "comment": "凯丽"
+    },
+    "etc/titleballooninfo.etc": {
+      "comment": "称号调用ani"
+    },
+    "etc/apsystem_properties.etc": {
+      "comment": "AP系统 活跃度"
+    },
+    "etc/slanglist.etc": {
+      "comment": "屏蔽字符列表"
+    },
+    "etc/slangname.etc": {
+      "comment": "屏蔽名字"
+    },
+    "etc/superman": {
+      "comment": "不明"
+    },
+    "etc/pvpskilltree": {
+      "comment": "pkc技能平衡"
+    },
+    "etc/pvprevisiontable": {
+      "comment": "pkc连招伤害减少"
+    },
+    "etc/pvppracticecombo": {
+      "comment": "pkc练习连招"
+    },
+    "etc/emblemrenewal": {
+      "comment": "徽章更新？"
+    },
+    "etc/avatar_roulette": {
+      "comment": "时装轮盘能力值"
+    },
+    "etc/actionpointsystem.etc": {
+      "comment": "AP活跃度系统"
+    },
+    "etc/activestatustable.etc": {
+      "comment": "活动状态表？"
+    },
+    "etc/additionaleffectlist.etc": {
+      "comment": "不明"
+    },
+    "etc/aradeventperoid.etc": {
+      "comment": "不明"
+    },
+    "etc/araditemrewardprocesslist.etc": {
+      "comment": "安拉的奖励道具列表？"
+    },
+    "etc/aradtitlechange_main.etc": {
+      "comment": "阿拉德标题变更"
+    },
+    "etc/auction_recommend_item.etc": {
+      "comment": "拍卖行按等级推荐装备"
+    },
+    "etc/avatarcolorvariation.etc": {
+      "comment": "时装染色？"
+    },
+    "etc/billingtestdata.etc": {
+      "comment": "广告测试数据？"
+    },
+    "etc/bindsphere.etc": {
+      "comment": "不明"
+    },
+    "etc/bloodclearreward.etc": {
+      "comment": "无尽祭坛清理奖励"
+    },
+    "etc/bloodwar.etc": {
+      "comment": "无尽祭坛怪物奖励BP"
+    },
+    "etc/boostergage.etc": {
+      "comment": "boss挑战 领主塔？"
+    },
+    "etc/broadcastitem.etc": {
+      "comment": "一般装备强化券？"
+    },
+    "etc/channelrecommendlevel.etc": {
+      "comment": "频道区域奖励等级"
+    },
+    "etc/channeluiinfo.etc": {
+      "comment": "塔里能用的UI？"
+    },
+    "etc/chaosequalize.tbl": {
+      "comment": "混乱新手中手高手？"
+    },
+    "etc/chaosfpshop.etc": {
+      "comment": "不明"
+    },
+    "etc/characlinksystem.etc": {
+      "comment": "特性链接系统？"
+    },
+    "etc/chatsystem.etc": {
+      "comment": "聊天系统 表情"
+    },
+    "etc/effectlevel.etc": {
+      "comment": "额外效果贴图"
+    },
+    "clientonly/hotkeysystem.co": {
+      "comment": "按键设置"
+    },
+    "clientonly/skillshoptextguide.co": {
+      "comment": "技能商店指示"
+    },
+    "clientonly/joypadmapping.co": {
+      "comment": "雷蛇手柄映射?"
+    },
+    "clientonly/hotkeysystemforcreator.co": {
+      "comment": "缔造者按键设置"
+    },
+    "clientonly/commonskilllist.co": {
+      "comment": "通用技能"
+    },
+    "clientonly/skillshoptreespindex.co": {
+      "comment": "技能树目录"
+    },
+    "clientonly/gmcmdmap.co": {
+      "comment": "GM指令"
+    },
+    "event/racingdungeon/racingdungeon.info": {
+      "comment": "赛马地下城"
+    },
+    "event/bingoevent.evt": {
+      "comment": "冰菓活动"
+    },
+    "event/avatardisjointrandomreward.evt": {
+      "comment": "出席活动"
+    },
+    "etc/newbierecommendselectoption.etc": {
+      "comment": "时装属性按职业推荐选项"
+    },
+    "etc/cleanpadbuff.etc": {
+      "comment": "清理PAD的buff？"
+    },
+    "etc/compoundavatar.etc": {
+      "comment": "装扮合成器列表",
+      "detailedComment": "装扮合成器列表"
+    },
+    "etc/deathtowerclient.etc": {
+      "comment": "死亡塔削弱属性"
+    },
+    "etc/deathtower.etc": {
+      "comment": "死亡塔奖励相关"
+    },
+    "etc/chn_actionpointsystem.etc": {
+      "comment": "AP系统"
+    },
+    "etc/chn_dblogitem.etc": {
+      "comment": "按时获得博客道具？"
+    },
+    "etc/chn_equipmentsockettypelist.etc": {
+      "comment": "装备插槽类型列表？"
+    },
+    "etc/chronicle.etc": {
+      "comment": "记录 毁灭结果？"
+    },
+    "etc/contentsloadingadvermessage.etc": {
+      "comment": "读条目录信息"
+    },
+    "etc/equipmentaniscript.etc": {
+      "comment": "装备动画脚本lay"
+    },
+    "etc/equipmentgradesample.etc": {
+      "comment": "装备掉落等级样本 作用不明"
+    },
+    "etc/eventupgradejar.etc": {
+      "comment": "活动强化表"
+    },
+    "etc/exchangeitemnpc.etc": {
+      "comment": "NPC赠送礼物?"
+    },
+    "etc/linksystem/striker": {
+      "comment": "练习对战?"
+    },
+    "etc/global_bosstower.etc": {
+      "comment": "领主塔奖励掉落"
+    },
+    "etc/vendingmachine.lst": {
+      "comment": "自动售货机列表"
+    },
+    "event/eventcharacter": {
+      "comment": "活动角色 技能提升 不明"
+    },
+    "event/eventreward": {
+      "comment": "活动奖励 装备"
+    },
+    "n_quest/trainingquest.lst": {
+      "comment": "训练任务"
+    },
+    "etc/leagueavatarbalance.etc": {
+      "comment": "时装属性平衡"
+    },
+    "sqr/character/atmage/icesword": {
+      "comment": "冰魄剑"
+    },
+    "sqr/character/atmage/windstrike": {
+      "comment": "魔法旋风"
+    },
+    "sqr/character/atmage/lightningwall": {
+      "comment": "雷光屏障"
+    },
+    "sqr/character/atmage/teleport": {
+      "comment": "瞬移"
+    },
+    "sqr/character/atmage/holonglight": {
+      "comment": "幽冥火"
+    },
+    "sqr/character/atmage/magiccannon": {
+      "comment": "魔法炮"
+    },
+    "sqr/character/atmage/pushout": {
+      "comment": "擒拿掌"
+    },
+    "sqr/character/atmage/watercannon": {
+      "comment": "魔法冰球"
+    },
+    "sqr/character/atmage/iceman": {
+      "comment": "极冰绽放"
+    },
+    "sqr/character/atmage/resonance": {
+      "comment": "寒冰之境"
+    },
+    "sqr/character/atmage/fallenblossoms": {
+      "comment": "寒冰连枪"
+    },
+    "sqr/character/atmage/expressions": {
+      "comment": "发现"
+    },
+    "sqr/character/atmage/iceorbex": {
+      "comment": "冰凌破"
+    },
+    "sqr/character/atmage/diehard": {
+      "comment": "不死之身"
+    },
+    "sqr/character/atmage/frozenland": {
+      "comment": "冰龙旋舞"
+    },
+    "sqr/character/atmage/darknessmantle": {
+      "comment": "黑暗禁域"
+    },
+    "map/origin/town/01_seria_room/gate_elvengard.map": {
+      "comment": "贝尔马北部艾尔文防线地区"
+    },
+    "map/origin": {
+      "comment": "国服新城镇"
+    },
+    "itemshop/hznw.shp": {
+      "comment": "花之女王的商店"
+    },
+    "chatemoticon/chatemoticon.lst": {
+      "comment": "聊天表情"
+    },
+    "chatemoticon/chatemoticon.kor.str": {
+      "comment": "表情描述"
+    },
+    "clientonly/clientonly.kor.str": {
+      "comment": "菜单的描述"
+    },
+    "map/realskycastle": {
+      "comment": "蠕动之城"
+    },
+    "map/alfhlyra": {
+      "comment": "城镇地图（阿法利亚）"
+    },
+    "map/advancealtar": {
+      "comment": "守护者祭坛"
+    },
+    "map/2ndbackbone": {
+      "comment": "第二脊椎"
+    },
+    "map/aganzo": {
+      "comment": "应该是月光酒馆副本（阿甘左）"
+    },
+    "map/elvengard": {
+      "comment": "艾尔文防线（城镇地区）"
+    },
+    "ui/rapidparty": {
+      "comment": "副本UI等级登记处"
+    },
+    "map/elvengard/elvengard.map": {
+      "comment": "铁匠地区"
+    },
+    "map/elvengard/(f)gate.map": {
+      "comment": "赛利亚房间"
+    },
+    "map/elvengard/elven2alfh.map": {
+      "comment": "通往阿法利亚的路"
+    },
+    "map/elvengard/(r)gate.map": {
+      "comment": "也是赛丽亚房间"
+    },
+    "map/elvengard/d_elvengard.map": {
+      "comment": "洛兰副本副本门前的路"
+    },
+    "map/hendonmyre/hendon_pub.map": {
+      "comment": "酒馆"
+    },
+    "map/hendonmyre/d_westcoast.map": {
+      "comment": "天空城副本门口1"
+    },
+    "map/hendonmyre/d_westcoast2.map": {
+      "comment": "天空城副本门口2"
+    },
+    "map/hendonmyre/(f)gate_west.map": {
+      "comment": "赫顿玛尔公国西海岸赛丽亚房间"
+    },
+    "map/hendonmyre/west2death.map": {
+      "comment": "亡者峡谷"
+    },
+    "map/hendonmyre/hendon2north.map": {
+      "comment": "诺斯玛尔副本入口"
+    },
+    "ui/optionwindow": {
+      "comment": "游戏设置界面的文字ui"
+    },
+    "map/bdking": {
+      "comment": "大狗王自制公会大厅"
+    },
+    "map/guildagit_2019": {
+      "comment": "王之圣城"
+    },
+    "map/guildagit": {
+      "comment": "王之圣城"
+    },
+    "map/guildagit/animation/zzcym.ani": {
+      "comment": "双石柱门"
+    },
+    "map/guildagit/animation/zzm.ani": {
+      "comment": "蓝洞门"
+    },
+    "map/guildagit/animation/zzm3.ani": {
+      "comment": "古老树洞之门"
+    },
+    "map/guildagit/animation/zzm4.ani": {
+      "comment": "古树门（正门）"
+    },
+    "map/guildagit/animation/zzm2.ani": {
+      "comment": "蓝光魔法门"
+    },
+    "map/guildagit/animation/zzm5.ani": {
+      "comment": "生命树之门"
+    },
+    "map/guildagit/animation/zzm6.ani": {
+      "comment": "黄金古树门（正门）"
+    },
+    "map/guildagit/animation/zzmm7.ani": {
+      "comment": "彼诺修雕像"
+    },
+    "map/guildagit/animation/zzdg.ani": {
+      "comment": "三国次元之门"
+    },
+    "map/guildagit/animation/zzm10.ani": {
+      "comment": "三国烈火双兵门"
+    },
+    "map/guildagit/animation/2015_stone.ani": {
+      "comment": "石块"
+    },
+    "map/guildagit/animation/2015_entrance_up.ani": {
+      "comment": "路标"
+    },
+    "map/guildagit/animation/2015_drum.ani": {
+      "comment": "木桶"
+    },
+    "map/event_kronos/animation/kronos_move_gate.ani": {
+      "comment": "次元之门"
+    },
+    "equipment/bdking": {
+      "comment": "大狗王专属装备"
+    },
+    "itemshop/equipmentshop24.shp": {
+      "comment": "海上列车NPC"
+    },
+    "monster/act8/ghost_flu/ghost_flu.mob": {
+      "comment": "幽灵列车领主"
+    },
+    "n_quest/lufthafen/pirateonthetrain": {
+      "comment": "海上列车"
+    },
+    "n_quest/lufthafen": {
+      "comment": "海上列车"
+    },
+    "n_quest/lufthafen/seatrainretaking": {
+      "comment": "夺回西部"
+    },
+    "dungeon/act8": {
+      "comment": "海上列车"
+    },
+    "stackable/gcn": {
+      "comment": "光尘;Gcn专区"
+    },
+    "stackable/emblem": {
+      "comment": "镶嵌徽章"
+    },
+    "region/minimap": {
+      "comment": "世界小地图"
+    },
+    "passiveobject/passiveobject.lst": {
+      "comment": "OBJ列表"
+    },
+    "map/map.lst": {
+      "comment": "map列表"
+    },
+    "etc/cerashop_first.etc": {
+      "comment": "商城(旧版)"
+    },
+    "etc/compoundavatar_atmage.etc": {
+      "comment": "天空合成 - 魔法师-男"
+    },
+    "etc/compoundavatar_creator_mage.etc": {
+      "comment": "天空合成 - 缔造者"
+    },
+    "etc/compoundavatar_demonic_swordman.etc": {
+      "comment": "天空合成 - 黑暗武士"
+    },
+    "etc/pvp_ref.etc": {
+      "comment": "决斗场基本设置"
+    },
+    "etc/pvpmapbasicdata.etc": {
+      "comment": "PKC地图设置"
+    },
+    "etc/pvppracticeailist.etc": {
+      "comment": "决斗场AI设置"
+    },
+    "etc/reseal.etc": {
+      "comment": "蜜蜡相关"
+    },
+    "etc/restrictnameunicoderangetable.etc": {
+      "comment": "限制名称Unicode范围表"
+    },
+    "etc/towerlist.lst": {
+      "comment": "新手第一次进游戏副本列表"
+    },
+    "etc/towerofdespair.etc": {
+      "comment": "绝望之塔对应的dgn"
+    },
+    "character/expertjob": {
+      "comment": "副职业"
+    },
+    "character/expertjob/disjointshop.ani": {
+      "comment": "分解师动画"
+    },
+    "map/screamingcave": {
+      "comment": "悲鸣洞穴"
+    },
+    "map/noirpera": {
+      "comment": "诺伊佩拉"
+    },
+    "equipment/character/common/title/dnf_guidebook.equ": {
+      "comment": "测试数据称号"
+    },
+    "equipment/character/common/title/dnf_guidebook_all.equ": {
+      "comment": "赞助累计称号"
+    },
+    "n_quest/gent/supplycut": {
+      "comment": "补给阻断战"
+    },
+    "n_quest/gent/nightassault": {
+      "comment": "夜间袭击战"
+    },
+    "n_quest/gent/gentnorthgate": {
+      "comment": "根特北门"
+    },
+    "n_quest/gent/gentdefence": {
+      "comment": "根特防御战"
+    },
+    "n_quest/gent/counterattack": {
+      "comment": "追击歼灭战"
+    },
+    "n_quest/shonan": {
+      "comment": "素喃"
+    },
+    "n_quest/alphraira/noirpera": {
+      "comment": "诺伊佩拉"
+    },
+    "map/sao_tree_2": {
+      "comment": "世界树：系统区域"
+    },
+    "map/vilmark": {
+      "comment": "比尔马克试验场"
+    },
+    "monster/newmonsters/heaven/sergeant": {
+      "comment": "老中士"
+    },
+    "monster/newmonsters/heaven/assaultmarine": {
+      "comment": "强袭兵梅隆"
+    },
+    "monster/newmonsters/heaven/majorcamoka": {
+      "comment": "黑夜使者卡莫卡"
+    },
+    "monster/newmonsters/heaven/mechanicgiselle/mechanicgiselle": {
+      "comment": "机械吉赛尔"
+    },
+    "monster/newmonsters/heaven/mechanicgiselle/zx_5_1": {
+      "comment": "ZX-5帕克斯"
+    },
+    "monster/newmonsters/heaven/mechanicgiselle": {
+      "comment": "机械吉赛尔"
+    },
+    "monster/newmonsters/screamingcave": {
+      "comment": "悲鸣洞穴"
+    },
+    "monster/newmonsters/silverspoon/crazyman": {
+      "comment": "伊比吉斯"
+    },
+    "monster/newmonsters/silverspoon": {
+      "comment": "补给阻断战"
+    },
+    "monster/newmonsters/dog/dreckdog": {
+      "comment": "AM-9 克倫基"
+    },
+    "monster/newmonsters/silverspoon/gusto": {
+      "comment": "HM-8 古斯托"
+    },
+    "monster/newmonsters/snowman/blanka": {
+      "comment": "UM-7 布萊斯托"
+    },
+    "monster/newmonsters/silverspoon/tripo": {
+      "comment": "火焰球杜魯夫"
+    },
+    "monster/newmonsters/silverspoon/silverclown_robert": {
+      "comment": "橡皮人洛貝利"
+    },
+    "monster/newmonsters/cartel/silkhat": {
+      "comment": "西克特·帕菲斯"
+    },
+    "monster/newmonsters/cartel/peltshu": {
+      "comment": "裴特舒·帕菲斯"
+    },
+    "monster/newmonsters/cartel/dismantle": {
+      "comment": "機械分解師"
+    },
+    "monster/newmonsters/cartel/deserter": {
+      "comment": "突擊隊長左倫"
+    },
+    "monster/newmonsters/cartel/warjack": {
+      "comment": "機械臂捷克"
+    },
+    "monster/newmonsters/heaven/jena": {
+      "comment": "眩击枪杰娜"
+    },
+    "monster/newmonsters/heaven/dorian": {
+      "comment": "巨枪多里安"
+    },
+    "monster/newmonsters/heaven/captain_berhik": {
+      "comment": "前鋒衛隊長波西克"
+    },
+    "monster/newmonsters/heaven/gt9600": {
+      "comment": "GT-9600"
+    },
+    "monster/newmonsters/heaven/vulcherspecialforce": {
+      "comment": "辅修师斯佩特"
+    },
+    "monster/newmonsters/heaven/captainshured": {
+      "comment": "機動隊長蘇雷德"
+    },
+    "monster/newmonsters/heaven/letsburn_bentinck": {
+      "comment": "縱火犯本汀克"
+    },
+    "monster/newmonsters/dragon/scasa": {
+      "comment": "冰龍斯卡薩"
+    },
+    "monster/newmonsters/cartel/cypher": {
+      "comment": "魔雷者麥瑟·莫納亨"
+    },
+    "monster/newmonsters/cartel/rocketman": {
+      "comment": "火箭俠"
+    },
+    "monster/newmonsters/event": {
+      "comment": "活动副本"
+    },
+    "n_quest/elvengard/vilmark": {
+      "comment": "比尔马克帝国试验场"
+    },
+    "n_quest/elvengard/screamingcave": {
+      "comment": "悲鸣洞穴"
+    },
+    "n_quest/elvengard/lorieninside": {
+      "comment": "洛兰深处"
+    },
+    "n_quest/elvengard/lorien": {
+      "comment": "洛兰"
+    },
+    "n_quest/alphraira": {
+      "comment": "暗黑城"
+    },
+    "n_quest/alphraira/kingsruins": {
+      "comment": "王的遗迹"
+    },
+    "stackable/quest": {
+      "comment": "任务材料"
+    },
+    "dungeon/act1": {
+      "comment": "格兰之森"
+    },
+    "dungeon/act6": {
+      "comment": "诺斯玛尔"
+    },
+    "dungeon/act9": {
+      "comment": "发电站"
+    },
+    "dungeon/boss_rush": {
+      "comment": "灵魂之冢"
+    },
+    "dungeon/gcontents": {
+      "comment": "秘密之森"
+    },
+    "dungeon/kcontents3": {
+      "comment": "黑色魔物"
+    },
+    "dungeon/poongjintrainingroom": {
+      "comment": "修炼场"
+    },
+    "dungeon/quest": {
+      "comment": "任务地图"
+    },
+    "dungeon/shonantournament": {
+      "comment": "素喃"
+    },
+    "dungeon/towers": {
+      "comment": "死亡峡谷"
+    },
+    "dungeon/tutorial": {
+      "comment": "时空之门2"
+    },
+    "dungeon/village": {
+      "comment": "海岸三番区"
+    },
+    "dungeon/villageattack": {
+      "comment": "怪物攻城"
+    },
+    "dungeon/warroom": {
+      "comment": "不到啊"
+    },
+    "stackable/qq906127695": {
+      "comment": "2022新年至尊装扮"
+    },
+    "stackable/professional/puppet": {
+      "comment": "人偶"
+    },
+    "stackable/professional/recipe": {
+      "comment": "设计图"
+    },
+    "stackable/professional/potion": {
+      "comment": "药剂"
+    },
+    "stackable/professional/material": {
+      "comment": "副职业材料"
+    },
+    "stackable/new_people": {
+      "comment": "活跃度"
+    },
+    "appendage/equipment/418.apd": {
+      "comment": "力智+200，上限5次"
+    },
+    "monster/newmonsters/towerofultimate": {
+      "comment": "极限祭坛"
+    },
+    "passiveobject/actionobject/monster/screamingcave/attackinfo/gas.atk": {
+      "comment": "毒气"
+    },
+    "monster/newmonsters/heaven/cannon": {
+      "comment": "天堂炮"
+    },
+    "monster/newmonsters/heaven/big_soldier": {
+      "comment": "卡勒特先锋队"
+    },
+    "monster/newmonsters/heaven/caspar": {
+      "comment": "胆小的卡斯珀"
+    },
+    "monster/95monster/equipment/pistol_up2/gun_congcong3/action/2.act": {
+      "comment": "召唤企鹅"
+    },
+    "monster/95monster/equipment/pistol_up2/gun_congcong3/action/3.act": {
+      "comment": "招换黑球"
+    },
+    "monster/95monster/equipment/pistol_up2/gun_congcong3/action/5.act": {
+      "comment": "召唤黑球"
+    },
+    "monster/95monster/equipment/pistol_up2/gun_congcong3/action/6.act": {
+      "comment": "召唤分身"
+    },
+    "sqr/character": {
+      "comment": "角色"
+    },
+    "map/metrocenter/hell/hell2.map": {
+      "comment": "第二图"
+    },
+    "map/metrocenter/hell/hell1.map": {
+      "comment": "第一图"
+    },
+    "map/metrocenter/hell/hell3.map": {
+      "comment": "第三图"
+    },
+    "map/metrocenter/hell/hell4.map": {
+      "comment": "超音速"
+    },
+    "map/metrocenter/hell/hell5.map": {
+      "comment": "第五图"
+    },
+    "map/metrocenter/hell/hell6.map": {
+      "comment": "毒王"
+    },
+    "map/metrocenter/hell/hell7.map": {
+      "comment": "第七图"
+    },
+    "map/metrocenter/hell/hell8.map": {
+      "comment": "第八图"
+    },
+    "map/metrocenter/hell/hell9.map": {
+      "comment": "BOSS"
+    },
+    "passiveobject/95object/actionobject/monster/legend/tayberrs/normal/auka_wine/poison/attackinfo/killer_basic.atk": {
+      "comment": "紫色的球带中毒"
+    },
+    "passiveobject/95object/actionobject/monster/timegate/conflagration/redeyes_sinua/fire.obj": {
+      "comment": "火焰魔法阵"
+    },
+    "passiveobject/95object/actionobject/monster/timegate/conflagration/redeyes_sinua/heal.obj": {
+      "comment": "回血魔法阵"
+    },
+    "monster/95monster/equipment/pistol_up2/gun_congcong2/action/attack_7.act": {
+      "comment": "4个黑球"
+    },
+    "monster/95monster/equipment/pistol_up2/gun_congcong2/action/attack_10.act": {
+      "comment": "心灵控制"
+    },
+    "monster/95monster/ghoul/ghoul/action/1.act": {
+      "comment": "红光往前瞄准"
+    },
+    "monster/95monster/ghoul/ghoul/action/3.act": {
+      "comment": "红球"
+    },
+    "monster/95monster/ghoul/ghoul/action/8.act": {
+      "comment": "大圈红光"
+    },
+    "monster/95monster/ghoul/ghoul/action/2.act": {
+      "comment": "爆炸攻击"
+    },
+    "monster/95monster/ghoul/ghoul/action/5.act": {
+      "comment": "怒吼"
+    },
+    "monster/95monster/ghoul/ghoul/action/6.act": {
+      "comment": "怒吼2"
+    },
+    "monster/95monster/ghoul/ghoul/action/7.act": {
+      "comment": "怒吼3"
+    },
+    "monster/95monster/ghoul/ghoul/action/4.act": {
+      "comment": "爆炸攻击"
+    },
+    "monster/95monster/ghoul/ghoul/action/move.act": {
+      "comment": "移动燃烧"
+    },
+    "passiveobject/95object/actionobject/monster/legend/tayberrs/harbart/divisionattackboomf/divisionattackboomf.obj": {
+      "comment": "皎玉爆炸特效"
+    },
+    "passiveobject/95object/actionobject/monster/legend/tayberrs/harbart/harbart_slash_00/harbart_slash_00.obj": {
+      "comment": "爪子攻击"
+    },
+    "passiveobject/95object/actionobject/monster/legend/tayberrs/harbart/darkfireroad/attackinfo/darkfireroad.atk": {
+      "comment": "燃烧攻击"
+    },
+    "passiveobject/95object/actionobject/monster/legend/tayberrs/kepuros/kepurosdarkmarblestart/kepurosdarkmarblestart1.obj": {
+      "comment": "4个黑球"
+    },
+    "passiveobject/95object/actionobject/new/gej/boom1.obj": {
+      "comment": "爆炸攻击？"
+    },
+    "passiveobject/95object/actionobject/monster/legend/tayberrs/kepuros/darkmarbleboom/darkmarbleboom.obj": {
+      "comment": "黑球爆炸"
+    },
+    "monster/newmonsters/timegate/timelord/neymar/action/stay.act": {
+      "comment": "释放技能"
+    },
+    "monster/newmonsters/goblinkingdom/golgo/attackinfo/chair_dash.atk": {
+      "comment": "冲刺攻击"
+    },
+    "monster/newmonsters/goblinkingdom/golgo/action/nochair_octorthunder.act": {
+      "comment": "闪电攻击"
+    },
+    "monster/newmonsters/goblinkingdom/golgoserver/action/suicide.act": {
+      "comment": "自杀"
+    },
+    "monster/newmonsters/goblinkingdom/golgoserver/action/explode.act": {
+      "comment": "自杀爆炸"
+    },
+    "monster/newmonsters/goblinkingdom/golgo/action/nochair_summon.act": {
+      "comment": "亲卫队"
+    },
+    "monster/newmonsters/goblinkingdom/golgo/action/nochair_saintskullsummon.act": {
+      "comment": "骷髅暗属性爆炸"
+    },
+    "monster/newmonsters/goblinkingdom/golgo/action/chair_dashready.act": {
+      "comment": "冲刺准备"
+    },
+    "monster/newmonsters/goblinkingdom/golgo/animation/server/chair_server2_dash.ani": {
+      "comment": "冲刺"
+    },
+    "monster/newmonsters/goblinkingdom/golgo/animation/server/chair_server2_dance.ani": {
+      "comment": "跳舞"
+    },
+    "monster/newmonsters/goblinkingdom/golgo/action/nochair_cloud.act": {
+      "comment": "云层闪电"
+    },
+    "passiveobject/actionobject/spc/_gligexp/attackinfo/body.atk": {
+      "comment": "火焰爆炸"
+    },
+    "monster/newmonsters/goblinkingdom/glig/glig/action/rage.act": {
+      "comment": "大爆炸"
+    },
+    "monster/newmonsters/goblinkingdom/glig/glig/action/move.act": {
+      "comment": "吃小怪"
+    },
+    "monster/newmonsters/goblinkingdom/glig/glig/action/grow.act": {
+      "comment": "吃小怪"
+    },
+    "passiveobject/actionobject/common/oli/action/monstertrap2.act": {
+      "comment": "召唤牛头统帅"
+    },
+    "monster/newmonsters/goblin/guardiantraper/action/trapmove.act": {
+      "comment": "陷阱+召唤牛头统帅"
+    },
+    "monster/newmonsters/dollmaster": {
+      "comment": "蠕动2图4法师"
+    },
+    "monster/newmonsters/draconian/magneus/action/hallucination.act": {
+      "comment": "分身"
+    },
+    "monster/newmonsters/draconian/magneus/action/mindcontrol.act": {
+      "comment": "心灵控制"
+    },
+    "monster/newmonsters/realsky/mirkius/action/attacklong.act": {
+      "comment": "诅咒攻击"
+    },
+    "monster/newmonsters/realsky/mirkius/action/summon.act": {
+      "comment": "召唤怪物"
+    },
+    "monster/newmonsters/ranjerus/maryjane/action/cast.act": {
+      "comment": "心灵控制"
+    },
+    "monster/newmonsters/ranjerus/gashengrigun/action/order.act": {
+      "comment": "召唤精英追击者"
+    },
+    "monster/newmonsters/ranjerus/gashengrigun/action/order3.act": {
+      "comment": "召唤风暴"
+    },
+    "monster/newmonsters/ranjerus/gashengrigun/action/rolling_b.act": {
+      "comment": "扔催眠弹"
+    },
+    "monster/newmonsters/ranjerus/gashengrigun/action/rolling_b2.act": {
+      "comment": "伪装"
+    },
+    "monster/newmonsters/ranjerus/dugong/action/mine.act": {
+      "comment": "蜘蛛地雷"
+    },
+    "monster/newmonsters/ranjerus/dugong/action/summon_1st_squad.act": {
+      "comment": "支援兵"
+    },
+    "n_quest/northmyre/danceingbutterfly": {
+      "comment": "血蝴蝶之舞"
+    },
+    "n_quest/northmyre/leshphon": {
+      "comment": "痛苦之村列瑟芬"
+    },
+    "n_quest/northmyre/suspiciousvillage": {
+      "comment": "疑惑之村"
+    },
+    "n_quest/northmyre/villageoftemptation": {
+      "comment": "迷亂之村哈穆林"
+    },
+    "n_quest/northmyre/astraythief": {
+      "comment": "堕落的盗贼"
+    },
+    "n_quest/northmyre": {
+      "comment": "诺斯玛尔"
+    }
+  }
+}

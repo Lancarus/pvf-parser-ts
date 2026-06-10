@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { PvfModel, PvfFileEntry } from './model';
 import { getIconForFile } from './fileIcons';
+import { PvfTreeCommentService } from './treeComments';
 import * as path from 'path';
 
 export class PvfProvider implements vscode.TreeDataProvider<PvfFileEntry> {
@@ -11,7 +12,7 @@ export class PvfProvider implements vscode.TreeDataProvider<PvfFileEntry> {
   private disposables: vscode.Disposable[] = [];
   private _metadataRequested = new Set<string>();
 
-  constructor(private model: PvfModel, private output?: vscode.OutputChannel) {}
+  constructor(private model: PvfModel, private output?: vscode.OutputChannel, private treeComments?: PvfTreeCommentService) {}
 
   refresh(): void {
     this._onDidChangeTreeData.fire();
@@ -22,12 +23,16 @@ export class PvfProvider implements vscode.TreeDataProvider<PvfFileEntry> {
   }
 
   getTreeItem(element: PvfFileEntry): vscode.TreeItem {
+    const comment = this.treeComments?.getComment(element.key);
+    const commentDescription = comment ? `(${comment})` : undefined;
     const item = new vscode.TreeItem(element.name,
       element.isFile ? vscode.TreeItemCollapsibleState.None : vscode.TreeItemCollapsibleState.Collapsed);
     item.contextValue = element.isFile ? 'pvf.file' : 'pvf.folder';
   const uri = vscode.Uri.parse(`pvf:/${element.key}`);
   // 为文件和文件夹都设置 resourceUri，便于文件装饰向父级传播
   item.resourceUri = uri;
+  const tooltip = this.treeComments?.getTooltip(element);
+  if (tooltip) item.tooltip = tooltip;
   if (element.isFile) {
       const icon = getIconForFile(element.name);
       if (icon) {
@@ -63,8 +68,13 @@ export class PvfProvider implements vscode.TreeDataProvider<PvfFileEntry> {
         let parts: string[] = [];
         if (showName && disp) parts.push(disp);
         if (showCode && code !== -1) parts.push(`<${code}>`);
+        if (commentDescription) parts.push(commentDescription);
         if (parts.length) item.description = parts.join(' ');
       }
+      if (!item.description && commentDescription) item.description = commentDescription;
+    }
+    else if (commentDescription) {
+      item.description = commentDescription;
     }
   if (element.isFile) item.command = { command: 'pvf.openFile', title: '打开', arguments: [element] };
     return item;

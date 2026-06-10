@@ -27,6 +27,7 @@
 - **元数据解析** — 自动解析 `[name]` 和 `[icon]` 标签，用于显示文件别名和自定义图标。
 - **多编码支持** — 支持韩文（cp949）、繁体中文（big5）、简体中文（gb18030）、日文（shift_jis）和 UTF8，并可自动检测。
 - **解封目录编辑优化** — 解封后的磁盘脚本文件会自动切换到对应 `pvf-*` 语言模式，使用真实制表符缩进，并通过 VS Code 原生空白字符渲染显示制表符箭头。
+- **解包目录注释视图** — 从 `.env` 的 `UNPACK_DIR` 读取磁盘解包目录，在 PVF 侧边栏的 **解包目录** 视图中显示路径注释，例如 `equipment (装备)`。注释使用 VS Code 的说明文字颜色，和文件/文件夹名区分显示。
 
 ## 环境要求
 
@@ -54,6 +55,28 @@
 
 解封和封装均采用受控并发处理，适合几十万小文件的 PVF 包；实际速度主要受磁盘随机写入性能、杀毒软件扫描和文本反编译/编译比例影响。
 
+### 解包目录注释
+
+项目根目录的 `.env` 可配置解包目录位置：
+
+```env
+# 解包文件所在位置
+UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
+```
+
+插件会读取 `UNPACK_DIR`，并在 PVF 活动栏里的 **解包目录** 视图展示该目录的真实磁盘结构。命中内置路径注释或用户自定义注释时，节点会显示为文件/文件夹名加说明文字，例如：
+
+```text
+equipment    (装备)
+creature     (NPC卖的宠物)
+```
+
+其中 `equipment`、`creature` 使用正常文件名颜色，括号里的注释使用 VS Code 的 `description` 说明文字颜色。视图标题栏的刷新按钮会重新读取 `.env` 和磁盘目录。
+
+原生 VS Code Explorer 不能通过扩展 API 在文件名后追加完整说明文字，且 `FileDecoration.badge` 超过 2 个字符会被 VS Code 直接截断或不显示。因此插件不会在原生 Explorer 中显示注释 badge；原生 Explorer 只保留完整注释的 hover tooltip 和右键菜单 **编辑路径注释**。需要完整行内注释时，请使用 PVF 侧边栏的 **解包目录** 视图。
+
+路径注释默认来自 `src/pvf/resources/treeComments.json`，用户通过 **编辑路径注释** 保存的覆盖项会写入 VS Code `globalStorage`，并按 PVF `fileVersion` 区分版本。若解包目录里存在 `.pvfmanifest.json`，插件会读取其中的 `fileVersion`；没有 manifest 时使用通用版本 `0`。
+
 ### 解封目录中的脚本编辑
 
 解封后的 `.equ`、`.skl`、`.act`、`.dgn`、`.map` 等脚本文件是普通磁盘文件，可以直接被 VS Code、agent 和其他文本工具读取。插件会在打开这些文件时按扩展名自动切换到对应的 `pvf-*` 语言模式，例如 `.equ` 会切到 `pvf-equ`。
@@ -63,6 +86,8 @@
 如果打开解封目录后没有看到制表符箭头，先确认右下角语言模式是 `pvf-equ`、`pvf-skl` 等 PVF 语言；也可以手动切换语言模式或重新打开文件。插件会为原生空白字符设置一个略亮的 `editorWhitespace.foreground` 默认颜色，便于在深色背景下看清，但不会使用自绘装饰覆盖文本。
 
 默认的简繁转换适合“解包目录给 agent/编辑器直接读”的工作流：解封时将繁体脚本文本写成简体，便于理解和修改；重新封装时根据 `.pvfmanifest.json` 把这些文本转回繁体，再按 PVF 格式写入封包。关闭 `pvf.unpack.chineseConversion` 后，解封文本会尽量保持原文字形，不再执行繁简互转。
+
+悬停提示、悬浮窗和原生资源管理器 hover 效果主要在打开磁盘解包后的真实文件时验证。也就是说，应在 VS Code 中打开 `UNPACK_DIR` 指向的目录，再从原生 Explorer 或 **解包目录** 视图打开 `.equ`、`.skl`、`.act` 等磁盘文件进行测试；仅查看 PVF 包内 `pvf:` 虚拟文件或未配置 `UNPACK_DIR` 的目录，不能完整覆盖磁盘路径解析、`.lst` 查找、Explorer hover tooltip 和右键编辑入口。
 
 ### 数字代码悬停
 

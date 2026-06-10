@@ -3,16 +3,24 @@ import { Deps } from './types';
 
 // Very first version of a visual ANI editor using webview and VS Code UI Toolkit
 export function registerAniEditor(context: vscode.ExtensionContext, _deps: Deps) {
-  const d = vscode.commands.registerCommand('pvf.openAniEditor', async () => {
-    const editor = vscode.window.activeTextEditor; if (!editor) { vscode.window.showWarningMessage('没有活动的编辑器'); return; }
-    const doc = editor.document;
+  const d = vscode.commands.registerCommand('pvf.openAniEditor', async (target?: vscode.Uri | { fsPath?: string }) => {
+    let doc: vscode.TextDocument | undefined;
+    if (target instanceof vscode.Uri) {
+      doc = await vscode.workspace.openTextDocument(target);
+    } else if (target && typeof target.fsPath === 'string') {
+      doc = await vscode.workspace.openTextDocument(vscode.Uri.file(target.fsPath));
+    } else {
+      doc = vscode.window.activeTextEditor?.document;
+    }
+    if (!doc) { vscode.window.showWarningMessage('没有活动的编辑器'); return; }
     if (!/\.ani$/i.test(doc.fileName)) { vscode.window.showWarningMessage('请在一个 .ani 文件中使用 ANI 编辑器'); return; }
-    const text = doc.getText();
+    const activeDoc = doc;
+    const text = activeDoc.getText();
 
   // 固定源文档在左侧第一列
-  try { await vscode.window.showTextDocument(doc, { viewColumn: vscode.ViewColumn.One, preserveFocus: true }); } catch {}
+  try { await vscode.window.showTextDocument(activeDoc, { viewColumn: vscode.ViewColumn.One, preserveFocus: true }); } catch {}
 
-  const panel = vscode.window.createWebviewPanel('pvfAniEditor', `ANI 编辑器: ${doc.fileName.split(/[\\/]/).pop()}`, vscode.ViewColumn.Two, {
+  const panel = vscode.window.createWebviewPanel('pvfAniEditor', `ANI 编辑器: ${activeDoc.fileName.split(/[\\/]/).pop()}`, vscode.ViewColumn.Two, {
       enableScripts: true,
       retainContextWhenHidden: true,
       localResourceRoots: [
@@ -30,7 +38,7 @@ export function registerAniEditor(context: vscode.ExtensionContext, _deps: Deps)
     let framePos = new Map<number, vscode.Position>();
     function computeFramePositions() {
       framePos = new Map();
-      const t = doc.getText();
+      const t = activeDoc.getText();
       const re = /^\s*\[FRAME(\d{3})\]/gmi;
       let m: RegExpExecArray | null;
       while ((m = re.exec(t)) !== null) {
@@ -38,7 +46,7 @@ export function registerAniEditor(context: vscode.ExtensionContext, _deps: Deps)
         const bracketAt = t.indexOf('[', lineStart);
         const offset = bracketAt >= 0 ? bracketAt : lineStart;
         const idx = parseInt(m[1], 10);
-        if (!Number.isNaN(idx)) framePos.set(idx, doc.positionAt(offset));
+        if (!Number.isNaN(idx)) framePos.set(idx, activeDoc.positionAt(offset));
       }
     }
     computeFramePositions();
@@ -153,9 +161,9 @@ export function registerAniEditor(context: vscode.ExtensionContext, _deps: Deps)
             if (!Number.isNaN(idx)) {
               const pos = framePos.get(idx);
               if (pos) {
-                const visible = vscode.window.visibleTextEditors.find(e => e.document.uri.toString() === doc.uri.toString());
+                const visible = vscode.window.visibleTextEditors.find(e => e.document.uri.toString() === activeDoc.uri.toString());
                 const viewColumn = visible?.viewColumn ?? vscode.ViewColumn.One;
-                await vscode.window.showTextDocument(doc, { viewColumn, preserveFocus: true, selection: new vscode.Range(pos, pos) });
+                await vscode.window.showTextDocument(activeDoc, { viewColumn, preserveFocus: true, selection: new vscode.Range(pos, pos) });
               }
             }
           } catch {}
@@ -166,8 +174,8 @@ export function registerAniEditor(context: vscode.ExtensionContext, _deps: Deps)
             const frames = Array.isArray(msg.frames) ? msg.frames : [];
             const content = rebuildAni(text, frames);
             const edit = new vscode.WorkspaceEdit();
-            const fullRange = new vscode.Range(0, 0, doc.lineCount, 0);
-            edit.replace(doc.uri, fullRange, content);
+            const fullRange = new vscode.Range(0, 0, activeDoc.lineCount, 0);
+            edit.replace(activeDoc.uri, fullRange, content);
             const ok = await vscode.workspace.applyEdit(edit);
             if (ok) { vscode.window.showInformationMessage('ANI 已保存'); }
             else { vscode.window.showWarningMessage('保存失败'); }
@@ -183,7 +191,7 @@ export function registerAniEditor(context: vscode.ExtensionContext, _deps: Deps)
 
     // Update positions if the source document changes while editor is open
     const changeSub = vscode.workspace.onDidChangeTextDocument(e => {
-      if (e.document.uri.toString() === doc.uri.toString()) {
+      if (e.document.uri.toString() === activeDoc.uri.toString()) {
         computeFramePositions();
       }
     });

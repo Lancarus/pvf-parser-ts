@@ -2,6 +2,9 @@ import * as vscode from 'vscode';
 import { PvfModel, PvfFileEntry } from './pvf/model';
 import { parseMetadataForKeys } from './pvf/metadata';
 import { PvfProvider } from './pvf/provider';
+import { registerDiskTreeCommentDecorations } from './pvf/diskTreeCommentDecorations';
+import { PvfTreeCommentService } from './pvf/treeComments';
+import { UnpackExplorerProvider } from './pvf/unpackExplorerProvider';
 import { registerPathLinkProvider } from './pvf/pathLinkProvider';
 import { registerPvfDecorations } from './pvf/decorations';
 import { registerAllCommands } from './commander/index.js';
@@ -80,14 +83,23 @@ export function activate(context: vscode.ExtensionContext) {
     // 供 metadata.ts 生成图标时访问上下文 (globalStorage)
     (model as any)._extCtx = context;
     const output = vscode.window.createOutputChannel('PVF');
-    const tree = new PvfProvider(model, output);
+    const treeComments = new PvfTreeCommentService(context, model, output);
+    const tree = new PvfProvider(model, output, treeComments);
+    const unpackTree = new UnpackExplorerProvider(context, treeComments, output);
     const deco = registerPvfDecorations(context, model);
+    const diskTreeCommentDeco = registerDiskTreeCommentDecorations(context, treeComments, output);
+    void treeComments.load().then(() => {
+        tree.refresh();
+        unpackTree.refresh();
+        diskTreeCommentDeco.refreshAll();
+    });
     void ensureNativeWhitespaceColor(output);
     registerPvfDiskFileLanguageActivation(context, output);
     // 图标逻辑：在 provider 中通过 vscode.extensions.getExtension 查找当前扩展根路径，从 media/icons 读取 png
     // 若需要在运行时修改映射，可暴露命令以动态刷新（后续可扩展）
 
     vscode.window.registerTreeDataProvider('pvfExplorerView', tree);
+    vscode.window.registerTreeDataProvider('pvfUnpackExplorerView', unpackTree);
     // register document link provider for .lst/.nut and other path-like tokens
     registerPathLinkProvider(context, model);
 
@@ -151,6 +163,68 @@ export function activate(context: vscode.ExtensionContext) {
         } catch {
             try { await vscode.commands.executeCommand('workbench.action.openSettings', 'pvf.'); } catch {}
         }
+    }));
+
+    context.subscriptions.push(vscode.commands.registerCommand('pvf.editTreeComment', async (target?: PvfFileEntry | vscode.Uri | { key?: string; name?: string; isFile?: boolean; version?: string; uri?: string }) => {
+        let key = '';
+        let version = treeComments.currentVersionKey();
+        let refreshUri: vscode.Uri | undefined;
+
+        if (target instanceof vscode.Uri) {
+            const diskTarget = await diskTreeCommentDeco.targetFromUri(target);
+            if (diskTarget) {
+                key = diskTarget.key;
+                version = diskTarget.version;
+                refreshUri = target;
+            }
+        } else if (target && typeof target === 'object' && typeof target.key === 'string') {
+            const record = target as Record<string, unknown>;
+            key = target.key;
+            version = typeof record.version === 'string' ? record.version : version;
+            if (typeof record.uri === 'string') {
+                try { refreshUri = vscode.Uri.parse(record.uri); } catch {}
+            }
+        }
+
+        if (!key) {
+            vscode.window.showWarningMessage('请在 PVF 资源树中选择路径，或在包含 .pvfmanifest.json 的解包目录中选择文件/文件夹。');
+            return;
+        }
+        const current = treeComments.getCommentForVersion(key, version) || '';
+        const value = await vscode.window.showInputBox({
+            title: '编辑资源树注释',
+            prompt: `路径: ${key}    PVF 版本: ${version}。留空会恢复内置注释或清除自定义注释。`,
+            placeHolder: '例如: 装备',
+            value: current,
+            ignoreFocusOut: true,
+        });
+        if (value === undefined) return;
+        try {
+            await treeComments.setCommentForVersion(key, value, version);
+            tree.refresh();
+            unpackTree.refresh();
+            if (refreshUri) diskTreeCommentDeco.refreshUri(refreshUri);
+            else diskTreeCommentDeco.refreshAll();
+            vscode.window.showInformationMessage(value.trim() ? '已保存资源树注释' : '已恢复内置注释或清除自定义注释');
+        } catch (err: any) {
+            const message = String(err && err.message || err);
+            output.appendLine(`[PVF] failed to save tree comment: ${message}`);
+            vscode.window.showErrorMessage(message);
+        }
+    }));
+
+    context.subscriptions.push(vscode.commands.registerCommand('pvf.refreshUnpackExplorer', () => {
+        unpackTree.refresh();
+        diskTreeCommentDeco.refreshAll();
+    }));
+
+    context.subscriptions.push(vscode.commands.registerCommand('pvf.copyUnpackPath', async (target?: { fsPath?: string; key?: string }) => {
+        const text = typeof target?.fsPath === 'string'
+            ? target.fsPath
+            : (typeof target?.key === 'string' ? target.key : '');
+        if (!text) return;
+        await vscode.env.clipboard.writeText(text);
+        vscode.window.showInformationMessage('已复制路径到剪贴板');
     }));
 
     // diagnostic command: show index status and storage path
@@ -230,9 +304,16 @@ export function activate(context: vscode.ExtensionContext) {
     registerStringTableCodeLens(context, model);
 
     // AIC Editor (APC 预览编辑) 命令
-    context.subscriptions.push(vscode.commands.registerCommand('pvf.openAicEditor', async () => {
-        const editor = vscode.window.activeTextEditor; if (!editor) { vscode.window.showWarningMessage('没有活动的编辑器'); return; }
-        const doc = editor.document;
+    context.subscriptions.push(vscode.commands.registerCommand('pvf.openAicEditor', async (target?: vscode.Uri | { fsPath?: string }) => {
+        let doc: vscode.TextDocument | undefined;
+        if (target instanceof vscode.Uri) {
+            doc = await vscode.workspace.openTextDocument(target);
+        } else if (target && typeof target.fsPath === 'string') {
+            doc = await vscode.workspace.openTextDocument(vscode.Uri.file(target.fsPath));
+        } else {
+            doc = vscode.window.activeTextEditor?.document;
+        }
+        if (!doc) { vscode.window.showWarningMessage('没有活动的编辑器'); return; }
         if (!/\.aic$/i.test(doc.fileName)) { vscode.window.showWarningMessage('请在一个 .aic 文件中使用该命令'); return; }
         // 显示源文档在第一列
         try { await vscode.window.showTextDocument(doc, { viewColumn: vscode.ViewColumn.One, preserveFocus: true }); } catch {}

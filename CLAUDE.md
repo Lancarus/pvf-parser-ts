@@ -43,6 +43,10 @@ src/
 │   ├── pvfFile.ts        # Per-file data & metadata (decrypt, script detection)
 │   ├── provider.ts       # TreeDataProvider for the "PVF Explorer" sidebar
 │   ├── decorations.ts    # File status decorations (modified, etc.)
+│   ├── treeComments.ts   # Built-in/user path comments keyed by PVF path/version
+│   ├── unpackEnv.ts      # Reads .env UNPACK_DIR/PVF_UNPACK_DIR for disk unpack roots
+│   ├── unpackExplorerProvider.ts # TreeDataProvider for disk unpack dir comments
+│   ├── diskTreeCommentDecorations.ts # Native Explorer hover tooltip for unpack paths
 │   ├── scriptCompiler.ts / scriptDecompiler.ts  # Binary ↔ text script format
 │   ├── aniCompiler.ts / binaryAni.ts            # .ani file compile/decompile
 │   ├── lstDecompiler.ts  # Specialized .lst decompile (two-line-per-entry)
@@ -89,6 +93,15 @@ src/
 
 ### Virtual File System (`pvf:` scheme)
 The extension implements `vscode.FileSystemProvider` for the `pvf:` URI scheme. All files inside a PVF pack appear as `pvf://path/to/file`. Reading/writing delegates to `PvfModel.readFileBytes()` / `writeFile()`. On write, metadata ([name]/[icon] tags) is re-parsed and the tree refreshes.
+
+### Disk Unpack Directory Comments
+Path comments are stored in `src/pvf/resources/treeComments.json` as `{ schemaVersion, version, comments }`, with user overrides persisted under VS Code `globalStorage` by PVF `fileVersion`. `PvfTreeCommentService` merges built-in comments with per-version user edits.
+
+The disk unpack root is configured through `.env` (`UNPACK_DIR`, `PVF_UNPACK_DIR`, or `pvf_unpack_dir`) and resolved by `unpackEnv.ts`. The custom `pvfUnpackExplorerView` uses `UnpackExplorerProvider` to show the real disk tree from `UNPACK_DIR`; file/folder names remain in normal tree text color, while path comments are placed in `TreeItem.description` so VS Code renders them in description/comment color, e.g. `equipment    (装备)`.
+
+Native VS Code Explorer cannot append arbitrary full text after file names. Its `FileDecoration.badge` is only a very short marker and labels longer than about two characters may be clipped or omitted. Therefore `diskTreeCommentDecorations.ts` must not be used for full inline comments; it only provides native Explorer hover tooltips and the context-menu command path for disk files. Full visible comments belong in the custom `pvfUnpackExplorerView`.
+
+When verifying hover/tooltip/floating-window behavior, test primarily against real disk files opened from the configured `UNPACK_DIR`. This covers disk path normalization, `.env` root resolution, `.lst` lookup from unpacked folders, native Explorer hover tooltip behavior, and the right-click `pvf.editTreeComment` command. Testing only `pvf:` virtual files does not validate the disk-unpack workflow.
 
 ### Core Data Model (`PvfModel`)
 - Holds a `Map<string, PvfFile>` (key = normalized path), plus caches for children, encodings, display names, and codes

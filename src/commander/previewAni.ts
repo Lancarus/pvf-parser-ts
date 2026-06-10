@@ -194,11 +194,19 @@ export function registerPreviewAni(context: vscode.ExtensionContext, deps: Deps)
   }
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('pvf.previewAni', async () => {
-      const editor = vscode.window.activeTextEditor; if (!editor) { vscode.window.showWarningMessage('没有活动的编辑器'); return; }
-      const fileUri = editor.document.uri; const key = fileUri.fsPath.toLowerCase();
+    vscode.commands.registerCommand('pvf.previewAni', async (target?: vscode.Uri | { fsPath?: string }) => {
+      let doc: vscode.TextDocument | undefined;
+      if (target instanceof vscode.Uri) {
+        doc = await vscode.workspace.openTextDocument(target);
+      } else if (target && typeof target.fsPath === 'string') {
+        doc = await vscode.workspace.openTextDocument(vscode.Uri.file(target.fsPath));
+      } else {
+        doc = vscode.window.activeTextEditor?.document;
+      }
+      if (!doc) { vscode.window.showWarningMessage('没有活动的编辑器'); return; }
+      const fileUri = doc.uri; const key = fileUri.fsPath.toLowerCase();
       // 确保源文档固定在左侧(第一组)
-      try { await vscode.window.showTextDocument(editor.document, { viewColumn: vscode.ViewColumn.One, preserveFocus: true }); } catch {}
+      try { await vscode.window.showTextDocument(doc, { viewColumn: vscode.ViewColumn.One, preserveFocus: true }); } catch {}
       const existing = panelsByFile.get(key);
       if (existing) {
         // 始终使用右侧文档组 (第二列)

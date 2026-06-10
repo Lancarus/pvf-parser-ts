@@ -51,7 +51,8 @@
     "onLanguage:pvf-twn",
     "onLanguage:pvf-ui",
     "onLanguage:pvf-wdm",
-    "onCommand:pvf.editScriptTagComment"
+    "onCommand:pvf.editScriptTagComment",
+    "onCommand:pvf.editTreeComment"
   ],
   "icon": "media/icons8-源代码-48.png",
   "main": "./dist/extension.js",
@@ -1015,6 +1016,11 @@
           "id": "pvfExplorerView",
           "name": "",
           "icon": "codicon:archive"
+        },
+        {
+          "id": "pvfUnpackExplorerView",
+          "name": "解包目录",
+          "icon": "codicon:folder-library"
         }
       ]
     },
@@ -1128,6 +1134,21 @@
         "title": "预览编辑 APC"
       },
       {
+        "command": "pvf.editTreeComment",
+        "title": "编辑路径注释",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "pvf.refreshUnpackExplorer",
+        "title": "刷新解包目录",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "pvf.copyUnpackPath",
+        "title": "复制路径",
+        "icon": "$(copy)"
+      },
+      {
         "command": "pvf.unpackPack",
         "title": "解封PVF到目录",
         "icon": "$(archive)"
@@ -1181,6 +1202,11 @@
           "command": "pvf.repackPack",
           "when": "view == pvfExplorerView",
           "group": "navigation@6"
+        },
+        {
+          "command": "pvf.refreshUnpackExplorer",
+          "when": "view == pvfUnpackExplorerView",
+          "group": "navigation@0"
         }
       ],
       "editor/context": [
@@ -1232,6 +1258,11 @@
           "command": "pvf.openAicEditor",
           "when": "resourceExtname == .aic",
           "group": "navigation@9"
+        },
+        {
+          "command": "pvf.editTreeComment",
+          "when": "resourceScheme == file",
+          "group": "navigation@50"
         }
       ],
       "view/item/context": [
@@ -1304,6 +1335,41 @@
           "command": "pvf.deleteFolder",
           "when": "view == pvfExplorerView && viewItem == pvf.folder",
           "group": "navigation@3"
+        },
+        {
+          "command": "pvf.editTreeComment",
+          "when": "view == pvfExplorerView && viewItem == pvf.folder",
+          "group": "inline@0"
+        },
+        {
+          "command": "pvf.editTreeComment",
+          "when": "view == pvfUnpackExplorerView && (viewItem == pvf.unpackFolder || viewItem == pvf.unpackFile || viewItem == pvf.unpackFile.ani || viewItem == pvf.unpackFile.aic)",
+          "group": "inline@0"
+        },
+        {
+          "command": "pvf.previewAni",
+          "when": "view == pvfUnpackExplorerView && viewItem == pvf.unpackFile.ani",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pvf.openAniEditor",
+          "when": "view == pvfUnpackExplorerView && viewItem == pvf.unpackFile.ani",
+          "group": "navigation@2"
+        },
+        {
+          "command": "pvf.openAicEditor",
+          "when": "view == pvfUnpackExplorerView && viewItem == pvf.unpackFile.aic",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pvf.copyUnpackPath",
+          "when": "view == pvfUnpackExplorerView && (viewItem == pvf.unpackRoot || viewItem == pvf.unpackFolder || viewItem == pvf.unpackFile || viewItem == pvf.unpackFile.ani || viewItem == pvf.unpackFile.aic)",
+          "group": "navigation@40"
+        },
+        {
+          "command": "pvf.editTreeComment",
+          "when": "view == pvfUnpackExplorerView && (viewItem == pvf.unpackFolder || viewItem == pvf.unpackFile || viewItem == pvf.unpackFile.ani || viewItem == pvf.unpackFile.aic)",
+          "group": "navigation@50"
         }
       ]
     }
