@@ -144,7 +144,7 @@
       "comment": "副本列表"
     },
     "map": {
-      "comment": "地图"
+      "comment": "副本房间/城镇区域"
     },
     "region": {
       "comment": "区域"
@@ -154,6 +154,9 @@
     },
     "equipment/equipment.lst": {
       "comment": "装备列表"
+    },
+    "equipment/character": {
+      "comment": "职业装备"
     },
     "data": {
       "comment": "数据"
@@ -165,7 +168,7 @@
       "comment": "NPC"
     },
     "passiveobject": {
-      "comment": "被动对象"
+      "comment": "被动对象/脱手攻击"
     },
     "ui": {
       "comment": "界面"
@@ -184,6 +187,9 @@
     },
     "n_quest/epicquest.lst": {
       "comment": "主线任务清单"
+    },
+    "n_quest/epicjob": {
+      "comment": "觉醒任务"
     },
     "etc/goldlimitbylevel.etc": {
       "comment": "金币上限"
@@ -325,7 +331,7 @@
       "comment": "宠物（被废弃）"
     },
     "map/kingsruins": {
-      "comment": "王的遗迹"
+      "comment": "王的遗迹 房间"
     },
     "character/expertjob.etc": {
       "comment": "分解大成功率"
@@ -1825,7 +1831,7 @@
       "comment": "鸽子自制设计图"
     },
     "dungeon/timegate": {
-      "comment": "时空之门"
+      "comment": "时空之门 地区"
     },
     "stackable/cwzb": {
       "comment": "宠物装备礼盒"
@@ -1846,19 +1852,19 @@
       "comment": "男格斗"
     },
     "dungeon/riskdungeon": {
-      "comment": "魂副本"
+      "comment": "真:远古地下城"
     },
     "dungeon/southerndale": {
       "comment": "南部溪谷"
     },
     "dungeon/impossible": {
-      "comment": "异界6图"
+      "comment": "异界地下城"
     },
     "dungeon/anton": {
       "comment": "安图恩"
     },
     "dungeon/ancient": {
-      "comment": "远古地图"
+      "comment": "远古地下城"
     },
     "dungeon/anton/phase2": {
       "comment": "安图恩二"
@@ -1873,7 +1879,7 @@
       "comment": "罗特斯宫殿"
     },
     "map/timespiral": {
-      "comment": "鸽子研究所"
+      "comment": "赫拉斯研究所 房间"
     },
     "equipment/character/common/etc": {
       "comment": "契约效果"
@@ -2641,7 +2647,7 @@
       "comment": "天界传送NPC"
     },
     "map/hendonmyre": {
-      "comment": "旧版本赫顿玛尔城区（地图）"
+      "comment": "赫顿玛尔 区域"
     },
     "ui/aura/aura_accepted.ani": {
       "comment": "光环小图标"
@@ -2656,13 +2662,13 @@
       "comment": "勇者异界任务"
     },
     "dungeon/act3": {
-      "comment": "天帷巨兽副本"
+      "comment": "天帷巨兽 地区"
     },
     "dungeon/act2": {
-      "comment": "天空之城副本"
+      "comment": "天空城 地区"
     },
     "dungeon/act4": {
-      "comment": "阿法利亚副本"
+      "comment": "诺伊佩拉 地区"
     },
     "map/hendonmyre/hendon_ura.map": {
       "comment": "米内特地区"
@@ -2725,28 +2731,28 @@
       "comment": "魔之掌控者"
     },
     "dungeon/act7": {
-      "comment": "天界副本"
+      "comment": "安特贝鲁峡谷 地区"
     },
     "n_quest/gent": {
       "comment": "天界任务"
     },
     "dungeon/act5": {
-      "comment": "雪域副本"
+      "comment": "万年雪山 地区"
     },
     "dungeon/advancealtar": {
-      "comment": "守护者祭坛"
+      "comment": "生存模式"
     },
     "n_quest/lufthafen/ghosttrain": {
       "comment": "幽灵列车任务"
     },
     "map/shonan": {
-      "comment": "素南地区（城镇）"
+      "comment": "虚祖首都素喃 区域"
     },
     "map/noirpera/map7(4,0)_boss.map": {
       "comment": "诺伊佩拉领主"
     },
     "map/timegaterequiem": {
-      "comment": "镇魂曲"
+      "comment": "时空之门 - 镇魂曲 区域"
     },
     "appendage/huanghu": {
       "comment": "恍惚"
@@ -3011,22 +3017,22 @@
       "comment": "菜单的描述"
     },
     "map/realskycastle": {
-      "comment": "蠕动之城"
+      "comment": "蠕动之城 房间"
     },
     "map/alfhlyra": {
-      "comment": "城镇地图（阿法利亚）"
+      "comment": "阿法利亚营地 区域"
     },
     "map/advancealtar": {
-      "comment": "守护者祭坛"
+      "comment": "生存模式 房间"
     },
     "map/2ndbackbone": {
-      "comment": "第二脊椎"
+      "comment": "第二脊椎 房间"
     },
     "map/aganzo": {
-      "comment": "应该是月光酒馆副本（阿甘左）"
+      "comment": "月光酒馆 房间"
     },
     "map/elvengard": {
-      "comment": "艾尔文防线（城镇地区）"
+      "comment": "艾尔文防线 区域"
     },
     "ui/rapidparty": {
       "comment": "副本UI等级登记处"
@@ -3074,7 +3080,7 @@
       "comment": "王之圣城"
     },
     "map/guildagit": {
-      "comment": "王之圣城"
+      "comment": "公会大厅 区域"
     },
     "map/guildagit/animation/zzcym.ani": {
       "comment": "双石柱门"
@@ -3137,7 +3143,7 @@
       "comment": "夺回西部"
     },
     "dungeon/act8": {
-      "comment": "海上列车"
+      "comment": "海上列车 地区"
     },
     "stackable/gcn": {
       "comment": "光尘;Gcn专区"
@@ -3152,7 +3158,7 @@
       "comment": "OBJ列表"
     },
     "map/map.lst": {
-      "comment": "map列表"
+      "comment": "所有副本房间/城镇区域列表"
     },
     "etc/cerashop_first.etc": {
       "comment": "商城(旧版)"
@@ -3194,10 +3200,10 @@
       "comment": "分解师动画"
     },
     "map/screamingcave": {
-      "comment": "悲鸣洞穴"
+      "comment": "悲鸣洞穴 房间"
     },
     "map/noirpera": {
-      "comment": "诺伊佩拉"
+      "comment": "诺伊佩拉 房间"
     },
     "equipment/character/common/title/dnf_guidebook.equ": {
       "comment": "测试数据称号"
@@ -3227,10 +3233,10 @@
       "comment": "诺伊佩拉"
     },
     "map/sao_tree_2": {
-      "comment": "世界树：系统区域"
+      "comment": "世界树:系统区域 房间"
     },
     "map/vilmark": {
-      "comment": "比尔马克试验场"
+      "comment": "比尔马克帝国试验场 房间"
     },
     "monster/newmonsters/heaven/sergeant": {
       "comment": "老中士"
@@ -3344,13 +3350,13 @@
       "comment": "任务材料"
     },
     "dungeon/act1": {
-      "comment": "格兰之森"
+      "comment": "格兰之森 地区"
     },
     "dungeon/act6": {
-      "comment": "诺斯玛尔"
+      "comment": "诺斯玛尔 地区"
     },
     "dungeon/act9": {
-      "comment": "发电站"
+      "comment": "能源中心 地区"
     },
     "dungeon/boss_rush": {
       "comment": "灵魂之冢"
@@ -3365,22 +3371,22 @@
       "comment": "修炼场"
     },
     "dungeon/quest": {
-      "comment": "任务地图"
+      "comment": "任务地下城"
     },
     "dungeon/shonantournament": {
-      "comment": "素喃"
+      "comment": "虚祖武斗大会 地区"
     },
     "dungeon/towers": {
-      "comment": "死亡峡谷"
+      "comment": "亡者峡谷 地区"
     },
     "dungeon/tutorial": {
       "comment": "时空之门2"
     },
     "dungeon/village": {
-      "comment": "海岸三番区"
+      "comment": "海岸三番街 区域"
     },
     "dungeon/villageattack": {
-      "comment": "怪物攻城"
+      "comment": "怪物攻城战 地区"
     },
     "dungeon/warroom": {
       "comment": "不到啊"
@@ -3627,18 +3633,645 @@
     },
     "n_quest/northmyre": {
       "comment": "诺斯玛尔"
+    },
+    "passiveobject/character/fighter": {
+      "comment": "格斗家 被动对象"
+    },
+    "passiveobject/character/gunner": {
+      "comment": "神枪手 被动对象"
+    },
+    "passiveobject/character/mage": {
+      "comment": "魔法师 被动对象"
+    },
+    "passiveobject/character/priest": {
+      "comment": "圣职者 被动对象"
+    },
+    "passiveobject/character/swordman": {
+      "comment": "鬼剑士 被动对象"
+    },
+    "passiveobject/character/thief": {
+      "comment": "暗夜使者 被动对象"
+    },
+    "passiveobject/monster/bantu": {
+      "comment": "班图战士 被动对象"
+    },
+    "passiveobject/monster/golem": {
+      "comment": "石巨人 被动对象"
+    },
+    "passiveobject/monster/goblin": {
+      "comment": "哥布林 被动对象"
+    },
+    "passiveobject/monster/lotus": {
+      "comment": "罗特斯 被动对象"
+    },
+    "passiveobject/monster/tau": {
+      "comment": "牛头怪 被动对象"
+    },
+    "passiveobject/monster/thief": {
+      "comment": "疯狂盗贼 被动对象"
+    },
+    "passiveobject/monster/zombie": {
+      "comment": "僵尸 被动对象"
+    },
+    "passiveobject/monster/vehicle": {
+      "comment": "龙头炮 被动对象"
+    },
+    "passiveobject/monster/spider": {
+      "comment": "蜘蛛 被动对象"
+    },
+    "passiveobject/monster/soldier": {
+      "comment": "驱逐者 被动对象"
+    },
+    "passiveobject/monster/soceress": {
+      "comment": "克拉赫、彼诺修、露易丝 被动对象"
+    },
+    "passiveobject/monster/lordoflight": {
+      "comment": "赛格哈特 被动对象"
+    },
+    "passiveobject/monster/hunter": {
+      "comment": "夜叉 被动对象"
+    },
+    "passiveobject/monster/evileye": {
+      "comment": "罪恶之眼 被动对象"
+    },
+    "passiveobject/monster/dendroid": {
+      "comment": "树精 被动对象"
+    },
+    "passiveobject/monster/darkelf": {
+      "comment": "暗精灵护卫 被动对象"
+    },
+    "passiveobject/monster/coldboy": {
+      "comment": "查理 被动对象"
+    },
+    "passiveobject/monster/casillas": {
+      "comment": "卡西利亚斯 被动对象"
+    },
+    "passiveobject/monster/dollmaster": {
+      "comment": "人偶师 被动对象"
+    },
+    "monster/bantu": {
+      "comment": "班图战士"
+    },
+    "monster/casillas": {
+      "comment": "卡西利亚斯"
+    },
+    "monster/characterstatue": {
+      "comment": "职业雕像"
+    },
+    "passiveobject/monster/characterstatue": {
+      "comment": "职业雕像 被动对象"
+    },
+    "monster/cityhallgate": {
+      "comment": "被诅咒的市政厅"
+    },
+    "monster/coldboy": {
+      "comment": "查理"
+    },
+    "monster/coldheart": {
+      "comment": "冰之心"
+    },
+    "monster/cosmofiend": {
+      "comment": "深渊四基佬"
+    },
+    "passiveobject/monster/cosmofiend": {
+      "comment": "深渊四基佬 被动对象"
+    },
+    "monster/crimebuffalo": {
+      "comment": "罪恶布法罗"
+    },
+    "passiveobject/monster/crimebuffalo": {
+      "comment": "罪恶布法罗 被动对象"
+    },
+    "monster/darkelf": {
+      "comment": "暗精灵护卫"
+    },
+    "monster/dendroid": {
+      "comment": "树精"
+    },
+    "monster/dog": {
+      "comment": "诺斯玛尔的猎犬"
+    },
+    "monster/dollmaster": {
+      "comment": "人偶师"
+    },
+    "monster/draconian": {
+      "comment": "龙人"
+    },
+    "passiveobject/monster/draconian": {
+      "comment": "龙人 被动对象"
+    },
+    "passiveobject/monster/drake": {
+      "comment": "邪龙斯皮兹 被动对象"
+    },
+    "monster/evileye": {
+      "comment": "罪恶之眼"
+    },
+    "monster/fighter": {
+      "comment": "格斗家的分身、千莲怒放"
+    },
+    "monster/flydragon": {
+      "comment": "旧翼龙"
+    },
+    "passiveobject/monster/flydragon": {
+      "comment": "翼龙 被动对象"
+    },
+    "monster/ghoul": {
+      "comment": "食尸鬼"
+    },
+    "passiveobject/monster/ghoul": {
+      "comment": "食尸鬼 被动对象"
+    },
+    "monster/goblin": {
+      "comment": "哥布林"
+    },
+    "monster/golem": {
+      "comment": "旧石巨人"
+    },
+    "monster/gunner": {
+      "comment": "枪手的机器人"
+    },
+    "monster/gunner/robot": {
+      "comment": "机器人"
+    },
+    "monster/headlessknight": {
+      "comment": "无头骑士"
+    },
+    "passiveobject/monster/headlessknight": {
+      "comment": "无头骑士 被动对象"
+    },
+    "monster/hunter": {
+      "comment": "夜叉"
+    },
+    "monster/icetiger": {
+      "comment": "寒冰虎"
+    },
+    "monster/lordoflight": {
+      "comment": "赛格哈特"
+    },
+    "monster/lotus": {
+      "comment": "罗特斯"
+    },
+    "monster/lugaru": {
+      "comment": "猫妖"
+    },
+    "monster/mage": {
+      "comment": "魔法师的召唤物"
+    },
+    "monster/magma": {
+      "comment": "熔岩洞穴的怪物"
+    },
+    "passiveobject/monster/magma": {
+      "comment": "熔岩洞穴的怪物 被动对象"
+    },
+    "monster/monsterflower": {
+      "comment": "魔界之花袄索"
+    },
+    "monster/new_flydragon": {
+      "comment": "新翼龙"
+    },
+    "monster/new_golem": {
+      "comment": "新石巨人"
+    },
+    "monster/nugol": {
+      "comment": "戮蛊"
+    },
+    "passiveobject/monster/nugol": {
+      "comment": "戮蛊 被动对象"
+    },
+    "monster/peterthepiper": {
+      "comment": "皮特、老鼠"
+    },
+    "passiveobject/monster/peterthepiper": {
+      "comment": "皮特、老鼠 被动对象"
+    },
+    "monster/sealstone": {
+      "comment": "封印石"
+    },
+    "monster/skeleton": {
+      "comment": "骷髅"
+    },
+    "passiveobject/monster/skeleton": {
+      "comment": "骷髅 被动对象"
+    },
+    "passiveobject/monster/spacefish": {
+      "comment": "空骨鱼 被动对象"
+    },
+    "monster/spacefish": {
+      "comment": "空骨鱼"
+    },
+    "monster/soldier": {
+      "comment": "驱逐者"
+    },
+    "monster/snowman": {
+      "comment": "雪魈"
+    },
+    "monster/slotor": {
+      "comment": "寒冰蜘蛛"
+    },
+    "monster/specialmonster": {
+      "comment": "魔女阿嘉璐"
+    },
+    "monster/spider": {
+      "comment": "蜘蛛"
+    },
+    "monster/spikeking": {
+      "comment": "伊伽贝拉"
+    },
+    "monster/spirit": {
+      "comment": "元素精灵"
+    },
+    "passiveobject/monster/spirit": {
+      "comment": "元素精灵 被动对象"
+    },
+    "monster/starfish": {
+      "comment": "章鱼怪"
+    },
+    "monster/statue": {
+      "comment": "妖变的石像"
+    },
+    "passiveobject/monster/statue": {
+      "comment": "妖变的石像 被动对象"
+    },
+    "monster/tau": {
+      "comment": "牛头怪"
+    },
+    "monster/thief": {
+      "comment": "疯狂盗贼"
+    },
+    "monster/toy": {
+      "comment": "玩具士兵"
+    },
+    "passiveobject/monster/toy": {
+      "comment": "玩具士兵 被动对象"
+    },
+    "monster/vehicle": {
+      "comment": "龙头炮"
+    },
+    "monster/villageattacked": {
+      "comment": "怪物攻城战的怪物"
+    },
+    "monster/wraith": {
+      "comment": "女冤魂"
+    },
+    "passiveobject/monster/wraith": {
+      "comment": "女冤魂 被动对象"
+    },
+    "monster/zealot": {
+      "comment": "GBL教信徒"
+    },
+    "passiveobject/monster/zealot": {
+      "comment": "GBL教信徒 被动对象"
+    },
+    "monster/zealotrebirth": {
+      "comment": "复活的GBL教信徒"
+    },
+    "monster/zepplin": {
+      "comment": "多尼尔飞船"
+    },
+    "passiveobject/monster/zepplin": {
+      "comment": "多尼尔飞船 被动对象"
+    },
+    "monster/zombie": {
+      "comment": "僵尸"
+    },
+    "monster/drake": {
+      "comment": "邪龙斯皮兹"
+    },
+    "map/1stbackbone": {
+      "comment": "第一脊椎 房间"
+    },
+    "map/grakkarak": {
+      "comment": "格拉卡 房间"
+    },
+    "map/grakkarakburning": {
+      "comment": "烈焰格拉卡 房间"
+    },
+    "map/lorien": {
+      "comment": "洛兰 房间"
+    },
+    "map/lorieninside": {
+      "comment": "洛兰深处 房间"
+    },
+    "map/mirkwood": {
+      "comment": "幽暗密林 房间"
+    },
+    "map/mirkwooddeep": {
+      "comment": "幽暗密林深处 房间"
+    },
+    "map/mirkwoodfrost": {
+      "comment": "冰霜幽暗密林 房间"
+    },
+    "map/sunderland": {
+      "comment": "雷鸣废墟 房间"
+    },
+    "map/sunderlanddark": {
+      "comment": "暗黑雷鸣废墟 房间"
+    },
+    "map/sunderlandpoison": {
+      "comment": "猛毒雷鸣废墟 房间"
+    },
+    "map/amon": {
+      "comment": "亚蒙 房间"
+    },
+    "map/darkentrance": {
+      "comment": "黑暗玄廊 房间"
+    },
+    "map/draconiantower": {
+      "comment": "龙人之塔 房间"
+    },
+    "map/floatingcastle": {
+      "comment": "悬空城 房间"
+    },
+    "map/golemtower": {
+      "comment": "石巨人塔 房间"
+    },
+    "map/hallofdoll": {
+      "comment": "人偶玄关 房间"
+    },
+    "map/ocean": {
+      "comment": "天空之海 房间",
+      "detailedComment": "包含天空之海的浅海与深海"
+    },
+    "map/palaceofload": {
+      "comment": "城主宫殿 房间"
+    },
+    "map/sepa": {
+      "comment": "世帕罗塔 房间",
+      "detailedComment": "包含世帕罗塔的下层与上层"
+    },
+    "map/traningroom": {
+      "comment": "修练地下城 房间"
+    },
+    "map/bloodhell": {
+      "comment": "天帷禁地 房间"
+    },
+    "map/darkhell": {
+      "comment": "炼狱 房间"
+    },
+    "map/jungle": {
+      "comment": "树精丛林 房间"
+    },
+    "map/outerwall": {
+      "comment": "神殿外围 房间"
+    },
+    "map/whitenight": {
+      "comment": "极昼 房间"
+    },
+    "map/darkelfcemetary": {
+      "comment": "暗精灵墓地 房间"
+    },
+    "map/magmacave": {
+      "comment": "熔岩洞穴 房间"
+    },
+    "map/marpissalair": {
+      "comment": "蜘蛛洞穴 房间"
+    },
+    "map/shadowmaze": {
+      "comment": "暗影迷宫 房间"
+    },
+    "map/shallowkeep": {
+      "comment": "浅栖之地 房间"
+    },
+    "map/underfoot": {
+      "comment": "暗黑城入口 房间"
+    },
+    "map/bwanga": {
+      "comment": "布万加的修练场 房间"
+    },
+    "map/charnakridge": {
+      "comment": "山脊 房间"
+    },
+    "map/icepalace": {
+      "comment": "冰雪宫殿 房间"
+    },
+    "map/ricuceiling": {
+      "comment": "利库天井 房间"
+    },
+    "map/scasalair": {
+      "comment": "斯卡萨之巢 房间"
+    },
+    "map/coldboy": {
+      "comment": "冰心少年 房间"
+    },
+    "map/whiteland": {
+      "comment": "白色废墟 房间"
+    },
+    "map/astraythief": {
+      "comment": "堕落的盗贼 房间"
+    },
+    "map/bloodbutterfly": {
+      "comment": "血蝴蝶之舞 房间"
+    },
+    "map/suspiciousvillage": {
+      "comment": "疑惑之村 房间"
+    },
+    "map/villigeoftemptation": {
+      "comment": "迷乱之村哈穆林 房间"
+    },
+    "map/counterattack": {
+      "comment": "追击歼灭战 房间"
+    },
+    "map/gentdefence": {
+      "comment": "根特防御战 房间"
+    },
+    "map/genteastgate": {
+      "comment": "根特东门 房间"
+    },
+    "map/gentnorthgate": {
+      "comment": "根特北门 房间"
+    },
+    "map/gentsouthgate": {
+      "comment": "根特南门 房间"
+    },
+    "map/nightassault": {
+      "comment": "夜间袭击战 房间"
+    },
+    "map/outergent": {
+      "comment": "根特外围 房间"
+    },
+    "map/supplycut": {
+      "comment": "补给线阻断战 房间"
+    },
+    "map/arden": {
+      "comment": "阿登高地 房间"
+    },
+    "map/haze": {
+      "comment": "雾都赫伊斯 房间"
+    },
+    "map/pirateonthetrain": {
+      "comment": "列车上的海贼 房间"
+    },
+    "map/seatrainretaking": {
+      "comment": "夺回西部线 房间"
+    },
+    "map/fruz_station": {
+      "comment": "普鲁兹发电站 房间"
+    },
+    "map/grandine": {
+      "comment": "格兰迪发电站 房间"
+    },
+    "map/kohlepowerstation": {
+      "comment": "克雷发电站 房间"
+    },
+    "map/trombe": {
+      "comment": "特伦斯发电站 房间"
+    },
+    "map/cartelcommand": {
+      "comment": "卡勒特指挥部 房间"
+    },
+    "map/ghosttrain": {
+      "comment": "幽灵列车 房间"
+    },
+    "map/leshphon": {
+      "comment": "痛苦之村列瑟芬 房间"
+    },
+    "map/goblinkingdom": {
+      "comment": "哥布林王国 房间"
+    },
+    "map/towerofbloodyfight": {
+      "comment": "无尽的祭坛 房间"
+    },
+    "map/deadtower": {
+      "comment": "死亡之塔 房间"
+    },
+    "map/illusiontower": {
+      "comment": "迷妄之塔 房间"
+    },
+    "map/towerofultimate": {
+      "comment": "极限祭坛 房间"
+    },
+    "map/towerofdespair": {
+      "comment": "绝望之塔"
+    },
+    "map/towerofdespair_down": {
+      "comment": "绝望之塔下层 房间",
+      "detailedComment": "绝望之塔1层——50层"
+    },
+    "map/towerofdespair_up": {
+      "comment": "绝望之塔上层 房间",
+      "detailedComment": "绝望之塔50层——100层"
+    },
+    "map/gbl_breeding": {
+      "comment": "树精繁殖地 房间"
+    },
+    "map/gbl_goddess_temple": {
+      "comment": "GBL女神殿 房间"
+    },
+    "map/sao_tree_1": {
+      "comment": "世界树:入口 房间"
+    },
+    "map/bakalcastle": {
+      "comment": "巴卡尔之城 房间"
+    },
+    "map/blackearth": {
+      "comment": "黑色大地 房间"
+    },
+    "map/cosmofiend": {
+      "comment": "异次元裂缝 房间"
+    },
+    "map/ranjerusdogs": {
+      "comment": "兰蒂卢斯的鹰犬 房间"
+    },
+    "map/deadmoon": {
+      "comment": "亡月雷鸣废墟 房间"
+    },
+    "map/r_cartelcommand": {
+      "comment": "真:卡勒特指挥部 房间"
+    },
+    "map/r_ghosttrain": {
+      "comment": "真:幽灵列车 房间"
+    },
+    "map/r_kingsruins": {
+      "comment": "真:王的遗迹 房间"
+    },
+    "map/r_noirpera": {
+      "comment": "真:诺伊佩拉 房间"
+    },
+    "map/r_vilmark": {
+      "comment": "真:比尔马克帝国试验场 房间"
+    },
+    "map/r_leshphon": {
+      "comment": "真:痛苦之村列瑟芬 房间"
+    },
+    "map/r_screamingcave": {
+      "comment": "真:悲鸣洞穴"
+    },
+    "map/beginning": {
+      "comment": "凛冬 房间"
+    },
+    "map/black_church": {
+      "comment": "暗黑圣战 房间"
+    },
+    "map/conflagration": {
+      "comment": "格兰之火 房间"
+    },
+    "map/consciousness": {
+      "comment": "迷之觉悟 房间"
+    },
+    "map/epidemic": {
+      "comment": "瘟疫之源 房间"
+    },
+    "map/formacartel": {
+      "comment": "卡勒特之初 房间"
+    },
+    "map/oldscreamingcave": {
+      "comment": "昔日悲鸣 房间"
+    },
+    "map/topsecretarea": {
+      "comment": "绝密区域 房间"
+    },
+    "map/gent": {
+      "comment": "根特 区域"
+    },
+    "map/lufthafen": {
+      "comment": "鲁夫特悬空海港 区域"
+    },
+    "map/sainthorn": {
+      "comment": "圣者之鸣号 区域"
+    },
+    "map/slough": {
+      "comment": "斯曼工地基地 区域"
+    },
+    "map/stormpass": {
+      "comment": "斯顿雪域 区域"
+    },
+    "map/timegate": {
+      "comment": "时空之门 区域"
+    },
+    "map/warfare": {
+      "comment": "帝国竞技场 房间"
+    },
+    "map/groznyoutside": {
+      "comment": "绿都格罗兹尼 房间"
+    },
+    "dungeon/village/cartelarad": {
+      "comment": "陌路者要塞 地区"
+    },
+    "dungeon/village/gbl": {
+      "comment": "堕落之殿 地区"
+    },
+    "dungeon/village/moonlightpub": {
+      "comment": "月光酒馆 地区"
+    },
+    "map/odesa2": {
+      "comment": "热血八番街 房间"
+    },
+    "map/gbl1": {
+      "comment": "GBL教阿拉德分部 房间"
+    },
+    "map/gbl3": {
+      "comment": "GBL教孵化场 房间"
+    },
+    "map/gbl2": {
+      "comment": "GBL教研究所 房间"
+    },
+    "map/villageattack": {
+      "comment": "怪物攻城战 房间"
     }
   },
   "versions": {
     "66282": {
-      "comments": {
-        "equipment/character": {
-          "comment": "职业装备"
-        },
-        "n_quest/epicjob": {
-          "comment": "觉醒任务"
-        }
-      }
+      "comments": {}
     }
   }
 }
