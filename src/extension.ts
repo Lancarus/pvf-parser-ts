@@ -223,7 +223,7 @@ export function activate(context: vscode.ExtensionContext) {
         const current = treeComments.getCommentForVersion(key, version) || '';
         const value = await vscode.window.showInputBox({
             title: '编辑资源树注释',
-            prompt: `路径: ${key}    PVF 版本: ${version}。留空会恢复内置注释或清除自定义注释。`,
+            prompt: `路径: ${key}    PVF 版本: ${version}。保存后会写入内置路径注释文件；留空会删除当前版本覆盖项。`,
             placeHolder: '例如: 装备',
             value: current,
             ignoreFocusOut: true,
@@ -235,7 +235,7 @@ export function activate(context: vscode.ExtensionContext) {
             unpackTree.refresh();
             if (refreshUri) diskTreeCommentDeco.refreshUri(refreshUri);
             else diskTreeCommentDeco.refreshAll();
-            vscode.window.showInformationMessage(value.trim() ? '已保存资源树注释' : '已恢复内置注释或清除自定义注释');
+            vscode.window.showInformationMessage(value.trim() ? '已保存资源树注释' : '已删除当前版本路径注释覆盖项');
         } catch (err: any) {
             const message = String(err && err.message || err);
             output.appendLine(`[PVF] failed to save tree comment: ${message}`);

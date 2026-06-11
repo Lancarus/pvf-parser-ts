@@ -3628,5 +3628,17 @@
     "n_quest/northmyre": {
       "comment": "诺斯玛尔"
     }
+  },
+  "versions": {
+    "66282": {
+      "comments": {
+        "equipment/character": {
+          "comment": "职业装备"
+        },
+        "n_quest/epicjob": {
+          "comment": "觉醒任务"
+        }
+      }
+    }
   }
 }

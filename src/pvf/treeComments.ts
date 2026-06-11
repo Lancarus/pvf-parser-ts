@@ -11,6 +11,8 @@ export interface PvfTreeCommentEntry {
 
 interface PersistedTreeCommentFile {
   schemaVersion?: number;
+  version?: number | string;
+  comments?: Record<string, PvfTreeCommentEntry | string | null>;
   versions?: Record<string, {
     comments?: Record<string, PvfTreeCommentEntry | string | null>;
   } | Record<string, PvfTreeCommentEntry | string | null>>;
@@ -47,6 +49,31 @@ function normalizeCommentMap(source: Record<string, unknown> | undefined): Map<s
   return result;
 }
 
+function commentMapsEqual(left: PvfTreeCommentEntry | undefined, right: PvfTreeCommentEntry | undefined): boolean {
+  return (left?.comment || '') === (right?.comment || '')
+    && (left?.detailedComment || '') === (right?.detailedComment || '');
+}
+
+function mapToJson(comments: Map<string, PvfTreeCommentEntry>): Record<string, PvfTreeCommentEntry> {
+  const out: Record<string, PvfTreeCommentEntry> = {};
+  for (const [key, entry] of comments) out[key] = entry;
+  return out;
+}
+
+function serializeVersion(value: string): string | number {
+  const n = Number(value);
+  return Number.isFinite(n) && String(Math.trunc(n)) === value ? Math.trunc(n) : value;
+}
+
+async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    const stat = await fs.stat(filePath);
+    return stat.isFile();
+  } catch {
+    return false;
+  }
+}
+
 function escapeMarkdown(value: string): string {
   return value.replace(/[\\`*_{}[\]()#+\-.!|>]/g, '\\$&');
 }
@@ -63,9 +90,10 @@ export function normalizeTreeCommentVersion(value: unknown): string {
 }
 
 export class PvfTreeCommentService {
-  private readonly bundledVersion = normalizeTreeCommentVersion((bundledTreeComments as any).version ?? 0);
-  private readonly bundledComments = normalizeCommentMap((bundledTreeComments as any).comments);
-  private readonly userCommentsByVersion = new Map<string, Map<string, PvfTreeCommentEntry>>();
+  private baseVersion = normalizeTreeCommentVersion((bundledTreeComments as PersistedTreeCommentFile).version ?? 0);
+  private baseComments = normalizeCommentMap((bundledTreeComments as PersistedTreeCommentFile).comments as Record<string, unknown>);
+  private readonly overrideCommentsByVersion = new Map<string, Map<string, PvfTreeCommentEntry>>();
+  private treeCommentFilePath: string | undefined;
   private loaded = false;
 
   constructor(
@@ -76,23 +104,17 @@ export class PvfTreeCommentService {
 
   async load(): Promise<void> {
     try {
-      const raw = await fs.readFile(this.userFilePath(), 'utf8');
-      const data = JSON.parse(raw) as PersistedTreeCommentFile;
-      const versions = data.versions || {};
-      this.userCommentsByVersion.clear();
-      for (const [version, versionData] of Object.entries(versions)) {
-        if (!versionData || typeof versionData !== 'object') continue;
-        const comments = 'comments' in versionData
-          ? (versionData as { comments?: Record<string, unknown> }).comments
-          : versionData as Record<string, unknown>;
-        const normalized = normalizeCommentMap(comments);
-        if (normalized.size > 0) this.userCommentsByVersion.set(normalizeTreeCommentVersion(version), normalized);
-      }
+      const data = await this.readTreeCommentFile();
+      this.applyTreeCommentFile(data);
     } catch (err: any) {
-      if (err && err.code !== 'ENOENT') {
-        this.output?.appendLine(`[PVF] failed to load tree comments: ${String(err && err.message || err)}`);
-      }
+      this.applyTreeCommentFile(bundledTreeComments as PersistedTreeCommentFile);
+      this.output?.appendLine(`[PVF] failed to load tree comments: ${String(err && err.message || err)}`);
     } finally {
+      try {
+        await this.migrateLegacyUserFile();
+      } catch (err: any) {
+        this.output?.appendLine(`[PVF] failed to migrate legacy tree comments: ${String(err && err.message || err)}`);
+      }
       this.loaded = true;
     }
   }
@@ -109,10 +131,10 @@ export class PvfTreeCommentService {
     const normalizedKey = normalizeTreeCommentPath(key);
     if (!normalizedKey) return undefined;
     const versionKey = normalizeTreeCommentVersion(version);
-    const userEntry = this.userCommentsByVersion.get(versionKey)?.get(normalizedKey);
+    const userEntry = this.overrideCommentsByVersion.get(versionKey)?.get(normalizedKey);
     if (userEntry) return userEntry;
-    if (this.bundledVersion === '0' || this.bundledVersion === versionKey) {
-      return this.bundledComments.get(normalizedKey);
+    if (this.baseVersion === '0' || this.baseVersion === versionKey) {
+      return this.baseComments.get(normalizedKey);
     }
     return undefined;
   }
@@ -163,40 +185,131 @@ export class PvfTreeCommentService {
     if (!normalizedKey) throw new Error('路径为空，无法保存注释。');
     if (!this.loaded) await this.load();
     const versionKey = normalizeTreeCommentVersion(version);
-    let comments = this.userCommentsByVersion.get(versionKey);
-    if (!comments) {
-      comments = new Map<string, PvfTreeCommentEntry>();
-      this.userCommentsByVersion.set(versionKey, comments);
-    }
     const text = comment.trim();
     if (text) {
-      const existing = this.getEntry(normalizedKey);
+      let comments = this.overrideCommentsByVersion.get(versionKey);
+      if (!comments) {
+        comments = new Map<string, PvfTreeCommentEntry>();
+        this.overrideCommentsByVersion.set(versionKey, comments);
+      }
+      const existing = this.getEntryForVersion(normalizedKey, versionKey);
       comments.set(normalizedKey, {
         comment: text,
         ...(existing?.detailedComment ? { detailedComment: existing.detailedComment } : {}),
       });
     } else {
-      comments.delete(normalizedKey);
-      if (comments.size === 0) this.userCommentsByVersion.delete(versionKey);
+      const comments = this.overrideCommentsByVersion.get(versionKey);
+      comments?.delete(normalizedKey);
+      if (comments && comments.size === 0) this.overrideCommentsByVersion.delete(versionKey);
     }
     await this.save();
   }
 
-  private userFilePath(): string {
+  private legacyUserFilePath(): string {
     return path.join(this.context.globalStorageUri.fsPath, 'tree-comments.user.json');
+  }
+
+  private async resourceFilePath(): Promise<string> {
+    if (this.treeCommentFilePath) return this.treeCommentFilePath;
+    const extensionRoot = this.context.extensionUri.fsPath;
+    const candidates = [
+      path.join(extensionRoot, 'src', 'pvf', 'resources', 'treeComments.json'),
+      path.join(extensionRoot, 'dist', 'pvf', 'resources', 'treeComments.json'),
+      path.join(__dirname, 'resources', 'treeComments.json'),
+    ];
+    const uniqueCandidates = [...new Set(candidates.map(candidate => path.resolve(candidate)))];
+    for (const candidate of uniqueCandidates) {
+      if (await fileExists(candidate)) {
+        this.treeCommentFilePath = candidate;
+        return candidate;
+      }
+    }
+    this.treeCommentFilePath = uniqueCandidates[0];
+    return this.treeCommentFilePath;
+  }
+
+  private async readTreeCommentFile(): Promise<PersistedTreeCommentFile> {
+    const file = await this.resourceFilePath();
+    return JSON.parse(await fs.readFile(file, 'utf8')) as PersistedTreeCommentFile;
+  }
+
+  private applyTreeCommentFile(data: PersistedTreeCommentFile): void {
+    this.baseVersion = normalizeTreeCommentVersion(data.version ?? 0);
+    this.baseComments = normalizeCommentMap(data.comments as Record<string, unknown>);
+    this.overrideCommentsByVersion.clear();
+    this.mergeVersionOverrides(data);
+  }
+
+  private mergeVersionOverrides(data: PersistedTreeCommentFile): boolean {
+    let changed = false;
+    const versions = data.versions || {};
+    for (const [version, versionData] of Object.entries(versions)) {
+      if (!versionData || typeof versionData !== 'object') continue;
+      const comments = 'comments' in versionData
+        ? (versionData as { comments?: Record<string, unknown> }).comments
+        : versionData as Record<string, unknown>;
+      const normalized = normalizeCommentMap(comments);
+      if (normalized.size === 0) continue;
+      const versionKey = normalizeTreeCommentVersion(version);
+      let target = this.overrideCommentsByVersion.get(versionKey);
+      if (!target) {
+        target = new Map<string, PvfTreeCommentEntry>();
+        this.overrideCommentsByVersion.set(versionKey, target);
+      }
+      for (const [key, entry] of normalized) {
+        if (!commentMapsEqual(target.get(key), entry)) changed = true;
+        target.set(key, entry);
+      }
+    }
+    return changed;
+  }
+
+  private async migrateLegacyUserFile(): Promise<void> {
+    let data: PersistedTreeCommentFile;
+    const legacyFile = this.legacyUserFilePath();
+    try {
+      data = JSON.parse(await fs.readFile(legacyFile, 'utf8')) as PersistedTreeCommentFile;
+    } catch (err: any) {
+      if (err && err.code !== 'ENOENT') {
+        this.output?.appendLine(`[PVF] failed to migrate legacy tree comments: ${String(err && err.message || err)}`);
+      }
+      return;
+    }
+
+    const changed = this.mergeVersionOverrides(data);
+    if (changed) {
+      await this.save();
+      this.output?.appendLine(`[PVF] migrated legacy tree comments into ${await this.resourceFilePath()}`);
+    }
+    await this.renameLegacyUserFile(legacyFile);
+  }
+
+  private async renameLegacyUserFile(legacyFile: string): Promise<void> {
+    const parsed = path.parse(legacyFile);
+    const backup = path.join(parsed.dir, `${parsed.name}.migrated-${Date.now()}${parsed.ext}`);
+    try {
+      await fs.rename(legacyFile, backup);
+    } catch (err: any) {
+      if (err && err.code !== 'ENOENT') {
+        this.output?.appendLine(`[PVF] failed to rename legacy tree comments: ${String(err && err.message || err)}`);
+      }
+    }
   }
 
   private async save(): Promise<void> {
     const versions: PersistedTreeCommentFile['versions'] = {};
-    for (const [version, comments] of this.userCommentsByVersion) {
-      const out: Record<string, PvfTreeCommentEntry> = {};
-      for (const [key, entry] of comments) out[key] = entry;
+    for (const [version, comments] of this.overrideCommentsByVersion) {
+      const out = mapToJson(comments);
       if (Object.keys(out).length > 0) versions![version] = { comments: out };
     }
-    await fs.mkdir(path.dirname(this.userFilePath()), { recursive: true });
-    await fs.writeFile(this.userFilePath(), JSON.stringify({
+    const file = await this.resourceFilePath();
+    const snapshot: PersistedTreeCommentFile = {
       schemaVersion: 1,
-      versions,
-    }, null, 2) + '\n', 'utf8');
+      version: serializeVersion(this.baseVersion),
+      comments: mapToJson(this.baseComments),
+      ...(versions && Object.keys(versions).length > 0 ? { versions } : {}),
+    };
+    await fs.mkdir(path.dirname(file), { recursive: true });
+    await fs.writeFile(file, JSON.stringify(snapshot, null, 2) + '\n', 'utf8');
   }
 }
