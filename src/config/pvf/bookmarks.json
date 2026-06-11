@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "roots": [
     {
-      "label": "我的书签",
+      "label": "默认书签",
       "children": [
         {
           "label": "自用",
@@ -138,7 +138,7 @@
           ]
         },
         {
-          "label": "列表",
+          "label": "lst列表",
           "children": [
             {
               "label": "任务列表",

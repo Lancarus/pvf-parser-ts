@@ -19,6 +19,7 @@ import { setPvfModel } from './pvf/runtimeModel';
 import getPvfContent, { getIconBase64ByCode , getNameByCodeAndLst , parsePvfScriptToJson} from './pvf/services/getPvfContent';
 import getIconFrameBase64 from './pvf/services/getIconFrame';
 import { registerStringTableCodeLens } from './pvf/services/stringTableCodeLens';
+import { registerPvfWebApiServer } from './pvf/webApi/server';
 import { scriptTagLanguageIdForPath } from './scriptLang/genericTags';
 import {
     BookmarkEntry,
@@ -127,6 +128,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Register all commands from commander modules
     registerAllCommands(context, { model, tree, deco: deco as any, output });
+    registerPvfWebApiServer({ context, extensionVersion: context.extension.packageJSON?.version || '0.0.0', output });
     // 注册快速搜索（模糊/多关键字）
     registerSearchInPack(context, model);
 

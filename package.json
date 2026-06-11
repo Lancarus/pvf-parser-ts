@@ -1167,6 +1167,94 @@
           "minimum": 1,
           "maximum": 1024,
           "description": "将目录封装为 PVF 时并发读取/转换文件数量。"
+        },
+        "pvf.webApi.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否启用 pvfUtility 兼容 WebApi 本地服务。"
+        },
+        "pvf.webApi.autoStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "存在有效解包 PVF 根目录时是否自动启动 WebApi 兼容服务。"
+        },
+        "pvf.webApi.preferredPort": {
+          "type": "number",
+          "default": 27000,
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "WebApi 首选监听端口。端口被占用时会向后递增。"
+        },
+        "pvf.webApi.maxPortScanCount": {
+          "type": "number",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 256,
+          "description": "首选端口被占用时向后扫描的最大端口数量。"
+        },
+        "pvf.webApi.bindHost": {
+          "type": "string",
+          "default": "loopback",
+          "enum": [
+            "loopback",
+            "127.0.0.1",
+            "localhost"
+          ],
+          "enumDescriptions": [
+            "仅绑定本机回环地址。",
+            "绑定 127.0.0.1。",
+            "绑定 localhost。"
+          ],
+          "description": "WebApi 监听地址。默认仅允许本机访问。"
+        },
+        "pvf.webApi.unpackRoot": {
+          "type": "string",
+          "default": "",
+          "description": "WebApi 使用的解包 PVF 根目录。为空时回退到 .env 的 UNPACK_DIR。"
+        },
+        "pvf.webApi.readOnly": {
+          "type": "boolean",
+          "default": true,
+          "description": "WebApi 是否以只读模式运行。只读模式下 Import/Delete 接口不会修改磁盘。"
+        },
+        "pvf.webApi.enableMutationApis": {
+          "type": "boolean",
+          "default": false,
+          "description": "是否启用 WebApi 写入/删除接口。首版默认关闭以保护解包目录。"
+        },
+        "pvf.webApi.maxFileReadBytes": {
+          "type": "number",
+          "default": 10485760,
+          "minimum": 1024,
+          "maximum": 536870912,
+          "description": "WebApi 单文件读取最大字节数。"
+        },
+        "pvf.webApi.maxImportBytes": {
+          "type": "number",
+          "default": 10485760,
+          "minimum": 1024,
+          "maximum": 536870912,
+          "description": "WebApi 单个导入请求最大字节数。首版写入接口默认禁用。"
+        },
+        "pvf.webApi.enableLegacyShortEndpoints": {
+          "type": "boolean",
+          "default": false,
+          "description": "是否启用 /files、/list、/file 等短路径旧兼容端点。"
+        },
+        "pvf.webApi.requestLogging": {
+          "type": "string",
+          "default": "summary",
+          "enum": [
+            "off",
+            "errors",
+            "summary"
+          ],
+          "enumDescriptions": [
+            "不记录请求日志。",
+            "只记录错误请求。",
+            "记录请求路径、耗时和错误状态。"
+          ],
+          "description": "WebApi 请求日志级别。不会记录完整文件内容。"
         }
       }
     },
@@ -1396,6 +1484,41 @@
         "command": "pvf.repackPack",
         "title": "将目录封装为PVF",
         "icon": "$(repo-create)"
+      },
+      {
+        "command": "pvf.webApi.start",
+        "title": "PVF WebApi: Start Compatibility Server",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "pvf.webApi.stop",
+        "title": "PVF WebApi: Stop Compatibility Server",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "pvf.webApi.restart",
+        "title": "PVF WebApi: Restart Compatibility Server",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "pvf.webApi.copyBaseUrl",
+        "title": "PVF WebApi: Copy Base URL",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "pvf.webApi.selectUnpackRoot",
+        "title": "PVF WebApi: Select Unpacked PVF Root",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "pvf.webApi.showOutput",
+        "title": "PVF WebApi: Show Output",
+        "icon": "$(output)"
+      },
+      {
+        "command": "pvf.webApi.diagnostics",
+        "title": "PVF WebApi: Run Diagnostics",
+        "icon": "$(pulse)"
       }
     ],
     "keybindings": [
