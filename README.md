@@ -1,6 +1,6 @@
 # PVF Code (pvf-parser-ts)
 
-在 VS Code 中打开、浏览和编辑 **PVF** 封包文件——DNF（地下城与勇士）的游戏资源包格式。
+在 VS Code 中打开、解封 **PVF** 封包文件到本地并支持vscode资源管理器浏览、修改注释，以期后续agent修改pvf支持。
 
 同时支持解析 **NPK**（Neople Pack）和 **IMG**（Neople Image）格式，并为游戏的多种脚本文件类型提供自定义语言支持。
 
