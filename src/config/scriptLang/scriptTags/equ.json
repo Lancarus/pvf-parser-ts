@@ -264,13 +264,13 @@
       "name": "usable job",
       "title": "可使用职业",
       "closing": true,
-      "description": "可使用职业\n`[swordman]`\n`[fighter]`\n`[at fighter]`\n`[demonic swordman]`\n`[creatormage]`\n`[gunner]`\n`[at gunner]`\n`[mage]`\n`[at mage]`\n`[priest]`\n`[all]`",
-      "authors": "lostluna1"
+      "description": "`[swordman]`\n`[fighter]`\n`[at fighter]`\n`[demonic swordman]`\n`[creatormage]`\n`[gunner]`\n`[at gunner]`\n`[mage]`\n`[at mage]`\n`[priest]`\n`[all]`",
+      "authors": "lostluna1|Lancarus"
     },
     {
       "name": "swordman",
-      "title": "鬼剑士",
-      "description": "鬼剑士",
+      "title": "鬼剑士(男)",
+      "description": "鬼剑士(男)",
       "authors": "lostluna1"
     },
     {
@@ -360,8 +360,8 @@
     },
     {
       "name": "equipment type",
-      "title": "类型",
-      "description": "|字段|意义|\n|---|---|\n|[title name] | 称号|\n|[weapon] |武器|\n|[coat] | 上衣|\n|[pants] | 下衣|\n|[hat] | 帽子|\n|[shoulder] | 护肩|\n|[waist] | 腰带|\n|[shoes] | 鞋子|\n|[amulet] | 项链|\n|[wrist] | 手镯|\n|[ring] | 戒指|\n|[support] | 辅助装备|\n|[aurora avatar] | 光环|\n|[magic stone] | 魔法石|\n|[creature]|宠物|\n|[artifact red] | 宠物装备 红|\n|[artifact blue] | 宠物装备 蓝|\n|[artifact green] | 宠物装备 绿|\n|[skin avatar] | 皮肤|\n|[face avatar] | 脸部装扮|\n|[pants avatar] | 下衣时装|",
+      "title": "装备类型",
+      "description": "|字段|意义|\n|---|---|\n|[title name] | 称号|\n|[weapon] |武器|\n|[coat] | 上装|\n|[pants] | 下装|\n|[shoulder] | 护肩|\n|[waist] | 腰带|\n|[shoes] | 鞋子|\n|[amulet] | 项链|\n|[wrist] | 手镯|\n|[ring] | 戒指|\n|[support] | 辅助装备|\n|[aurora avatar] | 光环|\n|[magic stone] | 魔法石|\n|[hat] | 帽子|\n|---|---|\n|[creature]|宠物|\n|[artifact red] | 宠物装备 红|\n|[artifact blue] | 宠物装备 蓝|\n|[artifact green] | 宠物装备 绿|\n|---|---|\n|[skin avatar] | 皮肤时装|\n|[face avatar] | 脸部时装|\n|[pants avatar] | 下衣时装|",
       "authors": "pvf|Lancarus"
     },
     {
@@ -487,9 +487,9 @@
     },
     {
       "name": "sub type",
-      "title": "子类型/子分类 (武器细分或特殊用途)",
-      "description": "子类型/子分类 (武器细分或特殊用途)",
-      "authors": "lostluna1"
+      "title": "子类型/子分类",
+      "description": "武器细分或特殊用途",
+      "authors": "lostluna1|Lancarus"
     },
     {
       "name": "durability",
@@ -518,8 +518,8 @@
     {
       "name": "need material",
       "title": "购买所需道具",
-      "description": "购买所需道具\n添加到 NPC 商店时购买所需道具\n//示例：\n[need material]\n\t3037\t20\n左边是道具代码      右边是数量\n\n//以及：\n[price]      金币购买\n[value]     售出价格（左道具编号，右道具数量）\n[cash]       点券购买",
-      "authors": "Xiti Fox"
+      "description": " - 添加到 NPC 商店时购买所需道具\n - 每行第一个数是道具ID，第二个数是所需数量\n***\n - [price]      金币购买\n - [value]     售出价格（左道具编号，右道具数量）\n - [cash]       点券购买",
+      "authors": "Xiti Fox|Lancarus"
     },
     {
       "name": "cash",
@@ -541,20 +541,20 @@
     },
     {
       "name": "cool time",
-      "title": "装备整体冷却(ms)",
-      "description": "装备整体冷却(ms)",
-      "authors": "lostluna1"
+      "title": "装备整体冷却",
+      "description": "单位：ms",
+      "authors": "lostluna1|Lancarus"
     },
     {
       "name": "icon",
-      "title": "主图标文件 + 帧",
+      "title": "图标位置",
       "description": "主图标文件 + 帧",
-      "authors": "lostluna1"
+      "authors": "lostluna1|Lancarus"
     },
     {
       "name": "icon mark",
-      "title": "图标边框 Item/IconMark.img 数值",
-      "description": "图标边框\n62白装 63蓝装 64紫装 65勇者 66神器 67传说 68史诗",
+      "title": "图标边框",
+      "description": "- 62 白装 \n- 63 蓝装 \n- 64 紫装 \n- 65 勇者 \n- 66 神器\n- 67 传说 \n- 68 史诗",
       "authors": "by：小小白|Lancarus"
     },
     {
@@ -578,9 +578,9 @@
     },
     {
       "name": "move wav",
-      "title": "跌落到地面或移动物品（包括安装件）时发出的声音",
-      "description": "// 跌落到地面或移动物品（包括安装件）时发出的声音\n`POTION_TOUCH` 药水\n\n//饰品：\n`NECKLACE_TOUCH`  项链\n`BRACELET_TOUCH`   手镯\n`RING_TOUCH`          戒指\n\n//防具：\n`BONE_TOUCH`      轻甲\n`SCRAP_TOUCH`    板甲\n`CLOTH_TOUCH`    布甲\n`CLOTH_TOUCH`    皮甲同布甲\n\n//武器：\n`MINERALSWD_TOUCH`     短剑",
-      "authors": "Xiti Fox"
+      "title": "掉落、移动、使用音效",
+      "description": "|字段|音效类型|\n|---|---|\n|`POTION_TOUCH`| 药水|\n|**饰品**||\n|`NECKLACE_TOUCH`|  项链|\n|`BRACELET_TOUCH`| 手镯|\n|`RING_TOUCH`|戒指|\n|**防具**||\n|`BONE_TOUCH`   |   轻甲|\n|`SCRAP_TOUCH`  |  板甲|\n|`CLOTH_TOUCH`  |  布甲|\n|`CLOTH_TOUCH`  |  皮甲同布甲|\n|**武器**||\n|`MINERALSWD_TOUCH`  |   短剑|",
+      "authors": "Xiti Fox|Lancarus"
     },
     {
       "name": "use wav",
@@ -616,8 +616,8 @@
     {
       "name": "layer variation",
       "title": "数字的意思是图层",
-      "description": "数字的意思是图层，数字越大图层就越显示在前面。\n数字下面的英文意思是会调用同文件夹下这个英文名称的文件夹内所有ani文件。",
-      "authors": "王良一-85431480"
+      "description": "- 数字的意思是图层，数字越大图层就越显示在前面。\n- 数字下面的英文意思是会调用同文件夹下这个英文名称的文件夹内所有ani文件。",
+      "authors": "王良一-85431480|Lancarus"
     },
     {
       "name": "equipment ani script",
@@ -639,9 +639,9 @@
     },
     {
       "name": "basic explain",
-      "title": "简单说明",
-      "description": "简单说明\n\n装备中显示的蓝色文本说明，和 [detail explain] 关联的，此时在游戏中按 F4(默认键) 可切换简单/详细说明。\n\n* 通常在装备上使用。",
-      "authors": "Cai - 263007544"
+      "title": "装备说明",
+      "description": "- 装备中显示的蓝色文本说明，和 [detail explain] 关联的，此时在游戏中按 F4(默认键) 可切换简单/详细说明。\n\n- 通常在装备上使用。",
+      "authors": "Cai - 263007544|Lancarus"
     },
     {
       "name": "detail explain",
@@ -657,9 +657,9 @@
     },
     {
       "name": "grade",
-      "title": "grade",
-      "description": "[grade]\n在装备、道具中为掉落等级，史诗装备则为对应等级的深渊\n掉落区间为±5级，也就是说写10时，有概率从击杀的5—15级怪物身上掉落\n深渊派对的文件路径：{ etc/hellparty.etc }\n深渊怪物爆率的文件路径：{ etc/itemdropinfo_monster_hell.etc }\n\n另外此值影响增幅强化所加的具体数值，与增幅强化的数值成正比",
-      "authors": "Xiti Fox"
+      "title": "装备实际等级",
+      "description": "- 影响增幅强化所加的具体数值，与增幅强化的数值成正比 \n- 在装备、道具中为**掉落等级**，史诗装备则为对应等级的深渊\n>掉落区间为±5级，也就是说写10时，有概率从击杀的5—15级怪物身上掉落\n1. [深渊派对文件](etc/hellparty.etc)\n2. [深渊怪物爆率的文件路径](etc/itemdropinfo_monster_hell.etc)",
+      "authors": "Xiti Fox|Lancarus"
     },
     {
       "name": "spectrum",
@@ -681,9 +681,9 @@
     },
     {
       "name": "rarity",
-      "title": "rarity",
-      "description": "装备类型 0.普通 1.高级 2.稀有 3.神器 4.史诗 5.勇者 6.传说 7.神话",
-      "authors": "圣心语&老王|老夫|Xiti Fox"
+      "title": "稀有度",
+      "description": "0.普通 \n1.高级 \n2.稀有 \n3.神器 \n4.史诗 \n5.勇者 \n6.传说 \n7.神话",
+      "authors": "圣心语&老王|老夫|Xiti Fox|Lancarus"
     },
     {
       "name": "anti evil",
@@ -712,8 +712,8 @@
     {
       "name": "physical attack",
       "title": "力量",
-      "description": "力量",
-      "authors": "Cai - 263007544"
+      "description": "",
+      "authors": "Cai - 263007544|Lancarus"
     },
     {
       "name": "physical defense",
@@ -844,8 +844,8 @@
     {
       "name": "light attack",
       "title": "光属性强化",
-      "description": "光属性强化\n光属性强化\n[light attack]\n\n火属性强化\n[fire attack]\n\n水属性强化\n[water attack]\n\n暗属性强化\n[dark attack]",
-      "authors": "Cai|大狮纸q1925229848"
+      "description": "增加光属性强化",
+      "authors": "Cai|大狮纸q1925229848|Lancarus"
     },
     {
       "name": "slow resistance",
@@ -1000,8 +1000,8 @@
     {
       "name": "move speed",
       "title": "移动速度",
-      "description": "移动速度\n* 100 = 10%",
-      "authors": "释然"
+      "description": "单位：0.1%",
+      "authors": "释然|Lancarus"
     },
     {
       "name": "x move dash speed",
@@ -1018,14 +1018,14 @@
     {
       "name": "attack speed",
       "title": "攻击速度",
-      "description": "[attack speed]   //攻击速度\n100=10%",
-      "authors": "等风来"
+      "description": "单位：0.1%",
+      "authors": "等风来|Lancarus"
     },
     {
       "name": "cast speed",
       "title": "施放速度",
-      "description": "施放速度\n\n* 100 = 10%",
-      "authors": "Cai - 263007544|Xiti Fox"
+      "description": "单位：0.1%",
+      "authors": "Cai - 263007544|Xiti Fox|Lancarus"
     },
     {
       "name": "hit recovery",
@@ -1047,9 +1047,9 @@
     },
     {
       "name": "room list move speed rate",
-      "title": "城镇移动速度",
-      "description": "城镇移动速度。\n\n[room list move speed rate]\n\t1.0\n\n1.0 等于 100%",
-      "authors": "Cai - 263007544"
+      "title": "城镇内移动速度",
+      "description": "- 增加城镇内移动速度\n- 单位：100%，即 0.4 代表 +40% 城镇内移动速度",
+      "authors": "Cai - 263007544|Lancarus"
     },
     {
       "name": "elemental property",
@@ -1084,20 +1084,20 @@
     {
       "name": "physical critical hit",
       "title": "物理暴击率",
-      "description": "物理暴击率增量",
-      "authors": "lostluna1"
+      "description": " - 增加物理暴击率\n - 单位：1%",
+      "authors": "lostluna1|Lancarus"
     },
     {
       "name": "magical critical hit",
       "title": "魔法暴击率",
-      "description": "魔法暴击率增量",
-      "authors": "lostluna1"
+      "description": " - 增加魔法暴击率\n - 单位：1%",
+      "authors": "lostluna1|Lancarus"
     },
     {
       "name": "stuck",
       "title": "命中率",
-      "description": "命中修正(负数表示增加)",
-      "authors": "lostluna1"
+      "description": " - 命中修正\n - 负数表示增加\n - 单位：1%",
+      "authors": "lostluna1|Lancarus"
     },
     {
       "name": "ignore defense",
@@ -1146,8 +1146,8 @@
       "name": "skill levelup",
       "title": "技能等级提升",
       "closing": true,
-      "description": "技能等级提升\n[skill levelup]\n\n[/skill levelup]\n此为一段，中间3个一组，分别为：\n 使用职业，职业技能ID，提升等级数",
-      "authors": "Xiti Fox"
+      "description": "每一行由3列组成：\n1. 使用职业\n2. 职业技能ID\n3. 提升等级数",
+      "authors": "Xiti Fox|Lancarus"
     },
     {
       "name": "if",
@@ -1393,9 +1393,9 @@
     },
     {
       "name": "item group name",
-      "title": "物品组",
-      "description": "`ssword`   = 短剑\n` totem`    =    图腾\n`axe`  = 巨斧\n`katana`   = 太刀\n `automatic`=自动步枪\n`club`      = 钝器\n`lswd`      = 巨剑\n`beamswd`= 光剑\n`knuckle`  = 手套\n`claw`      = 爪\n`tonfa`     = 东方棍\n`gauntlet` = 臂铠\n`hcannon`=               手炮\n`wrist`      =              手镯\n`la coat`   =              上衣\n`lt pants`  =              褲子\n`la waist`  =              腰帶\n\n`magic stone` =魔法石(左右槽)\n---------------------------------\n`mt pants` = 板甲下装\n`mt waist` = 板甲腰带\n`mt coat` = 板甲上衣\n`mt shoes` = 板甲鞋子\n`mt shoulder` = 板甲护肩\n---------------------------------\n`ha pants` = 重甲下装\n`ha waist` = 重甲腰带\n`ha coat` = 重甲上衣\n`ha shoes` = 重甲鞋子\n`ha shoulder` = 重甲护肩\n---------------------------------\n`lt pants` = 皮甲下装\n`lt waist` = 皮甲腰带\n`lt coat` = 皮甲上衣\n`lt shoes` = 皮甲鞋子\n`lt shoulder` = 皮甲护肩\n---------------------------------\n`la pants` = 轻甲下装\n`la waist` = 轻甲腰带\n`la coat` = 轻甲上衣\n`la shoes` = 轻甲鞋子\n`la shoulder` = 轻甲护肩\n---------------------------------\n`cl pants` = 布甲下装\n`cl waist` = 布甲腰带\n`cl coat` = 布甲上衣\n`cl shoes` = 布甲鞋子\n`cl shoulder` = 布甲护肩\n---------------------------------\n`amulet` = 项链",
-      "authors": "囫囵"
+      "title": "具体装备类型",
+      "description": "|字段|意义|\n|---|---|\n|武器|---|\n|`ssword`|短剑|\n|`totem`|图腾|\n|`axe`|巨斧|\n|`katana`|太刀|\n|`automatic`|自动步枪|\n|`club`|钝器|\n|`lswd`|巨剑|\n|`beamswd`|光剑|\n|`knuckle`|手套|\n|`claw`|爪|\n|`tonfa`|东方棍|\n|`gauntlet`|臂铠|\n|`hcannon`|手炮|\n|首饰|---|\n|`amulet`|项链|\n|`wrist`|手镯|\n|`lacoat`|上衣|\n|`ltpants`|褲子|\n|`lawaist`|腰帶|\n|`magicstone`|魔法石|\n|板甲|---|\n|`mtpants`|板甲下装|\n|`mtwaist`|板甲腰带|\n|`mtcoat`|板甲上衣|\n|`mtshoes`|板甲鞋子|\n|`mtshoulder`|板甲护肩|\n|皮甲|---|\n|`hapants`|重甲下装|\n|`hawaist`|重甲腰带|\n|`hacoat`|重甲上衣|\n|`hashoes`|重甲鞋子|\n|`hashoulder`|重甲护肩|\n|武器|---|\n|`ltpants`|皮甲下装|\n|`ltwaist`|皮甲腰带|\n|`ltcoat`|皮甲上衣|\n|`ltshoes`|皮甲鞋子|\n|`ltshoulder`|皮甲护肩|\n|轻甲|---|\n|`lapants`|轻甲下装|\n|`lawaist`|轻甲腰带|\n|`lacoat`|轻甲上衣|\n|`lashoes`|轻甲鞋子|\n|`lashoulder`|轻甲护肩|\n|布甲|---|\n|`clpants`|布甲下装|\n|`clwaist`|布甲腰带|\n|`clcoat`|布甲上衣|\n|`clshoes`|布甲鞋子|\n|`clshoulder`|布甲护肩|",
+      "authors": "囫囵|Lancarus"
     },
     {
       "name": "Force Result Item Rule",
@@ -1408,12 +1408,6 @@
       "title": "独立攻击力",
       "description": "独立攻击力",
       "authors": "Xiti Fox"
-    },
-    {
-      "name": "physical attack",
-      "title": "力量",
-      "description": "力量",
-      "authors": "Cai - 263007544"
     },
     {
       "name": "subtype",
@@ -1462,10 +1456,10 @@
     },
     {
       "name": "impossible contents",
-      "title": "这个标签下的动作不能进行",
+      "title": "无法进行",
       "closing": true,
       "description": "这个标签下的动作不能进行\nupgrade   强化\namplify upgrade  增幅\ndisjoint  分解\ngift  赠送\nseparate upgrade  锻造\ncharac cargo  仓库存储",
-      "authors": "乐乐-QQ906127695"
+      "authors": "乐乐-QQ906127695|Lancarus"
     },
     {
       "name": "target active status",
@@ -1605,8 +1599,8 @@
     {
       "name": "creature species",
       "title": "宠物 ID",
-      "description": "宠物 ID\n\n* 链接到宠物所在 ID，宠物属性所在。",
-      "authors": "Cai - 263007544"
+      "description": "链接到宠物所在 ID，宠物属性所在。",
+      "authors": "Cai - 263007544|Lancarus"
     },
     {
       "name": "character item check",
@@ -1901,6 +1895,13 @@
       "title": "冰属性强化",
       "description": "",
       "authors": "preview"
+    },
+    {
+      "name": "creature",
+      "title": "宠物",
+      "description": "",
+      "closing": false,
+      "authors": "Lancarus"
     }
   ]
 }
