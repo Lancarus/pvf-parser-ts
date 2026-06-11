@@ -168,7 +168,7 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
     metadata?: UnpackMetadataService,
   ) {
     this.metadata = metadata || new UnpackMetadataService(context, output);
-    this.preview = new UnpackPreviewService(this.metadata, output);
+    this.preview = new UnpackPreviewService(this.metadata, context, output);
     this.previewPanel = new UnpackHoverPreviewPanel(context);
     this.context.subscriptions.push(
       vscode.window.onDidChangeActiveTextEditor(editor => {

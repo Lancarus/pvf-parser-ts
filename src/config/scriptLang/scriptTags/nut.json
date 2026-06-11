@@ -2,81 +2,97 @@
   "tags": [
     {
       "name": "clear_vector",
+      "title": "清空储存器内容",
       "description": "清空储存器内容\n需要配合getVar()使用\n例如：obj.getVar(\"fuck\").clear_vector();\n意：清除储存器fuck的内容",
       "authors": "糖糖QQ6494667"
     },
     {
       "name": "dofile",
+      "title": ".挂载外部文件",
       "description": "dofile.挂载外部文件",
       "authors": "lostluna1"
     },
     {
       "name": "else",
+      "title": "否则",
       "description": "否则",
       "authors": "lostluna1"
     },
     {
       "name": "for",
+      "title": "循环",
       "description": "循环",
       "authors": "lostluna1"
     },
     {
       "name": "function",
+      "title": "声明一个函数/方法/功能等等",
       "description": "声明一个函数/方法/功能等等\n空格 xxxxx 这里xxxxx是函数名、方法名、功能名等\n(xxx,xxx,xxx) xxx是参数 传递的参数\n{\nxxxxxxx;    xxxxxxx是具体实现细节 这个函数具体干了什么\n}",
       "authors": "糖糖QQ6494667"
     },
     {
       "name": "get_vector",
+      "title": "获取矢量存储器的存储内容",
       "description": "获取矢量存储器的存储内容\n括号内为存储器的数据位置，第几号数据的意思\n需要和obj.get_Var()配合使用\n例：\nobj.get_Var(\"aaa\").get_vector(1);",
       "authors": "糖糖QQ6494667"
     },
     {
       "name": "getCurrentSkillIndex",
+      "title": "获取释放的技能ID",
       "description": "获取释放的技能ID\nobj.getCurrentSkillIndex()",
       "authors": "糖糖QQ:6494667"
     },
     {
       "name": "getVar",
+      "title": "获取矢量存储器",
       "description": "获取矢量存储器\n括号内为存储器名字ID(唯一不可重复)",
       "authors": "糖糖QQ6494667"
     },
     {
       "name": "pushState",
+      "title": "移动状态",
       "description": "移动状态",
       "authors": "吧哥"
     },
     {
       "name": "sq_drawCurrentFrame",
+      "title": "创建ANI",
       "description": "创建ANI",
       "authors": "lostluna1"
     },
     {
       "name": "sq_IsUseSkill",
+      "title": "使用技能",
       "description": "使用技能",
       "authors": "qyy8802"
     },
     {
       "name": "sq_RunScript",
+      "title": "sq_RunScript",
       "description": "运行nut脚本文件(nut的相对sqr目录)（原翻译：松鼠_运行脚本）",
       "authors": "糖糖QQ6494667"
     },
     {
       "name": "sq_SetSkillSlotPos",
+      "title": "设置技能槽位置",
       "description": "设置技能槽位置",
       "authors": "李云溪"
     },
     {
       "name": "sq_StopMove",
+      "title": "停止移动",
       "description": "停止移动",
       "authors": "qyy8802"
     },
     {
       "name": "true",
+      "title": "真",
       "description": "真",
       "authors": "lostluna1"
     },
     {
       "name": "while",
+      "title": "循环判断",
       "description": "循环判断",
       "authors": "清高"
     }

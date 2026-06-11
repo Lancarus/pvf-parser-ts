@@ -2,66 +2,79 @@
   "tags": [
     {
       "name": "condition reward",
+      "title": "奖励条件",
       "description": "奖励条件",
       "authors": "lostluna1"
     },
     {
       "name": "end",
+      "title": "结束时间",
       "description": "结束时间",
       "authors": "释然"
     },
     {
       "name": "entry",
+      "title": "条目",
       "description": "条目",
       "authors": "无名氏"
     },
     {
       "name": "event info",
+      "title": "活动资​​讯",
       "description": "活动资​​讯",
       "authors": "lostluna1"
     },
     {
       "name": "idx",
+      "title": "开启活动的 ID",
       "description": "开启活动的 ID",
       "authors": "释然"
     },
     {
       "name": "mail content",
+      "title": "邮件内容",
       "description": "邮件内容",
       "authors": "无名氏"
     },
     {
       "name": "monster id",
+      "title": "怪物ID",
       "description": "怪物ID",
       "authors": "lostluna1"
     },
     {
       "name": "ON",
+      "title": "显示什么公告",
       "description": "显示什么公告\n在下面有公告ID",
       "authors": "烟辰"
     },
     {
       "name": "reward",
+      "title": "完成获得获得的奖励",
       "description": "完成获得获得的奖励",
       "authors": "释然"
     },
     {
       "name": "Seria Blessing",
+      "title": "赛丽亚的祝福活动",
       "description": "赛丽亚的祝福活动",
       "authors": "Xiti Fox"
     },
     {
       "name": "start",
+      "title": "开始时间",
       "description": "开始时间",
       "authors": "释然"
     },
     {
       "name": "thief",
+      "title": "暗夜使者",
       "description": "[thief]=暗夜使者",
       "authors": "lostluna1"
     },
     {
       "name": "url hyperlink",
+      "title": "URL超级链接",
       "description": "URL超级链接",
       "authors": "Xiti Fox"
     }

@@ -2,91 +2,109 @@
   "tags": [
     {
       "name": "animation",
+      "title": "物品贴图动画等",
       "description": "物品贴图动画等",
       "authors": "无名氏"
     },
     {
       "name": "background pos",
+      "title": "背景POS",
       "description": "背景POS",
       "authors": "lostluna1"
     },
     {
       "name": "basic action",
+      "title": "基本动作",
       "description": "基本动作",
       "authors": "lostluna1"
     },
     {
       "name": "block use stackable item",
+      "title": "禁止使用消耗品",
       "description": "禁止使用消耗品",
       "authors": "lostluna1"
     },
     {
       "name": "dungeon start area",
+      "title": "进入该副本地图时的入场坐标（大概是）",
       "description": "进入该副本地图时的入场坐标（大概是）\n1、X轴位置\n2、Y轴位置\n3、\n4、",
       "authors": "Xiti Fox"
     },
     {
       "name": "far sight scroll",
+      "title": "城镇最后面的背景图片随着人物移动也跟着移动的词条",
       "description": "城镇最后面的背景图片随着人物移动也跟着移动的词条，数字越大图片移动的越快",
       "authors": "南城以北花似海"
     },
     {
       "name": "filename",
+      "title": "城镇的最底层背景的贴图",
       "description": "城镇的最底层背景的贴图",
       "authors": "小鬼"
     },
     {
       "name": "greed",
+      "title": "贪吃蛇小游戏",
       "description": "贪吃蛇小游戏。\n副本房间的连接顺序，显示副本网格形状\nBB\t=\t右\nMM\t=\t左下\nDD\t=\t右上\nGG\t=\t左上\nJJ\t=\t右下\nFF\t=\t左右\nEE\t=\t左\nNN\t=\t左下右\nCC\t=\t上\nII\t=\t下\nKK\t=\t上下\nPP\t=\t十字\nHH\t=\t左上右\nAA\t=\t无法通过\nLL             =              上下右",
       "authors": "阿董-137735017"
     },
     {
       "name": "monster",
+      "title": "如下",
       "description": "如下：\t61337\t1\t0\t611\t240\t0\t1\t1\t`[fixed]`\t`[normal]`\n\n61337（怪物代码）-（1）怪物数量-（0）怪物等级，如果写0就是代表跟随副本等级-611（坐标）-240（坐标）-0-1-1（0-1-1不用管）-[fixed]-[normal]（怪物类别普通怪物）\n\n如果想做成BOSS 就把[normal]变成[boss]11",
       "authors": "lostluna1"
     },
     {
       "name": "pathgate pos",
+      "title": "房间入口的坐标",
       "description": "房间入口的坐标\n一共8个数字，两组数字为一个入口的X,Y坐标。\n第1组=左边入口坐标\n第2组=右边入口坐标\n第3组=上方入口坐标\n第4组=下方入口坐标",
       "authors": "pvf"
     },
     {
       "name": "player number",
+      "title": "玩家人数",
       "description": "玩家人数\n\n最少人数，最多人数",
       "authors": "lostluna1"
     },
     {
       "name": "pvp practice start area",
+      "title": "和[pvp start area]一样",
       "description": "和[pvp start area]一样,就是玩家和人机开始时的位置",
       "authors": "notlikeKFC"
     },
     {
       "name": "pvp start area",
+      "title": "pvp起始点定义（X坐标",
       "description": "pvp起始点定义（X坐标，Y坐标，宽度，高度顺序）\n四个数字一组，分三组\n0 0 0 0\t\t/个人战开始点\n\n0 0 0 0\t\t/1队的起点\n\n0 0 0 0\t\t/2队的起点",
       "authors": "阿董-137735017"
     },
     {
       "name": "sound",
+      "title": "进入副本时会播放的背景音乐和环境音乐",
       "description": "进入副本时会播放的背景音乐和环境音乐\n可以在客户端 audio.xml 文件内查看指向哪个声音文件\n\n背景音乐位置在客户端的[Music]\n环境音乐位置在客户端的[SoundPacks]（大概是）\n\n[SoundPacks]内的声音文件需借助npk解包工具查看\n目前据作者所知的npk解包工具有：\nExtractorSharp（可编辑贴图、音乐）\n黑猫（适合拿来做时装）\n\n除了解包工具还有配套的免费调音工具，也是作者正在使用的：\nAudacity\n\n若是不会找工具也可以加群下载，从下载到使用到产出成品都无需任何费用：\nQQ群：903031457",
       "authors": "Xiti Fox"
     },
     {
       "name": "special passive object",
+      "title": "指向深渊派对组",
       "description": "指向深渊派对组，书签-常用-深渊派对。\n特殊建筑物(item如果洛兰的树可能会出果实，木桶可能会爆出怪物、HP、MP精灵之类的...)\n[id, x, y, ?, 组数量] 接下来将读取按6个为一组 [type, id, ?, ?, ?, ?]",
       "authors": "fox"
     },
     {
       "name": "tile",
+      "title": "在近景图层上平铺绘制的地图基础",
       "description": "\n在近景图层上平铺绘制的地图基础。\n\n地图底板",
       "authors": "阿董-137735017"
     },
     {
       "name": "town movable area",
+      "title": "城镇内区域之间的连接",
       "description": "城镇内区域之间的连接\n\n六个数字为一组\n1、X坐标\n2、Y坐标\n3、X的范围\n4、Y的范围\n5、城镇编号\n6、区域编号\n\n例如：\n1-100-200-300-2-0\n释：在此地图X1Y100的地方有一个200*300大小的传送阵通向2号城镇的第0个区域。\n\n注：如果5、6位数字都为-1，则表示此处进入副本选图界面",
       "authors": "pvf"
     },
     {
       "name": "virtual movable area",
+      "title": "城镇可移动区域",
       "description": "城镇可移动区域\n\n四组数字为一组\n1、X坐标\n2、Y坐标\n3、X的范围\n4、Y的范围\n\n例子：45 55 65 75\n从X45为起点向右扩展65\n从Y55为起点向下扩展75\n人物可以在这个范围内移动",
       "authors": "lostluna1"
     }

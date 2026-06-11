@@ -2,26 +2,31 @@
   "tags": [
     {
       "name": "area",
+      "title": "城镇区域（减号代表制表符）",
       "description": "城镇区域（减号代表制表符）\n-数字，意思是小区域的编号\n-xxx/xxx.map，意思是这个小区域的map文件，不能直接转到，需要复制文件名搜索文件名\n-`[minimap rect]`，这个什么用都没有，猜测是在迷你地图里鼠标右键点击可以自动寻路的一个东西，\n但台服好像不能在地图上自动寻路，即使全部删掉也能正常游戏，跟正常跑五国，不过不建议删掉\n-[dungeon gate] 表示连接到worldmap选图界面的ID 19 (worldmap/worldmap.lst)\n-[gate] 城镇内传送门\n474 234 (赛丽亚房间门)",
       "authors": "pvf"
     },
     {
       "name": "at swordman",
+      "title": "女鬼剑士",
       "description": "女鬼剑士",
       "authors": "Xiti Fox"
     },
     {
       "name": "dungeon gate",
+      "title": "副本入口",
       "description": "副本入口，在worldmap.lst 中被定义",
       "authors": "pvf"
     },
     {
       "name": "entering title",
+      "title": "进入城镇时的标题动画",
       "description": "进入城镇时的标题动画\n例如：埃尔文防线，赫顿马尔，这些大字",
       "authors": "王良一"
     },
     {
       "name": "minimap rect",
+      "title": "小地图上可以移动的区域",
       "description": "小地图上可以移动的区域",
       "authors": "依旧"
     }

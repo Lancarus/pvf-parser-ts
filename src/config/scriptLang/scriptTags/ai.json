@@ -2,288 +2,336 @@
   "tags": [
     {
       "name": "ai pattern",
+      "title": "AI逻辑",
       "description": "AI逻辑",
       "closing": true,
       "authors": "Xiti Fox"
     },
     {
       "name": "think",
+      "title": "逻辑判断块",
       "description": "逻辑判断块：内部比较条件并根据结果进入 [true]/[false] 分支",
       "closing": true,
       "authors": "lostluna1"
     },
     {
       "name": "true",
+      "title": "条件为真分支",
       "description": "条件为真分支",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "false",
+      "title": "条件为假分支",
       "description": "条件为假分支",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "return",
+      "title": "返回按键索引",
       "description": "返回按键索引；-1 / 空 表示不执行任何键",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "void",
+      "title": "void",
       "description": "",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "check key cooltime",
+      "title": "check key cooltime",
       "description": "",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "return str",
+      "title": "返回一个字符串",
       "description": "返回一个字符串",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "import ai",
+      "title": "插入一个.ai文件",
       "description": "插入一个.ai文件 \n`示例.ai`",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "hp",
+      "title": "当前 HP 数值 (可与 >",
       "description": "当前 HP 数值 (可与 >=, <=, == 等运算符比较)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "mp",
+      "title": "当前 MP 数值",
       "description": "当前 MP 数值",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "random",
+      "title": "0~99 随机值 (实时变化)",
       "description": "0~99 随机值 (实时变化)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "target distance",
+      "title": "与当前目标的像素距离",
       "description": "与当前目标的像素距离",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "last result",
+      "title": "last result",
       "description": "上一条指令写入的结果 (get random / enemy number of in attack area 等)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": ">=",
+      "title": "比较运算",
       "description": "比较运算：大于等于",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "<=",
+      "title": "比较运算",
       "description": "比较运算：小于等于",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "==",
+      "title": "比较运算",
       "description": "比较运算：等于",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": ">",
+      "title": "比较运算",
       "description": "比较运算：大于",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "<",
+      "title": "比较运算",
       "description": "比较运算：小于",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "%>=",
+      "title": "百分比比较",
       "description": "百分比比较：当前值/最大值 >=",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "%<=",
+      "title": "百分比比较",
       "description": "百分比比较：当前值/最大值 <=",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "%==",
+      "title": "百分比比较",
       "description": "百分比比较：当前值/最大值 ==",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "%>",
+      "title": "百分比比较",
       "description": "百分比比较：当前值/最大值 >",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "%<",
+      "title": "百分比比较",
       "description": "百分比比较：当前值/最大值 <",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "get random()",
+      "title": "get random()",
       "description": "生成区间随机数写入 [last result]：语法 `[void]` `get random()` min max",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "enemy number of in attack area()",
+      "title": "enemy number of in attack area()",
       "description": "统计攻击区域内敌人数写入 [last result]：`[void]` `enemy number of in attack area()` 前 后 上 下",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "is target in attack area()",
+      "title": "检测目标是否位于攻击区域",
       "description": "检测目标是否位于攻击区域",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "is the skill in cooltime()",
+      "title": "检测技能是否处于冷却",
       "description": "检测技能是否处于冷却",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "cooltime",
+      "title": "cooltime",
       "description": "设置当前 [return] 动作附加冷却 (需放在同一层 [think] 且位于 [return] 之前)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "my active status",
+      "title": "检测自身状态变化",
       "description": "检测自身状态变化",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "my state",
+      "title": "检测自身当前状态",
       "description": "检测自身当前状态",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "target state",
+      "title": "检测目标当前状态",
       "description": "检测目标当前状态",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "combo",
+      "title": "比较连击数",
       "description": "比较连击数",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "aerial",
+      "title": "比较空中连击数",
       "description": "比较空中连击数",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "overkill",
+      "title": "目标是否被超杀",
       "description": "目标是否被超杀",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "check skill on",
+      "title": "检查技能开关状态",
       "description": "检查技能开关状态：`[think] [check skill on] 52`",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "check use skill",
+      "title": "检查是否可使用特定技能 (技能索引)",
       "description": "检查是否可使用特定技能 (技能索引)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "use skill",
+      "title": "事件",
       "description": "事件：技能使用时 (Event.ai 专用)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "attack success",
+      "title": "攻击成功事件 (Event.ai)",
       "description": "攻击成功事件 (Event.ai)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "hit",
+      "title": "受击事件 (Event.ai)",
       "description": "受击事件 (Event.ai)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "element",
+      "title": "当前攻击/受击属性 (火/水/暗/光/无)",
       "description": "当前攻击/受击属性 (火/水/暗/光/无)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "set friend character",
+      "title": "DestinationSelect",
       "description": "DestinationSelect：指定友方角色 AI ID",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "set target monster",
+      "title": "DestinationSelect",
       "description": "DestinationSelect：指定目标怪物 ID 与队伍",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "set friend object",
+      "title": "DestinationSelect",
       "description": "DestinationSelect：指定友方对象 ID",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "set bound",
+      "title": "DestinationSelect",
       "description": "DestinationSelect：设置移动边界 前 后 上 下",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "auto attack direction",
+      "title": "是否自动面向敌人 (1/0)",
       "description": "是否自动面向敌人 (1/0)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "my hp down",
+      "title": "检测 HP 降低瞬间",
       "description": "检测 HP 降低瞬间：% 或 + 模式",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "my mp down",
+      "title": "检测 MP 降低瞬间",
       "description": "检测 MP 降低瞬间",
       "closing": false,
       "authors": "lostluna1"

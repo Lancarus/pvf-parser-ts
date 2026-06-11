@@ -2,170 +2,199 @@
   "tags": [
     {
       "name": "FRAME MAX",
+      "title": "整个动画过程播放的最大帧数",
       "description": "整个动画过程播放的最大帧数",
       "closing": false,
       "authors": "Xiti Fox"
     },
     {
       "name": "IMAGE",
+      "title": "动画贴图",
       "description": "[IMAGE]动画贴图\n在此标签下添加npk路径以调用npk文件的贴图，贴图npk文件的位置在客户端的[ImagePacks2]文件夹\n\n[ImagePacks2]内的贴图文件需借助npk解包工具查看\n目前据作者所知的npk解包工具有：\nExtractorSharp（可编辑贴图、音乐）\n黑猫（适合拿来做时装）\n\n若是不会找工具也可以加群下载，从下载到使用到产出成品都无需任何费用：\nQQ群：903031457",
       "closing": false,
       "authors": "Xiti Fox"
     },
     {
       "name": "IMAGE POS",
+      "title": "动画贴图坐标",
       "description": "[IMAGE POS]动画贴图坐标\n左边为X轴          右边为Y轴",
       "closing": false,
       "authors": "糖糖QQ6494667|Xiti Fox"
     },
     {
       "name": "IMAGE RATE",
+      "title": "放大或缩小",
       "description": "放大或缩小\n1.0不变\n0.5缩小到原图百分之50\n 1.5放大到原图百分之150",
       "closing": false,
       "authors": "-1为反转"
     },
     {
       "name": "IMAGE ROTATE",
+      "title": "旋转角度",
       "description": "旋转角度",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "RGBA",
+      "title": "颜色",
       "description": "颜色",
       "closing": false,
       "authors": "糖糖QQ6494667"
     },
     {
       "name": "DAMAGE BOX",
+      "title": "受击判定框",
       "description": "受击判定框\n拥有该标签表示使用此技能时可以被命中，移除此标签可赋予一帧的无敌时间\n[DAMAGE BOX]\nX1   Y1  Z1   X2  Y2  Z2\nX1:以ani坐标为基点的碰撞框X轴坐标\nY1:以ani坐标为基点的碰撞框Y轴坐标\nZ1:以ani坐标为基点的碰撞框Z轴坐标\nX2:以ani坐标为基点的碰撞框X轴大小\nY2:以ani坐标为基点的碰撞框Y轴大小\nZ2:以ani坐标为基点的碰撞框Z轴大小",
       "closing": false,
       "authors": "Xiti Fox"
     },
     {
       "name": "ATTACK BOX",
+      "title": "攻击范围判定框",
       "description": "[ATTACK BOX]  攻击范围判定框\nX1   Y1  Z1   X2  Y2  Z2\n\nX1:以ani坐标为基点的碰撞框X轴坐标\n\nY1:以ani坐标为基点的碰撞框Y轴坐标\n\nZ1:以ani坐标为基点的碰撞框Z轴坐标\n\nX2:以ani坐标为基点的碰撞框X轴大小\n\nY2:以ani坐标为基点的碰撞框Y轴大小\n\nZ2:以ani坐标为基点的碰撞框Z轴大小",
       "closing": false,
       "authors": "Xiti Fox"
     },
     {
       "name": "SHADOW",
+      "title": "开启阴影 0关闭",
       "description": "开启阴影 0关闭",
       "closing": false,
       "authors": "糖糖QQ6494667"
     },
     {
       "name": "COORD",
+      "title": "单色效果",
       "description": "单色效果",
       "closing": false,
       "authors": "糖糖QQ6494667"
     },
     {
       "name": "OPERATION",
+      "title": "操作模式/标志",
       "description": "操作模式/标志",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "SPECTRUM",
+      "title": "残影",
       "description": "残影\n\n跟传承武器一样，走路有拖影\n\n代码前面三个数字就是控制颜色，打开【开始】【所有程序】【附件】【画图】【编辑颜色】左下角那三个值，你选择好自己要的颜色，把数值换到刚刚的代码写入装备即可\n\n前面三个值是颜色，至于后面那两个，应该是残影的产生间隔和残影残留时间",
       "closing": false,
       "authors": "By：短腿猫不吃鱼-694326115"
     },
     {
       "name": "INTERPOLATION",
+      "title": "插值模式",
       "description": "插值模式",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "SET FLAG",
+      "title": "设置帧标记",
       "description": "设置帧标记，可在脚本中读取",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "GRAPHIC EFFECT",
+      "title": "图形效果",
       "description": "图形效果",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "PLAY SOUND",
+      "title": "播放声音",
       "description": "播放声音",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "DELAY",
+      "title": "一帧贴图的持续时间",
       "description": "一帧贴图的持续时间\n1000=1秒\n\n若要为此帧赋予霸体状态，需添加词条：\n\t[DAMAGE TYPE]\n\t\t`SUPERARMOR`",
       "closing": false,
       "authors": "Xiti Fox"
     },
     {
       "name": "PRELOAD",
+      "title": "预加载资源",
       "description": "预加载资源",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "DAMAGE TYPE",
+      "title": "霸体代码",
       "description": "霸体代码\n\n\t[DAMAGE TYPE]\n\t\t`SUPERARMOR`    超级护甲（一般拿来添加进帧数文件的）",
       "closing": false,
       "authors": "Xiti Fox"
     },
     {
       "name": "FLIP TYPE",
+      "title": "翻转类型",
       "description": "翻转类型",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "LOOP",
+      "title": "循环",
       "description": "循环\n\n部分拥有位移效果的动作添加此标签后才可以生效\n比如牛头怪或翼龙的冲撞，各个职业的行走、奔跑等等",
       "closing": false,
       "authors": "Xiti Fox"
     },
     {
       "name": "LOOP START",
+      "title": "循环段开始",
       "description": "循环段开始",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "LOOP END",
+      "title": "循环段结束 (跟一个次数)",
       "description": "循环段结束 (跟一个次数)",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "CLIP",
+      "title": "裁剪区域",
       "description": "裁剪区域",
       "closing": false,
       "authors": "lostluna1"
     },
     {
       "name": "FRAME001",
+      "title": "第二帧对应img中的第二张png",
       "description": "FRAME001第二帧对应img中的第二张png",
       "authors": "如亦"
     },
     {
       "name": "FRAME000",
+      "title": "FRAME000",
       "description": "[FRAME000]\n这是每个动画的第一帧，\n001就是第二帧，\n一般是不用专门改frame后面数字的，只要添加进动画就会自动按顺序改",
       "authors": "Xiti Fox"
     },
     {
       "name": "SUPERARMOR",
+      "title": "霸体",
       "description": "霸体：超级护甲",
       "authors": "Xiti Fox"
     },
     {
       "name": "create draw only object",
+      "title": "创建唯一的绘制对象",
       "description": "创建唯一的绘制对象，该词条创建的Ani动画不会随着人物当前动作的结束，而销毁该Ani动画。",
       "authors": "ZateL"
     },
     {
       "name": "LINEARDODGE",
+      "title": "线性减淡",
       "description": "线性减淡",
       "authors": "北海3092158274"
     }

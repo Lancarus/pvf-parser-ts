@@ -2,148 +2,183 @@
   "tags": [
     {
       "name": "clear map",
+      "title": "清空副本地图",
       "description": "清空副本地图",
       "authors": "牧羊人"
     },
     {
       "name": "clear reward item",
+      "title": "通关时获得物品",
       "description": "通关时获得物品\n* 6 个数值为一组数据。\n1 0 1002 3 17 -1\t\t// 副本编号, 副本难度, 物品编号,最大数量，出现概率 (%), 最大拥有数量(如果为-1，则表示无限制)\n2 0 1003 2 100 30\t\t// 如果副本难度为-1，则表示所有难度, 0:EASY 1:NORMAL 2:HARD 3:VERYHARD 普通,冒险,勇士,王者",
       "authors": "Cai|unMen"
     },
     {
       "name": "collision quest",
+      "title": "冲突任务",
       "description": "[collision quest]冲突任务\n魔法师跟魔法师",
       "authors": "lostluna1"
     },
     {
       "name": "complete npc index",
+      "title": "完成 NPC",
       "description": "完成任务的 NPC。\n\n* 填写 NPC 的 ID，当 -1 时等于没有。",
       "authors": "Cai"
     },
     {
       "name": "daily",
+      "title": "每日任务",
       "description": "每日任务",
       "authors": "阿军"
     },
     {
       "name": "depend message",
+      "title": "接受任务时的对话",
       "description": "接受任务时的对话。",
       "authors": "Cai"
     },
     {
       "name": "dungeon info",
+      "title": "任务副本的目的地",
       "description": "任务副本的目的地，也可用于显示副本难度要求（即副本入口中的任务闪烁）。\n* 此项非必要；如果 [type] 是 `[clear map]` 时，必须要加入。\n//如果条件为`[meet npc]`，且在后面的任务中进入地下城副本，那么在`[meet npc]`中也应该输入地下城信息(例如:任务以罗莉安>赛利亚>幽暗密林 顺序的话， 那么请在罗莉安，赛利亚的任务中输入幽暗密林地下城",
       "authors": "Cai|unMen"
     },
     {
       "name": "enemy reward item",
+      "title": "在任务执行的状态下(怪物",
       "description": "在任务执行的状态下(怪物,APC) 杀死时出现的任务道具,与[monster reward item]不同的是,该标签可指明敌人类型,八个数据为一组\n\n怪物编号,\n敌人类型(1:怪物，2:APC，3:obj对象()),\n副本编号 (如果不指定副本则该值为 -1),\n副本难度 (如果不指定难度则该值为 -1),\n物品编号\n每次获得数量,\n出现概率 (%),\n获得上限 (如果为-1则无上限)",
       "authors": "Cai"
     },
     {
       "name": "epic",
+      "title": "主线",
       "description": "主线",
       "authors": "陈"
     },
     {
       "name": "event",
+      "title": "任务里代表活动",
       "description": "任务里代表活动，置顶此任务",
       "authors": "赵三岁"
     },
     {
       "name": "exposed by npc",
+      "title": "是否显示在NPC的任务界面",
       "description": "是否显示在NPC的任务界面\n\n0 = 不显示\n1 = 显示\n\n添加此标签并赋予0时，即便NPC有此任务也无法在游戏内接取",
       "authors": "Cai|Xiti Fox"
     },
     {
       "name": "first exposed by npc",
+      "title": "首先由NPC曝光",
       "description": "首先由NPC曝光",
       "authors": "无名氏"
     },
     {
       "name": "gold multiple",
+      "title": "任务金币奖励倍数",
       "description": "任务金币奖励倍数\n\n* 在 [reward int data] 或[reward selection int data]奖励中, 有金币代码0才会生效。\n\n* 实际奖励金额 = 等级奖励基数 * 任务难度 * 金币奖励倍数\n\n* 等级奖励基数由 [ignore quest level 4 exp] 来决定是取决于角色等级还是任务等级，该标签不存在或为 0 时，按任务等级。\n\n* 任务难度由 [difficulty] 决定。\n\n* 等",
       "authors": "Cai|Xiti Fox"
     },
     {
       "name": "grow number",
+      "title": "转职类型（0到3）",
       "description": "转职类型（0到3）",
       "authors": "Allenwhere"
     },
     {
       "name": "int data",
+      "title": "int数据",
       "description": "int数据\n在任务.qst中\n当 [type] = `[seeking]`时\n两个数值\n分别为: 所需物品 所需物品数量\n\n当 [type] = `[condition under clear]` 时\n三个数值\n分别为: 副本代码 副本難度 组队人数\n也可以只填写前2个参数 副本代码 副本难度\n\n当[type]=[hunt monster]时\n四个数值\n分别为 副本代码 难度 怪物ID 怪物数量\n\n当type=[[custom quest]]时\n三个数值\n1 0 1未知 有时最后一个数可能是任务怪物ID\n\n`不修改前辈已有信息的补充：部分怪物会把机制信息写在int数据而不是\natk info里，想修改的话，有个笨方法，一个一个改，改对了就记住`",
       "authors": "Xiti Fox"
     },
     {
       "name": "job",
+      "title": "职业",
       "description": "职业类型\n[all] ————————所有职业(在一些文件中不适用)\n[swordman] —————鬼剑士（男）\n[at swordman] ————鬼剑士（女）\n[fighter] ——————格斗家（女）\n[at fighter] —————格斗家（男）\n[gunner] ——————神枪手（男）\n[at gunner] —————神枪手（女）\n[mage] ———————魔法师（女）\n[at mage] ——————魔法师（男）\n[priest] ———————圣职者（男）\n[thief] ———————暗夜使者\n[creator mage] ————外传职业 : 缔造者\n[demonic swordman] —外传职业 : 黑暗武士\n\n//截止到2026/3/22还没有能改的女鬼剑，都是别的职业改过来的，注意辨别",
       "authors": "Xiti Fox"
     },
     {
       "name": "job message",
+      "title": "作业消息",
       "description": "作业消息",
       "authors": "lostluna1"
     },
     {
       "name": "module",
+      "title": "在哪儿生效 下面例如写",
       "description": "在哪儿生效  下面例如写\n\n`[dead tower]`\n`[dungeon]`\n`[tournament dungeon]`\n`[war room]`\n`[blood system]`\n\n看不懂的百度翻译",
       "authors": "空QQ2533448753"
     },
     {
       "name": "monster reward item",
+      "title": "当接取该任务后可以让指定怪物掉落指定物品",
       "description": "当接取该任务后可以让指定怪物掉落指定物品。\n* 七个数值为一组。\n分别为：\n怪物\n副本\n副本难度\n物品代码\n每次获得数量\n概率\n获得上限",
       "authors": "丞哥-37358891"
     },
     {
       "name": "npc index",
+      "title": "接取 NPC",
       "description": "在任务(*.qst)中，设置接取任务的 NPC。\n\n* 填写 NPC 的 ID。",
       "authors": "Cai"
     },
     {
       "name": "on int data 130409 1",
+      "title": "任务奖励中",
       "description": "任务奖励中，可供选择的奖励 代码 数量",
       "authors": "Dr久之"
     },
     {
       "name": "pre required quest",
+      "title": "前置任务",
       "description": "前置任务\n\n* 接取该任务之前，需要完成的前置任务。\n\n* 填写前置任务的 ID。",
       "authors": "Cai"
     },
     {
       "name": "relation quest",
+      "title": "关联任务",
       "description": "完成当前任务时，自动弹出下一个任务。\n\n* 填写任务 ID，通常用于普通、成就类的任务。",
       "authors": "Cai"
     },
     {
       "name": "reward int data",
+      "title": "完成任务时给予的固定奖励",
       "description": "完成任务时给予的固定奖励\n\n* 两个数值为一组，第一个为装备、道具代码，第二个为数量\n\n* 赋予金币代码0时，任务金币奖励倍数[gold multiple]就会生效",
       "authors": "Xiti Fox"
     },
     {
       "name": "reward selection int data",
+      "title": "完成任务时",
       "description": "完成任务时，可以选择其中一种作为奖励\n\n//此类有两种写法：\n①与 [reward int data] 一致，同样是两个代码为一组\n②根据不同职业发放道具、装备\n\n//第②种写法的示例（第2种写法同样适用于固定奖励）：\n\t27012\t`[job]`\t0\t-1\t1\n   为男鬼剑的全部职业发放一把短剑\n\n\t27611\t`[job]`\t0\t1\t1\n   为男鬼剑的剑魂发放一把太刀\n\n//五个代码为一组：\n1 = 道具、装备 ID\n2 = `[job]`\n3 = 职业类型(0 到 10)\n4 = -1代表是否转职都可以领，0到4代表限定某个职业\n5 = 数量\n\n//职业类型代码：\n* 职业类型可在PVF主界面的character/character.lst查看\n男鬼剑：0\n女格斗：1\n男枪手：2\n女魔法：3\n男圣职：4\n\n//限定某个职业的代码：\n-1不限职业  0男鬼剑士 1剑魂            2鬼泣         3狂战士      4阿修罗\n-1不限职业  0女格斗     1女气功        2女散打     3女街霸      4女柔道家\n-1不限职业  0女魔法师 1女元素师     2召唤师     3战斗法师  4魔道学者\n-1不限职业  0男圣职者 1男圣骑士     2蓝拳圣使 3男驱魔师   4复仇者",
       "authors": "Xiti Fox"
     },
     {
       "name": "reward type",
+      "title": "奖励类型",
       "description": "任务奖励类型\n\n[item] = 装备、物品\n[title] = 点亮称号簿\n[hero] = 开启英雄级地图\n[grow type] = 角色转职\n[expert job] = 学习副职业\n[slot expansion] = 左右槽\n[hell challenge] = 开启深渊\n[awakening type] = 职业觉醒\n[creature evolution] = 宠物进化\n[event creat",
       "authors": "Cai|dongjak"
     },
     {
       "name": "special",
+      "title": "特殊任务（国服的词条）台服不适应",
       "description": "特殊任务（国服的词条）台服不适应",
       "authors": "by甘先生992466200"
     },
     {
       "name": "sub type",
+      "title": "子项目类型",
       "description": "子项目类型\n--------------------------------------------------\n在任务(*.qst)中，与 [type] 响应。\n* 当 [type] = `[condition under clear]` 时，[sub type] 将对应以下子类型，其它类型则为 -1。\n0 = 通关时间          （副本编号，副本难度，限时通关秒数）\n1 = 被击数              （副本编号，副本难度，受击次数限制要求）\n\n2 = 技巧                 （副本编号，副本难度，技巧要求  10=10%）\n\n3 = 操作                 （副本编号，副本难度，操作要求  10=10%）\n4 = 不使用复活币   （副本编号，副本难度）\n5 = 组队                  （副本编号，副本难度，组队人数）\n6 = 通关副本          （副本编号，副本难度）\n\n7 =连击杀伤率       （副本编号，副本难度，连击杀伤率要求  10=10%）\n\n10 = 连击数           （副本编号，副本难度，连击数要求）",
       "authors": "Xiti Fox"
     },
     {
       "name": "type",
+      "title": "类型",
       "description": "[type]任务完成条件类型\n`[condition under clear]`过图\n`[seeking]`需要道具\n`[hunt monster]`击杀怪物次数\n`[meet npc]`对话NPC\n`[custom quest]`按字面意思应该是自定任务 暂且叫私人任务或者个人任务吧 学习技能或者加点时使用 对话时也出现了\n`[disjoint item]`分解装备\n`[clear map]` 任务在地图里找人",
       "authors": "Like浪浪：547314354|dongjak|Xiti Fox"
+    },
+    {
+      "name": "grade",
+      "title": "任务品级",
+      "description": "",
+      "authors": "preview"
     }
   ]
 }

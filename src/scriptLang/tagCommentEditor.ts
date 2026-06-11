@@ -75,7 +75,7 @@ async function readTagForEditor(context: vscode.ExtensionContext, short: string,
 }
 
 function createTagForFile(data: TagFile, seed: ScriptTagInfo): ScriptTagInfo {
-    const tag: ScriptTagInfo = { name: normalizeTagDisplayName(seed.name), description: '' };
+    const tag: ScriptTagInfo = { name: normalizeTagDisplayName(seed.name), title: seed.title || normalizeTagDisplayName(seed.name), description: '' };
     if (typeof seed.closing === 'boolean') {
         tag.closing = seed.closing;
     } else if ((data.tags || []).some(item => Object.prototype.hasOwnProperty.call(item, 'closing'))) {
@@ -85,12 +85,13 @@ function createTagForFile(data: TagFile, seed: ScriptTagInfo): ScriptTagInfo {
     return tag;
 }
 
-async function saveTagDescription(context: vscode.ExtensionContext, short: string, name: string, description: string, seed?: ScriptTagInfo): Promise<{ files: number; authors: string; created: number }> {
+async function saveTagInfo(context: vscode.ExtensionContext, short: string, name: string, title: string, description: string, seed?: ScriptTagInfo): Promise<{ files: number; authors: string; created: number; title: string }> {
     const expected = normalizeTagName(name);
     let saved = 0;
     let created = 0;
     let savedAuthors = '';
     const author = configuredAuthor();
+    const cleanTitle = normalizeTagDisplayName(title) || normalizeTagDisplayName(seed?.title || name);
     const paths = tagFilePaths(context, short);
     const existingFiles: string[] = [];
     for (const file of paths) {
@@ -112,6 +113,7 @@ async function saveTagDescription(context: vscode.ExtensionContext, short: strin
             data.tags.push(tag);
             created++;
         }
+        tag.title = cleanTitle;
         tag.description = description.replace(/\r\n?/g, '\n').trimEnd();
         tag.authors = appendAuthor(tag.authors, author);
         savedAuthors = tag.authors || '';
@@ -119,7 +121,7 @@ async function saveTagDescription(context: vscode.ExtensionContext, short: strin
         saved++;
     }
     clearTagCache(short);
-    return { files: saved, authors: savedAuthors, created };
+    return { files: saved, authors: savedAuthors, created, title: cleanTitle };
 }
 
 function tagAtActiveCursor(): EditTagCommentArgs | undefined {
@@ -155,7 +157,7 @@ function safeJson(value: unknown): string {
     });
 }
 
-function editorHtml(panel: vscode.WebviewPanel, init: { short: string; name: string; description: string; authors: string; currentAuthor: string }): string {
+function editorHtml(panel: vscode.WebviewPanel, init: { short: string; name: string; title: string; description: string; authors: string; currentAuthor: string }): string {
     const n = nonce();
     const initJson = safeJson(init);
     return `<!DOCTYPE html>
@@ -209,13 +211,14 @@ button {
     font: inherit;
 }
 button:hover { background: var(--button-hover); }
-button:focus-visible, textarea:focus-visible { outline: 1px solid var(--focus); outline-offset: 1px; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1px solid var(--focus); outline-offset: 1px; }
 .body {
     display: grid;
     grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr);
     min-height: 0;
 }
 .pane { min-height: 0; display: grid; grid-template-rows: auto 1fr; }
+.editorPane { grid-template-rows: auto auto 1fr; }
 .pane + .pane { border-left: 1px solid var(--border); }
 .paneHeader {
     min-height: 34px;
@@ -224,6 +227,25 @@ button:focus-visible, textarea:focus-visible { outline: 1px solid var(--focus); 
     color: var(--muted);
     font-size: 12px;
     line-height: 18px;
+}
+.titleEditor {
+    display: grid;
+    gap: 6px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+}
+.titleEditor label {
+    color: var(--muted);
+    font-size: 12px;
+}
+input {
+    width: 100%;
+    min-height: 28px;
+    border: 0;
+    padding: 4px 8px;
+    color: var(--input-fg);
+    background: var(--input);
+    font: inherit;
 }
 textarea {
     width: 100%;
@@ -241,6 +263,9 @@ textarea {
     overflow: auto;
     padding: 12px 18px 32px;
     line-height: 1.6;
+}
+.preview .tagName {
+    margin: 0 0 10px;
 }
 .preview h1, .preview h2, .preview h3, .preview h4 { line-height: 1.25; margin: 18px 0 10px; }
 .preview h1 { font-size: 1.55em; border-bottom: 1px solid var(--border); padding-bottom: 0.25em; }
@@ -314,7 +339,11 @@ textarea {
         <button id="save" type="button">保存</button>
     </div>
     <div class="body">
-        <section class="pane">
+        <section class="pane editorPane">
+            <div class="titleEditor">
+                <label for="titleInput">Title</label>
+                <input id="titleInput" type="text">
+            </div>
             <div class="paneHeader">Markdown</div>
             <textarea id="editor" spellcheck="false"></textarea>
         </section>
@@ -328,13 +357,16 @@ textarea {
 <script nonce="${n}">
 const vscode = acquireVsCodeApi();
 const init = ${initJson};
+const titleInput = document.getElementById('titleInput');
 const editor = document.getElementById('editor');
 const preview = document.getElementById('preview');
 const status = document.getElementById('status');
 const saveButton = document.getElementById('save');
 document.querySelector('.tag').textContent = init.short + ' / [' + init.name + ']';
+titleInput.value = init.title || init.name || '';
 editor.value = init.description || '';
-let lastSaved = editor.value;
+let lastSavedTitle = titleInput.value;
+let lastSavedDescription = editor.value;
 let saveTimer = 0;
 
 function escapeHtml(value) {
@@ -499,20 +531,24 @@ function setStatus(text, isError) {
 }
 
 function updatePreview() {
-    preview.innerHTML = renderMarkdown(editor.value);
-    vscode.setState({ text: editor.value });
+    const title = titleInput.value.trim() || init.name || '';
+    const source = '### ' + title + '\\n\\n' + (editor.value || '');
+    preview.innerHTML = '<pre class="tagName"><code>' + escapeHtml(init.name || '') + '</code></pre>' + renderMarkdown(source);
+    vscode.setState({ title: titleInput.value, text: editor.value });
     const authorText = init.authors ? '作者: ' + init.authors : '作者: 未署名';
     const signerText = init.currentAuthor ? '保存签名: ' + init.currentAuthor : '';
-    setStatus((editor.value === lastSaved ? '已保存' : '未保存') + '    ' + authorText + (signerText ? '    ' + signerText : ''));
+    const saved = editor.value === lastSavedDescription && titleInput.value === lastSavedTitle;
+    setStatus((saved ? '已保存' : '未保存') + '    ' + authorText + (signerText ? '    ' + signerText : ''));
 }
 
 function save() {
     window.clearTimeout(saveTimer);
     saveButton.disabled = true;
     setStatus('保存中...');
-    vscode.postMessage({ type: 'save', description: editor.value });
+    vscode.postMessage({ type: 'save', title: titleInput.value, description: editor.value });
 }
 
+titleInput.addEventListener('input', updatePreview);
 editor.addEventListener('input', updatePreview);
 saveButton.addEventListener('click', save);
 document.addEventListener('keydown', event => {
@@ -525,7 +561,9 @@ window.addEventListener('message', event => {
     const msg = event.data || {};
     saveButton.disabled = false;
     if (msg.type === 'saved') {
-        lastSaved = editor.value;
+        lastSavedTitle = titleInput.value;
+        lastSavedDescription = editor.value;
+        init.title = msg.title || titleInput.value;
         init.authors = msg.authors || init.authors;
         setStatus('已保存到 ' + msg.files + ' 个文件    作者: ' + (init.authors || '未署名'));
     } else if (msg.type === 'error') {
@@ -533,9 +571,10 @@ window.addEventListener('message', event => {
     }
 });
 const state = vscode.getState();
+if (state && typeof state.title === 'string') titleInput.value = state.title;
 if (state && typeof state.text === 'string') editor.value = state.text;
 updatePreview();
-editor.focus();
+titleInput.focus();
 requestAnimationFrame(() => vscode.postMessage({ type: 'ready' }));
 </script>
 </body>
@@ -592,12 +631,13 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
                     markReady();
                     return;
                 }
-                if (msg.type !== 'save' || typeof msg.description !== 'string') return;
+                if (msg.type !== 'save' || typeof msg.description !== 'string' || typeof msg.title !== 'string') return;
                 try {
-                    const result = await saveTagDescription(context, short, tag.name, msg.description, tag);
+                    const result = await saveTagInfo(context, short, tag.name, msg.title, msg.description, tag);
+                    tag.title = result.title;
                     tag.description = msg.description.replace(/\r\n?/g, '\n').trimEnd();
                     tag.authors = result.authors;
-                    panel.webview.postMessage({ type: 'saved', files: result.files, authors: result.authors });
+                    panel.webview.postMessage({ type: 'saved', files: result.files, authors: result.authors, title: result.title });
                     const action = result.created ? '已创建并保存' : '已保存';
                     vscode.window.showInformationMessage(`${action} [${tag.name}] 注释`);
                 } catch (err: any) {
@@ -611,6 +651,7 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
             panel.webview.html = editorHtml(panel, {
                 short,
                 name: tag.name,
+                title: tag.title || tag.name,
                 description: tag.description || '',
                 authors: tag.authors || '',
                 currentAuthor: configuredAuthor()

@@ -1,5 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import type * as vscode from 'vscode';
 import {
   UnpackMetadataService,
   UnpackResolvedMetadata,
@@ -29,6 +30,7 @@ export interface UnpackPreviewIcon {
 export interface UnpackPreviewField {
   label: string;
   value: string;
+  tagName?: string;
   tone?: 'normal' | 'muted' | 'good' | 'magic' | 'warning' | 'danger';
 }
 
@@ -113,6 +115,17 @@ interface LstCacheEntry {
 interface ParsedTags {
   values: Map<string, string[]>;
 }
+
+interface ScriptTagTitleFile {
+  tags?: Array<{ name?: unknown; title?: unknown }>;
+}
+
+interface PreviewTagTitle {
+  name: string;
+  title: string;
+}
+
+type PreviewTagTitles = ReadonlyMap<string, PreviewTagTitle>;
 
 interface CodeReference {
   code: number;
@@ -375,9 +388,11 @@ export class UnpackPreviewService {
   private readonly cache = new Map<string, CacheEntry>();
   private readonly lstCache = new Map<string, LstCacheEntry | undefined>();
   private readonly lstPromises = new Map<string, Promise<LstCacheEntry | undefined>>();
+  private readonly tagTitlePromises = new Map<string, Promise<Map<string, PreviewTagTitle>>>();
 
   constructor(
     private readonly metadata: UnpackMetadataService,
+    private readonly context: vscode.ExtensionContext,
     private readonly output?: { appendLine(value: string): void },
   ) {}
 
@@ -385,6 +400,7 @@ export class UnpackPreviewService {
     this.cache.clear();
     this.lstCache.clear();
     this.lstPromises.clear();
+    this.tagTitlePromises.clear();
   }
 
   invalidate(input: UnpackPreviewInput): void {
@@ -466,26 +482,27 @@ export class UnpackPreviewService {
     metadata: UnpackResolvedMetadata | undefined,
   ): Promise<UnpackHoverPreview> {
     const sections: UnpackPreviewSection[] = [];
+    const titles = await this.loadTagTitles('equ');
     const fields = compactFields([
-      field('代码', numText(metadata?.itemCode)),
-      field('类型', labelToken(firstValue(tags, 'equipment type'))),
-      field('物品组', cleanValue(firstValue(tags, 'item group name'))),
-      field('等级限制', levelText(firstNumber(tags, 'minimum level'))),
-      field('耐久度', numText(firstNumber(tags, 'durability'))),
-      field('重量', weightText(firstNumber(tags, 'weight'))),
-      field('交易', tradeText(firstValue(tags, 'attach type'))),
-      field('出售价格', priceText(firstNumber(tags, 'value'), 5)),
-      field('价格', priceText(firstNumber(tags, 'price'))),
+      field('道具ID', numText(metadata?.itemCode)),
+      tagField(titles, 'equipment type', '类型', labelToken(firstValue(tags, 'equipment type'))),
+      tagField(titles, 'item group name', '物品组', cleanValue(firstValue(tags, 'item group name'))),
+      tagField(titles, 'minimum level', '等级限制', levelText(firstNumber(tags, 'minimum level'))),
+      tagField(titles, 'durability', '耐久度', numText(firstNumber(tags, 'durability'))),
+      tagField(titles, 'weight', '重量', weightText(firstNumber(tags, 'weight'))),
+      tagField(titles, 'attach type', '交易', tradeText(firstValue(tags, 'attach type'))),
+      tagField(titles, 'value', '出售价格', priceText(firstNumber(tags, 'value'), 5)),
+      tagField(titles, 'price', '价格', priceText(firstNumber(tags, 'price'))),
     ]);
     if (fields.length) sections.push({ title: '装备信息', fields });
 
     const jobs = tagLines(tags, 'usable job').map(line => labelToken(line)).filter(isString);
     if (jobs.length) sections.push({ title: '可使用职业', lines: [jobs.map(job => JOB_LABELS[job.toLowerCase()] || job).join('、')] });
 
-    const baseStats = statFields(tags, EQUIPMENT_STAT_LABELS, false);
+    const baseStats = statFields(tags, EQUIPMENT_STAT_LABELS, false, titles);
     if (baseStats.length) sections.push({ title: '基础属性', fields: baseStats });
 
-    const magicStats = statFields(tags, EQUIPMENT_MAGIC_LABELS, true);
+    const magicStats = statFields(tags, EQUIPMENT_MAGIC_LABELS, true, titles);
     if (magicStats.length) sections.push({ title: '特殊属性', fields: magicStats, tone: 'blue' });
 
     addTextSection(sections, '装备说明', explainLines(tags, 'basic explain', 'detail explain', 'explain'), 'blue');
@@ -518,14 +535,15 @@ export class UnpackPreviewService {
     metadata: UnpackResolvedMetadata | undefined,
   ): Promise<UnpackHoverPreview> {
     const sections: UnpackPreviewSection[] = [];
+    const titles = await this.loadTagTitles('stk');
     const fields = compactFields([
-      field('代码', numText(metadata?.itemCode)),
-      field('类型', labelToken(firstValue(tags, 'stackable type'))),
-      field('堆叠上限', numText(firstNumber(tags, 'stack limit'))),
-      field('等级限制', levelText(firstNumber(tags, 'minimum level'))),
-      field('交易', tradeText(firstValue(tags, 'attach type'))),
-      field('出售价格', priceText(firstNumber(tags, 'value'), 5)),
-      field('价格', priceText(firstNumber(tags, 'price'))),
+      field('ID', numText(metadata?.itemCode)),
+      tagField(titles, 'stackable type', '类型', labelToken(firstValue(tags, 'stackable type'))),
+      tagField(titles, 'stack limit', '堆叠上限', numText(firstNumber(tags, 'stack limit'))),
+      tagField(titles, 'minimum level', '等级限制', levelText(firstNumber(tags, 'minimum level'))),
+      tagField(titles, 'attach type', '交易', tradeText(firstValue(tags, 'attach type'))),
+      tagField(titles, 'value', '出售价格', priceText(firstNumber(tags, 'value'), 5)),
+      tagField(titles, 'price', '价格', priceText(firstNumber(tags, 'price'))),
     ]);
     if (fields.length) sections.push({ title: '道具信息', fields });
     addTextSection(sections, '道具说明', explainLines(tags, 'explain', 'basic explain', 'detail explain', 'use effect explain'), 'blue');
@@ -550,11 +568,12 @@ export class UnpackPreviewService {
     metadata: UnpackResolvedMetadata | undefined,
   ): Promise<UnpackHoverPreview> {
     const sections: UnpackPreviewSection[] = [];
+    const titles = await this.loadTagTitles('shp');
     const fields = compactFields([
       field('代码', numText(metadata?.itemCode)),
-      field('消息', cleanValue(firstValue(tags, 'message'))),
-      field('商店类型', hasTag(tags, 'weapon shop') ? '武器商店' : undefined),
-      field('NPC', cleanValue(firstValue(tags, 'npc'))),
+      tagField(titles, 'message', '消息', cleanValue(firstValue(tags, 'message'))),
+      tagField(titles, 'weapon shop', '商店类型', hasTag(tags, 'weapon shop') ? '武器商店' : undefined),
+      tagField(titles, 'npc', 'NPC', cleanValue(firstValue(tags, 'npc'))),
     ]);
     if (fields.length) sections.push({ title: '商店信息', fields, tone: 'shop' });
     const tabs = tagLines(tags, 'tab name').map(cleanValue).filter(isString);
@@ -577,16 +596,17 @@ export class UnpackPreviewService {
     metadata: UnpackResolvedMetadata | undefined,
   ): Promise<UnpackHoverPreview> {
     const sections: UnpackPreviewSection[] = [];
+    const titles = await this.loadTagTitles('qst');
     const fields = compactFields([
       field('代码', numText(metadata?.itemCode)),
-      field('类型', labelToken(firstValue(tags, 'type'))),
-      field('奖励类型', labelToken(firstValue(tags, 'reward type'))),
-      field('任务品级', metadata?.grade || labelToken(firstValue(tags, 'grade'))),
-      field('职业', labelToken(firstValue(tags, 'job'))),
-      field('接取 NPC', numText(firstNumber(tags, 'npc index'))),
-      field('完成 NPC', numText(firstNumber(tags, 'complete npc index'))),
-      field('前置任务', numText(firstNumber(tags, 'pre required quest'))),
-      field('关联任务', numText(firstNumber(tags, 'relation quest'))),
+      tagField(titles, 'type', '类型', labelToken(firstValue(tags, 'type'))),
+      tagField(titles, 'reward type', '奖励类型', labelToken(firstValue(tags, 'reward type'))),
+      tagField(titles, 'grade', '任务品级', metadata?.grade || labelToken(firstValue(tags, 'grade'))),
+      tagField(titles, 'job', '职业', labelToken(firstValue(tags, 'job'))),
+      tagField(titles, 'npc index', '接取 NPC', numText(firstNumber(tags, 'npc index'))),
+      tagField(titles, 'complete npc index', '完成 NPC', numText(firstNumber(tags, 'complete npc index'))),
+      tagField(titles, 'pre required quest', '前置任务', numText(firstNumber(tags, 'pre required quest'))),
+      tagField(titles, 'relation quest', '关联任务', numText(firstNumber(tags, 'relation quest'))),
     ]);
     if (fields.length) sections.push({ title: '任务信息', fields, tone: 'quest' });
     addTextSection(sections, '任务说明', explainLines(tags, 'explain', 'basic explain', 'detail explain', 'depend message', 'job message'), 'quest');
@@ -608,18 +628,19 @@ export class UnpackPreviewService {
     metadata: UnpackResolvedMetadata | undefined,
   ): Promise<UnpackHoverPreview> {
     const sections: UnpackPreviewSection[] = [];
+    const titles = await this.loadTagTitles('skl');
     const fields = compactFields([
       field('代码', numText(metadata?.itemCode)),
-      field('类型', labelToken(firstValue(tags, 'type'))),
-      field('技能类', cleanValue(firstValue(tags, 'skill class'))),
-      field('学习等级', levelText(firstNumber(tags, 'required level'))),
-      field('等级间隔', numText(firstNumber(tags, 'required level range'))),
-      field('最高等级', numText(firstNumber(tags, 'maximum level'))),
-      field('冷却时间', timeMsText(firstNumber(tags, 'cool time'))),
-      field('开始冷却', timeMsText(firstNumber(tags, 'start cool time'))),
-      field('MP 消耗', rangeText(numbersFromLines(tagLines(tags, 'consume mp')))),
-      field('施法时间', timeMsText(firstNumber(tags, 'casting time'), 100)),
-      field('伤害类型', labelToken(firstValue(tags, 'weapon effect type'))),
+      tagField(titles, 'type', '类型', labelToken(firstValue(tags, 'type'))),
+      tagField(titles, 'skill class', '技能类', cleanValue(firstValue(tags, 'skill class'))),
+      tagField(titles, 'required level', '学习等级', levelText(firstNumber(tags, 'required level'))),
+      tagField(titles, 'required level range', '等级间隔', numText(firstNumber(tags, 'required level range'))),
+      tagField(titles, 'maximum level', '最高等级', numText(firstNumber(tags, 'maximum level'))),
+      tagField(titles, 'cool time', '冷却时间', timeMsText(firstNumber(tags, 'cool time'))),
+      tagField(titles, 'start cool time', '开始冷却', timeMsText(firstNumber(tags, 'start cool time'))),
+      tagField(titles, 'consume mp', 'MP 消耗', rangeText(numbersFromLines(tagLines(tags, 'consume mp')))),
+      tagField(titles, 'casting time', '施法时间', timeMsText(firstNumber(tags, 'casting time'), 100)),
+      tagField(titles, 'weapon effect type', '伤害类型', labelToken(firstValue(tags, 'weapon effect type'))),
     ]);
     if (fields.length) sections.push({ title: '技能信息', fields, tone: 'skill' });
     addTextSection(sections, '技能说明', explainLines(tags, 'basic explain', 'explain', 'basic explain ex', 'explain ex'), 'skill');
@@ -640,6 +661,7 @@ export class UnpackPreviewService {
     const treeType = skillTreeType(input.key);
     const job = firstSkillTreeJob(text) || labelToken(firstValue(tags, 'character job'));
     const lsts = skillLstsForJob(job);
+    const titles = await this.loadTagTitles(skillTreeTagShort(input.key));
     const entries: UnpackPreviewEntry[] = [];
     let resolvedCount = 0;
     for (const node of nodes.slice(0, 120)) {
@@ -660,7 +682,7 @@ export class UnpackPreviewService {
     }
     const fields = compactFields([
       field('类型', treeType),
-      field('职业', job ? labelJob(job) : undefined),
+      tagField(titles, 'character job', '职业', job ? labelJob(job) : undefined),
       field('节点数', String(nodes.length)),
       field('已解析', `${resolvedCount}/${nodes.length}`),
     ]);
@@ -717,6 +739,39 @@ export class UnpackPreviewService {
       message,
       sections: [{ title: '错误', lines: [message] }],
     };
+  }
+
+  private async loadTagTitles(short: string): Promise<PreviewTagTitles> {
+    const normalized = short.toLowerCase();
+    let promise = this.tagTitlePromises.get(normalized);
+    if (!promise) {
+      promise = this.readTagTitles(normalized);
+      this.tagTitlePromises.set(normalized, promise);
+    }
+    return promise;
+  }
+
+  private async readTagTitles(short: string): Promise<Map<string, PreviewTagTitle>> {
+    const candidates = [
+      path.join(this.context.extensionUri.fsPath, 'dist', 'config', 'scriptLang', 'scriptTags', `${short}.json`),
+      path.join(this.context.extensionUri.fsPath, 'src', 'config', 'scriptLang', 'scriptTags', `${short}.json`),
+    ];
+    for (const candidate of candidates) {
+      try {
+        const raw = await fs.readFile(candidate, 'utf8');
+        const data = JSON.parse(raw) as ScriptTagTitleFile;
+        const titles = new Map<string, PreviewTagTitle>();
+        for (const tag of data.tags || []) {
+          if (typeof tag.name !== 'string' || typeof tag.title !== 'string') continue;
+          const title = tag.title.trim();
+          const name = tag.name.trim();
+          if (name && title) titles.set(name.toLowerCase(), { name, title });
+        }
+        return titles;
+      } catch {
+      }
+    }
+    return new Map<string, PreviewTagTitle>();
   }
 
   private async resolveEntries(
@@ -909,12 +964,12 @@ function numbersFromLines(lines: string[]): number[] {
   return out;
 }
 
-function statFields(tags: ParsedTags, labels: Record<string, string>, signed: boolean): UnpackPreviewField[] {
+function statFields(tags: ParsedTags, labels: Record<string, string>, signed: boolean, titles?: PreviewTagTitles): UnpackPreviewField[] {
   const fields: UnpackPreviewField[] = [];
   for (const [tag, label] of Object.entries(labels)) {
     const value = firstNumber(tags, tag);
     if (typeof value !== 'number') continue;
-    fields.push({ label, value: signedNumber(value, signed), tone: signed ? 'magic' : 'normal' });
+    fields.push({ ...tagLabel(titles, tag, label), value: signedNumber(value, signed), tone: signed ? 'magic' : 'normal' });
   }
   return fields;
 }
@@ -926,6 +981,23 @@ function signedNumber(value: number, signed: boolean): string {
 
 function field(label: string, value: string | undefined, tone?: UnpackPreviewField['tone']): UnpackPreviewField | undefined {
   return value ? { label, value, ...(tone ? { tone } : {}) } : undefined;
+}
+
+function tagField(titles: PreviewTagTitles | undefined, tag: string, fallbackLabel: string, value: string | undefined, tone?: UnpackPreviewField['tone']): UnpackPreviewField | undefined {
+  if (!value) return undefined;
+  return { ...tagLabel(titles, tag, fallbackLabel), value, ...(tone ? { tone } : {}) };
+}
+
+function tagTitle(titles: PreviewTagTitles | undefined, tag: string, fallbackLabel: string): string {
+  return tagLabel(titles, tag, fallbackLabel).label;
+}
+
+function tagLabel(titles: PreviewTagTitles | undefined, tag: string, fallbackLabel: string): Pick<UnpackPreviewField, 'label' | 'tagName'> {
+  const entry = titles?.get(tag.toLowerCase());
+  return {
+    label: entry?.title || fallbackLabel,
+    tagName: entry?.name || tag,
+  };
 }
 
 function compactFields(fields: Array<UnpackPreviewField | undefined>): UnpackPreviewField[] {
@@ -1018,6 +1090,10 @@ function shouldProbePreviewText(key: string): boolean {
 
 function isSkillTreeText(text: string): boolean {
   return /\[character job\]/i.test(text) && /\[skill info\]/i.test(text) && /\[icon pos\]/i.test(text);
+}
+
+function skillTreeTagShort(key: string): string {
+  return normalizeUnpackKey(key).endsWith('.etc') ? 'etc' : 'co';
 }
 
 function parsePairedItemCodes(lines: string[]): Array<{ code: number; quantity?: number; detail?: string }> {

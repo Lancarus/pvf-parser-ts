@@ -2,31 +2,37 @@
   "tags": [
     {
       "name": "basic motion",
+      "title": "主动画演出Ani指向",
       "description": "主动画演出Ani指向",
       "authors": "ZateL"
     },
     {
       "name": "learn overskill level",
+      "title": "学习overskill水平",
       "description": "学习overskill水平",
       "authors": "lostluna1"
     },
     {
       "name": "response motion",
+      "title": "解答动作",
       "description": "解答动作",
       "authors": "lostluna1"
     },
     {
       "name": "run over effect",
+      "title": "跑步动作",
       "description": "跑步动作",
       "authors": "挚爱"
     },
     {
       "name": "skill recovery time",
+      "title": "技能恢复时间",
       "description": "技能恢复时间",
       "authors": "无名氏"
     },
     {
       "name": "walk over effect",
+      "title": "走路动作",
       "description": "走路动作",
       "authors": "挚爱"
     }

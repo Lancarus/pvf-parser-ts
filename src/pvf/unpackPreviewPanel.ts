@@ -3,6 +3,7 @@ import type { UnpackHoverPreview, UnpackPreviewSection } from './unpackPreview';
 
 export class UnpackHoverPreviewPanel {
   private panel: vscode.WebviewPanel | undefined;
+  private currentPreview: UnpackHoverPreview | undefined;
 
   constructor(private readonly context: vscode.ExtensionContext) {}
 
@@ -14,12 +15,14 @@ export class UnpackHoverPreviewPanel {
 
   show(preview: UnpackHoverPreview, preserveFocus = true): void {
     const panel = this.ensurePanel(preserveFocus);
+    this.currentPreview = preview;
     panel.title = preview.title ? `预览: ${preview.title}` : '解包预览';
     panel.webview.html = this.html(panel.webview, renderPreview(preview));
   }
 
   clear(message = '将鼠标悬停到解包目录中的装备、道具、商店、任务、技能或技能树文件。'): void {
     if (!this.panel) return;
+    this.currentPreview = undefined;
     this.panel.webview.html = this.html(this.panel.webview, `<div class="preview-frame"><div class="preview-loading">${escapeHtml(message)}</div></div>`);
   }
 
@@ -38,20 +41,46 @@ export class UnpackHoverPreviewPanel {
       '解包预览',
       { viewColumn: vscode.ViewColumn.Beside, preserveFocus },
       {
-        enableScripts: false,
+        enableScripts: true,
         retainContextWhenHidden: true,
         localResourceRoots: [this.context.extensionUri, this.context.globalStorageUri],
       },
     );
+    panel.webview.onDidReceiveMessage(message => {
+      if (!message || typeof message !== 'object') return;
+      if ((message as any).type === 'openTag' && typeof (message as any).tagName === 'string') {
+        void this.openCurrentPreviewTag((message as any).tagName);
+      }
+    });
     panel.onDidDispose(() => {
-      if (this.panel === panel) this.panel = undefined;
+      if (this.panel === panel) {
+        this.panel = undefined;
+        this.currentPreview = undefined;
+      }
     });
     this.panel = panel;
     return panel;
   }
 
+  private async openCurrentPreviewTag(tagName: string): Promise<void> {
+    const preview = this.currentPreview;
+    if (!preview?.fsPath || !tagName.trim()) return;
+    try {
+      const uri = vscode.Uri.file(preview.fsPath);
+      const document = await vscode.workspace.openTextDocument(uri);
+      const editor = await vscode.window.showTextDocument(document, vscode.ViewColumn.One, false);
+      const found = findTagRange(document, tagName);
+      if (found) {
+        editor.selection = new vscode.Selection(found.start, found.end);
+        editor.revealRange(found, vscode.TextEditorRevealType.InCenterIfOutsideViewport);
+      }
+    } catch (err: any) {
+      vscode.window.showWarningMessage(`无法跳转到 [${tagName}]: ${String(err && err.message || err)}`);
+    }
+  }
+
   private html(webview: vscode.Webview, body: string): string {
-    const csp = `default-src 'none'; img-src ${webview.cspSource} data:; style-src ${webview.cspSource} 'unsafe-inline';`;
+    const csp = `default-src 'none'; img-src ${webview.cspSource} data:; style-src ${webview.cspSource} 'unsafe-inline'; script-src ${webview.cspSource} 'unsafe-inline';`;
     return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -207,6 +236,19 @@ body {
 }
 .preview-field-label {
   color: #9b948b;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: default;
+}
+.preview-field-label.clickable {
+  cursor: pointer;
+}
+.preview-field-label.clickable:hover {
+  color: #d9c27a;
+  text-decoration: underline;
 }
 .preview-field-value {
   color: #e1ded8;
@@ -283,6 +325,15 @@ body {
 </head>
 <body>
 <main class="preview-stage">${body}</main>
+<script>
+const vscode = acquireVsCodeApi();
+document.addEventListener('click', event => {
+  const target = event.target && event.target.closest ? event.target.closest('[data-tag-name]') : null;
+  if (!target) return;
+  event.preventDefault();
+  vscode.postMessage({ type: 'openTag', tagName: target.getAttribute('data-tag-name') || '' });
+});
+</script>
 </body>
 </html>`;
   }
@@ -341,7 +392,9 @@ function renderSection(section: UnpackPreviewSection): string {
   const chunks = [`<section class="preview-section${tone}">`, `<div class="preview-section-title">${escapeHtml(section.title || '')}</div>`];
   for (const field of section.fields || []) {
     const fieldTone = field.tone ? ` ${field.tone}` : '';
-    chunks.push(`<div class="preview-field"><div class="preview-field-label">${escapeHtml(field.label || '')}</div><div class="preview-field-value${fieldTone}">${escapeHtml(field.value || '')}</div></div>`);
+    const tagAttrs = field.tagName ? ` title="${escapeAttr(field.tagName)}" data-tag-name="${escapeAttr(field.tagName)}"` : '';
+    const labelClass = `preview-field-label${field.tagName ? ' clickable' : ''}`;
+    chunks.push(`<div class="preview-field"><button type="button" class="${labelClass}"${tagAttrs}>${escapeHtml(field.label || '')}</button><div class="preview-field-value${fieldTone}">${escapeHtml(field.value || '')}</div></div>`);
   }
   for (const line of section.lines || []) {
     chunks.push(`<div class="preview-line">${escapeHtml(line)}</div>`);
@@ -404,4 +457,19 @@ function escapeHtml(value: string): string {
 
 function escapeAttr(value: string): string {
   return escapeHtml(value).replace(/`/g, '&#96;');
+}
+
+function findTagRange(document: vscode.TextDocument, tagName: string): vscode.Range | undefined {
+  const escaped = tagName.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (!escaped) return undefined;
+  const pattern = new RegExp(`\\[\\s*${escaped}\\s*\\]`, 'i');
+  for (let line = 0; line < document.lineCount; line++) {
+    const text = document.lineAt(line).text;
+    const match = pattern.exec(text);
+    if (!match) continue;
+    const start = text.indexOf('[', match.index) + 1;
+    const end = match.index + match[0].lastIndexOf(']');
+    return new vscode.Range(line, start, line, Math.max(start, end));
+  }
+  return undefined;
 }

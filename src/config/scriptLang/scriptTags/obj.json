@@ -2,16 +2,19 @@
   "tags": [
     {
       "name": "basic motion",
+      "title": "主动画演出Ani指向",
       "description": "主动画演出Ani指向",
       "authors": "ZateL"
     },
     {
       "name": "object destroy condition",
+      "title": "对象销毁条件",
       "description": "对象销毁条件",
       "authors": "无名氏"
     },
     {
       "name": "piercing power",
+      "title": "obj特效攻击时的穿透力",
       "description": "obj特效攻击时的穿透力，数值越大穿透的单位越多。",
       "authors": "ZateL"
     }

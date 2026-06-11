@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs/promises';
 
-export interface ScriptTagInfo { name: string; description?: string; authors?: string; closing?: boolean; }
+export interface ScriptTagInfo { name: string; title?: string; description?: string; authors?: string; closing?: boolean; }
 interface TagFile { tags: ScriptTagInfo[] }
 
 const cache = new Map<string, ScriptTagInfo[]>();
@@ -119,6 +119,10 @@ function escapeMarkdownTableCell(value: string): string {
     return value.replace(/\\/g, '\\\\').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
 }
 
+function escapeMarkdownHeading(value: string): string {
+    return value.replace(/\\/g, '\\\\').replace(/([`*_{}\[\]()#+\-.!|>])/g, '\\$1').replace(/\r?\n/g, ' ').trim();
+}
+
 function editCommentCommandUri(short: string, name: string): string {
     const args = encodeURIComponent(JSON.stringify([{ short, name }]));
     return `command:pvf.editScriptTagComment?${args}`;
@@ -129,11 +133,18 @@ function appendTagFooter(md: vscode.MarkdownString, short: string, tag: ScriptTa
     md.appendMarkdown(`\n\n---\n\n| 作者: ${author} | [$(edit) 编辑注释](${editCommentCommandUri(short, tag.name)}) |\n|:--|--:|\n`);
 }
 
-function tagDocumentationMarkdown(description: string | undefined, options?: { trustEditCommand?: boolean; short?: string; name?: string }): vscode.MarkdownString | undefined {
-    if (!description && !options?.trustEditCommand) return undefined;
+function tagTitle(tag: Pick<ScriptTagInfo, 'name' | 'title'>): string {
+    const title = (tag.title || '').trim();
+    return title || tag.name;
+}
+
+function tagDocumentationMarkdown(tag: ScriptTagInfo, options?: { trustEditCommand?: boolean; short?: string; name?: string }): vscode.MarkdownString | undefined {
+    if (!tag.description && !tag.title && !options?.trustEditCommand) return undefined;
     const md = new vscode.MarkdownString(undefined, true);
-    if (description) {
-        md.appendMarkdown(formatCommentMarkdown(description));
+    md.appendCodeblock(tag.name, options?.short ? `pvf-${options.short}` : undefined);
+    md.appendMarkdown(`\n\n### ${escapeMarkdownHeading(tagTitle(tag))}`);
+    if (tag.description) {
+        md.appendMarkdown('\n\n' + formatCommentMarkdown(tag.description));
     }
     if (options?.trustEditCommand && options.short && options.name) {
         md.supportThemeIcons = true;
@@ -338,6 +349,7 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                     md.supportThemeIcons = true;
                     md.isTrusted = { enabledCommands: ['pvf.editScriptTagComment'] };
                     md.appendCodeblock(tag.name, langId);
+                    md.appendMarkdown(`\n\n### ${escapeMarkdownHeading(tagTitle(tag))}`);
                     if (tag.description) {
                         md.appendMarkdown('\n\n' + formatCommentMarkdown(tag.description, { tableStyle: 'code' }));
                     } else if (!tags.some(x => x.name.toLowerCase() === t.rawName.toLowerCase())) {
@@ -395,7 +407,7 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                 if (short === 'act' && lower === 'trigger') dynamicClosing = depth === 0; // root-level only
                 const ci = new vscode.CompletionItem(t.name, vscode.CompletionItemKind.Keyword);
                 ci.detail = dynamicClosing ? '标签 (需闭合)' : '标签';
-                ci.documentation = tagDocumentationMarkdown(t.description);
+                ci.documentation = tagDocumentationMarkdown(t);
                 if (dynamicClosing) {
                     ci.insertText = new vscode.SnippetString(`${t.name}]$0[/${t.name}]`);
                 } else {
