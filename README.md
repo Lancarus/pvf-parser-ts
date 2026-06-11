@@ -126,11 +126,11 @@ creature     (NPC卖的宠物)
 
 原生 VS Code Explorer 不能通过扩展 API 在文件名后追加完整说明文字，且 `FileDecoration.badge` 超过 2 个字符会被 VS Code 直接截断或不显示。因此插件不会在原生 Explorer 中显示注释 badge；原生 Explorer 只保留完整注释的 hover tooltip 和右键菜单 **编辑路径注释**。需要完整行内注释时，请使用 PVF 侧边栏的 **解包目录** 视图。
 
-路径注释来自内置文件 `src/pvf/resources/treeComments.json`。用户通过 **编辑路径注释** 保存的覆盖项会直接写回这个内置路径注释文件，并按 PVF `fileVersion` 写入 `versions` 覆盖段；旧版本曾保存到 VS Code `globalStorage/tree-comments.user.json` 的覆盖项会在首次加载时迁移进内置文件。若解包目录里存在 `.pvfmanifest.json`，插件会读取其中的 `fileVersion`；没有 manifest 时使用通用版本 `0`。
+路径注释来自内置文件 `src/config/pvf/treeComments.json`。用户通过 **编辑路径注释** 保存的覆盖项会直接写回这个内置路径注释文件，并按 PVF `fileVersion` 写入 `versions` 覆盖段；旧版本曾保存到 VS Code `globalStorage/tree-comments.user.json` 的覆盖项会在首次加载时迁移进内置文件。若解包目录里存在 `.pvfmanifest.json`，插件会读取其中的 `fileVersion`；没有 manifest 时使用通用版本 `0`。
 
 ### 书签视图
 
-**书签** 视图首次加载时使用插件内置的 `src/pvf/resources/bookmarks.json`，按“我的书签”分组保存常见 PVF 资源路径，例如商城、深渊、装备列表、技能树和各类系统参数文件。原始 `BookMarkGroup.json` 中的旧字段已经清洗掉，仅保留视图需要的 `label`、`path` 和 `children`。
+**书签** 视图首次加载时使用插件内置的 `src/config/pvf/bookmarks.json`，按“我的书签”分组保存常见 PVF 资源路径，例如商城、深渊、装备列表、技能树和各类系统参数文件。原始 `BookMarkGroup.json` 中的旧字段已经清洗掉，仅保留视图需要的 `label`、`path` 和 `children`。
 
 用户修改后的书签会保存到 VS Code `globalStorage/bookmarks.json`，不会改写插件内置资源。可以在书签视图标题栏新建书签文件夹或重置为内置默认；也可以在书签项右键重命名、删除，或把书签/文件夹拖到其它目录下改变分组。
 
@@ -165,7 +165,7 @@ UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
 
 ### 数字代码悬停
 
-在已支持的脚本位置悬停数字代码时，插件会根据 `src/scriptLang/itemCodeHoverConfig.json` 中的规则判断该数字属于哪类资源，并通过 `.lst` 映射解析名称和脚本路径。例如副本、地图、怪物、NPC、任务、装备、消耗品、对象等代码会在匹配的标签上下文中显示来源类型、名称、LST 路径和可跳转的脚本路径。
+在已支持的脚本位置悬停数字代码时，插件会根据 `src/config/scriptLang/itemCodeHoverConfig.json` 中的规则判断该数字属于哪类资源，并通过 `.lst` 映射解析名称和脚本路径。例如副本、地图、怪物、NPC、任务、装备、消耗品、对象等代码会在匹配的标签上下文中显示来源类型、名称、LST 路径和可跳转的脚本路径。
 
 代码悬停同时支持两种来源：从 PVF 资源树打开的 `pvf:` 虚拟文件会优先查询当前已打开封包内的 `.lst`；从普通资源管理器打开的解封目录文件会从当前文件目录向上查找候选 `.lst`，例如 `stackable/stackable.lst`、`equipment/equipment.lst`。只有在配置规则能判断该数字属于哪类资源时才会显示，普通数值、注释、反引号字符串中的数字不会被误判。规则命中但查不到代码时，悬停提示会显示候选 LST 和失败原因，便于排查路径或代码映射问题。
 

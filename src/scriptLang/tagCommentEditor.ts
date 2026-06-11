@@ -46,8 +46,8 @@ async function exists(file: string): Promise<boolean> {
 function tagFilePaths(context: vscode.ExtensionContext, short: string): string[] {
     const root = context.extensionUri.fsPath;
     return [
-        path.join(root, 'src', 'scriptLang', 'scriptTags', `${short}.json`),
-        path.join(root, 'dist', 'scriptLang', 'scriptTags', `${short}.json`)
+        path.join(root, 'src', 'config', 'scriptLang', 'scriptTags', `${short}.json`),
+        path.join(root, 'dist', 'config', 'scriptLang', 'scriptTags', `${short}.json`)
     ];
 }
 

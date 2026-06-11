@@ -3,8 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const root = __dirname + '/..';
-const srcDir = path.join(root, 'src', 'scriptLang', 'scriptTags');
-const outDir = path.join(root, 'dist', 'scriptLang', 'scriptTags');
+const srcDir = path.join(root, 'src', 'config', 'scriptLang', 'scriptTags');
+const outDir = path.join(root, 'dist', 'config', 'scriptLang', 'scriptTags');
 if (!fs.existsSync(srcDir)) process.exit(0);
 function ensureInside(parent, child) {
   const rel = path.relative(parent, child);
@@ -27,4 +27,4 @@ function copyJsonTree(from, to) {
 ensureInside(path.resolve(root), path.resolve(outDir));
 fs.rmSync(outDir, { recursive: true, force: true });
 copyJsonTree(srcDir, outDir);
-console.log('[copy-script-tags] copied tag json files to dist/scriptLang/scriptTags');
+console.log('[copy-script-tags] copied tag json files to dist/config/scriptLang/scriptTags');

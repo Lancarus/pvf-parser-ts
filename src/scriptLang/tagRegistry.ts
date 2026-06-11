@@ -145,8 +145,8 @@ function tagDocumentationMarkdown(description: string | undefined, options?: { t
 
 async function loadTagFile(context: vscode.ExtensionContext, short: string): Promise<ScriptTagInfo[]> {
     const candidates = [
-        vscode.Uri.joinPath(context.extensionUri, 'dist', 'scriptLang', 'scriptTags', `${short}.json`),
-        vscode.Uri.joinPath(context.extensionUri, 'src', 'scriptLang', 'scriptTags', `${short}.json`)
+        vscode.Uri.joinPath(context.extensionUri, 'dist', 'config', 'scriptLang', 'scriptTags', `${short}.json`),
+        vscode.Uri.joinPath(context.extensionUri, 'src', 'config', 'scriptLang', 'scriptTags', `${short}.json`)
     ];
     for (const u of candidates) {
         try {

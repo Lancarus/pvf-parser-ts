@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import bundledBookmarks from './resources/bookmarks.json';
+import bundledBookmarks from '../config/pvf/bookmarks.json';
 import type { PvfFileEntry } from './model';
 import { pathContains, readConfiguredUnpackRoots } from './unpackEnv';
 import type { UnpackExplorerEntry } from './unpackExplorerProvider';

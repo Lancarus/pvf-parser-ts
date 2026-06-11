@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import configJson from './itemCodeHoverConfig.json';
+import configJson from '../config/scriptLang/itemCodeHoverConfig.json';
 import { getPvfModel } from '../pvf/runtimeModel';
 import { getNameByCodeAndLst, NameLookupResult } from '../pvf/services/getPvfContent';
 import { scriptTagLanguageId } from './genericTags';

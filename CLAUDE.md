@@ -61,8 +61,8 @@ src/
 │   ├── metadata.ts       # [name]/[icon] tag parser for file display names
 │   ├── searchQuickOpen.ts # Ctrl+Alt+P search: file path / @string ref / #item code
 │   ├── resources/
-│   │   ├── treeComments.json # Built-in path comments
-│   │   └── bookmarks.json    # Cleaned built-in bookmark groups
+│   │   ├── treeComments.json # Built-in path comments (moved to src/config/pvf)
+│   │   └── bookmarks.json    # Cleaned built-in bookmark groups (moved to src/config/pvf)
 │   └── services/         # Split-out search services, content providers, CodeLens
 │       ├── fileSearchService.ts   # File name index builder & ranker
 │       ├── codeSearchService.ts   # Item code search (from .lst mappings)
@@ -89,7 +89,7 @@ src/
 │   ├── tagRegistry.ts    # Central tag definitions shared across languages
 │   ├── act/, ani/, skl/, lst/, str/, equ/, ai/, aic/, key/
 │   │   Each: language registration, formatter, TextMate grammar snippets
-│   └── scriptTags/       # Tag metadata (hover info, completion items)
+│   └── scriptTags/       # Tag metadata (hover info, completion items; moved to src/config/scriptLang/scriptTags)
 │       ├── actTags.ts, aniTags.ts, sklTags.ts, ...
 │       └── ... (tag files for each language)
 └── webview/              # Webview apps and browser scripts
@@ -115,7 +115,7 @@ The extension implements `vscode.FileSystemProvider` for the `pvf:` URI scheme. 
 Do not add a separate "native resource tree" or alternate resource-manager view for unpack-directory metadata. The expected user-visible target for disk validation is `pvfUnpackExplorerView`.
 
 ### Disk Unpack Directory Comments
-Path comments are stored in `src/pvf/resources/treeComments.json` as `{ schemaVersion, version, comments }`, with user overrides persisted under VS Code `globalStorage` by PVF `fileVersion`. `PvfTreeCommentService` merges built-in comments with per-version user edits.
+Path comments are stored in `src/config/pvf/treeComments.json` as `{ schemaVersion, version, comments }`, with user overrides persisted under VS Code `globalStorage` by PVF `fileVersion`. `PvfTreeCommentService` merges built-in comments with per-version user edits.
 
 The disk unpack root is configured through `.env` (`UNPACK_DIR`, `PVF_UNPACK_DIR`, or `pvf_unpack_dir`) and resolved by `unpackEnv.ts`. NPK icon roots for the unpack tree come from `pvf.unpackExplorer.npkIcon.paths`, `.env` `NPK_DIR`/`PVF_NPK_DIR`, then legacy `pvf.npkRoot`.
 
@@ -163,7 +163,7 @@ Keep native hover fast. `UnpackPreviewService.resolvePreview(input)` defaults to
 Do not make unsupported `.co`/`.etc` files display "no preview" on hover in the custom view; preserve normal path tooltips unless the file is a real preview candidate. Skill-tree detection is path-based for `clientonly/skilltree/*_sp.co`, `*_tp.co`, `clientonly/skillshoptreespindex.co`, `clientonly/skillshoptreetpindex.co`, `etc/pvpskilltree/*.etc`, and content-based for files containing `[character job]`, `[skill info]`, and `[icon pos]`.
 
 ### Built-In Bookmarks
-Built-in bookmarks are stored in `src/pvf/resources/bookmarks.json` as a cleaned tree:
+Built-in bookmarks are stored in `src/config/pvf/bookmarks.json` as a cleaned tree:
 
 ```json
 {
@@ -221,7 +221,7 @@ React + FluentUI v9, bundled by esbuild as IIFE. Communication uses VS Code's `p
 
 ### Script Languages
 Each language (`act`, `ani`, `skl`, `lst`, `str`, `equ`, `ai`, `aic`, `key`) has:
-- A TextMate grammar in `syntaxes/` (`.tmLanguage.json`)
+- A TextMate grammar in `src/config/syntaxes/` (`.tmLanguage.json`)
 - A language configuration in the scriptLang subdirectories
 - Optional: a formatter, hover provider, completion provider
-- Tag definitions in `scriptTags/` subdirectory
+- Tag definitions in `src/config/scriptLang/scriptTags/`

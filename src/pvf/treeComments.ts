@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { PvfFileEntry, PvfModel } from './model';
-import bundledTreeComments from './resources/treeComments.json';
+import bundledTreeComments from '../config/pvf/treeComments.json';
 
 export interface PvfTreeCommentEntry {
   comment?: string;
@@ -213,9 +213,9 @@ export class PvfTreeCommentService {
     if (this.treeCommentFilePath) return this.treeCommentFilePath;
     const extensionRoot = this.context.extensionUri.fsPath;
     const candidates = [
-      path.join(extensionRoot, 'src', 'pvf', 'resources', 'treeComments.json'),
-      path.join(extensionRoot, 'dist', 'pvf', 'resources', 'treeComments.json'),
-      path.join(__dirname, 'resources', 'treeComments.json'),
+      path.join(extensionRoot, 'src', 'config', 'pvf', 'treeComments.json'),
+      path.join(extensionRoot, 'dist', 'config', 'pvf', 'treeComments.json'),
+      path.join(__dirname, '..', 'config', 'pvf', 'treeComments.json'),
     ];
     const uniqueCandidates = [...new Set(candidates.map(candidate => path.resolve(candidate)))];
     for (const candidate of uniqueCandidates) {

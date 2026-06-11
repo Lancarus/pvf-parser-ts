@@ -5,7 +5,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3');
 
 const root = path.resolve(__dirname, '..');
-const tagDir = path.join(root, 'src', 'scriptLang', 'scriptTags');
+const tagDir = path.join(root, 'src', 'config', 'scriptLang', 'scriptTags');
 const fallbackAuthor = 'lostluna1';
 
 const dbPath = path.resolve(process.argv[2] || path.join(root, 'PvfTabComments.bin'));

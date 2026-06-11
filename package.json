@@ -67,7 +67,7 @@
         "extensions": [
           ".act"
         ],
-        "configuration": "./src/scriptLang/act/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/act.json"
       },
       {
         "id": "pvf-ani",
@@ -80,7 +80,7 @@
           ".als",
           ".ani.als"
         ],
-        "configuration": "./src/scriptLang/ani/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/ani.json"
       },
       {
         "id": "pvf-skl",
@@ -91,7 +91,7 @@
         "extensions": [
           ".skl"
         ],
-        "configuration": "./src/scriptLang/skl/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/skl.json"
       },
       {
         "id": "pvf-lst",
@@ -102,7 +102,7 @@
         "extensions": [
           ".lst"
         ],
-        "configuration": "./src/scriptLang/lst/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/lst.json"
       },
       {
         "id": "pvf-str",
@@ -113,7 +113,7 @@
         "extensions": [
           ".str"
         ],
-        "configuration": "./src/scriptLang/str/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/str.json"
       },
       {
         "id": "pvf-equ",
@@ -124,7 +124,7 @@
         "extensions": [
           ".equ"
         ],
-        "configuration": "./src/scriptLang/equ/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/equ.json"
       },
       {
         "id": "pvf-ai",
@@ -135,7 +135,7 @@
         "extensions": [
           ".ai"
         ],
-        "configuration": "./src/scriptLang/ai/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/ai.json"
       },
       {
         "id": "pvf-aic",
@@ -146,7 +146,7 @@
         "extensions": [
           ".aic"
         ],
-        "configuration": "./src/scriptLang/aic/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/aic.json"
       },
       {
         "id": "pvf-key",
@@ -157,7 +157,7 @@
         "extensions": [
           ".key"
         ],
-        "configuration": "./src/scriptLang/key/language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/key.json"
       },
       {
         "id": "pvf-atk",
@@ -168,7 +168,7 @@
         "extensions": [
           ".atk"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-blu",
@@ -179,7 +179,7 @@
         "extensions": [
           ".blu"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-bm",
@@ -190,7 +190,7 @@
         "extensions": [
           ".bm"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-chr",
@@ -201,7 +201,7 @@
         "extensions": [
           ".chr"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-co",
@@ -212,7 +212,7 @@
         "extensions": [
           ".co"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-cre",
@@ -223,7 +223,7 @@
         "extensions": [
           ".cre"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-dgn",
@@ -234,7 +234,7 @@
         "extensions": [
           ".dgn"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-etc",
@@ -245,7 +245,7 @@
         "extensions": [
           ".etc"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-evt",
@@ -256,7 +256,7 @@
         "extensions": [
           ".evt"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-exj",
@@ -267,7 +267,7 @@
         "extensions": [
           ".exj"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-lay",
@@ -278,7 +278,7 @@
         "extensions": [
           ".lay"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-map",
@@ -289,7 +289,7 @@
         "extensions": [
           ".map"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-mm",
@@ -300,7 +300,7 @@
         "extensions": [
           ".mm"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-mob",
@@ -311,7 +311,7 @@
         "extensions": [
           ".mob"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-npc",
@@ -322,7 +322,7 @@
         "extensions": [
           ".npc"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-nut",
@@ -333,7 +333,7 @@
         "extensions": [
           ".nut"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-obj",
@@ -344,7 +344,7 @@
         "extensions": [
           ".obj"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-pos",
@@ -355,7 +355,7 @@
         "extensions": [
           ".pos"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-ptl",
@@ -366,7 +366,7 @@
         "extensions": [
           ".ptl"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-qst",
@@ -377,7 +377,7 @@
         "extensions": [
           ".qst"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-rgn",
@@ -388,7 +388,7 @@
         "extensions": [
           ".rgn"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-sd",
@@ -399,7 +399,7 @@
         "extensions": [
           ".sd"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-shp",
@@ -410,7 +410,7 @@
         "extensions": [
           ".shp"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-stk",
@@ -421,7 +421,7 @@
         "extensions": [
           ".stk"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-stm",
@@ -432,7 +432,7 @@
         "extensions": [
           ".stm"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-tbl",
@@ -443,7 +443,7 @@
         "extensions": [
           ".tbl"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-twn",
@@ -454,7 +454,7 @@
         "extensions": [
           ".twn"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-ui",
@@ -465,7 +465,7 @@
         "extensions": [
           ".ui"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
         "id": "pvf-wdm",
@@ -476,199 +476,199 @@
         "extensions": [
           ".wdm"
         ],
-        "configuration": "./src/scriptLang/generic-language-configuration.json"
+        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       }
     ],
     "grammars": [
       {
         "language": "pvf-act",
         "scopeName": "source.pvf-act",
-        "path": "./syntaxes/pvf-act.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-act.tmLanguage.json"
       },
       {
         "language": "pvf-ani",
         "scopeName": "source.pvf-ani",
-        "path": "./syntaxes/pvf-ani.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-ani.tmLanguage.json"
       },
       {
         "language": "pvf-skl",
         "scopeName": "source.pvf-skl",
-        "path": "./syntaxes/pvf-skl.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-skl.tmLanguage.json"
       },
       {
         "language": "pvf-lst",
         "scopeName": "source.pvf-lst",
-        "path": "./syntaxes/pvf-lst.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-lst.tmLanguage.json"
       },
       {
         "language": "pvf-str",
         "scopeName": "source.pvf-str",
-        "path": "./syntaxes/pvf-str.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-str.tmLanguage.json"
       },
       {
         "language": "pvf-equ",
         "scopeName": "source.pvf-equ",
-        "path": "./syntaxes/pvf-equ.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-equ.tmLanguage.json"
       },
       {
         "language": "pvf-ai",
         "scopeName": "source.pvf-ai",
-        "path": "./syntaxes/pvf-ai.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-ai.tmLanguage.json"
       },
       {
         "language": "pvf-aic",
         "scopeName": "source.pvf-aic",
-        "path": "./syntaxes/pvf-aic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-aic.tmLanguage.json"
       },
       {
         "language": "pvf-key",
         "scopeName": "source.pvf-key",
-        "path": "./syntaxes/pvf-key.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-key.tmLanguage.json"
       },
       {
         "language": "pvf-atk",
         "scopeName": "source.pvf-atk",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-blu",
         "scopeName": "source.pvf-blu",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-bm",
         "scopeName": "source.pvf-bm",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-chr",
         "scopeName": "source.pvf-chr",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-co",
         "scopeName": "source.pvf-co",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-cre",
         "scopeName": "source.pvf-cre",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-dgn",
         "scopeName": "source.pvf-dgn",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-etc",
         "scopeName": "source.pvf-etc",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-evt",
         "scopeName": "source.pvf-evt",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-exj",
         "scopeName": "source.pvf-exj",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-lay",
         "scopeName": "source.pvf-lay",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-map",
         "scopeName": "source.pvf-map",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-mm",
         "scopeName": "source.pvf-mm",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-mob",
         "scopeName": "source.pvf-mob",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-npc",
         "scopeName": "source.pvf-npc",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-nut",
         "scopeName": "source.pvf-nut",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-obj",
         "scopeName": "source.pvf-obj",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-pos",
         "scopeName": "source.pvf-pos",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-ptl",
         "scopeName": "source.pvf-ptl",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-qst",
         "scopeName": "source.pvf-qst",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-rgn",
         "scopeName": "source.pvf-rgn",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-sd",
         "scopeName": "source.pvf-sd",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-shp",
         "scopeName": "source.pvf-shp",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-stk",
         "scopeName": "source.pvf-stk",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-stm",
         "scopeName": "source.pvf-stm",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-tbl",
         "scopeName": "source.pvf-tbl",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-twn",
         "scopeName": "source.pvf-twn",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-ui",
         "scopeName": "source.pvf-ui",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
         "language": "pvf-wdm",
         "scopeName": "source.pvf-wdm",
-        "path": "./syntaxes/pvf-generic.tmLanguage.json"
+        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       }
     ],
     "configurationDefaults": {
