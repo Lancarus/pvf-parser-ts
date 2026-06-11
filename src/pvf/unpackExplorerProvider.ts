@@ -4,7 +4,7 @@ import * as path from 'path';
 import { PVF_MANIFEST_FILE, PvfDirectoryManifest } from './directoryArchive';
 import { normalizeTreeCommentPath, normalizeTreeCommentVersion, PvfTreeCommentService } from './treeComments';
 import { readConfiguredUnpackRoots } from './unpackEnv';
-import { UnpackMetadataService, UnpackResolvedMetadata, normalizeUnpackKey } from './unpackMetadata';
+import { UnpackMetadataService, UnpackResolvedMetadata, normalizeUnpackKey, rarityLabel, shouldResolveUnpackMetadataKey } from './unpackMetadata';
 
 export interface UnpackExplorerEntry {
   fsPath: string;
@@ -40,6 +40,8 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
   private readonly metadataQueued = new Set<string>();
   private readonly iconQueue: UnpackExplorerEntry[] = [];
   private readonly iconQueued = new Set<string>();
+  private readonly pendingRefresh = new Map<string, UnpackExplorerEntry>();
+  private refreshTimer: NodeJS.Timeout | undefined;
   private activeMetadataTasks = 0;
   private activeIconTasks = 0;
 
@@ -47,8 +49,9 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
     private readonly context: vscode.ExtensionContext,
     private readonly comments: PvfTreeCommentService,
     private readonly output?: vscode.OutputChannel,
+    metadata?: UnpackMetadataService,
   ) {
-    this.metadata = new UnpackMetadataService(context, output);
+    this.metadata = metadata || new UnpackMetadataService(context, output);
   }
 
   refresh(): void {
@@ -58,6 +61,9 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
     this.iconQueue.length = 0;
     this.metadataQueued.clear();
     this.iconQueued.clear();
+    this.pendingRefresh.clear();
+    if (this.refreshTimer) clearTimeout(this.refreshTimer);
+    this.refreshTimer = undefined;
     this.activeMetadataTasks = 0;
     this.activeIconTasks = 0;
     this._onDidChangeTreeData.fire();
@@ -183,6 +189,7 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
 
   private scheduleMetadata(element: UnpackExplorerEntry, cached: UnpackResolvedMetadata | undefined): void {
     if (element.isDirectory || !element.key) return;
+    if (!shouldResolveUnpackMetadataKey(element.key)) return;
     if (cached) {
       if (cached.icon && !cached.iconPath && cached.iconState !== 'loading' && cached.iconState !== 'missing' && cached.iconState !== 'error') {
         this.scheduleIcon(element);
@@ -204,7 +211,7 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
       this.activeMetadataTasks++;
       void this.metadata.resolveMetadata(element)
         .then(meta => {
-          this._onDidChangeTreeData.fire(element);
+          this.queueRefresh(element);
           if (meta.icon) this.scheduleIcon(element);
         })
         .catch((err: any) => {
@@ -233,7 +240,7 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
       const key = this.queueKey(element);
       this.activeIconTasks++;
       void this.metadata.resolveIcon(element)
-        .then(() => this._onDidChangeTreeData.fire(element))
+        .then(() => this.queueRefresh(element))
         .catch((err: any) => {
           this.output?.appendLine(`[PVF] failed to resolve unpack icon ${element.key}: ${String(err && err.message || err)}`);
         })
@@ -242,6 +249,26 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
           this.activeIconTasks--;
           this.pumpIconQueue();
         });
+    }
+  }
+
+  private queueRefresh(element: UnpackExplorerEntry): void {
+    this.pendingRefresh.set(this.queueKey(element), element);
+    if (this.refreshTimer) return;
+    this.refreshTimer = setTimeout(() => this.flushRefresh(), 120);
+  }
+
+  private flushRefresh(): void {
+    this.refreshTimer = undefined;
+    const elements = Array.from(this.pendingRefresh.values());
+    this.pendingRefresh.clear();
+    if (elements.length === 0) return;
+    if (elements.length > 40) {
+      this._onDidChangeTreeData.fire();
+      return;
+    }
+    for (const element of elements) {
+      this._onDidChangeTreeData.fire(element);
     }
   }
 
@@ -254,7 +281,11 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
     if (comment) md.appendMarkdown(`\n\n注释: ${escapeMarkdown(comment)}`);
     if (metadata?.itemName) md.appendMarkdown(`\n\n名称: ${escapeMarkdown(metadata.itemName)}`);
     if (typeof metadata?.itemCode === 'number') md.appendMarkdown(`\n\n代码: \`${metadata.itemCode}\``);
-    if (typeof metadata?.rarity === 'number') md.appendMarkdown(`\n\n稀有度: \`${metadata.rarity}\``);
+    if (typeof metadata?.rarity === 'number') {
+      const label = rarityLabel(metadata.rarity);
+      md.appendMarkdown(`\n\n稀有度: \`${metadata.rarity}${label ? ` ${label}` : ''}\``);
+    }
+    if (metadata?.grade) md.appendMarkdown(`\n\n任务品级: \`${escapeInlineCode(metadata.grade)}\``);
     if (metadata?.icon) md.appendMarkdown(`\n\n图标: \`${escapeInlineCode(metadata.icon.imagePath)}\` #${metadata.icon.frameIndex}`);
     md.appendMarkdown(`\n\n版本: \`${escapeInlineCode(element.version)}\``);
     if (element.key) {

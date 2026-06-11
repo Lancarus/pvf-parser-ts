@@ -30,6 +30,8 @@ npm run check:icons
 
 The webview React code (in `src/webview/`) is compiled by [esbuild](scripts/build-webview.mjs) separately from `tsc`. It bundles `reactDemo.tsx`, `aniPreview.tsx`, and `apcEditor.tsx` as IIFE bundles into `media/webview/`.
 
+Exception: `src/webview/unpackExplorerClient.js` is the plain browser script for the unpack-directory WebviewView. It is loaded directly from `src/webview/` by `UnpackExplorerWebviewProvider`; keep it browser-safe and do not introduce CommonJS/ESM output (`exports`, `require`, imports) unless the view is explicitly moved into the esbuild pipeline.
+
 ## Architecture Overview
 
 ```
@@ -47,7 +49,8 @@ src/
 │   ├── treeComments.ts   # Built-in/user path comments keyed by PVF path/version
 │   ├── unpackEnv.ts      # Reads .env UNPACK_DIR/PVF_UNPACK_DIR and NPK_DIR
 │   ├── unpackMetadata.ts # Lazy disk metadata/code/icon resolver for unpack tree
-│   ├── unpackExplorerProvider.ts # TreeDataProvider for disk unpack dir resources
+│   ├── unpackExplorerWebview.ts # WebviewViewProvider for disk unpack dir resources
+│   ├── unpackExplorerProvider.ts # Legacy TreeDataProvider implementation; not the registered view
 │   ├── diskTreeCommentDecorations.ts # Native Explorer hover tooltip for unpack paths
 │   ├── scriptCompiler.ts / scriptDecompiler.ts  # Binary ↔ text script format
 │   ├── aniCompiler.ts / binaryAni.ts            # .ani file compile/decompile
@@ -87,10 +90,11 @@ src/
 │   └── scriptTags/       # Tag metadata (hover info, completion items)
 │       ├── actTags.ts, aniTags.ts, sklTags.ts, ...
 │       └── ... (tag files for each language)
-└── webview/              # React apps rendered in webview panels
+└── webview/              # Webview apps and browser scripts
     ├── reactDemo.tsx     # Demo/test panel (ping/pong, counter)
     ├── aniPreview.tsx    # ANI animation preview (canvas-based)
     ├── apcEditor.tsx     # APC (character animation) visual editor
+    ├── unpackExplorerClient.js # Plain JS client for pvfUnpackExplorerView
     └── theme.ts          # Shared FluentUI theme customization
 ```
 
@@ -103,7 +107,7 @@ The extension implements `vscode.FileSystemProvider` for the `pvf:` URI scheme. 
 `package.json` contributes one activity bar container (`pvfExplorer`) with these views, in order:
 
 - `pvfExplorerView`: the packed PVF resource tree backed by `PvfProvider`.
-- `pvfUnpackExplorerView`: the real disk unpack directory tree backed by `UnpackExplorerProvider`.
+- `pvfUnpackExplorerView`: the real disk unpack directory Webview backed by `UnpackExplorerWebviewProvider`.
 - `pvfBookmarkView`: the built-in bookmark tree backed by `BookmarkProvider`.
 
 Do not add a separate "native resource tree" or alternate resource-manager view for unpack-directory metadata. The expected user-visible target for disk validation is `pvfUnpackExplorerView`.
@@ -113,9 +117,19 @@ Path comments are stored in `src/pvf/resources/treeComments.json` as `{ schemaVe
 
 The disk unpack root is configured through `.env` (`UNPACK_DIR`, `PVF_UNPACK_DIR`, or `pvf_unpack_dir`) and resolved by `unpackEnv.ts`. NPK icon roots for the unpack tree come from `pvf.unpackExplorer.npkIcon.paths`, `.env` `NPK_DIR`/`PVF_NPK_DIR`, then legacy `pvf.npkRoot`.
 
-The custom `pvfUnpackExplorerView` uses `UnpackExplorerProvider` to show the real disk tree from `UNPACK_DIR`; file/folder names remain in normal tree text color, while path comments, script names, and item codes are placed in `TreeItem.description`, e.g. `101000001.equ    古代遗骨的青铜剑[活动] <101000001>`. `UnpackMetadataService` lazily reads encountered files and likely `.lst` files in the background, then decodes NPK icons into `globalStorage/unpack-icon-cache` and refreshes only the affected tree item.
+The custom `pvfUnpackExplorerView` uses `UnpackExplorerWebviewProvider` to show the real disk tree from `UNPACK_DIR`. It renders rows in a Webview so file/folder names can remain in normal resource-tree text color while comments, parsed item names, rarity colors, item codes, and game icons are rendered as separate spans. Example row: `101000001.equ    古代遗骨的青铜剑[活动] <101000001>`.
 
-Keep `getChildren()` in `UnpackExplorerProvider` cheap: it should only `readdir`, map, and sort immediate children. Do not synchronously read `.equ` files, parse `.lst`, or decode NPK frames during directory expansion; large directories such as `equipment/character` must remain responsive.
+`UnpackMetadataService` lazily reads encountered files and likely `.lst` files in the background, resolves string links from `stringtable.bin` and `.str`, parses `[name]`, `[set name]`, other `name`-like tags, `[icon]`, `rarity`, and quest `grade`, then decodes NPK/IMG frames into `globalStorage/unpack-icon-cache`. The decoded PNG is also read as a data URI and sent to the Webview; this avoids broken Webview image URLs for cached icons.
+
+Keep directory expansion in `UnpackExplorerWebviewProvider` cheap: it should only `readdir`, map, and sort immediate children before posting rows to the Webview. Do not synchronously read `.equ` files, parse `.lst`, or decode NPK frames while handling a `children` message; large directories such as `equipment/character` and `equipment/character/partset` must remain responsive. Metadata resolution is queued with a higher concurrency than icon decoding, and row updates are batched before posting back to the client.
+
+In the Webview row renderer:
+- `row.name` is always normal file/folder label color.
+- Path comments use description color.
+- Parsed item/resource names use `pvf.rarity0Foreground` through `pvf.rarity7Foreground` when `rarity` is present; otherwise they use `pvf.unpackStringForeground`.
+- `<code>` text uses `pvf.unpackNumberForeground`.
+- Normal NPK item icons use the configured square size, default `16`.
+- Quest tag icons from `Interface/Quest/quest_tag.img` are height-scaled and may remain rectangular so the label stays legible.
 
 Native VS Code Explorer cannot append arbitrary full text after file names. Its `FileDecoration.badge` is only a very short marker and labels longer than about two characters may be clipped or omitted. Therefore `diskTreeCommentDecorations.ts` must not be used for full inline comments; it only provides native Explorer hover tooltips and the context-menu command path for disk files. Full visible comments belong in the custom `pvfUnpackExplorerView`.
 

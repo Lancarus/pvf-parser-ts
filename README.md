@@ -27,7 +27,7 @@
 - **元数据解析** — 自动解析 `[name]` 和 `[icon]` 标签，用于显示文件别名和自定义图标。
 - **多编码支持** — 支持韩文（cp949）、繁体中文（big5）、简体中文（gb18030）、日文（shift_jis）和 UTF8，并可自动检测。
 - **解封目录编辑优化** — 解封后的磁盘脚本文件会自动切换到对应 `pvf-*` 语言模式，使用真实制表符缩进，并通过 VS Code 原生空白字符渲染显示制表符箭头。
-- **解包目录资源视图** — 从 `.env` 的 `UNPACK_DIR` 读取磁盘解包目录，在 PVF 侧边栏的 **解包目录** 视图中显示路径注释、脚本名称、物品代码和 NPK 图标，例如 `101000001.equ 古代遗骨的青铜剑[活动] <101000001>`。注释/名称/代码会作为 VS Code TreeItem 描述文字显示。
+- **解包目录资源视图** — 从 `.env` 的 `UNPACK_DIR` 读取磁盘解包目录，在 PVF 侧边栏的 **解包目录** Webview 中显示路径注释、脚本真实名称、物品代码和 NPK/任务图标，例如 `101000001.equ 古代遗骨的青铜剑[活动] <101000001>`。文件名保持默认颜色，解析出的名称按 `rarity` 或字符串颜色显示，代码使用数字颜色显示。
 - **可编辑书签视图** — PVF 侧边栏的 **书签** 视图内置常用资源路径，可新建/重命名/删除文件夹和书签、拖拽移动目录；可从 PVF 资源树或解包目录右键添加文件/目录到书签。
 
 ## 环境要求
@@ -40,6 +40,14 @@
 | 设置项 | 默认值 | 说明 |
 |---------|---------|------|
 | `pvf.npkRoot` | `""` | NPK 文件根目录（通常为游戏目录下的 `ImagePacks2`） |
+| `pvf.unpackExplorer.npkIcon.enabled` | `true` | **解包目录** 是否显示从 NPK/IMG 解析出的真实图标 |
+| `pvf.unpackExplorer.npkIcon.paths` | `[]` | **解包目录** 使用的 NPK 图包目录列表，可填写 `ImagePacks2` 或其上级目录；为空时回退到 `.env` 的 `NPK_DIR` 和 `pvf.npkRoot` |
+| `pvf.unpackExplorer.npkIcon.cache.enabled` | `true` | 是否复用解码后的解包目录 PNG 图标缓存 |
+| `pvf.unpackExplorer.npkIcon.size` | `16` | **解包目录** 行内图标基准尺寸；任务标签按高度等比显示为矩形 |
+| `pvf.unpackExplorer.metadata.showComment` | `true` | **解包目录** 是否显示路径注释 |
+| `pvf.unpackExplorer.metadata.showItemName` | `true` | **解包目录** 是否显示脚本内解析出的真实名称 |
+| `pvf.unpackExplorer.metadata.showItemCode` | `true` | **解包目录** 是否显示 `.lst` 或文件名解析出的代码 |
+| `pvf.unpackExplorer.metadata.itemCodeFormat` | `"<{code}>"` | **解包目录** 代码显示格式，使用 `{code}` 作为数字占位符 |
 | `pvf.encodingMode` | `AUTO` | 文本编码：`AUTO`（自动检测）、`KR`（cp949）、`TW`（big5）、`CN`（gb18030）、`JP`（shift_jis）、`UTF8` |
 | `pvf.showScriptDisplayName` | `true` | 在资源树中文件后显示脚本别名（来自 `.lst` 解析） |
 | `pvf.showScriptCode` | `true` | 在资源树中文件后显示物品代码（来自 `.lst` 解析） |
@@ -61,7 +69,7 @@
 PVF 活动栏中按顺序提供这些视图：
 
 - **PVF 资源树**：浏览当前打开的 PVF 封包内容。
-- **解包目录**：读取 `.env` 中的 `UNPACK_DIR` / `PVF_UNPACK_DIR` / `pvf_unpack_dir`，展示真实磁盘目录，并异步补齐路径注释、脚本名称、物品代码和 NPK 图标。
+- **解包目录**：读取 `.env` 中的 `UNPACK_DIR` / `PVF_UNPACK_DIR` / `pvf_unpack_dir`，展示真实磁盘目录，并通过 Webview 行渲染异步补齐路径注释、脚本名称、物品代码和 NPK/任务图标。
 - **书签**：内置常用 PVF 路径分组，并支持用户自定义整理，用于快速跳转到解包目录或当前 PVF 封包中的文件。
 
 ### 解包目录注释
@@ -80,15 +88,19 @@ equipment    (装备)
 creature     (NPC卖的宠物)
 ```
 
-其中 `equipment`、`creature` 使用正常文件名颜色，括号里的注释使用 VS Code 的 `description` 说明文字颜色。视图标题栏的刷新按钮会重新读取 `.env`、磁盘目录和解包目录元数据缓存。
+其中 `equipment`、`creature` 使用正常文件名颜色，括号里的注释使用 VS Code 的说明文字颜色。视图标题栏的刷新按钮会重新读取 `.env`、磁盘目录和解包目录元数据缓存。
 
-对于 `.equ` 等脚本文件，**解包目录** 会先立即显示文件名，再在后台解析脚本和 `.lst` 映射，补齐脚本内 `[name]`、物品代码和 `[icon]` 指向的 NPK 图标。例如：
+对于 `.equ`、`.qst` 等脚本文件，**解包目录** 会先立即显示文件名，再在后台解析脚本、字符串链接和 `.lst` 映射，补齐脚本内 `[name]` / `[set name]` / 其它带 `name` 的字段、物品代码、`rarity`、任务 `grade` 和图标。例如：
 
 ```text
 [NPK icon] 101000001.equ  古代遗骨的青铜剑[活动]  <101000001>
 ```
 
-图标路径优先读取设置 `pvf.unpackExplorer.npkIcon.paths`，为空时读取 `.env` 的 `NPK_DIR`，再回退到旧设置 `pvf.npkRoot`。VS Code 原生 TreeView 不能在同一行里分别给文件名、名称和代码设置不同颜色，因此这些字段会合并到 `description` 中显示；真实 PNG 图标会通过 `TreeItem.iconPath` 显示在文件名前。
+文件名保持 VS Code 默认资源树颜色；解析出的真实名称会按 `rarity` 对齐 DNF 游戏配色（`0` 普通、`1` 高级、`2` 稀有、`3` 神器、`4` 史诗、`5` 勇者、`6` 传说、`7` 神话），没有 `rarity` 时使用编辑器字符串颜色；后面的 `<code>` 使用数字颜色。颜色可通过 `pvf.unpackStringForeground`、`pvf.unpackNumberForeground` 和 `pvf.rarity0Foreground` 到 `pvf.rarity7Foreground` 覆盖。
+
+图标路径优先读取设置 `pvf.unpackExplorer.npkIcon.paths`，为空时读取 `.env` 的 `NPK_DIR` / `PVF_NPK_DIR`，再回退到旧设置 `pvf.npkRoot`。`[icon]` 会解析到对应 IMG 帧并以 PNG data URI 发给 Webview；普通装备图标按 `pvf.unpackExplorer.npkIcon.size` 显示为正方形，任务图标根据 `grade` 或任务类型查找 `Interface/Quest/quest_tag.img`，并按高度等比显示为矩形，避免被压成看不清的正方块。
+
+解包目录 Webview 的目录展开只做当前层级的 `readdir`、排序和渲染，不会在展开大目录时同步解析所有脚本或解码所有 NPK 图标；脚本元数据和图标会限流异步补齐，适合 `equipment/character`、`equipment/character/partset` 这类大目录。
 
 原生 VS Code Explorer 不能通过扩展 API 在文件名后追加完整说明文字，且 `FileDecoration.badge` 超过 2 个字符会被 VS Code 直接截断或不显示。因此插件不会在原生 Explorer 中显示注释 badge；原生 Explorer 只保留完整注释的 hover tooltip 和右键菜单 **编辑路径注释**。需要完整行内注释时，请使用 PVF 侧边栏的 **解包目录** 视图。
 

@@ -904,6 +904,98 @@
         "editor.detectIndentation": false
       }
     },
+    "colors": [
+      {
+        "id": "pvf.unpackStringForeground",
+        "description": "PVF 解包目录中无 rarity 名称的默认字符串前景色。",
+        "defaults": {
+          "dark": "#CE9178",
+          "light": "#A31515",
+          "highContrast": "#CE9178"
+        }
+      },
+      {
+        "id": "pvf.unpackNumberForeground",
+        "description": "PVF 解包目录中只有编号可用时的默认数字前景色。",
+        "defaults": {
+          "dark": "#B5CEA8",
+          "light": "#098658",
+          "highContrast": "#B5CEA8"
+        }
+      },
+      {
+        "id": "pvf.rarity0Foreground",
+        "description": "PVF rarity 0 普通前景色。",
+        "defaults": {
+          "dark": "#D4D4D4",
+          "light": "#444444",
+          "highContrast": "#FFFFFF"
+        }
+      },
+      {
+        "id": "pvf.rarity1Foreground",
+        "description": "PVF rarity 1 高级前景色。",
+        "defaults": {
+          "dark": "#68D5ED",
+          "light": "#007ACC",
+          "highContrast": "#68D5ED"
+        }
+      },
+      {
+        "id": "pvf.rarity2Foreground",
+        "description": "PVF rarity 2 稀有前景色。",
+        "defaults": {
+          "dark": "#B36BFF",
+          "light": "#7F3FBF",
+          "highContrast": "#B36BFF"
+        }
+      },
+      {
+        "id": "pvf.rarity3Foreground",
+        "description": "PVF rarity 3 神器前景色。",
+        "defaults": {
+          "dark": "#FF4DF2",
+          "light": "#C000B8",
+          "highContrast": "#FF4DF2"
+        }
+      },
+      {
+        "id": "pvf.rarity4Foreground",
+        "description": "PVF rarity 4 史诗前景色。",
+        "defaults": {
+          "dark": "#FFB100",
+          "light": "#B36B00",
+          "highContrast": "#FFB100"
+        }
+      },
+      {
+        "id": "pvf.rarity5Foreground",
+        "description": "PVF rarity 5 勇者前景色。",
+        "defaults": {
+          "dark": "#FF6666",
+          "light": "#C83333",
+          "highContrast": "#FF6666"
+        }
+      },
+      {
+        "id": "pvf.rarity6Foreground",
+        "description": "PVF rarity 6 传说前景色。",
+        "defaults": {
+          "dark": "#FF7800",
+          "light": "#D05A00",
+          "highContrast": "#FF7800"
+        }
+      },
+      {
+        "id": "pvf.rarity7Foreground",
+        "description": "PVF rarity 7 神话前景色。",
+        "defaults": {
+          "dark": "#36E6FF",
+          "light": "#008FA8",
+          "highContrast": "#36E6FF"
+        }
+      }
+    ],
     "configuration": {
       "title": "PVF Pack Explorer",
       "properties": {
@@ -932,7 +1024,7 @@
         },
         "pvf.unpackExplorer.npkIcon.size": {
           "type": "number",
-          "default": 20,
+          "default": 16,
           "minimum": 16,
           "maximum": 64,
           "description": "解包目录行内 NPK 图标尺寸。"
@@ -1064,6 +1156,7 @@
         },
         {
           "id": "pvfUnpackExplorerView",
+          "type": "webview",
           "name": "解包目录",
           "icon": "codicon:folder-library"
         },

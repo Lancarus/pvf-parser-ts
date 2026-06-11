@@ -16,8 +16,12 @@ export interface UnpackResolvedMetadata {
   itemName?: string;
   itemCode?: number;
   rarity?: number;
+  grade?: string;
   icon?: UnpackIconReference;
   iconPath?: string;
+  iconDataUri?: string;
+  iconWidth?: number;
+  iconHeight?: number;
   iconState?: UnpackIconState;
 }
 
@@ -39,6 +43,46 @@ interface LstCacheEntry {
   mtimeMs: number;
   size: number;
   fileToCode: Map<string, number>;
+  codeToFile: Map<number, string>;
+}
+
+interface StrCacheEntry {
+  mtimeMs: number;
+  size: number;
+  values: Map<string, string>;
+}
+
+interface ShopNpcMetadataIndex {
+  byShopCode: Map<number, UnpackResolvedMetadata>;
+  byDialogNpcId: Map<number, UnpackResolvedMetadata>;
+}
+
+interface DecodedIcon {
+  filePath: string;
+  width: number;
+  height: number;
+}
+
+export const RARITY_LABELS = ['普通', '高级', '稀有', '神器', '史诗', '勇者', '传说', '神话'] as const;
+
+export function rarityLabel(rarity: number | undefined): string | undefined {
+  return typeof rarity === 'number' && rarity >= 0 && rarity < RARITY_LABELS.length
+    ? RARITY_LABELS[rarity]
+    : undefined;
+}
+
+export function rarityThemeColor(rarity: number | undefined): vscode.ThemeColor | undefined {
+  return typeof rarity === 'number' && rarity >= 0 && rarity < RARITY_LABELS.length
+    ? new vscode.ThemeColor(`pvf.rarity${rarity}Foreground`)
+    : undefined;
+}
+
+export function defaultStringThemeColor(): vscode.ThemeColor {
+  return new vscode.ThemeColor('pvf.unpackStringForeground');
+}
+
+export function defaultNumberThemeColor(): vscode.ThemeColor {
+  return new vscode.ThemeColor('pvf.unpackNumberForeground');
 }
 
 function quickHash(value: string): string {
@@ -120,6 +164,13 @@ function stripPvfValue(value: string): string {
   return text.trim();
 }
 
+function normalizeGrade(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  const text = stripPvfValue(value).trim().toLowerCase();
+  if (!text) return undefined;
+  return text.startsWith('[') && text.endsWith(']') ? text : `[${text.replace(/^\[|\]$/g, '')}]`;
+}
+
 function tagValueToString(value: string | string[] | undefined): string | undefined {
   if (Array.isArray(value)) {
     for (const item of value) {
@@ -140,6 +191,125 @@ function tagValueToInt(value: string | string[] | undefined): number | undefined
   if (!match) return undefined;
   const parsed = Number(match[0]);
   return Number.isSafeInteger(parsed) ? parsed : undefined;
+}
+
+function allTagLines(value: string | string[] | undefined): string[] {
+  if (Array.isArray(value)) return value.flatMap(item => item.split(/\r?\n/)).map(item => item.trim()).filter(Boolean);
+  if (typeof value === 'string') return value.split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+  return [];
+}
+
+function iconFromTagValue(value: string | string[] | undefined): UnpackIconReference | undefined {
+  for (const line of allTagLines(value)) {
+    const match = line.match(/^([`'"])(.+?\.img)\1\s+(-?\d+)/i) || line.match(/^(.+?\.img)\s+(-?\d+)$/i);
+    if (!match) continue;
+    const imagePath = match.length >= 4 ? match[2] : match[1];
+    const frameText = match[match.length - 1];
+    const frameIndex = Number(frameText);
+    if (!imagePath || !Number.isSafeInteger(frameIndex) || frameIndex < 0) continue;
+    return { imagePath: normalizeImgLogical(imagePath), frameIndex };
+  }
+  return undefined;
+}
+
+function isUsefulDisplayName(value: string | undefined): value is string {
+  if (!value) return false;
+  const text = value.trim();
+  if (!text) return false;
+  if (/\.((img)|(ani)|(wav)|(ogg)|(npk))$/i.test(text)) return false;
+  return true;
+}
+
+function pickNameLikeTag(tags: Record<string, string | string[]> | undefined): string | undefined {
+  if (!tags) return undefined;
+  const priority = [
+    'set name',
+    'shop name',
+    'field name',
+    'display name',
+    'npc name',
+    'monster name',
+    'skill name',
+  ];
+  for (const key of priority) {
+    const value = tagValueToString(tags[key]);
+    if (isUsefulDisplayName(value)) return value;
+  }
+  for (const [key, raw] of Object.entries(tags)) {
+    if (!/\bname\b/i.test(key)) continue;
+    const value = tagValueToString(raw);
+    if (isUsefulDisplayName(value)) return value;
+  }
+  return undefined;
+}
+
+function pickShopNameTag(tags: Record<string, string | string[]> | undefined): string | undefined {
+  if (!tags) return undefined;
+  for (const key of ['shop name', 'display name']) {
+    const value = tagValueToString(tags[key]);
+    if (isUsefulDisplayName(value)) return value;
+  }
+  return undefined;
+}
+
+function faceIconFromTags(tags: Record<string, string | string[]> | undefined): UnpackIconReference | undefined {
+  if (!tags) return undefined;
+  for (const key of ['small face', 'popup face', 'big face']) {
+    const icon = iconFromTagValue(tags[key]);
+    if (icon) return icon;
+  }
+  return undefined;
+}
+
+function aniFirstImageIcon(text: string): UnpackIconReference | undefined {
+  const imageTag = /\[IMAGE\]/i.exec(text);
+  if (!imageTag) return undefined;
+  const lines = text.slice(imageTag.index + imageTag[0].length).split(/\r?\n/);
+  let imagePath = '';
+  let frameIndex: number | undefined;
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+    if (!imagePath) {
+      if (line.startsWith('[')) return undefined;
+      imagePath = stripPvfValue(line);
+      continue;
+    }
+    if (line.startsWith('[')) break;
+    const parsed = Number(line.match(/-?\d+/)?.[0]);
+    if (Number.isSafeInteger(parsed) && parsed >= 0) frameIndex = parsed;
+    break;
+  }
+  return imagePath && typeof frameIndex === 'number'
+    ? { imagePath: normalizeImgLogical(imagePath), frameIndex }
+    : undefined;
+}
+
+function questIconFromTags(tags: Record<string, string | string[]> | undefined): UnpackIconReference | undefined {
+  const rewardType = normalizeGrade(tagValueToString(tags?.['reward type']));
+  if (rewardType === '[awakening type]') {
+    return { imagePath: normalizeImgLogical('Interface/Quest/quest_tag.img'), frameIndex: 7 };
+  }
+  if (rewardType === '[creature evolution]') {
+    return { imagePath: normalizeImgLogical('Interface/Quest/quest_tag.img'), frameIndex: 8 };
+  }
+  const grade = normalizeGrade(tagValueToString(tags?.grade));
+  if (!grade) return undefined;
+  const frameByGrade: Record<string, number> = {
+    '[epic]': 0,
+    '[common unique]': 1,
+    '[training]': 3,
+    '[normaly repeat]': 1,
+    '[daily]': 11,
+    '[daily random]': 11,
+    '[achievement]': 12,
+    '[title]': 1,
+    '[urgent]': 14,
+  };
+  const frameIndex = frameByGrade[grade];
+  return typeof frameIndex === 'number'
+    ? { imagePath: normalizeImgLogical('Interface/Quest/quest_tag.img'), frameIndex }
+    : undefined;
 }
 
 function codeFromFileName(key: string): number | undefined {
@@ -176,6 +346,23 @@ function lstCandidatesForKey(key: string): string[] {
   return unique(candidates);
 }
 
+function strCandidatesForKey(key: string): string[] {
+  const normalized = normalizeUnpackKey(key);
+  const first = normalized.split('/')[0] || '';
+  if (!first) return [];
+  return unique([
+    `${first}/${first}.chn.str`,
+    `${first}/${first}.kor.str`,
+    `${first}/${first}.jpn.str`,
+  ]);
+}
+
+export function shouldResolveUnpackMetadataKey(key: string): boolean {
+  const lower = normalizeUnpackKey(key);
+  if (!lower || lower.endsWith('/')) return false;
+  return !/\.(ani|ani\.als|als|lst|str|nut|png|jpg|jpeg|dds|bmp|tga|gif|wav|ogg|mp3|bin)$/i.test(lower);
+}
+
 async function readUtf8Text(filePath: string): Promise<string> {
   const buf = await fs.readFile(filePath);
   let text = Buffer.from(buf).toString('utf8');
@@ -198,17 +385,40 @@ export async function readLstFileToCodeMap(lstDiskPath: string): Promise<Map<str
   return fileToCode;
 }
 
-export function parseUnpackScriptText(text: string): Omit<UnpackResolvedMetadata, 'itemCode' | 'iconPath' | 'iconState'> {
-  if (!/\[(name|name2|icon|rarity|grade)\]/i.test(text)) return {};
+async function readStrFile(strDiskPath: string): Promise<Map<string, string>> {
+  const text = await readUtf8Text(strDiskPath);
+  const values = new Map<string, string>();
+  for (const rawLine of text.replace(/\r\n?/g, '\n').split('\n')) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+    const sep = line.indexOf('>');
+    if (sep <= 0) continue;
+    const key = line.slice(0, sep).trim();
+    const value = line.slice(sep + 1).trim();
+    if (key) values.set(key, value);
+  }
+  return values;
+}
+
+export function parseUnpackScriptText(text: string, key = ''): Omit<UnpackResolvedMetadata, 'itemCode' | 'iconPath' | 'iconState'> {
+  if (!/\[(name|name2|set name|shop name|field name|field animation|icon|rarity|grade|small face|big face|popup face|npc|role)\]/i.test(text)) return {};
   const parsed = parseScriptMetadata(text);
-  const itemName = parsed.name || parsed.name2 || tagValueToString(parsed.tags?.['set name']);
+  const normalizedKey = normalizeUnpackKey(key);
+  const isShop = normalizedKey.endsWith('.shp');
+  const itemName = parsed.name || parsed.name2 || (isShop ? pickShopNameTag(parsed.tags) : pickNameLikeTag(parsed.tags));
   const rarity = tagValueToInt(parsed.tags?.rarity);
-  const icon = parsed.icon
+  const isQuest = normalizedKey.endsWith('.qst');
+  const grade = isQuest ? normalizeGrade(tagValueToString(parsed.tags?.grade)) : undefined;
+  const directIcon = parsed.icon
     ? { imagePath: normalizeImgLogical(parsed.icon.img), frameIndex: parsed.icon.frame }
     : undefined;
+  const icon = directIcon
+    || faceIconFromTags(parsed.tags)
+    || (isQuest ? questIconFromTags(parsed.tags) : undefined);
   return {
     ...(itemName ? { itemName } : {}),
     ...(typeof rarity === 'number' ? { rarity } : {}),
+    ...(grade ? { grade } : {}),
     ...(icon ? { icon } : {}),
   };
 }
@@ -246,11 +456,39 @@ async function fileExists(filePath: string): Promise<boolean> {
   }
 }
 
+async function readPngDimensions(filePath: string): Promise<{ width: number; height: number } | undefined> {
+  try {
+    const buf = await fs.readFile(filePath);
+    if (buf.length < 24) return undefined;
+    if (buf[0] !== 0x89 || buf[1] !== 0x50 || buf[2] !== 0x4e || buf[3] !== 0x47) return undefined;
+    return {
+      width: buf.readUInt32BE(16),
+      height: buf.readUInt32BE(20),
+    };
+  } catch {
+    return undefined;
+  }
+}
+
+async function readPngDataUri(filePath: string): Promise<string | undefined> {
+  try {
+    const buf = await fs.readFile(filePath);
+    if (buf.length < 24) return undefined;
+    if (buf[0] !== 0x89 || buf[1] !== 0x50 || buf[2] !== 0x4e || buf[3] !== 0x47) return undefined;
+    return `data:image/png;base64,${buf.toString('base64')}`;
+  } catch {
+    return undefined;
+  }
+}
+
 export class UnpackMetadataService {
   private readonly metadataCache = new Map<string, MetadataCacheEntry>();
   private readonly lstCache = new Map<string, LstCacheEntry>();
+  private readonly strCache = new Map<string, StrCacheEntry>();
   private readonly lstPromises = new Map<string, Promise<LstCacheEntry | undefined>>();
-  private readonly iconPromises = new Map<string, Promise<string | undefined>>();
+  private readonly strPromises = new Map<string, Promise<StrCacheEntry | undefined>>();
+  private readonly iconPromises = new Map<string, Promise<DecodedIcon | undefined>>();
+  private readonly shopNpcPromises = new Map<string, Promise<ShopNpcMetadataIndex>>();
   private npkRootsCache: Promise<string[]> | undefined;
 
   constructor(
@@ -261,8 +499,11 @@ export class UnpackMetadataService {
   clear(): void {
     this.metadataCache.clear();
     this.lstCache.clear();
+    this.strCache.clear();
     this.lstPromises.clear();
+    this.strPromises.clear();
     this.iconPromises.clear();
+    this.shopNpcPromises.clear();
     this.npkRootsCache = undefined;
   }
 
@@ -276,14 +517,31 @@ export class UnpackMetadataService {
     const cached = this.metadataCache.get(cacheKey);
     if (cached && cached.mtimeMs === stat.mtimeMs && cached.size === stat.size) return cached.metadata;
 
+    if (!stat.isFile() || !shouldResolveUnpackMetadataKey(input.key)) {
+      const metadata: UnpackResolvedMetadata = {};
+      this.metadataCache.set(cacheKey, { mtimeMs: stat.mtimeMs, size: stat.size, metadata });
+      return metadata;
+    }
+
     const text = await readUtf8Text(input.fsPath);
-    const parsed = parseUnpackScriptText(text);
+    const parsed = parseUnpackScriptText(text, input.key);
     const itemCode = await this.resolveItemCode(input);
+    const normalizedKey = normalizeUnpackKey(input.key);
+    const itemName = parsed.itemName
+      ? (normalizedKey.endsWith('.npc')
+        ? await this.resolveNpcDisplayName(input.root, input.fsPath, parsed.itemName) || parsed.itemName
+        : await this.resolveStringReference(input, parsed.itemName) || parsed.itemName)
+      : undefined;
+    const asyncNpcIcon = !parsed.icon && normalizedKey.endsWith('.npc')
+      ? await this.resolveFieldAnimationIcon(input.root, input.fsPath, parseScriptMetadata(text).tags)
+      : undefined;
     const metadata: UnpackResolvedMetadata = {
       ...parsed,
+      ...(asyncNpcIcon ? { icon: asyncNpcIcon } : {}),
+      ...(itemName ? { itemName } : {}),
       ...(typeof itemCode === 'number' ? { itemCode } : {}),
-      ...(parsed.icon ? { iconState: 'default' as UnpackIconState } : {}),
     };
+    if (metadata.icon) metadata.iconState = 'default';
     this.metadataCache.set(cacheKey, { mtimeMs: stat.mtimeMs, size: stat.size, metadata });
     return metadata;
   }
@@ -292,7 +550,19 @@ export class UnpackMetadataService {
     const entry = this.metadataCache.get(this.cacheKey(input));
     const metadata = entry?.metadata;
     if (!metadata?.icon) return metadata;
-    if (metadata.iconPath && metadata.iconState === 'ready') return metadata;
+    if (metadata.iconPath && metadata.iconState === 'ready') {
+      if (!metadata.iconWidth || !metadata.iconHeight) {
+        const dimensions = await readPngDimensions(metadata.iconPath);
+        if (dimensions) {
+          metadata.iconWidth = dimensions.width;
+          metadata.iconHeight = dimensions.height;
+        }
+      }
+      if (!metadata.iconDataUri) {
+        metadata.iconDataUri = await readPngDataUri(metadata.iconPath);
+      }
+      return metadata;
+    }
     if (!configBool('pvf.unpackExplorer.npkIcon.enabled', 'pvfExplorer.npkIcon.enabled', true)) {
       metadata.iconState = 'default';
       return metadata;
@@ -300,9 +570,12 @@ export class UnpackMetadataService {
 
     metadata.iconState = 'loading';
     try {
-      const iconPath = await this.decodeIcon(metadata.icon);
-      if (iconPath) {
-        metadata.iconPath = iconPath;
+      const decoded = await this.decodeIcon(metadata.icon);
+      if (decoded) {
+        metadata.iconPath = decoded.filePath;
+        metadata.iconDataUri = await readPngDataUri(decoded.filePath);
+        metadata.iconWidth = decoded.width;
+        metadata.iconHeight = decoded.height;
         metadata.iconState = 'ready';
       } else {
         metadata.iconState = 'missing';
@@ -345,9 +618,13 @@ export class UnpackMetadataService {
     const existing = this.lstPromises.get(lstDiskPath);
     if (existing) return existing;
 
-    const promise = readLstFileToCodeMap(lstDiskPath)
+      const promise = readLstFileToCodeMap(lstDiskPath)
       .then(fileToCode => {
-        const entry = { mtimeMs: stat.mtimeMs, size: stat.size, fileToCode };
+        const codeToFile = new Map<number, string>();
+        for (const [file, code] of fileToCode) {
+          if (!codeToFile.has(code)) codeToFile.set(code, file);
+        }
+        const entry = { mtimeMs: stat.mtimeMs, size: stat.size, fileToCode, codeToFile };
         this.lstCache.set(lstDiskPath, entry);
         return entry;
       })
@@ -358,6 +635,174 @@ export class UnpackMetadataService {
       .finally(() => this.lstPromises.delete(lstDiskPath));
     this.lstPromises.set(lstDiskPath, promise);
     return promise;
+  }
+
+  private async loadStr(strDiskPath: string): Promise<StrCacheEntry | undefined> {
+    let stat: import('fs').Stats;
+    try {
+      stat = await fs.stat(strDiskPath);
+      if (!stat.isFile()) return undefined;
+    } catch {
+      return undefined;
+    }
+
+    const cached = this.strCache.get(strDiskPath);
+    if (cached && cached.mtimeMs === stat.mtimeMs && cached.size === stat.size) return cached;
+
+    const existing = this.strPromises.get(strDiskPath);
+    if (existing) return existing;
+
+    const promise = readStrFile(strDiskPath)
+      .then(values => {
+        const entry = { mtimeMs: stat.mtimeMs, size: stat.size, values };
+        this.strCache.set(strDiskPath, entry);
+        return entry;
+      })
+      .catch((err: any) => {
+        this.output?.appendLine(`[PVF] failed to read unpack str ${strDiskPath}: ${String(err && err.message || err)}`);
+        return undefined;
+      })
+      .finally(() => this.strPromises.delete(strDiskPath));
+    this.strPromises.set(strDiskPath, promise);
+    return promise;
+  }
+
+  private async resolveStringReference(input: UnpackMetadataInput, value: string): Promise<string | undefined> {
+    if (!/^[a-z][a-z0-9_]*_[a-z0-9_]+$/i.test(value)) return undefined;
+    for (const strKey of strCandidatesForKey(input.key)) {
+      const strPath = safeJoinArchivePath(input.root, strKey);
+      if (!strPath) continue;
+      const entry = await this.loadStr(strPath);
+      const resolved = entry?.values.get(value);
+      if (resolved && resolved !== value) return resolved;
+    }
+    return undefined;
+  }
+
+  private async resolveNpcDisplayName(root: string, npcPath: string, rawName: string | undefined): Promise<string | undefined> {
+    const key = normalizeUnpackKey(path.relative(root, npcPath));
+    const input: UnpackMetadataInput = {
+      fsPath: npcPath,
+      key,
+      name: path.basename(npcPath),
+      root,
+      version: '0',
+    };
+    if (rawName) {
+      const resolved = await this.resolveStringReference(input, rawName);
+      if (resolved && resolved !== rawName && isUsefulDisplayName(resolved)) return resolved;
+    }
+
+    const base = path.basename(npcPath, path.extname(npcPath)).toLowerCase();
+    for (const candidate of [`name_${base}`, `field_name_${base}`]) {
+      const resolved = await this.resolveStringReference(input, candidate);
+      if (resolved && resolved !== candidate && isUsefulDisplayName(resolved)) return resolved;
+    }
+
+    return isUsefulDisplayName(rawName) ? rawName : undefined;
+  }
+
+  private async resolveFieldAnimationIcon(
+    root: string,
+    ownerPath: string,
+    tags: Record<string, string | string[]> | undefined,
+  ): Promise<UnpackIconReference | undefined> {
+    const raw = tagValueToString(tags?.['field animation']);
+    if (!raw) return undefined;
+    const normalized = normalizeUnpackKey(raw);
+    const candidates = unique([
+      path.resolve(path.dirname(ownerPath), ...normalized.split('/').filter(Boolean)),
+      ...(safeJoinArchivePath(root, normalized) ? [safeJoinArchivePath(root, normalized)!] : []),
+      ...(safeJoinArchivePath(root, `npc/${normalized}`) ? [safeJoinArchivePath(root, `npc/${normalized}`)!] : []),
+    ]);
+    for (const candidate of candidates) {
+      try {
+        const stat = await fs.stat(candidate);
+        if (!stat.isFile()) continue;
+        const icon = aniFirstImageIcon(await readUtf8Text(candidate));
+        if (icon) return icon;
+      } catch {
+        continue;
+      }
+    }
+    return undefined;
+  }
+
+  private async resolveDelegatedMetadata(input: UnpackMetadataInput, itemCode: number | undefined, text: string): Promise<UnpackResolvedMetadata | undefined> {
+    const key = normalizeUnpackKey(input.key);
+    if (!key.endsWith('.shp') || typeof itemCode !== 'number') return undefined;
+    const index = await this.loadShopNpcMetadata(input.root, input.version);
+    const parsed = parseScriptMetadata(text);
+    const npcId = tagValueToInt(parsed.tags?.npc);
+    if (typeof npcId === 'number') {
+      const byNpc = index.byDialogNpcId.get(npcId);
+      if (byNpc) return byNpc;
+    }
+    return index.byShopCode.get(itemCode);
+  }
+
+  private loadShopNpcMetadata(root: string, version: string): Promise<ShopNpcMetadataIndex> {
+    const cacheKey = `${path.resolve(root)}\0${version}`;
+    let promise = this.shopNpcPromises.get(cacheKey);
+    if (!promise) {
+      promise = this.buildShopNpcMetadata(root);
+      this.shopNpcPromises.set(cacheKey, promise);
+    }
+    return promise;
+  }
+
+  private async buildShopNpcMetadata(root: string): Promise<ShopNpcMetadataIndex> {
+    const byShopCode = new Map<number, UnpackResolvedMetadata>();
+    const byDialogNpcId = new Map<number, UnpackResolvedMetadata>();
+    const npcDir = path.join(root, 'npc');
+    let dirents: import('fs').Dirent[];
+    try {
+      dirents = await fs.readdir(npcDir, { withFileTypes: true });
+    } catch {
+      return { byShopCode, byDialogNpcId };
+    }
+
+    for (const dirent of dirents) {
+      if (!dirent.isFile() || !dirent.name.toLowerCase().endsWith('.npc')) continue;
+      const npcPath = path.join(npcDir, dirent.name);
+      let text: string;
+      try {
+        text = await readUtf8Text(npcPath);
+      } catch {
+        continue;
+      }
+      const parsed = parseScriptMetadata(text);
+      const roleLines = allTagLines(parsed.tags?.role);
+      const shopCodes: number[] = [];
+      for (const line of roleLines) {
+        if (!/\[item shop\]/i.test(line)) continue;
+        const match = line.match(/\[item shop\][^\d-]*(-?\d+)/i);
+        const code = match ? Number(match[1]) : NaN;
+        if (Number.isSafeInteger(code)) shopCodes.push(code);
+      }
+      const dialogIds = new Set<number>();
+      for (const match of text.matchAll(/<npc::(-?\d+)>/gi)) {
+        const id = Number(match[1]);
+        if (Number.isSafeInteger(id)) dialogIds.add(id);
+      }
+      if (shopCodes.length === 0 && dialogIds.size === 0) continue;
+
+      const rawName = parsed.name || parsed.name2 || pickNameLikeTag(parsed.tags);
+      const resolvedName = await this.resolveNpcDisplayName(root, npcPath, rawName);
+      const icon = faceIconFromTags(parsed.tags) || await this.resolveFieldAnimationIcon(root, npcPath, parsed.tags);
+      const metadata: UnpackResolvedMetadata = {
+        ...(isUsefulDisplayName(resolvedName) ? { itemName: resolvedName } : {}),
+        ...(icon ? { icon } : {}),
+      };
+      if (!metadata.itemName && !metadata.icon) continue;
+      for (const code of shopCodes) {
+        if (!byShopCode.has(code)) byShopCode.set(code, metadata);
+      }
+      for (const id of dialogIds) {
+        if (!byDialogNpcId.has(id)) byDialogNpcId.set(id, metadata);
+      }
+    }
+    return { byShopCode, byDialogNpcId };
   }
 
   private async getNpkRoots(): Promise<string[]> {
@@ -373,10 +818,10 @@ export class UnpackMetadataService {
     return this.npkRootsCache;
   }
 
-  private async decodeIcon(icon: UnpackIconReference): Promise<string | undefined> {
+  private async decodeIcon(icon: UnpackIconReference): Promise<DecodedIcon | undefined> {
     const roots = await this.getNpkRoots();
     if (roots.length === 0) return undefined;
-    const size = configNumber('pvf.unpackExplorer.npkIcon.size', 'pvfExplorer.npkIcon.size', 20);
+    const size = configNumber('pvf.unpackExplorer.npkIcon.size', 'pvfExplorer.npkIcon.size', 16);
     const cacheEnabled = configBool('pvf.unpackExplorer.npkIcon.cache.enabled', 'pvfExplorer.npkIcon.cache.enabled', true);
     const sessionNonce = cacheEnabled ? 'cache' : `${Date.now()}:${Math.random()}`;
     const promiseKey = `${roots.join('|')}\0${icon.imagePath}\0${icon.frameIndex}\0${size}\0${sessionNonce}`;
@@ -394,14 +839,23 @@ export class UnpackMetadataService {
     icon: UnpackIconReference,
     cacheKeyInput: string,
     cacheEnabled: boolean,
-  ): Promise<string | undefined> {
+  ): Promise<DecodedIcon | undefined> {
     const hash = quickHash(`${cacheKeyInput}\0unpack-png-v1`);
     const cacheDir = path.join(this.context.globalStorageUri.fsPath, 'unpack-icon-cache');
     const filePath = path.join(cacheDir, `${hash}.png`);
-    if (cacheEnabled && await fileExists(filePath)) return filePath;
+    if (cacheEnabled && await fileExists(filePath)) {
+      const dimensions = await readPngDimensions(filePath);
+      return dimensions ? { filePath, width: dimensions.width, height: dimensions.height } : { filePath, width: 0, height: 0 };
+    }
 
-    const { loadAlbumForImage } = await import('../commander/previewAni/npkResolver.js');
+    const indexer = await import('../npk/indexer.js');
+    const { ensureIndex, loadAlbumForImage } = await import('../commander/previewAni/npkResolver.js');
     const { getSpriteRgba } = await import('../npk/imgReader.js');
+    await ensureIndex(this.context).catch(() => undefined);
+    const index = indexer.getIndex();
+    if (!index || index.size === 0) return undefined;
+    const hasPathPlaceholder = /%0?\d*d/i.test(icon.imagePath);
+    if (!hasPathPlaceholder && !await indexer.findNpkFor(icon.imagePath)) return undefined;
     for (const root of roots) {
       const album = await loadAlbumForImage(this.context, root, icon.imagePath, this.output).catch(() => undefined);
       const sprite = album?.sprites?.[icon.frameIndex];
@@ -410,7 +864,7 @@ export class UnpackMetadataService {
       if (!rgba) continue;
       await fs.mkdir(cacheDir, { recursive: true });
       await fs.writeFile(filePath, encodePng(rgba, sprite.width, sprite.height));
-      return filePath;
+      return { filePath, width: sprite.width, height: sprite.height };
     }
     return undefined;
   }

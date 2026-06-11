@@ -4,7 +4,9 @@ import { parseMetadataForKeys } from './pvf/metadata';
 import { PvfProvider } from './pvf/provider';
 import { registerDiskTreeCommentDecorations } from './pvf/diskTreeCommentDecorations';
 import { PvfTreeCommentService } from './pvf/treeComments';
-import { UnpackExplorerProvider } from './pvf/unpackExplorerProvider';
+import { UnpackExplorerWebviewProvider } from './pvf/unpackExplorerWebview';
+import { UnpackMetadataService } from './pvf/unpackMetadata';
+import { readConfiguredNpkRoots } from './pvf/unpackEnv';
 import { registerPathLinkProvider } from './pvf/pathLinkProvider';
 import { registerPvfDecorations } from './pvf/decorations';
 import { registerAllCommands } from './commander/index.js';
@@ -94,7 +96,8 @@ export function activate(context: vscode.ExtensionContext) {
     const output = vscode.window.createOutputChannel('PVF');
     const treeComments = new PvfTreeCommentService(context, model, output);
     const tree = new PvfProvider(model, output, treeComments);
-    const unpackTree = new UnpackExplorerProvider(context, treeComments, output);
+    const unpackMetadata = new UnpackMetadataService(context, output);
+    const unpackTree = new UnpackExplorerWebviewProvider(context, treeComments, output, unpackMetadata);
     const bookmarkTree = new BookmarkProvider(context, output);
     const deco = registerPvfDecorations(context, model);
     const diskTreeCommentDeco = registerDiskTreeCommentDecorations(context, treeComments, output);
@@ -110,7 +113,9 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(
         vscode.window.registerTreeDataProvider('pvfExplorerView', tree),
-        vscode.window.registerTreeDataProvider('pvfUnpackExplorerView', unpackTree),
+        vscode.window.registerWebviewViewProvider('pvfUnpackExplorerView', unpackTree, {
+            webviewOptions: { retainContextWhenHidden: true },
+        }),
         vscode.window.createTreeView('pvfBookmarkView', {
             treeDataProvider: bookmarkTree,
             dragAndDropController: bookmarkTree,
@@ -128,12 +133,14 @@ export function activate(context: vscode.ExtensionContext) {
     // 激活时自动构建（若尚未有索引且配置了根目录）
     (async () => {
         const cfg = vscode.workspace.getConfiguration();
-        const root = (cfg.get<string>('pvf.npkRoot') || '').trim();
+        const legacyRoot = (cfg.get<string>('pvf.npkRoot') || '').trim();
+        const envRoots = await readConfiguredNpkRoots(context);
+        const roots = Array.from(new Set([...envRoots, ...(legacyRoot ? [legacyRoot] : [])].map(item => path.resolve(item))));
         const m = await indexer.loadIndexFromDisk(context);
-        if ((!m || m.size === 0) && root) {
+        if ((!m || m.size === 0) && roots.length > 0) {
             void vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '正在构建 NPK 索引…' }, async (p) => {
                 let lastReport = 0;
-                const map = await indexer.buildIndex(context, [root], (done, total, file) => {
+                const map = await indexer.buildIndex(context, roots, (done, total, file) => {
                     const pct = total > 0 ? Math.round((done / total) * 100) : 0;
                     if (pct !== lastReport) {
                         const delta = pct - lastReport;
@@ -142,24 +149,28 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                 });
                 p.report({ increment: 100, message: `已索引 ${map.size} 项` });
+                unpackTree.refresh();
+                diskTreeCommentDeco.refreshAll();
                 return map;
             });
-        } else if (!root) {
-            vscode.window.showInformationMessage('未设置 NPK 根目录 (pvf.npkRoot)，无法自动构建索引。');
+        } else if (roots.length === 0) {
+            output.appendLine('[PVF] 未设置 NPK 根目录 (pvf.npkRoot 或 .env NPK_DIR)，跳过自动构建索引。');
         }
     })();
 
     // register command to rebuild index explicitly
     context.subscriptions.push(vscode.commands.registerCommand('pvf.rebuildNpkIndex', async () => {
         const cfg = vscode.workspace.getConfiguration();
-        const root = (cfg.get<string>('pvf.npkRoot') || '').trim();
-        if (!root) {
-            vscode.window.showWarningMessage('请先在设置 pvf.npkRoot 指定 ImagePacks 根目录');
+        const legacyRoot = (cfg.get<string>('pvf.npkRoot') || '').trim();
+        const envRoots = await readConfiguredNpkRoots(context);
+        const roots = Array.from(new Set([...envRoots, ...(legacyRoot ? [legacyRoot] : [])].map(item => path.resolve(item))));
+        if (roots.length === 0) {
+            vscode.window.showWarningMessage('请先在设置 pvf.npkRoot 或 .env NPK_DIR 指定 ImagePacks 根目录');
             return;
         }
         await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '正在重建 NPK 索引…' }, async (p) => {
             let lastReport = 0;
-            const m = await indexer.buildIndex(context, [root], (done, total, file) => {
+            const m = await indexer.buildIndex(context, roots, (done, total, file) => {
                 const pct = total > 0 ? Math.round((done / total) * 100) : 0;
                 if (pct !== lastReport) {
                     const delta = pct - lastReport;
@@ -168,6 +179,8 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             });
             p.report({ increment: 100, message: `已索引 ${m.size} 项` });
+            unpackTree.refresh();
+            diskTreeCommentDeco.refreshAll();
         });
         vscode.window.showInformationMessage('NPK 索引已重建');
     }));

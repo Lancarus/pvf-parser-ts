@@ -74,10 +74,13 @@ export function registerDiskTreeCommentDecorations(
       if (!info) return undefined;
       const entry = comments.getEntryForVersion(info.key, info.version);
       if (!entry?.comment) return undefined;
-      const tooltip = entry.detailedComment
+
+      const tooltipParts: string[] = [];
+      tooltipParts.push(entry.detailedComment
         ? `${entry.comment}\n\n${entry.detailedComment}`
-        : entry.comment;
-      const decoration = new vscode.FileDecoration(undefined, tooltip);
+        : entry.comment);
+
+      const decoration = new vscode.FileDecoration(undefined, tooltipParts.join('\n\n'));
       decoration.propagate = false;
       return decoration;
     }
