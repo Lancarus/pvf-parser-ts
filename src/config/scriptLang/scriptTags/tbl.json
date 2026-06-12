@@ -17,6 +17,13 @@
       "title": "按照组队人数增加难度",
       "description": "按照组队人数增加难度，[dungeon party balance]这个标签下就是\n首先先把他对好格式， 先找到等级 就是这么这样很明显的数\n1-50级 51-60级 61-70级 71-90级 91-200级 分别给他们敲上回车\n然后剩下的数 按4个一组 对应定义，每组第一个数代表组队人数",
       "authors": "unMen"
+    },
+    {
+      "name": "Revision Table",
+      "title": "//",
+      "closing": true,
+      "officialDescription": "#### 官方示例: table/lorien.tbl\n\n- `monster` //`apc`",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

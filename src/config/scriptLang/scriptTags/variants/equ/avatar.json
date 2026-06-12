@@ -1,0 +1,123 @@
+{
+  "tags": [
+    {
+      "name": "name",
+      "title": "时装韩文名称索引",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装韩文名称索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "name2",
+      "title": "时装英文名称索引",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装英文名称索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "explain",
+      "title": "时装说明索引",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装说明索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "grade",
+      "title": "时装品级 // 1 普通",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装品级 // 1 普通，2 高级，3 稀有",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attach type",
+      "title": "交换许可 // free 可交换",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 交换许可 // free 可交换，trade 不可交换",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "usable job",
+      "title": "可穿戴职业",
+      "closing": true,
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 可穿戴职业",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "minimum level",
+      "title": "可穿戴最低等级",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 可穿戴最低等级",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "usable period",
+      "title": "时效性（天数）",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时效性（天数）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "icon",
+      "title": "图标图像路径",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 图标图像路径",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "equipment type",
+      "title": "穿戴部位",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 穿戴部位",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "avatar func filter",
+      "title": "时装功能 // 0 全部不可",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装功能 // 0 全部不可，1 可合成，2 可分解，3 可合成、可分解",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "avatar type select",
+      "title": "购买时类型选择",
+      "closing": true,
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 购买时类型选择",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "variation",
+      "title": "穿戴图像图层编号",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 穿戴图像图层编号",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move wav",
+      "title": "移动/拾取时音效",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 移动/拾取时音效",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "part set index",
+      "title": "普通套装编号 // 2 高级套装",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 普通套装编号 // 2 高级套装，3 稀有套装",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set name",
+      "title": "套装名称（如果指定了套装）",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 套装名称（如果指定了套装）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set item",
+      "title": "构成套装效果的其他部件索引（如果指定了套装）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 构成套装效果的其他部件索引（如果指定了套装）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set ability",
+      "title": "套装时装效果（如果指定了套装）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 套装时装效果（如果指定了套装）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "avatar select ability",
+      "title": "时装选择属性",
+      "closing": true,
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装选择属性",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

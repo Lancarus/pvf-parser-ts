@@ -1,0 +1,240 @@
+{
+  "tags": [
+    {
+      "name": "packagable",
+      "title": "不能邮寄",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 不能邮寄，注意默认值为可以邮寄，因此需要特别指定\n\n#### 官方示例: stackablesample.stk\n\n- 无法邮寄包裹，默认值为可以邮寄，请注意",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "explain",
+      "title": "消耗品的说明",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 消耗品的说明。可以换行。\n\n#### 官方示例: stackablesample.stk\n\n- 消耗品的说明。可以换行。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "grade",
+      "title": "消耗品的品级",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 消耗品的品级\n\n#### 官方示例: stackablesample.stk\n\n- 消耗品的等级",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attach type",
+      "title": "绑定类型",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 绑定类型\n\n#### 官方示例: stackablesample.stk\n\n- 绑定类型 在 `[free]` `[trade]` `[trade delete]` `[sealing]` 中选择一个",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creation rate",
+      "title": "生成比率",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 生成比率\n\n#### 官方示例: stackablesample.stk\n\n- 生成比率 (注意：不要使用过大的数值。建议 10 以下)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "rarity",
+      "title": "稀有度",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 稀有度\n\n#### 官方示例: stackablesample.stk\n\n- 稀有度。 0:普通 1:罕见 2:稀有 3:独特 4:史诗",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "weight",
+      "title": "重量",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 重量\n\n#### 官方示例: stackablesample.stk\n\n- 重量 (单位：10g)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "usable job",
+      "title": "可使用角色列表的开始",
+      "closing": true,
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 可使用角色列表的开始\n\n#### 官方示例: stackablesample.stk\n\n- 可使用角色列表的开始",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "minimum level",
+      "title": "使用所需的最低等级",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 使用所需的最低等级。\n\n#### 官方示例: stackablesample.stk\n\n- 使用所需的最低等级",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "icon",
+      "title": "图标图像文件和帧索引",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 图标图像文件和帧索引\n\n#### 官方示例: stackablesample.stk\n\n- 图标图像文件和帧索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "icon mark",
+      "title": "图标标记图像文件和帧索引",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 图标标记图像文件和帧索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "field image",
+      "title": "掉落在地上时的图像文件和帧索引",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 掉落在地上时的图像文件和帧索引\n\n#### 官方示例: stackablesample.stk\n\n- 掉落在地上时的图像文件和帧索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stackable type",
+      "title": "消耗品的类型",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 消耗品的类型。\n\n#### 官方示例: stackablesample.stk\n\n- 消耗品的类型",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sub type",
+      "title": "消耗品的子类型",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 消耗品的子类型。默认为0\n\n#### 官方示例: stackablesample.stk\n\n- 消耗品的子类型。默认为0",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "price",
+      "title": "价格",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 价格。如果从表里读取则无需填写。\n\n#### 官方示例: stackablesample.stk\n\n- 价格。如果从价格表读取则无需填写",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "cash",
+      "title": "点券价格",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 点券价格\n\n#### 官方示例: stackablesample.stk\n\n- 现金价格",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "medal",
+      "title": "勋章价格",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 勋章价格\n\n#### 官方示例: stackablesample.stk\n\n- 勋章价格",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "need material",
+      "title": "需要的材料物品索引",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 需要的材料物品索引，材料物品数量（例如，黑莲 2个）\n\n#### 官方示例: stackablesample.stk\n\n- 所需材料道具索引，材料道具个数 (例，黑莲 2个)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "value",
+      "title": "用户向商店出售的价格",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 用户向商店出售的价格\n\n#### 官方示例: stackablesample.stk\n\n- 用户在商店卖出的金额",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "finish point price",
+      "title": "FP价格",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- FP价格\n\n#### 官方示例: stackablesample.stk\n\n- FP价格",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stack limit",
+      "title": "堆叠数量限制",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 堆叠数量限制\n\n#### 官方示例: stackablesample.stk\n\n- 持有数量限制 '0' 表示无限制",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "cool time",
+      "title": "使用后阻止主动技能和消耗品使用的时间",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 使用后阻止主动技能和消耗品使用的时间。单位为毫秒，仅对 `[waste]` 和 `[throw]` 有效。\n\n#### 官方示例: stackablesample.stk\n\n- 使用后禁止使用主动技能和消耗品的时间。以毫秒为单位，仅对 `[waste]` 和 `[throw]` 有效",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "冷却时间分组",
+      "title": "所属的冷却时间组",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 所属的冷却时间组。若为-1或不写，则无组，仅应用于自身。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "party cooltime",
+      "title": "若为1",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 若为1，则应用队伍冷却时间\n\n#### 官方示例: stackablesample.stk\n\n- 如果为1则应用组队冷却时间",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move wav",
+      "title": "掉落在地上、移动物品时（包括装备）发出的声音",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 掉落在地上、移动物品时（包括装备）发出的声音\n\n#### 官方示例: stackablesample.stk\n\n- 掉落在地上、移动道具时(包括装备)发出的声音",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hp recovery",
+      "title": "hp 恢复",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- hp 恢复。200点，在1秒内对自己恢复",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "mp recovery",
+      "title": "mp 恢复",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- mp 恢复。200点，在1秒内对自己恢复",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "active status recovery",
+      "title": "状态异常恢复",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 状态异常恢复。状态异常种类，最大等级，目标",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "my status",
+      "title": "使自己进入状态异常",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 使自己进入状态异常。状态异常种类，概率，持续时间，等级，根据状态异常种类的变量（最多4个）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "buff",
+      "title": "使自己进入状态异常（基本以外的那些）",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 使自己进入状态异常（基本以外的那些）。状态异常种类，持续时间，目标",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster summons",
+      "title": "召唤怪物",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 召唤怪物。怪物索引，最低等级，最高等级，持续时间，最大召唤数量",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "summon apc",
+      "title": "召唤APC",
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 召唤APC。等级为-1时，召唤与自身等级相匹配的APC",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "consume item",
+      "title": "需要消耗的物品",
+      "closing": true,
+      "officialDescription": "#### 官方示例: 090302stackablesample.stk\n\n- 需要消耗的物品。物品索引，数量。可以添加多个",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "쿨타입 그룹",
+      "title": "所属的冷却时间组",
+      "officialDescription": "#### 官方示例: stackablesample.stk\n\n- 所属的冷却时间组。如果是-1或不写，则没有组，仅应用于自身",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "int data",
+      "title": "用于硬编码的整数数据",
+      "officialDescription": "#### 官方示例: stackablesample.stk\n\n- 用于硬编码的整数数据",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "string data",
+      "title": "用于硬编码的字符串数据",
+      "officialDescription": "#### 官方示例: stackablesample.stk\n\n- 用于硬编码的字符串数据",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "applying range",
+      "title": "应用范围",
+      "officialDescription": "#### 官方示例: stackablesample.stk\n\n- 应用范围",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "linking quest index",
+      "title": "当 [stackable type] 为  时",
+      "officialDescription": "#### 官方示例: stackablesample.stk\n\n- 当 [stackable type] 为 `[quest receive]` 时，指定此标签则在使用消耗品时接受指定任务",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "dye type",
+      "title": "0",
+      "officialDescription": "#### 官方示例: stackablesample.stk\n\n- 0:随机染色剂，1:单色，2:多色",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

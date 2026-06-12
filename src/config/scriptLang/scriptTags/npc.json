@@ -16,7 +16,9 @@
       "name": "big face",
       "title": "接取任务时在点开NPC时对话的大头像",
       "description": "接取任务时在点开NPC时对话的大头像。",
-      "authors": "夜白：122998088"
+      "authors": "夜白：122998088",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 窗口中显示的大脸部图像文件名和帧索引。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "common",
@@ -64,19 +66,25 @@
       "name": "field animation",
       "title": "场动画",
       "description": "场动画",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 在场景中显示的动画的相对路径。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "field name",
       "title": "字段名",
       "description": "字段名",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 在场景中显示的名称。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "field wav",
       "title": "STATIC_SOUND",
       "description": "[field wav]  `STATIC_SOUND`                        // 场效音,当你在NPC附近时播放的声音",
-      "authors": "unMen"
+      "authors": "unMen",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 在场景中时始终存在的效果音。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "guild",
@@ -100,7 +108,9 @@
       "name": "look around",
       "title": "环顾四周",
       "description": "环顾四周\n当你点击npc时，npc会随着你角色所在位置朝向你\n[look around]\n\t0\n写0，npc就会固定位置，不写这个代码npc就会朝向你 默认值为1",
-      "authors": "王良一|unMen"
+      "authors": "王良一|unMen",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 在场景中是否转向对话方向。1（转身看）为默认值。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "move town",
@@ -112,13 +122,17 @@
       "name": "popup face",
       "title": "接取任务时在点开NPC时对话的小头像",
       "description": "接取任务时在点开NPC时对话的小头像。",
-      "authors": "夜白：122998088"
+      "authors": "夜白：122998088",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 弹出菜单中显示的小脸部图像文件名和帧索引。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "popup wav",
       "title": "NPC_SOUND NPC_END_SOUND",
       "description": "[popup wav]  `NPC_SOUND` `NPC_END_SOUND`        // 弹出/关闭对话框时产生的效果音",
-      "authors": "unMen"
+      "authors": "unMen",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 打开菜单时、关闭菜单时播放的效果音。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "product item",
@@ -136,7 +150,10 @@
       "name": "role",
       "title": "NPC的各项功能",
       "description": "[role]  NPC的各项功能\n———————————————————————————\n//拓展功能\n[skill]\n\t`职业`\n[/skill]\n//导师技能商店（需写在[role]词条的外边，且部分端需要插件支持）\n———————————————————————————\n\t`[time sand]`\t0\n//导师技能商店（或许是）\n\n\t`[item shop]`\t33\n//NPC商店，NPC商店编号\n\t`[secret shop]`\t1002\n//加百利商店\n\n\t`[recover stamina]`\t0\n//解除虚弱\n\n\t`[sera shop]`\t\t0\n//进入商城\n\n\t`[create guild agit]`\t0\n//创建公会\n\n\t`[guild]`\t0\n//管理公会\n\n\t`[delete guild agit]`\t0\n//解散公会\n\n\t`[upgrade item]`\t0\n//强化装备\n\n\t`[convert avatar]`\t33\n//重铸徽章\n\n\t`[compound emblem]`\t33\n//徽章合成\n\n\t`[job change]`\t-1\n//副职业——1附魔师、2药剂师、3分解师、4人偶师\n\n\t`[product item]`\t20\n//生产，罗杰商店编号\n\n\t`[mouse register]`\t0",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "closing": true,
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- NPC的角色列表。交替写入所需的角色名称和索引。顺序没有意义。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "secret shop",
@@ -154,7 +171,10 @@
       "name": "skill",
       "title": "左边是技能编号 右边是技能等级",
       "description": "左边是技能编号      右边是技能等级\n\n该词条位于NPC内时，代表这是导师技能商店，将技能编号写进即可添加\n\n//示例1：\n[skill]\n\t`[swordman]`\t1\n[/skill]\n以上代表该导师技能商店内有一个男鬼剑士专属的编号为1的  `格挡`\n\n//示例2：\n[skill]\n\t`[common]`\t169\n[/skill]\n以上代表该导师技能商店内有一个全职业通用的编号为169的  `后跳`",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "closing": true,
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 可教授的职业技能。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "swordman",
@@ -179,6 +199,37 @@
       "title": "在Boss房间中设置副本通关前看不见",
       "description": "在Boss房间中设置副本通关前看不见，然后在副本通关后显示",
       "authors": "unMen"
+    },
+    {
+      "name": "small face",
+      "title": "窗口中显示的小脸部图像文件名和帧索引",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 窗口中显示的小脸部图像文件名和帧索引。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "name",
+      "title": "名称",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 名称。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "speech",
+      "title": "一段对话开始",
+      "closing": true,
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- 一段对话开始。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move town limit str",
+      "title": "NPC区域移动限制弹出窗口字符串",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- NPC区域移动限制弹出窗口字符串。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move town confirm str",
+      "title": "NPC区域移动前确认弹出窗口字符串",
+      "officialDescription": "#### 官方示例: npcsample.npc\n\n- NPC区域移动前确认弹出窗口字符串。",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

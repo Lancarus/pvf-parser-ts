@@ -1,0 +1,119 @@
+{
+  "tags": [
+    {
+      "name": "sub type",
+      "title": "表示是怪物卡片！！",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 表示是怪物卡片！！",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "HP MAX",
+      "title": "前面的+号可以省略",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 前面的+号可以省略",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical absolute damage",
+      "title": "物理绝对伤害",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 物理绝对伤害",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical damage reduce",
+      "title": "物理伤害修正",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 物理伤害修正",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical absolute defense",
+      "title": "物理绝对防御",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 物理绝对防御。%值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical absolute damage",
+      "title": "魔法绝对伤害",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 魔法绝对伤害",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical damage reduce",
+      "title": "魔法伤害修正",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 魔法伤害修正",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical absolute defense",
+      "title": "魔法绝对防御",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 魔法绝对防御。%值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stuck resistance",
+      "title": "(0",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- (0.1%单位)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "MP regen speed rate",
+      "title": "%增加 (临时例外处理)",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- %增加 (临时例外处理)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "room list move speed rate",
+      "title": "指定在村庄中的移动速度",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 指定在村庄中的移动速度",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "elemental property",
+      "title": "在      中选择",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 在 `[no element]` `[fire element]` `[water element]` `[dark element]` `[light element]` 中选择。`[no element]` 则可以不写",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "active status",
+      "title": "最前面是攻击时触发的状态异常种类",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 最前面是攻击时触发的状态异常种类。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "critical hit",
+      "title": "暴击命中概率上升值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 暴击命中概率上升值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stuck",
+      "title": "卡住概率变化值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 卡住概率变化值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "human damage rate",
+      "title": "对人类伤害比率变化值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 对人类伤害比率变化值。%值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "fort damage rate",
+      "title": "对建筑伤害比率变化值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 对建筑伤害比率变化值。%值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster damage rate",
+      "title": "对怪兽 (针对装甲类别为0的家伙) 攻击比率",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 对怪兽 (针对装甲类别为0的家伙) 攻击比率。可小数，%值，100为默认",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill levelup",
+      "title": "装备时提升的技能和等级列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 装备时提升的技能和等级列表。",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

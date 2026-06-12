@@ -4,7 +4,9 @@
       "name": "basic motion",
       "title": "主动画演出Ani指向",
       "description": "主动画演出Ani指向",
-      "authors": "ZateL"
+      "authors": "ZateL",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 基本动作动画文件名。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "object destroy condition",
@@ -16,7 +18,300 @@
       "name": "piercing power",
       "title": "obj特效攻击时的穿透力",
       "description": "obj特效攻击时的穿透力，数值越大穿透的单位越多。",
-      "authors": "ZateL"
+      "authors": "ZateL",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 攻击时的穿透力。攻击成功时计算概率，失败则对象消失。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "name",
+      "title": "对象的名称",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 对象的名称。\n- -> 模式的唯一名称。必须是唯一的名称。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "width",
+      "title": "怪物的碰撞检测范围",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 怪物的碰撞检测范围。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "layer",
+      "title": "绘制图层",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 绘制图层。可选择 `[close]` `[normal]` `[bottom]` `[closeback]` `[middleback]` `[distantback]` 之一。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "layer level",
+      "title": "图层层级",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 图层层级。此数值越高则位置越靠前。即此数值低则会被数值高的对象遮挡。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "pass type",
+      "title": "选择    之一",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 选择 `[pass all]` `[pass only float type]` `[do not pass]` 之一。添加 `[pass only red team]`、`[pass only blue team]`（势力战用）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "piercing tolerance",
+      "title": "穿透抗性",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 穿透抗性。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hp max",
+      "title": "被动对象的HP值",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 被动对象的HP值。若无此值则完全不会受到伤害（障碍物概念）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hp destroy",
+      "title": "HP耗尽时是否破坏",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- HP耗尽时是否破坏。0则不破坏，1则破坏。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "vanish on move collision",
+      "title": "碰撞时是否消失 (1",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 碰撞时是否消失 (1: 消失[默认] 0: 不消失)。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "category",
+      "title": "该对象的所属类别列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 该对象的所属类别列表。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "etc motion",
+      "title": "硬编码用动作动画文件名列表（顺序重要）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 硬编码用动作动画文件名列表（顺序重要）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "basic action",
+      "title": "基本动作的路径和文件名",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 基本动作的路径和文件名。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "etc action",
+      "title": "对象基本没有攻击",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 对象基本没有攻击，因此不使用 [action list] 标签，只使用 [etc action] 标签。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "team",
+      "title": "队伍编号 0~",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 队伍编号 0~ : 角色队伍 100~ : 怪物队伍 200~ : 中立队伍。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "trap",
+      "title": "是否为陷阱",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 是否为陷阱。为1则必须破坏才能通关。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "last action",
+      "title": "在破坏前必须执行一次的动作的文件路径",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 在破坏前必须执行一次的动作的文件路径。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "homing follow",
+      "title": "// 0 - 若是角色",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- `[ME]` `[ENEMY]` //`[CHARACTER]` 0 - 若是角色，则放入队伍索引。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "homing velocity",
+      "title": "速度",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 速度，加速度。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "homing check gap",
+      "title": "追踪中的目标位置检查时间间隔（1/1000）秒",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 追踪中的目标位置检查时间间隔（1/1000）秒。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sync animation rotation",
+      "title": "是否根据移动方向对齐动画（默认值 0）",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 是否根据移动方向对齐动画（默认值 0）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "max rotation",
+      "title": "每秒最大可旋转角度（0则为无限旋转）",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 每秒最大可旋转角度（0则为无限旋转）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "init rotation",
+      "title": "对象生成时的旋转角度（默认值 0）",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 对象生成时的旋转角度（默认值 0）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "diff rotation",
+      "title": "可感知目标的角度（默认值 180）- 当 [max rotation] ",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 可感知目标的角度（默认值 180）- 当 [max rotation] 不为0时生效。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "homing time",
+      "title": "制导功能生效的时间（0则为无限",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 制导功能生效的时间（0则为无限，默认值 0）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sync target move",
+      "title": "制导功能期间",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 制导功能期间，若目标移动，则实时移动该距离，使制导轨迹不变的功能。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "file",
+      "title": "粒子的生成位置为被动对象的生成位置 + 粒子脚本的生成位置",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 粒子的生成位置为被动对象的生成位置 + 粒子脚本的生成位置。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "create delay",
+      "title": "被动对象生成后到粒子特效出现为止的延迟",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 被动对象生成后到粒子特效出现为止的延迟。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "create sound",
+      "title": "粒子生成时输出的声音（不支持循环）",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 粒子生成时输出的声音（不支持循环）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "follow parent",
+      "title": "将粒子的生成位置改为距离被动对象特定位置偏移的位置",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 将粒子的生成位置改为距离被动对象特定位置偏移的位置。<移动类型：仅最后声明的移动类型有效>\n- `[path gate]` 进入门时随机位置。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "is blocking obj",
+      "title": "设为1并放置在门前",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 设为1并放置在门前，则门不会打开。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "is hp by difficulty",
+      "title": "为1则根据难度改变HP",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 为1则根据难度改变HP：普通 * 1.0 - 专家 * 2.0 - 大师 * 3.0 - 王者 * 4.0 - 英雄 - * 5.0。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hp gage",
+      "title": "为1则绘制HP条",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 为1则绘制HP条。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "burning death path",
+      "title": "被火属性武器终结时输出的特效路径（写入此标签则仅在火属性时死亡）",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 被火属性武器终结时输出的特效路径（写入此标签则仅在火属性时死亡）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "can beat index",
+      "title": "只有具有此标签内索引的怪物攻击时才会受到伤害",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 只有具有此标签内索引的怪物攻击时才会受到伤害。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "apply physics",
+      "title": "应用动力学",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 应用动力学，刚体的牛顿值（默认 1500N）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "index",
+      "title": "控制速度的对象索引",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 控制速度的对象索引。\n- 要生成的对象索引。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "speed",
+      "title": "速度增加",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 速度增加。\n- 速度减少。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "id",
+      "title": "用于[data]模式的ID",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 用于[data]模式的ID。用此值区分模式中出现的对象。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "probability",
+      "title": "对象生成的概率",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 对象生成的概率。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "warning",
+      "title": "是否显示警告标记",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 是否显示警告标记。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "pattern",
+      "title": "> 可以指定模式",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- -> 可以指定模式。也可以有多个。\n- 第一个参数是模式名称，必须是上面[patterns]标签中指定的名称。\n- 第二个参数是模式持续的时间，毫秒单位。\n- 示例中，模式以 A-B-A-A-B-R-A 的顺序每3秒变化一次。\n- 模式全部结束后，再从开始重复。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "interval",
+      "title": "> 对象生成的时间周期",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- -> 对象生成的时间周期。毫秒单位。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "columns",
+      "title": "> 一个周期内生成的模式单位数量",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- -> 一个周期内生成的模式单位数量。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "data",
+      "title": "> 在此指定模式数据",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- -> 在此指定模式数据。0为空位，1表示要生成的被动对象。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sequences",
+      "title": "> 按顺序放出上面指定的模式",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- -> 按顺序放出上面指定的模式。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "string data",
+      "title": "这里是用于声音等的空间",
+      "closing": true,
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 这里是用于声音等的空间。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "pvp room transparent value for observer",
+      "title": "若有此标签",
+      "officialDescription": "#### 官方示例: passiveobjectsample.obj\n\n- 若有此标签，则对象仅对观察者以此值透明显示。",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

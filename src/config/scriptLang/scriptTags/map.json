@@ -4,13 +4,18 @@
       "name": "animation",
       "title": "物品贴图动画等",
       "description": "物品贴图动画等",
-      "authors": "无名氏"
+      "authors": "无名氏",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 指定放置在地图上的动画。没有则不写也可以。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "background pos",
       "title": "背景POS",
       "description": "背景POS",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 扩展为800*600时，在原有背景绘制位置上提升该数值进行绘制。通常设置为80",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "basic action",
@@ -28,37 +33,50 @@
       "name": "dungeon start area",
       "title": "进入该副本地图时的入场坐标（大概是）",
       "description": "进入该副本地图时的入场坐标（大概是）\n1、X轴位置\n2、Y轴位置\n3、\n4、",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 在地牢起始地图设置，角色开始地牢时位置的x坐标,y坐标,x大小,y大小",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "far sight scroll",
       "title": "城镇最后面的背景图片随着人物移动也跟着移动的词条",
       "description": "城镇最后面的背景图片随着人物移动也跟着移动的词条，数字越大图片移动的越快",
-      "authors": "南城以北花似海"
+      "authors": "南城以北花似海",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 地砖滚动速度与远景滚动速度的比率 (%) 100则为一起滚动，0则不滚动",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "filename",
       "title": "城镇的最底层背景的贴图",
       "description": "城镇的最底层背景的贴图",
-      "authors": "小鬼"
+      "authors": "小鬼",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 动画路径",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "greed",
       "title": "贪吃蛇小游戏",
       "description": "贪吃蛇小游戏。\n副本房间的连接顺序，显示副本网格形状\nBB\t=\t右\nMM\t=\t左下\nDD\t=\t右上\nGG\t=\t左上\nJJ\t=\t右下\nFF\t=\t左右\nEE\t=\t左\nNN\t=\t左下右\nCC\t=\t上\nII\t=\t下\nKK\t=\t上下\nPP\t=\t十字\nHH\t=\t左上右\nAA\t=\t无法通过\nLL             =              上下右",
-      "authors": "阿董-137735017"
+      "authors": "阿董-137735017",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 设置在地牢的哪种网格类型中使用此地图",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "monster",
       "title": "如下",
       "description": "如下：\t61337\t1\t0\t611\t240\t0\t1\t1\t`[fixed]`\t`[normal]`\n\n61337（怪物代码）-（1）怪物数量-（0）怪物等级，如果写0就是代表跟随副本等级-611（坐标）-240（坐标）-0-1-1（0-1-1不用管）-[fixed]-[normal]（怪物类别普通怪物）\n\n如果想做成BOSS 就把[normal]变成[boss]11",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 指定放置在地图上的怪物。没有则不写也可以。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "pathgate pos",
       "title": "房间入口的坐标",
       "description": "房间入口的坐标\n一共8个数字，两组数字为一个入口的X,Y坐标。\n第1组=左边入口坐标\n第2组=右边入口坐标\n第3组=上方入口坐标\n第4组=下方入口坐标",
-      "authors": "pvf"
+      "authors": "pvf",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 放置通道对象的坐标",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "player number",
@@ -70,19 +88,26 @@
       "name": "pvp practice start area",
       "title": "和[pvp start area]一样",
       "description": "和[pvp start area]一样,就是玩家和人机开始时的位置",
-      "authors": "notlikeKFC"
+      "authors": "notlikeKFC",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- pvp练习模式开始地点定义 (X坐标, Y坐标, 宽度, 高度 顺序)",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "pvp start area",
       "title": "pvp起始点定义（X坐标",
       "description": "pvp起始点定义（X坐标，Y坐标，宽度，高度顺序）\n四个数字一组，分三组\n0 0 0 0\t\t/个人战开始点\n\n0 0 0 0\t\t/1队的起点\n\n0 0 0 0\t\t/2队的起点",
-      "authors": "阿董-137735017"
+      "authors": "阿董-137735017",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- pvp开始地点定义 (X坐标, Y坐标, 宽度, 高度 顺序)",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "sound",
       "title": "进入副本时会播放的背景音乐和环境音乐",
       "description": "进入副本时会播放的背景音乐和环境音乐\n可以在客户端 audio.xml 文件内查看指向哪个声音文件\n\n背景音乐位置在客户端的[Music]\n环境音乐位置在客户端的[SoundPacks]（大概是）\n\n[SoundPacks]内的声音文件需借助npk解包工具查看\n目前据作者所知的npk解包工具有：\nExtractorSharp（可编辑贴图、音乐）\n黑猫（适合拿来做时装）\n\n除了解包工具还有配套的免费调音工具，也是作者正在使用的：\nAudacity\n\n若是不会找工具也可以加群下载，从下载到使用到产出成品都无需任何费用：\nQQ群：903031457",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 进入地图时输出的声音标签列表",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "special passive object",
@@ -94,19 +119,275 @@
       "name": "tile",
       "title": "在近景图层上平铺绘制的地图基础",
       "description": "\n在近景图层上平铺绘制的地图基础。\n\n地图底板",
-      "authors": "阿董-137735017"
+      "authors": "阿董-137735017",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 地图基本地砖 - 在近景图层绘制。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "town movable area",
       "title": "城镇内区域之间的连接",
       "description": "城镇内区域之间的连接\n\n六个数字为一组\n1、X坐标\n2、Y坐标\n3、X的范围\n4、Y的范围\n5、城镇编号\n6、区域编号\n\n例如：\n1-100-200-300-2-0\n释：在此地图X1Y100的地方有一个200*300大小的传送阵通向2号城镇的第0个区域。\n\n注：如果5、6位数字都为-1，则表示此处进入副本选图界面",
-      "authors": "pvf"
+      "authors": "pvf",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 等候室用起始区域的列表。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "virtual movable area",
       "title": "城镇可移动区域",
       "description": "城镇可移动区域\n\n四组数字为一组\n1、X坐标\n2、Y坐标\n3、X的范围\n4、Y的范围\n\n例子：45 55 65 75\n从X45为起点向右扩展65\n从Y55为起点向下扩展75\n人物可以在这个范围内移动",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 等候室用角色可移动的方形区域列表。依次为x坐标, y坐标, x大小, y大小",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "map name",
+      "title": "地图的名称",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 地图的名称",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "player name",
+      "title": "最少人数",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 最少人数，最多人数",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "is character escape",
+      "title": "角色卡死逃脱例外",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 角色卡死逃脱例外",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "show dust",
+      "title": "灰尘和脚印效果",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 灰尘和脚印效果",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sort bottom",
+      "title": "除一般图层外是否使用其他图层排序 1",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 除一般图层外是否使用其他图层排序 1:使用 其他:不使用",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "tournament start area",
+      "title": "武斗场地图开始坐标定义 (入场人数",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 武斗场地图开始坐标定义 (入场人数, X坐标, Y坐标, 队伍(1:角色, 2:怪物))",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "shadow type",
+      "title": "影子模式",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 影子模式 : 设置为 `[mirror]` 时绘制上层、下层影子。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "dungeon",
+      "title": "使用此地图的副本列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 使用此地图的副本列表",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "type",
+      "title": "类型设置",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 类型设置 : 普通房间, 首领房间, 虚拟房间 (诱惑之村哈梅伦中使用 : 首领用硬编码)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "extended tile",
+      "title": "扩展地砖列表 附加在地砖下方的扩展地砖列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 扩展地砖列表 附加在地砖下方的扩展地砖列表",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "elemental property",
+      "title": "为地图指定属性",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 为地图指定属性。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "middle sight scroll",
+      "title": "地砖滚动速度与中景滚动速度的比率 (%) 100则为一起滚动",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 地砖滚动速度与中景滚动速度的比率 (%) 100则为一起滚动，0则不滚动",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "near sight scroll",
+      "title": "地砖滚动速度与近景滚动速度的比率 (%) 100则为一起滚动",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 地砖滚动速度与近景滚动速度的比率 (%) 100则为一起滚动，0则不滚动",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "layer",
+      "title": "绘制的图层",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 绘制的图层",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "loop y axis",
+      "title": "是否持续沿Y坐标向下重复",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 是否持续沿Y坐标向下重复",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "screen pos",
+      "title": "以屏幕坐标基准设置起始坐标",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 以屏幕坐标基准设置起始坐标",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "guild agit entrance info",
+      "title": "公会据点进/出场用AREA区域 x坐标",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 公会据点进/出场用AREA区域 x坐标,y坐标,x大小,y大小,放入-2, -2",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "static player start pos",
+      "title": "固定的地图起始位置",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 固定的地图起始位置。在指定的精确坐标开始。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "player 1",
+      "title": "玩家",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 玩家, x, y, z",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "opening bgm",
+      "title": "标签名 声音播放时间(播放30秒后播放主BGM)",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 标签名 声音播放时间(播放30秒后播放主BGM)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "passive object",
+      "title": "指定放置在地图上的被动对象",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 指定放置在地图上的被动对象。没有则不写也可以。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster condition",
+      "title": "地图上出现的条件怪物 与 [monster] 标签相同",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 地图上出现的条件怪物 与 [monster] 标签相同",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "blood monster",
+      "title": "怪物索引",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 怪物索引,召唤前(5秒前)出现的演出对象索引,x,y,z坐标,将复活多久,",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "ultimate monster",
+      "title": "与[blood monster]相同",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 与[blood monster]相同",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "tournament monster",
+      "title": "武斗场出现的怪物列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 武斗场出现的怪物列表",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "blood phase time",
+      "title": "第几轮",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 第几轮, 血战怪物列表索引(-1是从列表中随机..),",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "ultimate phase time",
+      "title": "与[blood phase time]相同",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 与[blood phase time]相同，但在最后放入难度 'A', 'B', 'C', 'D', 'E'",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "heroes mode map index",
+      "title": "英雄模式时代替出现的地图索引",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 英雄模式时代替出现的地图索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster team",
+      "title": "地图上出现的怪物的队伍",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 地图上出现的怪物的队伍。无特别指定时不需要。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster specific AI",
+      "title": "地图上有巡逻、区域防御AI的怪物放置时指定",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 地图上有巡逻、区域防御AI的怪物放置时指定。没有则无需指定。怪物AI指定按声明的顺序。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "champion",
+      "title": "冠军怪物数量",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 冠军怪物数量",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "NPC",
+      "title": "指定放置在地图上的NPC",
+      "closing": true,
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 指定放置在地图上的NPC。没有则不写也可以。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "event monster position",
+      "title": "活动怪物生成坐标",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 活动怪物生成坐标",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "quest animation",
+      "title": "可以通过任务控制动画显示或不显示",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 可以通过任务控制动画显示或不显示。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attacked monster info",
+      "title": "城镇袭击怪物信息",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 城镇袭击怪物信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move layered map",
+      "title": "上下重叠的地图 (layered map) 移动条件",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 上下重叠的地图 (layered map) 移动条件。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "all dead case passable",
+      "title": "队员全灭时可自动移动 (无此标签则停留在当前地图)",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 队员全灭时可自动移动 (无此标签则停留在当前地图)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "zpos under",
+      "title": "[zpos under] -300",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- [zpos under] -300 : z值在-300以下时",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "map dialog",
+      "title": "进入地图时出现的对话",
+      "officialDescription": "#### 官方示例: mapsample.map\n\n- 进入地图时出现的对话",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

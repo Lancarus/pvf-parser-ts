@@ -28,7 +28,9 @@
       "name": "growtype name",
       "title": "基本的角色 转职1 转职2 转职3",
       "description": "[growtype name] `基本的角色` `转职1` `转职2` `转职3` // 每种职业类型的名称。",
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 各成长类型的成长类型名称",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "gunner",
@@ -52,19 +54,268 @@
       "name": "weapon hit info",
       "title": "武器命中信息",
       "description": "武器命中信息\n\n//示例：\n\t`[cut]`\n\t`[blood]`\t90\t1.0\t0.0\t0.0\n\n`[cut]` = 武器打击类型为`切割`，就像太刀一样\n`[blood]` = 武器命中时`有出血视觉效果`\n\n`出血视觉效果开关`的右边第1个数字也就是90代表普攻卡肉时间为0.09秒\n——————————————————————\n//示例2：\n\t`[blow]`\n\t`[no blood]`\t100\t1.2\t0.1\t-0.95\n\n`[blow]` = 武器打击类型为`钝击`，就像钝器一样\n`[no blood]` = 武器命中时`无出血视觉效果`\n——————————————————————\n补充：第二个数值是命中硬直比率，比如卡肉时间0.2秒，\n           命中硬直比率为2.0，那么实际造成的硬直是0.4秒",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 武器的子类型信息（详情请参考 AttackInfo 示例）",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "weapon skill info",
       "title": "武器技能信息",
       "description": "武器技能信息",
-      "authors": "无名氏"
+      "authors": "无名氏",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 武器的子类型对应的武器技能 MP，冷却时间信息。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "width",
       "title": "40 10",
       "description": "[width] 40 10\t\t// X轴，Y轴宽度顺序（像素值）",
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 依次为 X轴，Y轴宽度（像素值）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "job",
+      "title": "在   中选择其一",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 在 `[swordman]` `[fighter]` 中选择其一",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "initial value",
+      "title": "此标识之后的数值为初始创建时的属性",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 此标识之后的数值为初始创建时的属性。可输入到小数点后第一位",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stuck resistance",
+      "title": "0",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 0.1% 单位",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "inventory limit",
+      "title": "（单位",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- （单位：10g）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move speed",
+      "title": "以 1000 为基准值",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 以 1000 为基准值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "weight",
+      "title": "（单位",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- （单位：10g）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill",
+      "title": "初始赋予技能列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 初始赋予技能列表\n- 转职时赋予的技能",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "category",
+      "title": "所属类别列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 所属类别列表\n- 转职时获得的护甲类别。不能与 initial value 中的重复。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "module damage rate",
+      "title": "PVP",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- PVP，战场，混沌模式下的伤害比率",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "growtype 1",
+      "title": "之后的数值为转职前的属性成长值",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 之后的数值为转职前的属性成长值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "growtype 2",
+      "title": "之后的数值为第一次转职时的属性",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 之后的数值为第一次转职时的属性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "growtype 3",
+      "title": "之后的数值为第二次转职时的属性",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 之后的数值为第二次转职时的属性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "growtype 4",
+      "title": "之后的数值为第三次转职时的属性",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 之后的数值为第三次转职时的属性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "growtype 5",
+      "title": "之后的数值为第四次转职时的属性",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 之后的数值为第四次转职时的属性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "waiting motion",
+      "title": "待机动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 待机动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move motion",
+      "title": "移动动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 移动动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sit motion",
+      "title": "坐下动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 坐下动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "damage motion 1",
+      "title": "受击动作1动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 受击动作1动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "damage motion 2",
+      "title": "受击动作2动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 受击动作2动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "down motion",
+      "title": "倒地动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 倒地动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "overturn motion",
+      "title": "翻身动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 翻身动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "jump motion",
+      "title": "跳跃动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 跳跃动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "jumpattack motion",
+      "title": "跳跃攻击动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 跳跃攻击动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "rest motion",
+      "title": "休息动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 休息动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "throw motion 1-1",
+      "title": "投掷动作1蓄力动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 投掷动作1蓄力动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "throw motion 1-2",
+      "title": "投掷动作1发射动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 投掷动作1发射动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "throw motion 2-1",
+      "title": "投掷动作2蓄力动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 投掷动作2蓄力动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "throw motion 2-2",
+      "title": "投掷动作2发射动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 投掷动作2发射动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "dash motion",
+      "title": "冲刺动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 冲刺动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "dashattack motion",
+      "title": "冲刺攻击动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 冲刺攻击动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "getitem motion",
+      "title": "拾取物品动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 拾取物品动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "buff motion",
+      "title": "增益效果使用动作动画文件名",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 增益效果使用动作动画文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attack motion",
+      "title": "攻击动作动画文件名列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 攻击动作动画文件名列表",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "etc motion",
+      "title": "硬编码用动作动画文件名列表（顺序重要）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 硬编码用动作动画文件名列表（顺序重要）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "jumpattack info",
+      "title": "跳跃攻击的攻击信息",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 跳跃攻击的攻击信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "dashattack info",
+      "title": "冲刺攻击的攻击信息",
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 冲刺攻击的攻击信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attack info",
+      "title": "基础攻击动作的攻击信息",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 基础攻击动作的攻击信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "etc attack info",
+      "title": "其他硬编码用攻击信息",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 其他硬编码用攻击信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "weapon wav",
+      "title": "武器子类型1的自定义音效列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: charactersample.chr\n\n- 武器子类型1的自定义音效列表\n- 武器子类型2的自定义音效列表\n- 武器子类型3的自定义音效列表",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

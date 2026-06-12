@@ -1,0 +1,16 @@
+{
+  "tags": [
+    {
+      "name": "stackable type",
+      "title": "类型为",
+      "officialDescription": "#### 官方示例: stackablesample-throwitem.stk\n\n- 类型为 `[throw]`",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "applying range",
+      "title": "以像素为单位的正圆形半径",
+      "officialDescription": "#### 官方示例: stackablesample-throwitem.stk\n\n- 以像素为单位的正圆形半径，虽然不是专为投掷物品设置的标签，但常用于赋予特殊效果的物品",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

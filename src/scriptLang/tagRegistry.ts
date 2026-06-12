@@ -1,11 +1,37 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs/promises';
+import * as path from 'path';
+import { pathContains, readConfiguredUnpackRoots } from '../pvf/unpackEnv';
 
-export interface ScriptTagInfo { name: string; title?: string; description?: string; authors?: string; closing?: boolean; }
+export interface ScriptTagInfo {
+    name: string;
+    title?: string;
+    description?: string;
+    authors?: string;
+    officialDescription?: string;
+    officialAuthors?: string;
+    closing?: boolean;
+}
 interface TagFile { tags: ScriptTagInfo[] }
+interface VariantRule {
+    short: string;
+    variant: string;
+    label?: string;
+    priority?: number;
+    pathIncludes?: string[];
+    contentTags?: string[];
+    contentIncludes?: string[];
+    equipmentTypes?: string[];
+    stackableTypes?: string[];
+}
+interface VariantRulesFile { rules?: VariantRule[] }
+export interface ResolvedScriptTags { tags: ScriptTagInfo[]; variant?: string }
 
 const cache = new Map<string, ScriptTagInfo[]>();
+const variantRulesCache = new Map<string, VariantRule[]>();
 const GLOBAL_TAGS_SHORT = 'global';
+const PVF_MANIFEST_FILE = '.pvfmanifest.json';
+const MAX_VARIANT_SCAN_CHARS = 64 * 1024;
 
 function sanitizeMarkdown(markdown: string): string {
     return markdown.replace(/\]\(\s*command:[^)]+\)/gi, '](#)');
@@ -123,14 +149,14 @@ function escapeMarkdownHeading(value: string): string {
     return value.replace(/\\/g, '\\\\').replace(/([`*_{}\[\]()#+\-.!|>])/g, '\\$1').replace(/\r?\n/g, ' ').trim();
 }
 
-function editCommentCommandUri(short: string, name: string): string {
-    const args = encodeURIComponent(JSON.stringify([{ short, name }]));
+function editCommentCommandUri(short: string, name: string, variant?: string): string {
+    const args = encodeURIComponent(JSON.stringify([{ short, name, ...(variant ? { variant } : {}) }]));
     return `command:pvf.editScriptTagComment?${args}`;
 }
 
-function appendTagFooter(md: vscode.MarkdownString, short: string, tag: ScriptTagInfo) {
+function appendTagFooter(md: vscode.MarkdownString, short: string, tag: ScriptTagInfo, variant?: string) {
     const author = escapeMarkdownTableCell((tag.authors || '').trim() || '未署名');
-    md.appendMarkdown(`\n\n---\n\n| 作者: ${author} | [$(edit) 编辑注释](${editCommentCommandUri(short, tag.name)}) |\n|:--|--:|\n`);
+    md.appendMarkdown(`\n\n---\n\n| 作者: ${author} | [$(edit) 编辑注释](${editCommentCommandUri(short, tag.name, variant)}) |\n|:--|--:|\n`);
 }
 
 function tagTitle(tag: Pick<ScriptTagInfo, 'name' | 'title'>): string {
@@ -138,28 +164,109 @@ function tagTitle(tag: Pick<ScriptTagInfo, 'name' | 'title'>): string {
     return title || tag.name;
 }
 
-function tagDocumentationMarkdown(tag: ScriptTagInfo, options?: { trustEditCommand?: boolean; short?: string; name?: string }): vscode.MarkdownString | undefined {
-    if (!tag.description && !tag.title && !options?.trustEditCommand) return undefined;
+function hasTagDocumentation(tag: ScriptTagInfo): boolean {
+    return !!tag.description || !!tag.officialDescription || !!tag.title;
+}
+
+function appendTagDocumentationSections(md: vscode.MarkdownString, tag: ScriptTagInfo, options?: { tableStyle?: 'markdown' | 'code' }) {
+    if (tag.description) {
+        md.appendMarkdown('\n\n' + formatCommentMarkdown(tag.description, options));
+    }
+    if (tag.officialDescription) {
+        md.appendMarkdown('\n\n---\n\n### 官方注释');
+        if (tag.officialAuthors) {
+            md.appendMarkdown(`\n\n来源: ${escapeMarkdownHeading(tag.officialAuthors)}`);
+        }
+        md.appendMarkdown('\n\n' + formatCommentMarkdown(tag.officialDescription, options));
+    }
+}
+
+function tagDocumentationMarkdown(tag: ScriptTagInfo, options?: { trustEditCommand?: boolean; short?: string; name?: string; variant?: string }): vscode.MarkdownString | undefined {
+    if (!hasTagDocumentation(tag) && !options?.trustEditCommand) return undefined;
     const md = new vscode.MarkdownString(undefined, true);
     md.appendCodeblock(tag.name, options?.short ? `pvf-${options.short}` : undefined);
     md.appendMarkdown(`\n\n### ${escapeMarkdownHeading(tagTitle(tag))}`);
-    if (tag.description) {
-        md.appendMarkdown('\n\n' + formatCommentMarkdown(tag.description));
-    }
+    appendTagDocumentationSections(md, tag);
     if (options?.trustEditCommand && options.short && options.name) {
         md.supportThemeIcons = true;
         md.isTrusted = { enabledCommands: ['pvf.editScriptTagComment'] };
-        md.appendMarkdown(`\n\n[$(edit) 编辑注释](${editCommentCommandUri(options.short, options.name)})`);
+        md.appendMarkdown(`\n\n[$(edit) 编辑注释](${editCommentCommandUri(options.short, options.name, options.variant)})`);
     }
     return md;
 }
 
-async function loadTagFile(context: vscode.ExtensionContext, short: string): Promise<ScriptTagInfo[]> {
-    const candidates = [
-        vscode.Uri.joinPath(context.extensionUri, 'dist', 'config', 'scriptLang', 'scriptTags', `${short}.json`),
-        vscode.Uri.joinPath(context.extensionUri, 'src', 'config', 'scriptLang', 'scriptTags', `${short}.json`)
+function normalizeTagName(value: string): string {
+    return value.trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+function normalizePvfPath(value: string): string {
+    return decodeURIComponent(String(value || ''))
+        .replace(/\\/g, '/')
+        .replace(/^\/+/, '')
+        .toLowerCase();
+}
+
+async function exists(file: string): Promise<boolean> {
+    try {
+        await fs.stat(file);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+function tagFileCandidates(context: vscode.ExtensionContext, short: string, variant?: string): vscode.Uri[] {
+    const parts = variant
+        ? ['config', 'scriptLang', 'scriptTags', 'variants', short, `${variant}.json`]
+        : ['config', 'scriptLang', 'scriptTags', `${short}.json`];
+    return [
+        vscode.Uri.joinPath(context.extensionUri, 'dist', ...parts),
+        vscode.Uri.joinPath(context.extensionUri, 'src', ...parts)
     ];
-    for (const u of candidates) {
+}
+
+function mergeDelimitedAuthors(previous: string | undefined, additions: string | undefined): string | undefined {
+    const authors = new Set(String(previous || '').split('|').map(item => item.trim()).filter(Boolean));
+    for (const author of String(additions || '').split('|').map(item => item.trim()).filter(Boolean)) {
+        authors.add(author);
+    }
+    return authors.size ? Array.from(authors).join('|') : undefined;
+}
+
+function appendMergedMarkdown(previous: string | undefined, addition: string | undefined): string | undefined {
+    const source = (addition || '').trim();
+    if (!source) return previous;
+    const current = (previous || '').trimEnd();
+    if (!current) return source;
+    if (current.includes(source)) return current;
+    return `${current}\n\n${source}`;
+}
+
+function mergeTagLists(base: ScriptTagInfo[], additions: ScriptTagInfo[], options?: { mergeDescriptions?: boolean }): ScriptTagInfo[] {
+    const merged = base.map(tag => ({ ...tag }));
+    const byName = new Map(merged.map(tag => [normalizeTagName(tag.name), tag]));
+    for (const source of additions) {
+        const key = normalizeTagName(source.name);
+        const target = byName.get(key);
+        if (!target) {
+            const copy = { ...source };
+            merged.push(copy);
+            byName.set(key, copy);
+            continue;
+        }
+        if (!options?.mergeDescriptions) continue;
+        target.description = appendMergedMarkdown(target.description, source.description);
+        target.officialDescription = appendMergedMarkdown(target.officialDescription, source.officialDescription);
+        if (!target.title && source.title) target.title = source.title;
+        if (typeof target.closing !== 'boolean' && typeof source.closing === 'boolean') target.closing = source.closing;
+        target.authors = mergeDelimitedAuthors(target.authors, source.authors);
+        target.officialAuthors = mergeDelimitedAuthors(target.officialAuthors, source.officialAuthors);
+    }
+    return merged;
+}
+
+async function loadTagFile(context: vscode.ExtensionContext, short: string, variant?: string): Promise<ScriptTagInfo[]> {
+    for (const u of tagFileCandidates(context, short, variant)) {
         try {
             const txt = await fs.readFile(u.fsPath, 'utf8');
             const data: TagFile = JSON.parse(txt);
@@ -188,7 +295,172 @@ export async function loadTags(context: vscode.ExtensionContext, short: string):
     return merged;
 }
 
-export function clearTagCache(short?: string) { if (short) cache.delete(short); else cache.clear(); }
+export async function loadVariantTags(context: vscode.ExtensionContext, short: string, variant: string): Promise<ScriptTagInfo[]> {
+    const key = `${short}:${variant}`;
+    if (cache.has(key)) return cache.get(key)!;
+    const local = await loadTagFile(context, short, variant);
+    cache.set(key, local);
+    return local;
+}
+
+export async function loadTagsForVariant(context: vscode.ExtensionContext, short: string, variant?: string): Promise<ScriptTagInfo[]> {
+    if (!variant) return loadTags(context, short);
+    const key = `${short}:${variant}:merged`;
+    if (cache.has(key)) return cache.get(key)!;
+    const local = await loadTagFile(context, short);
+    const variantTags = await loadVariantTags(context, short, variant);
+    const global = short === GLOBAL_TAGS_SHORT ? [] : await loadTags(context, GLOBAL_TAGS_SHORT);
+    const localWithVariant = mergeTagLists(local, variantTags, { mergeDescriptions: true });
+    const merged = mergeTagLists(localWithVariant, global);
+    cache.set(key, merged);
+    return merged;
+}
+
+async function loadVariantRules(context: vscode.ExtensionContext): Promise<VariantRule[]> {
+    const key = context.extensionUri.toString();
+    if (variantRulesCache.has(key)) return variantRulesCache.get(key)!;
+    const candidates = [
+        vscode.Uri.joinPath(context.extensionUri, 'dist', 'config', 'scriptLang', 'scriptTags', 'variantRules.json'),
+        vscode.Uri.joinPath(context.extensionUri, 'src', 'config', 'scriptLang', 'scriptTags', 'variantRules.json')
+    ];
+    for (const u of candidates) {
+        try {
+            const txt = await fs.readFile(u.fsPath, 'utf8');
+            const data: VariantRulesFile = JSON.parse(txt);
+            const rules = (data.rules || [])
+                .filter(rule => rule.short && rule.variant)
+                .sort((a, b) => (b.priority || 0) - (a.priority || 0));
+            variantRulesCache.set(key, rules);
+            return rules;
+        } catch { }
+    }
+    variantRulesCache.set(key, []);
+    return [];
+}
+
+function documentScanText(doc: vscode.TextDocument): string {
+    const text = doc.getText();
+    return text.length > MAX_VARIANT_SCAN_CHARS ? text.slice(0, MAX_VARIANT_SCAN_CHARS) : text;
+}
+
+function extractDocumentTags(text: string): Set<string> {
+    const tags = new Set<string>();
+    let inBacktick = false;
+    for (const line of text.replace(/\r\n?/g, '\n').split('\n')) {
+        const res = extractTagsOutsideBackticks(line, inBacktick);
+        inBacktick = res.inBacktickEnd;
+        for (const tag of res.tags) {
+            if (!tag.isClose) tags.add(normalizeTagName(tag.rawName));
+        }
+    }
+    return tags;
+}
+
+function extractFirstTagValue(text: string, tagName: string): string | undefined {
+    const expected = normalizeTagName(tagName);
+    let inBacktick = false;
+    for (const rawLine of text.replace(/\r\n?/g, '\n').split('\n')) {
+        const line = rawLine.slice(0, rawLine.indexOf('//') >= 0 ? rawLine.indexOf('//') : rawLine.length);
+        const res = extractTagsOutsideBackticks(line, inBacktick);
+        inBacktick = res.inBacktickEnd;
+        for (const tag of res.tags) {
+            if (tag.isClose || normalizeTagName(tag.rawName) !== expected) continue;
+            const rest = line.slice(tag.matchEnd);
+            const value = /\[([^\]]+)\]/.exec(rest);
+            if (value) return normalizeTagName(value[1]);
+            const code = /`([^`]+)`/.exec(rest);
+            if (code) return normalizeTagName(code[1]).replace(/^\[|\]$/g, '');
+            return normalizeTagName(rest);
+        }
+    }
+    return undefined;
+}
+
+async function pvfKeyFromDiskFile(context: vscode.ExtensionContext, filePath: string): Promise<string | undefined> {
+    let current = path.resolve(path.dirname(filePath));
+    while (true) {
+        const manifest = path.join(current, PVF_MANIFEST_FILE);
+        if (await exists(manifest)) {
+            const relative = path.relative(current, filePath);
+            return normalizePvfPath(relative);
+        }
+        const parent = path.dirname(current);
+        if (parent === current) break;
+        current = parent;
+    }
+    const roots = await readConfiguredUnpackRoots(context).catch(() => []);
+    const root = roots
+        .filter(candidate => pathContains(candidate, filePath))
+        .sort((a, b) => b.length - a.length)[0];
+    if (!root) return undefined;
+    return normalizePvfPath(path.relative(root, filePath));
+}
+
+async function normalizedDocumentPath(context: vscode.ExtensionContext, doc: vscode.TextDocument): Promise<string> {
+    if (doc.uri.scheme === 'pvf') return normalizePvfPath(doc.uri.path || doc.fileName);
+    if (doc.uri.scheme === 'file') {
+        const key = await pvfKeyFromDiskFile(context, doc.uri.fsPath);
+        if (key) return key;
+        return normalizePvfPath(doc.uri.fsPath);
+    }
+    return normalizePvfPath(doc.uri.path || doc.fileName);
+}
+
+function arrayIncludesNormalized(values: string[] | undefined, needle: string | undefined): boolean {
+    if (!needle) return false;
+    const normalizedNeedle = normalizeTagName(needle);
+    return (values || []).some(value => normalizeTagName(value) === normalizedNeedle || normalizedNeedle.includes(normalizeTagName(value)));
+}
+
+function ruleMatchesPath(rule: VariantRule, normalizedPath: string): boolean {
+    return (rule.pathIncludes || []).some(fragment => normalizedPath.includes(fragment.toLowerCase()));
+}
+
+function ruleMatchesContent(rule: VariantRule, scanText: string, tags: Set<string>): boolean {
+    if ((rule.contentTags || []).some(tag => tags.has(normalizeTagName(tag)))) return true;
+    const lowerText = scanText.toLowerCase();
+    if ((rule.contentIncludes || []).some(value => lowerText.includes(value.toLowerCase()))) return true;
+    if (rule.short === 'equ' && rule.equipmentTypes?.length) {
+        const equipmentType = extractFirstTagValue(scanText, 'equipment type');
+        if (arrayIncludesNormalized(rule.equipmentTypes, equipmentType)) return true;
+    }
+    if (rule.short === 'stk' && rule.stackableTypes?.length) {
+        const stackableType = extractFirstTagValue(scanText, 'stackable type');
+        if (arrayIncludesNormalized(rule.stackableTypes, stackableType)) return true;
+    }
+    if (rule.short === 'etc' && rule.variant === 'cashshop') {
+        return tags.has('avatar') && tags.has('item');
+    }
+    return false;
+}
+
+export async function resolveScriptTagVariant(context: vscode.ExtensionContext, short: string, doc: vscode.TextDocument): Promise<string | undefined> {
+    const rules = (await loadVariantRules(context)).filter(rule => rule.short === short);
+    if (!rules.length) return undefined;
+    const normalizedPath = await normalizedDocumentPath(context, doc);
+    const pathMatch = rules.find(rule => ruleMatchesPath(rule, normalizedPath));
+    if (pathMatch) return pathMatch.variant;
+    const scanText = documentScanText(doc);
+    const tags = extractDocumentTags(scanText);
+    const contentMatch = rules.find(rule => ruleMatchesContent(rule, scanText, tags));
+    return contentMatch?.variant;
+}
+
+export async function loadTagsForDocument(context: vscode.ExtensionContext, short: string, doc: vscode.TextDocument): Promise<ResolvedScriptTags> {
+    const variant = await resolveScriptTagVariant(context, short, doc);
+    return { tags: await loadTagsForVariant(context, short, variant), variant };
+}
+
+export function clearTagCache(short?: string) {
+    if (!short) {
+        cache.clear();
+        variantRulesCache.clear();
+        return;
+    }
+    for (const key of Array.from(cache.keys())) {
+        if (key === short || key.startsWith(`${short}:`)) cache.delete(key);
+    }
+}
 
 // Internal: iterate all bracketed tags in a single line of text.
 export function* iterateBracketTags(lineText: string): Generator<{ isClose: boolean; rawName: string; matchStart: number; matchEnd: number; nameStart: number; nameEnd: number }> {
@@ -254,7 +526,7 @@ export function registerTagDiagnostics(context: vscode.ExtensionContext, langId:
 
     async function lint(doc: vscode.TextDocument) {
         if (doc.languageId !== langId) return;
-        const tags = await loadTags(context, short);
+        const { tags } = await loadTagsForDocument(context, short, doc);
         if (!tags.length) { collection.delete(doc.uri); return; }
         const needCloseBase = new Set(tags.filter(t => t.closing).map(t => t.name.toLowerCase()));
         const knownTags = new Set(tags.map(t => t.name.toLowerCase()));
@@ -342,7 +614,8 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
             if (inBacktick) return; // inside backtick string: do not treat bracket tokens as tags
             for (const t of iterateBracketTags(lineText)) {
                 if (pos.character >= t.nameStart && pos.character <= t.nameEnd) {
-                    const tags = await loadTags(context, short);
+                    const resolved = await loadTagsForDocument(context, short, doc);
+                    const tags = resolved.tags;
                     const tag = tags.find(x => x.name.toLowerCase() === t.rawName.toLowerCase()) || { name: t.rawName, description: '', authors: '' };
                     const nameRange = new vscode.Range(pos.line, t.nameStart, pos.line, t.nameEnd);
                     const md = new vscode.MarkdownString(undefined, true);
@@ -350,12 +623,12 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                     md.isTrusted = { enabledCommands: ['pvf.editScriptTagComment'] };
                     md.appendCodeblock(tag.name, langId);
                     md.appendMarkdown(`\n\n### ${escapeMarkdownHeading(tagTitle(tag))}`);
-                    if (tag.description) {
-                        md.appendMarkdown('\n\n' + formatCommentMarkdown(tag.description, { tableStyle: 'code' }));
+                    if (tag.description || tag.officialDescription) {
+                        appendTagDocumentationSections(md, tag, { tableStyle: 'code' });
                     } else if (!tags.some(x => x.name.toLowerCase() === t.rawName.toLowerCase())) {
                         md.appendMarkdown('\n\n未找到标签注释。');
                     }
-                    appendTagFooter(md, short, tag);
+                    appendTagFooter(md, short, tag, resolved.variant);
                     return new vscode.Hover(md, nameRange);
                 }
             }
@@ -374,10 +647,11 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                 for (let i = 0; i < lt.length; i++) if (lt[i] === '`') inBacktick = !inBacktick;
             }
             if (inBacktick) return;
-            const tags = await loadTags(context, short);
-                const fullLine = doc.lineAt(pos.line).text;
-                const nextChar = pos.character < fullLine.length ? fullLine[pos.character] : '';
-                const replaceClosing = nextChar === ']';
+            const resolved = await loadTagsForDocument(context, short, doc);
+            const tags = resolved.tags;
+            const fullLine = doc.lineAt(pos.line).text;
+            const nextChar = pos.character < fullLine.length ? fullLine[pos.character] : '';
+            const replaceClosing = nextChar === ']';
             // compute current stack up to position for dynamic closing evaluation
             function computeDepth(): number {
                 let depth = 0;
@@ -386,7 +660,6 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                     for (const t of iterateBracketTags(text)) {
                         if (ln === pos.line && t.matchStart >= line.length) break; // don't process after cursor
                         const lower = t.rawName.toLowerCase();
-                        const isCloseCandidate = false; // we only need depth (root-level) for trigger; treat any open closable as depth++ and its close as depth--
                         // Determine dynamic closing for trigger same as diagnostics
                         if (short === 'act' && lower === 'trigger') {
                             // root-level closable; nested not closable => only increase depth if depth==0
@@ -407,7 +680,7 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                 if (short === 'act' && lower === 'trigger') dynamicClosing = depth === 0; // root-level only
                 const ci = new vscode.CompletionItem(t.name, vscode.CompletionItemKind.Keyword);
                 ci.detail = dynamicClosing ? '标签 (需闭合)' : '标签';
-                ci.documentation = tagDocumentationMarkdown(t);
+                ci.documentation = tagDocumentationMarkdown(t, resolved.variant ? { short, name: t.name, variant: resolved.variant } : undefined);
                 if (dynamicClosing) {
                     ci.insertText = new vscode.SnippetString(`${t.name}]$0[/${t.name}]`);
                 } else {
@@ -422,9 +695,10 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
     }, '[', '/'));
 
     context.subscriptions.push(vscode.languages.registerCodeActionsProvider(langId, {
-        provideCodeActions(doc, range, codeActionContext) {
+        async provideCodeActions(doc, range, codeActionContext) {
             const hasUnknownTagDiagnostic = codeActionContext.diagnostics.some(d => d.message.startsWith('未知标签') || d.message.startsWith('未知闭合标签'));
             if (!hasUnknownTagDiagnostic) return [];
+            const variant = await resolveScriptTagVariant(context, short, doc);
             const lineText = doc.lineAt(range.start.line).text;
             for (const tag of iterateBracketTags(lineText)) {
                 const tagRange = new vscode.Range(range.start.line, tag.matchStart, range.start.line, tag.matchEnd);
@@ -433,7 +707,7 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
                 action.command = {
                     title: `编辑 [${tag.rawName}] 注释`,
                     command: 'pvf.editScriptTagComment',
-                    arguments: [{ short, name: tag.rawName }]
+                    arguments: [{ short, name: tag.rawName, ...(variant ? { variant } : {}) }]
                 };
                 action.diagnostics = [...codeActionContext.diagnostics];
                 action.isPreferred = true;
@@ -445,7 +719,7 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
 
     context.subscriptions.push(vscode.languages.registerFoldingRangeProvider(langId, {
         async provideFoldingRanges(doc) {
-            const tags = await loadTags(context, short);
+            const { tags } = await loadTagsForDocument(context, short, doc);
             if (!tags.length) return [];
             const closers = new Set(tags.filter(t => t.closing).map(t => t.name.toLowerCase()));
             const out: vscode.FoldingRange[] = [];
@@ -485,11 +759,10 @@ export function provideSharedTagFeatures(context: vscode.ExtensionContext, langI
     context.subscriptions.push(vscode.languages.registerDocumentSemanticTokensProvider({ language: langId }, {
         async provideDocumentSemanticTokens(doc) {
             const builder = new vscode.SemanticTokensBuilder(legend);
-            const tags = await loadTags(context, short);
+            const { tags } = await loadTagsForDocument(context, short, doc);
             if (!tags.length) return builder.build();
             // We'll simulate stack to apply dynamic rule for TRIGGER (act)
             const baseClosing = new Set(tags.filter(t => t.closing).map(t => t.name.toLowerCase()));
-            const baseNonClosing = new Set(tags.filter(t => !t.closing).map(t => t.name.toLowerCase()));
             const stack: { tag: string }[] = [];
             let inBacktick = false;
             for (let lineNum = 0; lineNum < doc.lineCount; lineNum++) {

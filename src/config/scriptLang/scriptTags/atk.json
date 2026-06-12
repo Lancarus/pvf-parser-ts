@@ -4,7 +4,9 @@
       "name": "active status",
       "title": "此攻击附带的异常/增益状态",
       "description": "[active status]此攻击附带的异常/增益状态，异常/增益等级越高越容易施加成功\n//记得在添加异常/增益词条的时候把注释和中文去掉\n//1000 = 1秒\n———————————————————————————\n[blind]失明\n\t-1\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，减少视野(%)，减少命中(%)\n[freeze]冰冻\n\t-1\t-1\t-1// 概率(%)，等级，持续时间\n[stone]石化\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，石化时附加固伤\n[stun]眩晕\n\t-1\t-1\t-1// 概率(%)，等级，持续时间\n[sleep]睡眠\n\t-1\t-1\t-1// 概率(%)，等级，持续时间\n[hold]束缚\n\t-1\t-1\t-1// 概率，等级，持续时间\n[slow]减速\n\t-1\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，减少移速(%)，减少攻速(%)\n[haste]加速\n\t-1\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，增加移速(%)，增加攻速(%)\n[confuse]混乱\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，第4个若施加对象为职业则不添加，若施加对象为怪物则补上1，代表施加成功后令怪物攻击友方\n[poison]中毒\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，中毒总伤\n[bleeding]出血\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，出血总伤\n[burn]灼伤\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，灼伤总伤\n[lightning]感电\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，感电总伤\n[curse]诅咒\n\t-1\t-1\t-1\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，减少力量，减少体力，减少智力，减少精神\n[bless]祝福\n\t-1\t-1\t-1\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，增加力量，增加体力，增加智力，增加精神\n[weakness]虚弱\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，伤害减少比率（以剩余生命值计算，比如被施加虚弱的目标剩余200生命值，虚弱效果是0.3（30%），则打出的伤害减少60）\n[weapon break]武器损坏\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，减少武器耐久\n[armor break]防具损坏\n\t-1\t-1\t-1\t-1// 概率(%)，等级，持续时间，减少防具耐久\n[piercing]破甲\n\t-1\t-1\t-1\t？// 概率(%)，等级，持续时间，最后一个暂不清楚是怎么减少防御的\n[deelement]属性剥离\n\t-1\t-1\t-1// 概率(%)，等级，持续时间\n[deadlystrike]致命一击\n\t-1\t-1// 概率(%)，等级\n———————————————————————————\n{补充：破甲、属性剥离和致命一击的描述未经编写者测试，不一定准确}\n———————————————————————————\n你也可以在收尾部分添加[/active status]以为此攻击赋予多个异常效果，就像这样：\n\n[active status]\n[bleeding]\n\t35\t11\t15000\t500\n[/active status]\n\n[active status]\n[poison]\n\t25\t11\t15000\t500\n[/active status]\n//以上代表有35%的概率和25%的概率，同时施加均为11级的，持续时长为15秒的出血和中毒异常效果，出血和中毒效果均为500总伤\n———————————————————————————\n// 灼伤词条位于彼诺修的烈焰护盾机制时，代表：\n概率(%)，等级，持续时间，伤害，范围伤害，范围伤害选项(1表示范围伤害仅适用于敌军)、范围伤害间隔\n//1000 = 1秒\n\n// 彼诺修的烈焰护盾机制路径：\nmonster/soceress/action_keraha/proc_vinoshu.act",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 最前面是攻击附带的异常状态种类。\n- 概率, 等级, 持续时间, 视野（%）, 硬直率增加（+）\n- 概率, 等级, 持续时间\n- 概率, 等级, 持续时间, 移速（%）, 攻速（%）\n- 概率, 等级, 持续时间, 伤害值（+）\n- 概率, 等级, 持续时间, 为1时怪物陷入混乱，会攻击同伴。\n- 概率, 等级, 伤害减少比率（基于剩余 HP）\n- 概率, 等级, 持续时间, 耐久度消耗检查次数\n- 概率, 等级, 持续时间, 伤害\n- 概率, 等级, 持续时间, 伤害, 周围伤害, 周围伤害选项（为1时只对敌军造成周围伤害）, 周围伤害应用间隔（时间）\n- 概率, 等级, 持续时间, 力量,体力,智力,精神",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "armor break",
@@ -16,25 +18,33 @@
       "name": "attack direction",
       "title": "攻击方向",
       "description": "[attack direction]攻击方向\n\n[hit lift up] = 浮空\n[hit horizon] = 平推\n[hit down] = 击倒",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 攻击方向。在 [hit lift up] [hit horizon] [hit down] 中选择1个",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "attack enemy",
       "title": "敌伤判定（禁用时不会造成伤害）",
       "description": "[attack enemy]敌伤判定（禁用时不会造成伤害）\n开启改1     禁用改0\n————————————————————\n若要为此攻击添加友伤判定，需添加词条：\n[attack friend]\n————————————————————\n若要调整此攻击的伤害比率，需调整词条（没有的话要添加）：\n[damage bonus]\n————————————————————\n若要为此攻击赋予异常状态，需添加词条：\n[active status]",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 是否攻击敌人（除自己和友军外的所有目标）。默认值 1",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "attack friend",
       "title": "友伤判定（开启时可以对友方造成伤害）",
       "description": "[attack friend]友伤判定（开启时可以对友方造成伤害）\n开启改1     禁用改0\n————————————————————\n若要为此攻击添加敌伤判定，需添加词条：\n[attack enemy]\n————————————————————\n若要调整此攻击的伤害比率，需调整词条（没有的话要添加）：\n[damage bonus]\n————————————————————\n若要为此攻击赋予异常状态，需添加词条：\n[active status]",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 是否攻击友军。默认值 0",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "attack type",
       "title": "伤害类型（隔一行再编辑）",
       "description": "[attack type] 伤害类型（隔一行再编辑）\n\n[physic] = 物理伤害\n[magic] = 魔法伤害\n[ignore defense] = 无视防御的伤害",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 攻击类型。在 [physic] [magic] [ignore defense] 中选择1个",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "back",
@@ -76,13 +86,17 @@
       "name": "damage bonus",
       "title": "伤害比率",
       "description": "伤害比率\n\n0 = 100%\n\n20 = 120%\n\n-10 = 90%",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 伤害加成。%值\n- 技能固有的攻击力",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "damage reaction",
       "title": "伤害判定",
       "description": "[damage reaction]伤害判定\n——————————————————\n[none] = 无\n[damage] = 有伤害判定\n[down] = 有伤害的同时有击倒判定",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 受到攻击时的反应。在 [none] [damage] [down] [damage except human] 中选择1个",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "deelement",
@@ -100,7 +114,9 @@
       "name": "elemental property",
       "title": "为该攻击或装备赋予属性",
       "description": "为该攻击或装备赋予属性\n[fire element] 火属性\n[water element] 冰属性\n[light element] 光属性\n[dark element] 暗属性\n[no element] 无属性\n\n要为atk信息里添加异常状态的话，需赋予标签：\n[active status]",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 攻击的元素属性。在 [no element] [fire element] [water element] [dark element] [light element] 中选择1个。不写则默认 [no element]1",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "front",
@@ -136,7 +152,9 @@
       "name": "hit info",
       "title": "打击类型",
       "description": "[hit info]打击类型\n\n命中特效4选1：\n[cut]=切割       //参考太刀普攻击中\n[blow]=钝击    //参考钝器普攻击中\n[burn]=灼烧    //命中后不会马上掉血而是缓慢下降\n[etc]=其他       //暂不清楚\n\n出血视觉效果2选1：\n[blood]=有出血视觉效果\n[no blood]=无出血视觉效果\n\n选择完以后，在[blood]及[no blood]词条下\n编辑命中卡肉时间（1000=1秒，或改成-1同步武器卡肉时间）和命中硬直比率，如下演示：\n[hit info]\n\n[cut]\n\n[blood]\n\t150\t1.5\n//以上示例代表命中特效为切割，命中有出血视觉效果，卡肉时间0.15秒，命中硬直0.225秒\n————————————{分割线}——————————————\n[hit info]\n\n[blow]\n\n[no blood]\n\t-1\t1.2\n//以上示例代表命中特效为钝击，命中无出血视觉效果，卡肉时间跟随武器类型，命中硬直比率为1.2\n————————————{分割线}——————————————\n命中硬直比率：如果卡肉时间为0.2秒，命中硬直比率2.0，那么实际\n                         造成的硬直效果为0.4秒\n————————————{分割线}——————————————\n加斜杠的用意：\n一般用于需要赋予PVP属性时清晰划分开效果，比如如下展示\n[pvp]\n\t[hit info]\n\t[blow]\n\t[no blood]\n\t\t-1\t1.2\n[/pvp]\n\n[dungeon]\n\t[hit info]\n\t[blow]\n\t[no blood]\n\t\t100\t1.5\n[/dungeon]\n//自行理解",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 第一个是打击种类。在 [cut] [blow] [burn] [etc] [mana burn] 中选择1个，跟随武器子类型请用 ``",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "hit lift up",
@@ -148,7 +166,9 @@
       "name": "hit wav",
       "title": "命中音效",
       "description": "[hit wav]命中音效\n\n调用npk文件里的音效",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 命中时播放的音效标签",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "ignore defense",
@@ -160,13 +180,17 @@
       "name": "knuck back",
       "title": "击退",
       "description": "[knuck back]击退\n\n添加此词条之后有击退效果\n1 = 开启击退        -1 = 禁用击退\n\n开启击退后，可以选择赋予更高的值来增加击退力度\n比如1改成10，敌人会被一巴掌扇到地图边缘",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 击退类型。0:普通 1:大幅击退 -1:不击退",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "lift up",
       "title": "浮空值",
       "description": "浮空值\n10 = 10%",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 向上击飞的力度",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "lightning",
@@ -208,7 +232,9 @@
       "name": "push aside",
       "title": "平推值",
       "description": "平推值\n10 = 10%\n\n若要让此攻击可以击退敌人，需赋予词条：\n[knuck back]",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 向后方击退的力度",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "slow",
@@ -220,13 +246,17 @@
       "name": "stuck",
       "title": "命中率（正数减少",
       "description": "命中率（正数减少，负数增加）\n -10 = 增加10%命中率\n\n此标签在ATK信息里时，需填写-1000才能必定命中",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 硬直率变化值",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "weakness",
       "title": "异常效果",
       "description": "异常效果：虚弱\n\n//以剩余生命值计算，比如被施加虚弱的目标剩余200生命值，虚弱效果是0.3（30%），则打出的伤害减少60",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 有 3.0% 的概率造成 HP 5.5% 的伤害。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "weapon break",
@@ -238,7 +268,93 @@
       "name": "weapon damage apply",
       "title": "开启改1 关闭改0",
       "description": "开启改1     关闭改0\n\n开启时适用装备攻击力加成\n关闭时禁用装备攻击力加成",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 是否应用武器伤害。默认值 0。[ignore defense] 时应用物理伤害。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "damage",
+      "title": "伤害",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 伤害。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "absolute damage",
+      "title": "无视防御的绝对伤害",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 无视防御的绝对伤害",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attack myself",
+      "title": "是否攻击自己",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 是否攻击自己。默认值 0",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "bounce",
+      "title": "是否弹起",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 是否弹起。设为 1 则弹起时应用 [lift up] 的力度。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "HP drain",
+      "title": "未实现",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 未实现",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "MP drain",
+      "title": "未实现",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 未实现",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "human damage rate",
+      "title": "对人形（对人类）攻击比率",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 对人形（对人类）攻击比率。可为小数，%值，默认 100",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "fort damage rate",
+      "title": "对建筑（对建筑物）攻击比率",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 对建筑（对建筑物）攻击比率。可为小数，%值，默认 100",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster damage rate",
+      "title": "对怪兽（为护甲类别为0的目标设置）攻击比率",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 对怪兽（为护甲类别为0的目标设置）攻击比率。可为小数，%值，默认 100",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "critical hit",
+      "title": "暴击率变化值",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 暴击率变化值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stuck prob increase",
+      "title": "每次攻击命中时硬直率是否增加",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 每次攻击命中时硬直率是否增加。默认值 0",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "human active status rate",
+      "title": "对人形护甲施加 70",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 对人形护甲施加 70.0% 的较弱状态变化效果。数值的 1/10",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "is hit number increasing",
+      "title": "1 则受击数增加",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 1 则受击数增加，0 则不增加。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "ignore diehard",
+      "title": "是否无视不死被动",
+      "officialDescription": "#### 官方示例: attackinfosample.atk\n\n- 是否无视不死被动。默认值 0",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

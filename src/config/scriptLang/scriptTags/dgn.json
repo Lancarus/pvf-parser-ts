@@ -4,7 +4,9 @@
       "name": "ancient dungeon",
       "title": "是否远古图",
       "description": "是否远古图",
-      "authors": "feirnova"
+      "authors": "feirnova",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 如果是远古地下城则为1，否则可以没有\n\n#### 官方示例: dungeonsample.dgn\n\n- 如果是远古地下城则为1，否则可以没有",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "background pos",
@@ -16,25 +18,35 @@
       "name": "basis level",
       "title": "副本内怪物的平均等级",
       "description": "副本内怪物的平均等级",
-      "authors": "FreyaGrace|Xiti Fox"
+      "authors": "FreyaGrace|Xiti Fox",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 怪物的标准等级\n\n#### 官方示例: dungeonsample.dgn\n\n- 怪物的标准等级",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "boss map",
       "title": "这个标签是boss房间",
       "description": "这个标签是boss房间\n先x后y，从0开始\n\n比如最后一个房间是\n[map specification]\n     3     0      xxxxxx\n[/map specification]\n那么它对应的map房间xxxxxx应该有[boss]标签要注意哦~\n[boss map]\n     3     0\n[/boss map]",
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "closing": true,
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 可设置为首领地图的网格列表（x, y）\n\n#### 官方示例: dungeonsample.dgn\n\n- 可设置为首领地图的网格列表（x, y）",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "boss map specification",
       "title": "随机BOSS房间",
       "description": "随机BOSS房间",
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "closing": true,
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 指定当地图作为首领地图出现时的地图列表。\n\n#### 官方示例: dungeonsample.dgn\n\n- 指定当地图作为首领地图出现时的地图列表。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "champion",
       "title": "champion",
       "description": "[champion]\n100\t100\t100\t100\t100\n\n普通级、冒险级、勇士级、王者级、英雄级\n出现精英怪的几率\n\n1=1%\n也就是说赋予100时，每个房间必出1个",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 各难度下整个地下城中将出现的冠军怪物数量\n\n#### 官方示例: dungeonsample.dgn\n\n- 各难度下整个地下城中将出现的冠军怪物数量",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "clear reward item",
@@ -52,13 +64,17 @@
       "name": "coin limit",
       "title": "副本内的复活次数",
       "description": "副本内的复活次数\n[coin limit]\n      6\n上面这种代表副本内生命值耗尽时可复活6次\n通过移除此标签或将数字改为-1即可不限制复活次数",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 地下城中复活币限制使用次数。（队伍全体）移除标签或设为-1则无限制\n\n#### 官方示例: dungeonsample.dgn\n\n- 地下城中复活币限制使用次数。（队伍全体）移除标签或设为-1则无限制",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "cutscene image",
       "title": "进入新城镇时的过场动画图像",
       "description": "进入新城镇时的过场动画图像\n进图画面",
-      "authors": "阿董-137735017|Xiao哩"
+      "authors": "阿董-137735017|Xiao哩",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 过场图像文件名，帧索引\n\n#### 官方示例: dungeonsample.dgn\n\n- 过场图像文件名，帧索引",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "designate dungeon difficulty",
@@ -76,37 +92,49 @@
       "name": "entering title",
       "title": "进入城镇时的标题动画",
       "description": "进入城镇时的标题动画\n例如：埃尔文防线，赫顿马尔，这些大字",
-      "authors": "王良一"
+      "authors": "王良一",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 用作标题的动画。将动画中心对准屏幕中央。\n\n#### 官方示例: dungeonsample.dgn\n\n- 用作标题的动画。将动画中心对准屏幕中央。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "escape hell",
       "title": "逃脱地狱",
       "description": "逃脱地狱",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 在该迷宫中不出现地狱模式",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "evil high level",
       "title": "邪恶的高水平",
       "description": "邪恶的高水平",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: dungeonsample.dgn\n\n- 高等级用抗魔力（65级以上）",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "evil rate",
       "title": "第一个是最低值",
       "description": "第一个是最低值，第二个是减少属性，第三个是最高值，第四个是增加属性，如果想要抗磨不够就减少99的属性，抗磨够就增加0的属性就等于99~1~100~100（最后这个100表示百分之1）",
-      "authors": "凛冬-QQ439076736"
+      "authors": "凛冬-QQ439076736",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 抗魔力最大最小比率\n\n#### 官方示例: dungeonsample.dgn\n\n- 抗魔力最大最小比率",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "experience increasing point",
       "title": "副本内的经验值获取倍率",
       "description": "副本内的经验值获取倍率\n0.5代表只有50%的获取效率",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 经验值权重\n\n#### 官方示例: dungeonsample.dgn\n\n- 经验值权重",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "greed",
       "title": "贪吃蛇小游戏",
       "description": "贪吃蛇小游戏。\n副本房间的连接顺序，显示副本网格形状\nBB\t=\t右\nMM\t=\t左下\nDD\t=\t右上\nGG\t=\t左上\nJJ\t=\t右下\nFF\t=\t左右\nEE\t=\t左\nNN\t=\t左下右\nCC\t=\t上\nII\t=\t下\nKK\t=\t上下\nPP\t=\t十字\nHH\t=\t左上右\nAA\t=\t无法通过",
-      "authors": "阿董-137735017"
+      "authors": "阿董-137735017",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 地下城网格形状表示\n\n#### 官方示例: dungeonsample.dgn\n\n- 地下城网格形状表示",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "heaven dungeon",
@@ -136,25 +164,34 @@
       "name": "map specification",
       "title": "副本指向的map房间",
       "description": "副本指向的map房间",
-      "authors": "夜白-1229998088"
+      "authors": "夜白-1229998088",
+      "closing": true,
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 指定特定网格中出现的地图列表。未指定的网格随机选择\n- 根据需要重复。\n\n#### 官方示例: dungeonsample.dgn\n\n- 指定特定网格中出现的地图列表。未指定的网格随机选择\n- 根据需要重复。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "maze info",
       "title": "地图走势",
       "description": "地图走势",
-      "authors": "Xiao哩"
+      "authors": "Xiao哩",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 表示一个迷宫信息开始。\n\n#### 官方示例: dungeonsample.dgn\n\n- 表示一个迷宫信息开始。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "minimap image",
       "title": "副本中显示的小地图",
       "description": "副本中显示的小地图\n小地图图像包的文件名",
-      "authors": "释然"
+      "authors": "释然",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 小地图图像包的文件名\n\n#### 官方示例: dungeonsample.dgn\n\n- 小地图图像包的文件名",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "minimum required level",
       "title": "开启地下城的等级",
       "description": "开启地下城的等级",
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 进入地下城所需的最低要求等级\n\n#### 官方示例: dungeonsample.dgn\n\n- 进入地下城所需的最低要求等级",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "monster difficulty bonus",
@@ -166,7 +203,9 @@
       "name": "monsterapc diff table",
       "title": "副本单独调用全局tbl",
       "description": "副本单独调用全局tbl",
-      "authors": "夜白-1229998088"
+      "authors": "夜白-1229998088",
+      "officialDescription": "#### 官方示例: dungeonsample.dgn\n\n- 自定义怪物-APC难度表（不添加此标签则应用默认文件）",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "necessary party",
@@ -184,7 +223,9 @@
       "name": "pathgate object",
       "title": "副本中的门",
       "description": "副本中的门，其实是obj指向，真正的门ani在obj中。一般为10个数据，每个数据代表着一个门，-1代表没有门。",
-      "authors": "Xiao哩"
+      "authors": "Xiao哩",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 通道被动对象索引。不存在的对象为 -1\n\n#### 官方示例: dungeonsample.dgn\n\n- 通道被动对象索引。不存在的对象为 -1",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "re required skill",
@@ -202,7 +243,9 @@
       "name": "required item",
       "title": "进图门票",
       "description": "进图门票\n分别为  物品代碼，数量，消耗量\n在etc/accountcargo.etc中\n表示升级账号金库所需材料",
-      "authors": "丞哥-37358891"
+      "authors": "丞哥-37358891",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 进入地下城所需的物品。索引，数量，是否消耗。消耗为0则不消耗\n\n#### 官方示例: dungeonsample.dgn\n\n- 进入地下城所需的物品。索引，数量，是否消耗。消耗为0则不消耗",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "risk dungeon",
@@ -232,7 +275,9 @@
       "name": "size",
       "title": "这个在副本中代表 这个副本小地图的大小",
       "description": "这个在副本中代表 这个副本小地图的大小\n\n[size]\n     4     1\n\n横坐标是4纵坐标是1\n+----------------------+\n|  口  口  口  口   |\n+----------------------+\n副本地图就是一条直线",
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 横向地图大小，纵向地图大小（最大 50x50）\n- 横向地图大小，纵向地图大小\n\n#### 官方示例: dungeonsample.dgn\n\n- 横向地图大小，纵向地图大小（最大 50x50）\n- 横向地图大小，纵向地图大小",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "special passive object item",
@@ -262,7 +307,114 @@
       "name": "worldmap pattern info",
       "title": "世界地图模式信息",
       "description": "世界地图模式信息",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: dungeonsample.dgn\n\n- 改进版世界地图顺序：图案类型 图案索引（从1开始）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "herosmode enable",
+      "title": "是否有英雄模式？有 1 无 0",
+      "officialDescription": "#### 官方示例: dungeonsample.dgn\n\n- 是否有英雄模式？有 1 无 0",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "revision table",
+      "title": "指定修正表路径",
+      "officialDescription": "#### 官方示例: dungeonsample.dgn\n\n- 指定修正表路径。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "worldmap info",
+      "title": "要显示在世界地图上的信息",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 要显示在世界地图上的信息\n\n#### 官方示例: dungeonsample.dgn\n\n- 要显示在世界地图上的信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "boss room entrance condition",
+      "title": "首领房间进入条件",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 首领房间进入条件\n\n#### 官方示例: dungeonsample.dgn\n\n- 首领房间进入条件",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "character coin limit",
+      "title": "地下城中复活币限制次数",
+      "officialDescription": "#### 官方示例: dungeonsample.dgn\n\n- 地下城中复活币限制次数。（个人可使用的复活币限制）移除标签或设为-1则无限制",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "item",
+      "title": "地下城通关时掉落的物品列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 地下城通关时掉落的物品列表\n\n#### 官方示例: dungeonsample.dgn\n\n- 地下城通关时掉落的物品列表",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "quest connection",
+      "title": "进行0 完成1",
+      "officialDescription": "#### 官方示例: dungeonsample.dgn\n\n- 进行0 完成1，任务编号，难度（ -1 所有难度，0 普通，1 冒险，2 王者，3 英雄）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "start map",
+      "title": "可设置为起始地图的网格列表（x",
+      "closing": true,
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 可设置为起始地图的网格列表（x, y）\n\n#### 官方示例: dungeonsample.dgn\n\n- 可设置为起始地图的网格列表（x, y）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "name",
+      "title": "地下城的名称",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 地下城的名称\n\n#### 官方示例: dungeonsample.dgn\n\n- 地下城的名称",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "explain",
+      "title": "地下城的说明",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 地下城的说明。可换行。\n\n#### 官方示例: dungeonsample.dgn\n\n- 地下城的说明。可换行。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster type spawn prob",
+      "title": "普通",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 普通，普通冠军，超级冠军，首领\n\n#### 官方示例: dungeonsample.dgn\n\n- 普通，普通冠军，超级冠军，首领",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster type spawn cost",
+      "title": "普通",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 普通，普通冠军，超级冠军，首领\n\n#### 官方示例: dungeonsample.dgn\n\n- 普通，普通冠军，超级冠军，首领",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "evil",
+      "title": "抗魔力数值（按难度）",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 抗魔力数值（按难度）\n\n#### 官方示例: dungeonsample.dgn\n\n- 抗魔力数值（按难度）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "gold card use",
+      "title": "该地下城通关时是否使用黄金卡",
+      "officialDescription": "#### 官方示例: dungeonsample.dgn\n\n- 该地下城通关时是否使用黄金卡。0:不使用 1:使用",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "prohibit practice",
+      "title": "是否禁止练习模式（1",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 是否禁止练习模式（1: 禁止，不写标签或写0则不禁止）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "tower item drop",
+      "title": "死亡之塔中是否掉落物品（1",
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 死亡之塔中是否掉落物品（1: 掉落，0: 不掉落）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "event monster",
+      "title": "指定地下城中将出现的事件怪物的标签",
+      "closing": true,
+      "officialDescription": "#### 官方示例: dungeonsample_new_drop.dgn\n\n- 指定地下城中将出现的事件怪物的标签",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

@@ -10,7 +10,9 @@
       "name": "message",
       "title": "消息",
       "description": "商店橱窗上的消息",
-      "authors": "吧哥"
+      "authors": "吧哥",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- 商店窗口显示的消息",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "one a day start time",
@@ -22,7 +24,10 @@
       "name": "sell item",
       "title": "出售的项目",
       "description": "出售的项目\n-1代表空格-2代表翻页",
-      "authors": "李云溪"
+      "authors": "李云溪",
+      "closing": true,
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- 出售道具的索引列表",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "spending item",
@@ -45,8 +50,21 @@
     {
       "name": "npc",
       "title": "NPC",
-      "description": "",
-      "authors": "preview"
+      "authors": "preview",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- NPC 索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "type",
+      "title": "中选择一个",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- `[etc shop]` `[weapon shop]` `[disjoint shop]` 中选择一个",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "only buy",
+      "title": "商店是否可以卖东西还是只能买东西",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- 商店是否可以卖东西还是只能买东西。两者都可以则为 0",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

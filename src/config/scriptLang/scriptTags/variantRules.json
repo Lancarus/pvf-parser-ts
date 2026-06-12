@@ -1,0 +1,249 @@
+{
+  "rules": [
+    {
+      "short": "equ",
+      "variant": "piece-set",
+      "label": "套装",
+      "priority": 100,
+      "pathIncludes": [
+        "/partset/",
+        "/partset2/",
+        "set_item"
+      ],
+      "contentTags": [
+        "piece set ability",
+        "set item master"
+      ]
+    },
+    {
+      "short": "equ",
+      "variant": "creature",
+      "label": "宠物",
+      "priority": 80,
+      "pathIncludes": [
+        "/equipment/creature/",
+        "/equipment/character/creature/",
+        "/chongwu/"
+      ],
+      "contentTags": [
+        "creature species",
+        "hatch item id"
+      ],
+      "equipmentTypes": [
+        "creature"
+      ]
+    },
+    {
+      "short": "equ",
+      "variant": "avatar",
+      "label": "时装",
+      "priority": 60,
+      "pathIncludes": [
+        "/avatar/",
+        "/at_avatar/",
+        "/skin/",
+        "/pifu/",
+        "/guanghuang/",
+        "/wuqizhuangban/"
+      ],
+      "contentTags": [
+        "avatar type select",
+        "avatar func filter"
+      ],
+      "equipmentTypes": [
+        "hat avatar",
+        "hair avatar",
+        "breast avatar",
+        "face avatar",
+        "waist avatar",
+        "coat avatar",
+        "pants avatar",
+        "shoes avatar",
+        "skin avatar",
+        "aurora avatar"
+      ]
+    },
+    {
+      "short": "equ",
+      "variant": "equipment",
+      "label": "装备",
+      "priority": 10,
+      "pathIncludes": [
+        "/equipment/"
+      ],
+      "contentTags": [
+        "basic explain",
+        "detail explain",
+        "durability"
+      ]
+    },
+    {
+      "short": "stk",
+      "variant": "monster-card",
+      "label": "怪物卡片",
+      "priority": 80,
+      "pathIncludes": [
+        "/monstercard/",
+        "monster_card"
+      ],
+      "contentIncludes": [
+        "monster card"
+      ]
+    },
+    {
+      "short": "stk",
+      "variant": "stackable-legacy",
+      "label": "消耗品罐子",
+      "priority": 70,
+      "pathIncludes": [
+        "stackable_legacy"
+      ],
+      "stackableTypes": [
+        "stackable legacy"
+      ]
+    },
+    {
+      "short": "stk",
+      "variant": "booster",
+      "label": "礼包",
+      "priority": 60,
+      "pathIncludes": [
+        "booster"
+      ],
+      "contentIncludes": [
+        "booster"
+      ],
+      "stackableTypes": [
+        "booster",
+        "booster random",
+        "booster selection",
+        "cera booster"
+      ]
+    },
+    {
+      "short": "stk",
+      "variant": "legacy",
+      "label": "罐子",
+      "priority": 50,
+      "pathIncludes": [
+        "legacy"
+      ],
+      "stackableTypes": [
+        "legacy",
+        "upgradable legacy"
+      ]
+    },
+    {
+      "short": "stk",
+      "variant": "pandora",
+      "label": "魔盒",
+      "priority": 50,
+      "pathIncludes": [
+        "pandora"
+      ],
+      "contentIncludes": [
+        "pandora"
+      ]
+    },
+    {
+      "short": "stk",
+      "variant": "recipe",
+      "label": "设计图",
+      "priority": 50,
+      "pathIncludes": [
+        "/recipe/"
+      ],
+      "stackableTypes": [
+        "recipe"
+      ]
+    },
+    {
+      "short": "stk",
+      "variant": "throwitem",
+      "label": "投掷物",
+      "priority": 50,
+      "pathIncludes": [
+        "throwitem"
+      ],
+      "contentIncludes": [
+        "throw"
+      ]
+    },
+    {
+      "short": "stk",
+      "variant": "stackable",
+      "label": "消耗品",
+      "priority": 10,
+      "pathIncludes": [
+        "/stackable/"
+      ],
+      "contentTags": [
+        "stackable type"
+      ]
+    },
+    {
+      "short": "etc",
+      "variant": "cashshop",
+      "label": "商城",
+      "priority": 60,
+      "pathIncludes": [
+        "cashshop"
+      ],
+      "contentTags": [
+        "avatar",
+        "item"
+      ]
+    },
+    {
+      "short": "etc",
+      "variant": "compoundavatar",
+      "label": "时装合成",
+      "priority": 60,
+      "pathIncludes": [
+        "compoundavatar"
+      ],
+      "contentTags": [
+        "rare rate"
+      ]
+    },
+    {
+      "short": "etc",
+      "variant": "disjoint",
+      "label": "分解",
+      "priority": 60,
+      "pathIncludes": [
+        "disjoint"
+      ],
+      "contentTags": [
+        "cube index"
+      ]
+    },
+    {
+      "short": "etc",
+      "variant": "questparameter",
+      "label": "任务参数",
+      "priority": 50,
+      "pathIncludes": [
+        "questparameter"
+      ]
+    },
+    {
+      "short": "etc",
+      "variant": "tutorialtip",
+      "label": "教程提示",
+      "priority": 50,
+      "pathIncludes": [
+        "tutorialtip"
+      ]
+    },
+    {
+      "short": "etc",
+      "variant": "ultimateskillcutscene",
+      "label": "觉醒过场",
+      "priority": 50,
+      "pathIncludes": [
+        "ultimateskillcutscene"
+      ]
+    }
+  ]
+}

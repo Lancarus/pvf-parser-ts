@@ -1,0 +1,23 @@
+{
+  "tags": [
+    {
+      "name": "character type",
+      "title": "角色专用时装",
+      "officialDescription": "#### 官方示例: compoundavatarsample.etc\n\n- 角色专用时装",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "grade",
+      "title": "合成时所需物品品级",
+      "officialDescription": "#### 官方示例: compoundavatarsample.etc\n\n- 合成时所需物品品级",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "rare rate",
+      "title": "出现稀有时装的概率（万分率）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: compoundavatarsample.etc\n\n- 出现稀有时装的概率（万分率）",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

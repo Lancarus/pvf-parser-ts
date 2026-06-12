@@ -1,0 +1,18 @@
+{
+  "tags": [
+    {
+      "name": "avatar",
+      "title": "时装店出售的商品列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: cashshopsample.etc\n\n- 时装店出售的商品列表。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "item",
+      "title": "道具店出售的商品列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: cashshopsample.etc\n\n- 道具店出售的商品列表。",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

@@ -1,0 +1,845 @@
+{
+  "tags": [
+    {
+      "name": "packagable",
+      "title": "无法邮寄",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 无法邮寄，注意默认是可邮寄的",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "basic explain",
+      "title": "装备的简单说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备的简单说明。可以换行。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "detail explain",
+      "title": "装备的详细说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备的详细说明。可以换行。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "grade",
+      "title": "装备的等级 (佩戴等级 +0",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备的等级 (佩戴等级 +0:普通, +2:稀有 +3:传说 +4:神器 +5:史诗)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "spectrum",
+      "title": "有残影效果时需要的标签",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 有残影效果时需要的标签。没有残影则不需要写。目前只用于遗物。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attach type",
+      "title": "归属类型     中选择一个",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 归属类型 `[free]` `[trade]` `[trade delete]` `[sealing]` 中选择一个",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creation rate",
+      "title": "生成比率",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 生成比率",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "rarity",
+      "title": "稀有度",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 稀有度. 0:普通 1:高级 2:稀有 3:神器 4:史诗 5:传说)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "anti evil",
+      "title": "异界抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 异界抗性。异界地下城所需的属性。只出现在 50 级以上的装备上。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "weight",
+      "title": "重量 (单位",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 重量 (单位 : g)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "usable job",
+      "title": "可使用的角色列表开始",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 可使用的角色列表开始",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "minimum level",
+      "title": "使用所需的最低等级",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 使用所需的最低等级。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "required skill",
+      "title": "使用所需的技能",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 使用所需的技能。没有则删除此项或填 -1",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "icon",
+      "title": "图标图像文件和帧索引",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 图标图像文件和帧索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "icon mark",
+      "title": "图标标记图像文件和帧索引 (例如",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 图标标记图像文件和帧索引 (例如：遗物标记)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "extra icon",
+      "title": "附加图标图像文件和帧索引 // 透明时装 // 穿戴后（复制时）",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 附加图标图像文件和帧索引\t// 透明时装 // 穿戴后（复制时）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "field image",
+      "title": "掉落在地上时的图像文件和帧索引",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 掉落在地上时的图像文件和帧索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "custom animation",
+      "title": "硬编码中使用的自定义动画文件名",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬编码中使用的自定义动画文件名。仅用于称号。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "usable even peace",
+      "title": "待机时（战争地区",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 待机时（战争地区，决斗场），某些功能（如米歇尔念动力椅子召唤）不会生效。但",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "equipment type",
+      "title": "equipment type",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- `[hat avatar]` `[hair avatar]` `[breast avatar]` `[face avatar]`",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hide equipment",
+      "title": "穿戴时要隐藏的装备指定",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 穿戴时要隐藏的装备指定。也需要指定图层。没有要隐藏的装备则不需要。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hide layer",
+      "title": "要隐藏的装备的图层指定",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 要隐藏的装备的图层指定。可指定的图层数量没有限制。没有要隐藏的装备则不需要。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sub type",
+      "title": "装备的子类型",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备的子类型。(例如：剑、斧头、钝器) 不需要则不写也可以。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "durability",
+      "title": "耐久度",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 耐久度。0 为无限。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "price",
+      "title": "价格",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 价格。如果从表中读取则不需要写。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "value",
+      "title": "玩家卖给商店的金额",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 玩家卖给商店的金额",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "repair price",
+      "title": "修理费",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 修理费",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "need material",
+      "title": "所需材料道具索引",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 所需材料道具索引，材料道具数量 (例，黑莲 2个)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "cash",
+      "title": "点券价格",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 点券价格",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "medal",
+      "title": "勋章价格",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 勋章价格",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "finish point price",
+      "title": "FP价格",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- FP价格",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "cool time",
+      "title": "装备时冷却时间",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备时冷却时间",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "HP MAX",
+      "title": "HP 最大值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- HP 最大值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "MP MAX",
+      "title": "MP 最大值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- MP 最大值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical attack",
+      "title": "力量",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 力量",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical defense",
+      "title": "体力",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 体力",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical attack",
+      "title": "智力",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 智力",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical defense",
+      "title": "精神",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 精神",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "equipment physical attack",
+      "title": "物理攻击力(地下城) 物理攻击力(决斗场)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理攻击力(地下城) 物理攻击力(决斗场)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "equipment physical defense",
+      "title": "物理防御力(地下城) 物理防御力(决斗场)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理防御力(地下城) 物理防御力(决斗场)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "equipment magical attack",
+      "title": "魔法攻击力(地下城) 魔法攻击力(决斗场)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法攻击力(地下城) 魔法攻击力(决斗场)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "equipment magical defense",
+      "title": "魔法防御力(地下城) 魔法防御力(决斗场)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法防御力(地下城) 魔法防御力(决斗场)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical absolute damage",
+      "title": "物理绝对伤害",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理绝对伤害",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical damage reduce",
+      "title": "物理伤害修正",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理伤害修正",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical absolute defense",
+      "title": "物理绝对防御",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理绝对防御。%值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical absolute damage",
+      "title": "魔法绝对伤害",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法绝对伤害",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical damage reduce",
+      "title": "魔法伤害修正",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法伤害修正",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical absolute defense",
+      "title": "魔法绝对防御",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法绝对防御。%值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "fire resistance",
+      "title": "火属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 火属性抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "water resistance",
+      "title": "水属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 水属性抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "dark resistance",
+      "title": "暗属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 暗属性抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "light resistance",
+      "title": "光属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 光属性抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "all elemental resistance",
+      "title": "所有属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 所有属性抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "fire attack",
+      "title": "火属性强化",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 火属性强化",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "water attack",
+      "title": "水属性强化",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 水属性强化",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "dark attack",
+      "title": "暗属性强化",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 暗属性强化",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "light attack",
+      "title": "光属性强化",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 光属性强化",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "slow resistance",
+      "title": "减速抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 减速抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "freeze resistance",
+      "title": "冰冻抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 冰冻抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "poison resistance",
+      "title": "中毒抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 中毒抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stun resistance",
+      "title": "眩晕抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 眩晕抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "curse resistance",
+      "title": "诅咒抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 诅咒抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "blind resistance",
+      "title": "失明抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 失明抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "lightning resistance",
+      "title": "感电抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 感电抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stone resistance",
+      "title": "石化抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 石化抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sleep resistance",
+      "title": "睡眠抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 睡眠抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "bleeding resistance",
+      "title": "出血抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 出血抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "confuse resistance",
+      "title": "混乱抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 混乱抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hold resistance",
+      "title": "束缚抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 束缚抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "burn resistance",
+      "title": "灼伤抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 灼伤抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "weapon break resistance",
+      "title": "武器破坏抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 武器破坏抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "armor break resistance",
+      "title": "防具破坏抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 防具破坏抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "deelement resistance",
+      "title": "现在不用",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 现在不用",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "deadlystrike resistance",
+      "title": "现在不用",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 现在不用",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "all activestatus resistance",
+      "title": "所有状态异常抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 所有状态异常抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "piercing resistance",
+      "title": "破招抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 破招抗性",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stuck resistance",
+      "title": "回避率 (0",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 回避率 (0.1% 单位)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "active status control info",
+      "title": "出血概率增加(10%) 等级增加(20) 持续时间增加(30%) 其他信",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 出血概率增加(10%) 等级增加(20) 持续时间增加(30%) 其他信息(出血的情况下是伤害增加率 n%)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "inventory limit",
+      "title": "物品栏上限增加 (g 单位)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物品栏上限增加 (g 单位)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "HP regen speed",
+      "title": "HP恢复速度 (输入数值*0",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- HP恢复速度 (输入数值*0.6为实际数值，输入40则实际HP恢复为40*0.6=24)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "MP regen speed",
+      "title": "MP恢复速度 (输入数值*3为实际数值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- MP恢复速度 (输入数值*3为实际数值，输入8则实际MP恢复为8*3=24)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "MP regen speed rate",
+      "title": "%增加 (临时例外处理)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- %增加 (临时例外处理)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move speed",
+      "title": "移动速度 (0",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 移动速度 (0.1% 单位)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "x move dash speed",
+      "title": "X轴移动速度增加 50%",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- X轴移动速度增加 50%",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "y move dash speed",
+      "title": "Y轴移动速度减少 -50%",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- Y轴移动速度减少 -50%",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attack speed",
+      "title": "攻击速度 (0",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 攻击速度 (0.1% 单位)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "cast speed",
+      "title": "施放速度 (0",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 施放速度 (0.1% 单位)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hit recovery",
+      "title": "硬直恢复",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬直恢复",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "rigidity",
+      "title": "僵直度 (硬直恢复的反概念)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 僵直度 (硬直恢复的反概念)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "jump power",
+      "title": "跳跃力",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 跳跃力",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "room list move speed rate",
+      "title": "在城镇中的移动速度指定",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 在城镇中的移动速度指定",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "elemental property",
+      "title": "中选择一个",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- `[no element]` `[fire element]` `[water element]` `[dark element]` `[light element]` 中选择一个。`[no element]` 则可以不写。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "item aura",
+      "title": "装备时发动的物品光环",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备时发动的物品光环。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "active status",
+      "title": "状态异常改版前使用的标签",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 状态异常改版前使用的标签。现在不使用。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "push aside",
+      "title": "击退力量",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 击退力量",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "lift up",
+      "title": "浮空力量",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 浮空力量",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "physical critical hit",
+      "title": "物理暴击率上升值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理暴击率上升值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "magical critical hit",
+      "title": "魔法暴击率上升值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法暴击率上升值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stuck",
+      "title": "命中率",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 命中率。填写负数值。 -1 : 命中率+1%",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "ignore defense",
+      "title": "现在不用的标签",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 现在不用的标签",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "human damage rate",
+      "title": "对人形伤害比率变化值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 对人形伤害比率变化值。%值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "fort damage rate",
+      "title": "对建筑伤害比率变化值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 对建筑伤害比率变化值。%值",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "monster damage rate",
+      "title": "对怪物 (护甲类别为0个的单位准备的) 攻击比率",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 对怪物 (护甲类别为0个的单位准备的) 攻击比率。可为小数，%值，100为默认",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "HP drain",
+      "title": "HP 吸收",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- HP 吸收",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "MP drain",
+      "title": "MP 吸收",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- MP 吸收",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill data up",
+      "title": "控制技能脚本特定数据的标签",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 控制技能脚本特定数据的标签",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill levelup",
+      "title": "装备时提升的技能和等级限制",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备时提升的技能和等级限制。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "animation job",
+      "title": "使用该动画的职业",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 使用该动画的职业。只有异性角色共享一个脚本时才需要写。\n- 动画的职业。equ 中只有一个职业动画的话可以没有。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "variation",
+      "title": "动画变化索引",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 动画变化索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "layer variation",
+      "title": "图层索引及图层文件夹名",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 图层索引及图层文件夹名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "equipment ani script",
+      "title": "动画列表文件(*",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 动画列表文件(*.lay) 路径",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move wav",
+      "title": "掉落在地上、移动道具时（包含装备）发出的声音",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 掉落在地上、移动道具时（包含装备）发出的声音",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "use wav",
+      "title": "使用道具时发出的声音",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 使用道具时发出的声音",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set name",
+      "title": "套装名",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 套装名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set item",
+      "title": "与此道具形成套装的道具索引列表（包含自身）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 与此道具形成套装的道具索引列表（包含自身）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set ability",
+      "title": "加上这个",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 加上这个，则此后能力值被视为套装道具穿戴时的追加能力值。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "fullset basic explain",
+      "title": "集齐套装道具时出现的基本说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 集齐套装道具时出现的基本说明",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "fullset detail explain",
+      "title": "集齐套装道具时出现的详细说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 集齐套装道具时出现的详细说明",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set item master",
+      "title": "如果某个道具用 [set item] 指定了自身",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 如果某个道具用 [set item] 指定了自身，",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "piece set ability",
+      "title": "3件套效果",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 3件套效果",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "parameter basic explain",
+      "title": "集齐 3 件套时出现的基本说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 集齐 3 件套时出现的基本说明",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "parameter detail explain",
+      "title": "集齐 3 件套时出现的详细说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 集齐 3 件套时出现的详细说明",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "part set index",
+      "title": "etc/equipmentPartset",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- etc/equipmentPartset.etc 中指定的数据的部件套装索引。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hardcoding cooltime",
+      "title": "硬编码用冷却时间",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬编码用冷却时间",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "int data",
+      "title": "硬编码用整数数据",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬编码用整数数据",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "string data",
+      "title": "硬编码用字符串数据",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬编码用字符串数据",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attack info",
+      "title": "追加攻击信息 路径/文件名",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 追加攻击信息 路径/文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "expand ani",
+      "title": "第一个是要改变部位的索引",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 第一个是要改变部位的索引，第二个是优先级，第三个是是否使用攻击范围，第四个是是否重新设置音效",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "effect",
+      "title": "*// 该标签可重复使用",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- *// 该标签可重复使用",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attach target",
+      "title": "0//",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 0// `delegator`, `target`",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "type",
+      "title": "1//",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 1// `animation`, `particle`\n- 1// `animation`, `particle`, `range`",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attach pos",
+      "title": "1//",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 1// `bottom`, `middle`, `top`",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "z revision",
+      "title": "0// z 轴移动距离(px) 没有则忽略",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 0// z 轴移动距离(px) 没有则忽略",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "index",
+      "title": "1// <animation> 附加的图层位置",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 1// <animation> 附加的图层位置",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "option",
+      "title": "0// animation 选项",
+      "closing": true,
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 0// animation 选项",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "module",
+      "title": "0// 效果出现的模块 (没有则所有模块)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 0// 效果出现的模块 (没有则所有模块)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "file name",
+      "title": "1// 该效果路径及文件名",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 1// 该效果路径及文件名",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "change type ultimateSkillCurScene",
+      "title": "觉醒技能过场图像类型 ( 0",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 觉醒技能过场图像类型 ( 0: 使徒 )",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

@@ -107,6 +107,12 @@
       "title": "窗口",
       "description": "窗口",
       "authors": "lostluna1"
+    },
+    {
+      "name": "common action",
+      "title": "气泡动作路径（请勿修改！！咨询客户端组）",
+      "officialDescription": "#### 官方示例: dungeonselect_uisample.ui\n\n- 气泡动作路径（请勿修改！！咨询客户端组）",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

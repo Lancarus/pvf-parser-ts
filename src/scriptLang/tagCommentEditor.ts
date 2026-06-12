@@ -1,11 +1,11 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { clearTagCache, iterateBracketTags, loadTags, ScriptTagInfo } from './tagRegistry';
+import { clearTagCache, iterateBracketTags, loadTagsForVariant, resolveScriptTagVariant, ScriptTagInfo } from './tagRegistry';
 import { SHORT_BY_LANGUAGE_ID } from './genericTags';
 
 interface TagFile { tags: ScriptTagInfo[] }
-interface EditTagCommentArgs { short?: string; name?: string }
+interface EditTagCommentArgs { short?: string; name?: string; variant?: string }
 
 const VALID_SHORTS = new Set(Object.values(SHORT_BY_LANGUAGE_ID));
 const DEFAULT_AUTHOR = 'Lancarus';
@@ -43,33 +43,39 @@ async function exists(file: string): Promise<boolean> {
     }
 }
 
-function tagFilePaths(context: vscode.ExtensionContext, short: string): string[] {
+function tagFilePaths(context: vscode.ExtensionContext, short: string, variant?: string): string[] {
     const root = context.extensionUri.fsPath;
+    if (variant) {
+        return [
+            path.join(root, 'src', 'config', 'scriptLang', 'scriptTags', 'variants', short, `${variant}.json`),
+            path.join(root, 'dist', 'config', 'scriptLang', 'scriptTags', 'variants', short, `${variant}.json`)
+        ];
+    }
     return [
         path.join(root, 'src', 'config', 'scriptLang', 'scriptTags', `${short}.json`),
         path.join(root, 'dist', 'config', 'scriptLang', 'scriptTags', `${short}.json`)
     ];
 }
 
-async function readTagFile(context: vscode.ExtensionContext, short: string): Promise<{ file: string; data: TagFile }> {
-    for (const file of tagFilePaths(context, short)) {
+async function readTagFile(context: vscode.ExtensionContext, short: string, variant?: string): Promise<{ file: string; data: TagFile }> {
+    for (const file of tagFilePaths(context, short, variant)) {
         if (!await exists(file)) continue;
         const text = await fs.readFile(file, 'utf8');
         return { file, data: JSON.parse(text) as TagFile };
     }
-    throw new Error(`找不到 ${short}.json`);
+    throw new Error(`找不到 ${variant ? `${short}/${variant}` : short}.json`);
 }
 
-async function readTagForEditor(context: vscode.ExtensionContext, short: string, name: string): Promise<ScriptTagInfo> {
+async function readTagForEditor(context: vscode.ExtensionContext, short: string, name: string, variant?: string): Promise<ScriptTagInfo> {
     const expected = normalizeTagName(name);
     try {
-        const { data } = await readTagFile(context, short);
+        const { data } = await readTagFile(context, short, variant);
         const tag = (data.tags || []).find(item => normalizeTagName(item.name) === expected);
         if (tag) return tag;
     } catch {
         // loadTags below can still return fallback/global entries; save will create the file if needed.
     }
-    const fallback = (await loadTags(context, short)).find(item => normalizeTagName(item.name) === expected);
+    const fallback = (await loadTagsForVariant(context, short, variant)).find(item => normalizeTagName(item.name) === expected);
     if (fallback) return fallback;
     return { name: normalizeTagDisplayName(name), description: '', authors: '' };
 }
@@ -82,17 +88,19 @@ function createTagForFile(data: TagFile, seed: ScriptTagInfo): ScriptTagInfo {
         tag.closing = false;
     }
     if (seed.authors) tag.authors = seed.authors;
+    if (seed.officialDescription) tag.officialDescription = seed.officialDescription;
+    if (seed.officialAuthors) tag.officialAuthors = seed.officialAuthors;
     return tag;
 }
 
-async function saveTagInfo(context: vscode.ExtensionContext, short: string, name: string, title: string, description: string, seed?: ScriptTagInfo): Promise<{ files: number; authors: string; created: number; title: string }> {
+async function saveTagInfo(context: vscode.ExtensionContext, short: string, name: string, title: string, description: string, seed?: ScriptTagInfo, variant?: string): Promise<{ files: number; authors: string; created: number; title: string }> {
     const expected = normalizeTagName(name);
     let saved = 0;
     let created = 0;
     let savedAuthors = '';
     const author = configuredAuthor();
     const cleanTitle = normalizeTagDisplayName(title) || normalizeTagDisplayName(seed?.title || name);
-    const paths = tagFilePaths(context, short);
+    const paths = tagFilePaths(context, short, variant);
     const existingFiles: string[] = [];
     for (const file of paths) {
         if (await exists(file)) existingFiles.push(file);
@@ -124,7 +132,7 @@ async function saveTagInfo(context: vscode.ExtensionContext, short: string, name
     return { files: saved, authors: savedAuthors, created, title: cleanTitle };
 }
 
-function tagAtActiveCursor(): EditTagCommentArgs | undefined {
+async function tagAtActiveCursor(context: vscode.ExtensionContext): Promise<EditTagCommentArgs | undefined> {
     const editor = vscode.window.activeTextEditor;
     if (!editor) return undefined;
     const short = SHORT_BY_LANGUAGE_ID[editor.document.languageId];
@@ -133,7 +141,8 @@ function tagAtActiveCursor(): EditTagCommentArgs | undefined {
     const lineText = editor.document.lineAt(pos.line).text;
     for (const tag of iterateBracketTags(lineText)) {
         if (pos.character >= tag.nameStart && pos.character <= tag.nameEnd) {
-            return { short, name: tag.rawName };
+            const variant = await resolveScriptTagVariant(context, short, editor.document);
+            return { short, name: tag.rawName, ...(variant ? { variant } : {}) };
         }
     }
     return undefined;
@@ -157,7 +166,7 @@ function safeJson(value: unknown): string {
     });
 }
 
-function editorHtml(panel: vscode.WebviewPanel, init: { short: string; name: string; title: string; description: string; authors: string; currentAuthor: string }): string {
+function editorHtml(panel: vscode.WebviewPanel, init: { short: string; name: string; title: string; description: string; authors: string; currentAuthor: string; variant?: string; officialDescription?: string; officialAuthors?: string }): string {
     const n = nonce();
     const initJson = safeJson(init);
     return `<!DOCTYPE html>
@@ -316,6 +325,11 @@ textarea {
 }
 .preview a { color: var(--vscode-textLink-foreground); }
 .preview img { max-width: 100%; }
+.officialSource {
+    margin: -4px 0 12px;
+    color: var(--muted);
+    font-size: 12px;
+}
 .status {
     min-height: 28px;
     padding: 5px 12px;
@@ -362,7 +376,7 @@ const editor = document.getElementById('editor');
 const preview = document.getElementById('preview');
 const status = document.getElementById('status');
 const saveButton = document.getElementById('save');
-document.querySelector('.tag').textContent = init.short + ' / [' + init.name + ']';
+document.querySelector('.tag').textContent = init.short + (init.variant ? ':' + init.variant : '') + ' / [' + init.name + ']';
 titleInput.value = init.title || init.name || '';
 editor.value = init.description || '';
 let lastSavedTitle = titleInput.value;
@@ -533,7 +547,13 @@ function setStatus(text, isError) {
 function updatePreview() {
     const title = titleInput.value.trim() || init.name || '';
     const source = '### ' + title + '\\n\\n' + (editor.value || '');
-    preview.innerHTML = '<pre class="tagName"><code>' + escapeHtml(init.name || '') + '</code></pre>' + renderMarkdown(source);
+    let html = '<pre class="tagName"><code>' + escapeHtml(init.name || '') + '</code></pre>' + renderMarkdown(source);
+    if (init.officialDescription) {
+        html += '<hr><h3>官方注释</h3>';
+        if (init.officialAuthors) html += '<div class="officialSource">来源: ' + escapeHtml(init.officialAuthors) + '</div>';
+        html += renderMarkdown(init.officialDescription);
+    }
+    preview.innerHTML = html;
     vscode.setState({ title: titleInput.value, text: editor.value });
     const authorText = init.authors ? '作者: ' + init.authors : '作者: 未署名';
     const signerText = init.currentAuthor ? '保存签名: ' + init.currentAuthor : '';
@@ -583,7 +603,7 @@ requestAnimationFrame(() => vscode.postMessage({ type: 'ready' }));
 
 export function registerScriptTagCommentEditor(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('pvf.editScriptTagComment', async (arg?: EditTagCommentArgs) => {
-        const resolved = arg && arg.short && arg.name ? arg : tagAtActiveCursor();
+        const resolved = arg && arg.short && arg.name ? arg : await tagAtActiveCursor(context);
         if (!resolved?.short || !resolved.name) {
             vscode.window.showWarningMessage('请先把光标放在 PVF 标签名上。');
             return;
@@ -594,6 +614,7 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
             return;
         }
         const name = resolved.name;
+        const variant = typeof resolved.variant === 'string' && resolved.variant.trim() ? resolved.variant.trim() : undefined;
 
         await vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
@@ -601,11 +622,11 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
             cancellable: false
         }, async progress => {
             progress.report({ message: '读取标签注释' });
-            const tag = await readTagForEditor(context, short, name);
+            const tag = await readTagForEditor(context, short, name, variant);
 
             const panel = vscode.window.createWebviewPanel(
                 'pvfScriptTagComment',
-                `注释: [${tag.name}]`,
+                `注释: ${variant ? `${short}:${variant} ` : ''}[${tag.name}]`,
                 vscode.ViewColumn.Beside,
                 { enableScripts: true, retainContextWhenHidden: true }
             );
@@ -633,7 +654,7 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
                 }
                 if (msg.type !== 'save' || typeof msg.description !== 'string' || typeof msg.title !== 'string') return;
                 try {
-                    const result = await saveTagInfo(context, short, tag.name, msg.title, msg.description, tag);
+                    const result = await saveTagInfo(context, short, tag.name, msg.title, msg.description, tag, variant);
                     tag.title = result.title;
                     tag.description = msg.description.replace(/\r\n?/g, '\n').trimEnd();
                     tag.authors = result.authors;
@@ -650,10 +671,13 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
             progress.report({ message: '渲染 Markdown 预览' });
             panel.webview.html = editorHtml(panel, {
                 short,
+                ...(variant ? { variant } : {}),
                 name: tag.name,
                 title: tag.title || tag.name,
                 description: tag.description || '',
                 authors: tag.authors || '',
+                officialDescription: tag.officialDescription || '',
+                officialAuthors: tag.officialAuthors || '',
                 currentAuthor: configuredAuthor()
             });
 

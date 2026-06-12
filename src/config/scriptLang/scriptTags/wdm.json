@@ -4,13 +4,18 @@
       "name": "dungeon",
       "title": "在副本接口处代表",
       "description": "在副本接口处代表\n第一个数为副本ID\n第二个为任务ID 假如是-1就代表该副本无前置任务\n如果不为-1 则代表需完成指定任务ID才可开启该副本",
-      "authors": "白糖-193284563"
+      "authors": "白糖-193284563",
+      "closing": true,
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 要列出的地下城",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "hell dungeon",
       "title": "副本深渊开启指向 写1代表可以开启深渊",
       "description": "副本深渊开启指向 写1代表可以开启深渊",
-      "authors": "白糖-193284563"
+      "authors": "白糖-193284563",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 世界中是否存在地狱地下城 (1:有，0:无)",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "hell freepass item",
@@ -22,19 +27,26 @@
       "name": "in progress",
       "title": "进行中",
       "description": "进行中",
-      "authors": "无名氏"
+      "authors": "无名氏",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 在地下城索引和任务索引之间插入 [in progress]，则仅在任务进行中时才显示该地下城",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "item condition",
       "title": "在worldmap中表示 深渊门票代码",
       "description": "在worldmap中表示  深渊门票代码，仅适用于冰雪宫殿以上的副本",
-      "authors": "依旧"
+      "authors": "依旧",
+      "closing": true,
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 进入地狱地下城时消耗的物品索引、数量",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "map image",
       "title": "选择副本的背景图",
       "description": "选择副本的背景图",
-      "authors": "大白：649964267"
+      "authors": "大白：649964267",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 地图图像文件名称，帧索引",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "ui controls",
@@ -47,6 +59,19 @@
       "title": "UI路径",
       "description": "UI路径",
       "authors": "lostluna1"
+    },
+    {
+      "name": "name",
+      "title": "名称",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 名称",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hell quest",
+      "title": "地狱任务索引",
+      "closing": true,
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 地狱任务索引：必须完成该任务才能进入地狱地下城",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

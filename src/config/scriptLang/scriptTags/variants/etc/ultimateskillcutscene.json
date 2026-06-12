@@ -1,0 +1,34 @@
+{
+  "tags": [
+    {
+      "name": "SKILL INDEX",
+      "title": "职业编号",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 职业编号，技能索引 (例如: 0 5 = 鬼剑士 鬼斩)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "ONAIR ONLY",
+      "title": "是否仅为广播比赛专用 (0",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 是否仅为广播比赛专用 (0 : 否，1: 是，默认 : 0)",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "FLIP TYPE",
+      "title": "0",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 0 : 无 1 : 根据角色方向 2 : 根据角色位置",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "START POSITION",
+      "title": "起始 x",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 起始 x,y 坐标",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "ANI FILE",
+      "title": "要使用的动画文件",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 要使用的动画文件",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

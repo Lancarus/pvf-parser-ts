@@ -1,0 +1,100 @@
+{
+  "tags": [
+    {
+      "name": "creature species",
+      "title": "种族名索引",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 种族名索引",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "sub type",
+      "title": "0",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 0 : 宠物，1 : 蛋，2 : 胶囊",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature minimum level",
+      "title": "使用宠物所需的最低等级",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 使用宠物所需的最低等级",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature physical attack",
+      "title": "宠物物理攻击力",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物物理攻击力",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature magical attack",
+      "title": "宠物魔法攻击力",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物魔法攻击力",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature skill consume mp rate",
+      "title": "宠物技能消耗MP比率（%）",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物技能消耗MP比率（%）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature skill charge time rate",
+      "title": "宠物蓄力时间比率（%）",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物蓄力时间比率（%）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature skill over charge time rate",
+      "title": "宠物过载蓄力时间比率（%）",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物过载蓄力时间比率（%）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature experience amount rate",
+      "title": "宠物经验值获得量比率（%）",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物经验值获得量比率（%）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature physical critical hit",
+      "title": "宠物物理暴击率",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物物理暴击率",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature magical critical hit",
+      "title": "宠物魔法暴击率",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物魔法暴击率",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creature stuck",
+      "title": "宠物硬直率",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 宠物硬直率",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "MP MAX rate",
+      "title": "装备时 MP 最大值增加比率（%）",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 装备时 MP 最大值增加比率（%）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move wav",
+      "title": "移动/拾取音效",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 移动/拾取音效",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set item master",
+      "title": "套装主物品索引",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 套装主物品索引，-1 表示无",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hatch item id",
+      "title": "从宠物蛋中孵化时生成的宠物索引",
+      "officialDescription": "#### 官方示例: creaturesample.equ\n\n- 从宠物蛋中孵化时生成的宠物索引",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

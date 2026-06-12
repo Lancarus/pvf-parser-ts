@@ -1,0 +1,10 @@
+{
+  "tags": [
+    {
+      "name": "stackable type",
+      "title": "类型为",
+      "officialDescription": "#### 官方示例: stackablesample-legacy.stk\n\n- 类型为 `[legacy]`",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

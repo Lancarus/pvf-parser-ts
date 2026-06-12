@@ -1168,7 +1168,9 @@
       "name": "ally type",
       "title": "盟军类别",
       "description": "盟军类别",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 0// `dont-care`, `ally`, `enemy`, 不写则为 `dont-care`",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "alpha",
@@ -1762,13 +1764,17 @@
       "name": "attach pos",
       "title": "附上POS.",
       "description": "附上POS.",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 1// `bottom`, `middle`, `top`",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "attach target",
       "title": "附加目标",
       "description": "附加目标",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 1// `delegator`, `target`",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "attach type",
@@ -2410,7 +2416,9 @@
       "name": "basic motion",
       "title": "主动画演出Ani指向",
       "description": "主动画演出Ani指向",
-      "authors": "ZateL"
+      "authors": "ZateL",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 基本动作动画文件名",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "basic over effect",
@@ -2596,13 +2604,19 @@
       "name": "blood monster",
       "title": "血怪物",
       "description": "血怪物",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: blood script\n\n- 怪物索引, 召唤前（5秒前）出现的演出对象索引, x,y,z坐标, 复活持续多长时间,",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "blood phase time",
       "title": "血阶时间",
       "description": "血阶时间",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: blood script\n\n- 第几轮, 血之狂暴怪物列表索引（-1则从列表中随机选择）,",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "BLOOD POINT",
@@ -3154,7 +3168,9 @@
       "name": "cash",
       "title": "现金",
       "description": "现金",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 持有点券",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "cash user stackable count",
@@ -3712,7 +3728,9 @@
       "name": "check accountitem",
       "title": "检查会计师",
       "description": "检查会计师",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: ai_doc/how to edit aic\n\n- 是否检查账号绑定物品，1. 检查（默认），0. 不检查。如果检查账号绑定物品，则超过 70 级的 APC 将无法使用消耗品。\n- 계정 귀속템 체크를 할 것인지 여부, 1. 체크함(기본), 0. 체크안함), 계귀템 체크를 할 경우 70 렙 넘는 APC 는 소모품 사용을 할 수 없음",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "CHECK AREA",
@@ -5614,7 +5632,10 @@
       "name": "destroy method",
       "title": "破坏方法",
       "description": "破坏方法",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 0// 消除光环的条件（当 delegator 被销毁时必定消除）",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "destroy object",
@@ -5830,7 +5851,9 @@
       "name": "direction correct",
       "title": "方向正确",
       "description": "方向正确",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 是否让其面向当前移动的方向 (默认值 1)",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "direction type",
@@ -6244,7 +6267,9 @@
       "name": "dungeon",
       "title": "在副本接口处代表",
       "description": "在副本接口处代表\n第一个数为副本ID\n第二个为任务ID 假如是-1就代表该副本无前置任务\n如果不为-1 则代表需完成指定任务ID才可开启该副本",
-      "authors": "白糖-193284563"
+      "authors": "白糖-193284563",
+      "officialDescription": "#### 官方示例: dungeonlist_for_rapidparty_sample.dl\n\n- 地下城索引, 名称, 最小等级, 最大等级",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "dungeon balance table",
@@ -6346,7 +6371,9 @@
       "name": "dungeon index",
       "title": "地牢索引",
       "description": "地牢索引",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 62 //  13040 // 要测试的地下城索引。0为等待室。-1为角色选择画面。-2为PVP。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "dungeon info",
@@ -6502,7 +6529,9 @@
       "name": "duration",
       "title": "持续时间",
       "description": "持续时间",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 0// 持续时间（ms）0 或不写则为无限",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "DURATION TIME",
@@ -6568,7 +6597,9 @@
       "name": "effect",
       "title": "影响",
       "description": "影响",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- *// 此标签可以重复使用",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "effect add",
@@ -7432,7 +7463,10 @@
       "name": "etc motion",
       "title": "子动画Ani演出指向",
       "description": "子动画Ani演出指向，该指向需要Nut的po写法调用.",
-      "authors": "ZateL"
+      "authors": "ZateL",
+      "closing": true,
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 硬编码用动作动画文件名列表 (顺序重要)",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "etc sound",
@@ -7444,7 +7478,9 @@
       "name": "event",
       "title": "事件",
       "description": "事件",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 1//",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "event attack skill fail",
@@ -7654,7 +7690,10 @@
       "name": "event time",
       "title": "活动时间",
       "description": "活动时间",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 0// 光环事件发生的时间（ms）没有此标签则立即发生",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "event upgrade table",
@@ -8146,7 +8185,9 @@
       "name": "false",
       "title": "假",
       "description": "假",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: ai_doc/apc function history\n\n- 如果杀意波动关闭\n- 살의의 파동이 꺼져 있으면\n\n#### 官方示例: ai_doc/how to edit ai\n\n- 如果杀意波动关闭\n- 살의의 파동이 꺼져 있으면",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "fame",
@@ -8446,7 +8487,9 @@
       "name": "file name",
       "title": "文件名",
       "description": "文件名",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 1// 该效果的路径和文件名",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "file path",
@@ -8674,7 +8717,9 @@
       "name": "floating height",
       "title": "浮动高度",
       "description": "浮动高度",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 0则为地面型，1以上则为浮游型 (值 = 浮游高度)",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "flying mark",
@@ -9436,7 +9481,9 @@
       "name": "gravity",
       "title": "重力",
       "description": "重力",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 重力值。默认为 1500",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "grde",
@@ -9556,7 +9603,9 @@
       "name": "grow type",
       "title": "成长型",
       "description": "成长型",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 测试角色的成长类型。0~4（0为基本）",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "grow type index",
@@ -10780,7 +10829,9 @@
       "name": "index",
       "title": "对应城镇.twn的区域",
       "description": "对应城镇.twn的区域：\n\n[area]\n    0-------------对应这个区域\n    `xxxxxxxx.map`\n    `[gate]`\n[/area]\n鸣谢：Cai - 263007544\n-------\n城镇索引，对应Town.lst中的城镇编号。",
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 1// <animation> 附加的图层位置",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "index list",
@@ -11650,7 +11701,10 @@
       "name": "key stream",
       "title": "钥匙流",
       "description": "钥匙流",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: ai_doc/how to edit aic\n\n- 按键名称（可省略）, 按键文件名\n- 키이름(생략가능), 키파일명",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "key value index",
@@ -11782,7 +11836,9 @@
       "name": "layer",
       "title": "特效的显示图层类型",
       "description": "特效的显示图层类型\n`[close]`/最高层\n`[normal]` /普通层\n`[bottom]` /最底层\n`[closeback]` /近景背景图层\n`[middleback]` /中部背景图层\n`[distantback]`/远景背景图层",
-      "authors": "ZateL"
+      "authors": "ZateL",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 绘制图层。可选择 `[close]` `[normal]` `[bottom]` `[closeback]` `[middleback]` `[distantback]` 之一。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "layer effect",
@@ -12664,7 +12720,9 @@
       "name": "map index",
       "title": "地图索引",
       "description": "地图索引",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 1 //16105//16305//1//16209 //1//16205//16209 //16209//1 //113013//13012//13025//13013//13038//5424//5413//2001//5413//46000 // 要测试的地图索引。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "map loading image path",
@@ -13714,7 +13772,9 @@
       "name": "move speed",
       "title": "移动速度",
       "description": "移动速度\n\n* 100 = 10%",
-      "authors": "Cai - 263007544"
+      "authors": "Cai - 263007544",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 移动速度",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "MOVE TIME",
@@ -14632,7 +14692,9 @@
       "name": "object index",
       "title": "对象索引",
       "description": "对象索引",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- *// 对象索引，0 或不写则忽略。依赖于 [object type]",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "object max count",
@@ -14656,7 +14718,9 @@
       "name": "object type",
       "title": "对象类型",
       "description": "对象类型",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- *// `all`, `character`, `apc`, `monster`, 不写则为 `all`",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "OFF",
@@ -14884,7 +14948,9 @@
       "name": "option",
       "title": "选项",
       "description": "选项",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 0// animation 选项",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "option data",
@@ -15064,7 +15130,9 @@
       "name": "overlab type",
       "title": "overlab类型",
       "description": "overlab类型",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 1// `overlab`, `update`, `skip` //`update` 未实现!!",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "OVERTURN",
@@ -15280,7 +15348,10 @@
       "name": "party member",
       "title": "党员",
       "description": "党员",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: ai_doc/apc function history\n\n- 成员索引，APC索引\n- 멤버 인덱스, APC 인덱스\n\n#### 官方示例: ai_doc/how to edit aic\n\n- 成员索引, APC 索引\n- 멤버 인덱스, APC 인덱스",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "party member alive",
@@ -15388,7 +15459,9 @@
       "name": "pass type",
       "title": "通过类型",
       "description": "通过类型；\n`[pass all]`/可通过所有单位\n`[do not pass]`/不可通过所有单位\n`[pass only float type]`/浮空单位是唯一可通过的类型",
-      "authors": "ZateL"
+      "authors": "ZateL",
+      "officialDescription": "#### 官方示例: tilesample.til\n\n- 通行属性列表。0 : 全部可通过，1 : 仅浮空型可通过，2 : 全部不可通过",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "passice object",
@@ -17230,7 +17303,9 @@
       "name": "range",
       "title": "范围",
       "description": "范围",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 1// 光环范围（半径 px）",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "rank grade",
@@ -17500,7 +17575,9 @@
       "name": "recovery time",
       "title": "恢复时间",
       "description": "恢复时间",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 一次攻击后再次进入攻击待机状态所需的时间",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "recv check db table",
@@ -18010,7 +18087,9 @@
       "name": "return",
       "title": "返回",
       "description": "返回",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: ai_doc/apc function history\n\n- 可以正常工作\n- 문제 없이 작동한다\n\n#### 官方示例: ai_doc/how to edit key\n\n- 由于在 1) 中，5号索引对应的按键指向 2号槽位，",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "return iteminfo",
@@ -20878,7 +20957,10 @@
       "name": "target",
       "title": "目标",
       "description": "目标",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 0//",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "target active status",
@@ -21088,7 +21170,10 @@
       "name": "think",
       "title": "认为",
       "description": "认为",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "closing": true,
+      "officialDescription": "#### 官方示例: ai_doc/apc function history\n\n- 指定2号注册的队伍成员\n- 检查杀意波动的开启/关闭状态\n- 2번에 등록된 파티원을 지정\n- 살의의 파동의 온/오프 여부를 체크한다\n\n#### 官方示例: ai_doc/how to edit ai\n\n- 检查杀意波动的开启/关闭状态\n- 살의의 파동의 온/오프 여부를 체크한다\n\n#### 官方示例: ai_doc/how to edit aic\n\n- 指定注册在 2 号的队伍成员\n- 2번에 등록된 파티원을 지정",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "thorn",
@@ -21214,7 +21299,9 @@
       "name": "tile type",
       "title": "瓷砖的类型",
       "description": "// 瓷砖的类型。 [basic] [extended] 两者之一（默认[basic]）",
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "officialDescription": "#### 官方示例: tilesample.til\n\n- 图块类型。在 [basic] [extended] 中选择 (默认 [basic])",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "tile width",
@@ -21778,7 +21865,9 @@
       "name": "true",
       "title": "真正",
       "description": "真正",
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: ai_doc/apc function history\n\n- 对2号队伍成员使用a槽中指定的快速治愈技能。\n- 如果杀意波动开启\n- 2번 파티원에게 a슬롯에 지정된 패스트 힐 스킬을 사용한다.\n- 살의의 파동이 켜져 있으면\n\n#### 官方示例: ai_doc/how to edit ai\n\n- 如果杀意波动开启\n- 살의의 파동이 켜져 있으면\n\n#### 官方示例: ai_doc/how to edit aic\n\n- 对 2 号队伍成员使用 a 槽中指定的快速治愈技能。\n- 2번 파티원에게 a슬롯에 지정된 패스트 힐 스킬을 사용한다.",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "tutorial message",
@@ -23074,7 +23163,9 @@
       "name": "width",
       "title": "40 10",
       "description": "[width] 40 10\t\t// X轴，Y轴宽度顺序（像素值）",
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 依次为 X轴, Y轴 宽度 (像素值)",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "window",
@@ -23273,6 +23364,120 @@
       "title": "ZPOS下面",
       "description": "ZPOS下面",
       "authors": "lostluna1"
+    },
+    {
+      "name": "type",
+      "title": "1// 在",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 1// 在 `include`, `exclude`, `alone` 中选择 1 个\n- 1// `animation`, `particle`",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "max target number",
+      "title": "0// 最大目标数",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 0// 最大目标数，0 或不写则为无限 //未实现!!",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "z revision",
+      "title": "0// z 轴移动距离（px）不写则忽略",
+      "officialDescription": "#### 官方示例: aurasample.ora\n\n- 0// z 轴移动距离（px）不写则忽略",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "path info",
+      "title": "通道信息",
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 通道信息。前面的数字是网格列表中的索引（0~），后面是合适的出口索引（0~）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "job",
+      "title": "测试角色职业（0",
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 测试角色职业（0:剑士，1:格斗家，2:枪手，3:魔法师，4:圣职者）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "level",
+      "title": "测试角色等级",
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 测试角色等级\n\n#### 官方示例: dungeonlist_for_rapidparty_sample.dl\n\n- 最小 最大",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "avatar",
+      "title": "放入时装栏的时装（槽位自动指定）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 放入时装栏的时装（槽位自动指定）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "item",
+      "title": "放入物品栏的物品（槽位自动指定）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 放入物品栏的物品（槽位自动指定）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill",
+      "title": "要设置的技能（槽位自动指定）",
+      "closing": true,
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 要设置的技能（槽位自动指定）",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "SP",
+      "title": "持有技能点",
+      "officialDescription": "#### 官方示例: debugconfig\n\n- 持有技能点",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "�6���R܀����=��\b��ٕ& <:�.��m�Cj�R��aG�",
+      "title": "\u0016�^��\u0015S��]�5$}\u0003�\u001c���d��\u0000��",
+      "officialDescription": "#### 官方示例: manual for adding ui action system.doc\n\n- \u0016�^��\u0015S��]�5$}\u0003�\u001c���d��\u0000��",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "��: ���\u0001*��_*���?0z�",
+      "title": "� A|�\u001a",
+      "officialDescription": "#### 官方示例: manual for adding ui action system.doc\n\n- �\tA|�\u001a.���؇'����(�;u�/������n�_)�#Aie3���\u000b�\f~p�\u001e���",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "�I�ʣr��\u0012�|ʡ_5�\u001c;\u0012d�\u0018�[�J�;-\u0019�T�-��",
+      "title": "\\�@�\u0006ZsF�le�\u0001N�*���k�r���R���j��\u0002\u001bпV",
+      "officialDescription": "#### 官方示例: manual for adding ui action system.doc\n\n- \\�@�\u0006ZsF�le�\u0001N�*���k�r���R���j��\u0002\u001bпV��S���B����j��2���\u0005�\u0014���4ZT|��u~�I�\"��\f[C-C��#q�a7",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "name",
+      "title": "神兽的名称",
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 神兽的名称",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attack info",
+      "title": "硬编码用攻击信息",
+      "closing": true,
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 硬编码用攻击信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "int data",
+      "title": "硬编码中使用的整数资料列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 硬编码中使用的整数资料列表",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "string data",
+      "title": "硬编码中使用的字符串资料列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: petsample.pet\n\n- 硬编码中使用的字符串资料列表",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "IMAGE",
+      "title": "包含图块图像的img文件和帧索引",
+      "officialDescription": "#### 官方示例: tilesample.til\n\n- 包含图块图像的img文件和帧索引",
+      "officialAuthors": "官方PVF"
     }
   ]
 }

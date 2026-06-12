@@ -5,133 +5,171 @@
       "title": "在游戏中所显示的第1个名字",
       "description": "在游戏中所显示的第1个名字",
       "closing": false,
-      "authors": "Cai - 263007544|Xiti Fox"
+      "authors": "Cai - 263007544|Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 指定技能名称的标签，通常与<12:: > Skill.kor.str文件链接。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "name2",
       "title": "装备、物品的别名",
       "description": "装备、物品的别名\n\n在一些 dnf.exe 程序中会显示出该标签。\n\n* 通常是该装备、物品的英文名。",
       "closing": false,
-      "authors": "Cai - 263007544"
+      "authors": "Cai - 263007544",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 指定技能的英文名或汉字名的标签。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "basic explain",
       "title": "简单说明",
       "description": "简单说明\n\n装备中显示的蓝色文本说明，和 [detail explain] 关联的，此时在游戏中按 F4(默认键) 可切换简单/详细说明。\n\n* 通常在装备上使用。",
       "closing": false,
-      "authors": "Cai - 263007544"
+      "authors": "Cai - 263007544",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 指定技能基本说明的标签。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "explain",
       "title": "附加内容",
       "description": "附加内容\n\n* 在装备和道具类所展示的蓝色文本内容。\n\n* 在副本(.dgn)里展示该副本的描述内容。\n\n* 在 QP 商店里展示的属性内容。\n\n* 在活动(.evt)里展示活动的描述内容。\n\n* 在技能(.skl)里展示技能的描述内容。",
       "closing": false,
-      "authors": "Cai"
+      "authors": "Cai",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 指定技能详细说明的标签。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "purchase cost",
       "title": "学得此技能所需的sp点",
       "description": "学得此技能所需的sp点\n\n在数字的右边跟一个灰箭头即可设置下一级所需sp点\n你也可以只设置1个数字来统一技能每一级所需sp点",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 各级别购买所需的SP。此数值的数量即成为最大等级的数量。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "special purchase cost",
       "title": "学得此技能所需的tp点",
       "description": "学得此技能所需的tp点\n\n在数字的右边跟一个灰箭头即可设置下一级所需tp点\n你也可以只设置1个数字来统一技能每一级所需tp点",
       "closing": true,
-      "authors": "666|Xiti Fox"
+      "authors": "666|Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 若有此标签，则购买需要TP而非SP。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "required level",
       "title": "学习等级",
       "description": "最低学得等级",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 学习技能所需角色的最低等级。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "required level range",
       "title": "等级间隔",
       "description": "技能升级间隔\n\n2代表每2级可通过sp点或tp点升1级",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 需求等级的区间。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "pre required skill",
       "title": "学得所需的前置技能",
       "description": "学得所需的前置技能\n\n左边前置技能编号    右边等级需求\n\n//若设定不止一个前置技能，则按照\n`左、右、左、右`\n的顺序来赋予前置技能",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 学习技能前必须先学习的技能列表。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "type",
       "title": "类型",
       "description": "技能类型 \n 示例 \n `[active]` \n `[passive]`",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 技能的类型。可选择 `[active]` 和 `[passive]` 之一。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "skill class",
       "title": "技能类",
       "description": "技能类",
       "closing": false,
-      "authors": "无名氏"
+      "authors": "无名氏",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 将类似技能归为一组的技能系列索引 [例: 街头, 魔法, 体术 ]。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "maximum level",
       "title": "最高等级",
       "description": "拥有此词条对象为技能时，限制绝对的最大可学得等级，也就是不止通过sp点（比如装备、卡片、称号等等）可以提升的最大等级",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 通过所有手段可提升的最大等级（包含物品、Buff等）。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "growtype maximum level",
       "title": "每个职业可通过sp点或tp点学得此技能的最高等级",
       "description": "每个职业可通过sp点或tp点学得此技能的最高等级，比如\n[growtype maximum level]\n\t0\t2\t0\t0\t0\n代表只有剑魂能把这个技能学到2级\n\n1男鬼剑士 2剑魂            3鬼泣         4狂战士      5阿修罗\n1女格斗     2女气功        3女散打     4女街霸      5女柔道家\n1女魔法师 2元素师        3召唤师     4战斗法师  5魔道学者\n1男圣职者 2男圣骑士     3蓝拳圣使 4男驱魔师   5复仇者\n1神枪手     2漫游枪手     3枪炮师    4机械师       5弹药专家\n1暗夜使者 2刺客            3死灵术士  4忍者         5影舞者\n1男魔法师 2元素爆破师 3冰结师\n\n//赋予技能等级之后，还需要将技能加入目标职业的技能树坐标\nsp技能树路径：clientonly/skilltree/职业_sp.co\ntp技能树路径：clientonly/skilltree/职业_tp.co",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 通过技能购买可获得的最高等级。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "skill fitness growtype",
       "title": "为职业赋予这个技能",
       "description": "为职业赋予这个技能，需搭配代码：[growtype maximum level]\n                                    //不然的话就光是有技能而无法学得技能\n\n比如【崩山击】\n[skill fitness growtype]\n\t0\t1\t2\t3\t4\n[/skill fitness growtype]\n代表鬼剑士全部职业都可以学得\n\n再比如，还是【崩山击】\n[skill fitness growtype]\n\t0\t2\t4\n[/skill fitness growtype]\n代表只有鬼剑士、鬼泣、阿修罗可以学得\n\n输入数字可为职业赋予此技能\n0男鬼剑士 1剑魂            2鬼泣         3狂战士      4阿修罗\n0女格斗     1女气功        2女散打     3女街霸      4女柔道家\n0女魔法师 1女元素师     2召唤师     3战斗法师  4魔道学者\n0男圣职者 1男圣骑士     2蓝拳圣使 3男驱魔师   4复仇者\n0神枪手     1漫游枪手     2枪炮师     3机械师      4弹药专家\n0暗夜使者 1刺客            2死灵术士  3忍者         4影舞者\n\n//赋予技能之后，还需要将技能加入目标职业的技能树坐标\nsp技能树路径：clientonly/skilltree/职业_sp.co\ntp技能树路径：clientonly/skilltree/职业_tp.co",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 注册可正式学习技能的成长类型编号。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "consume MP",
       "title": "MP 消耗",
       "description": "使用技能时消耗的魔法值\n左边最低等级消耗     右边最高等级消耗\n\n//示例：\n\t[consume MP]\n\t\t7723\t1123\n\n以上示例代表1级消耗7723魔法值，并随等级逐渐减少需消耗的魔法值，满级消耗1123魔法值",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 每次消耗的MP。等级1和最高等级时的值。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "maintain MP",
       "title": "20.0 600.0",
       "description": "[maintain MP] 20.0 600.0\t// 每秒MP消耗。 仅用于持续消耗MP的技能",
       "closing": false,
-      "authors": "FreyaGrace"
+      "authors": "FreyaGrace",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 每秒消耗的MP。仅在具有持续MP消耗的技能中使用。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "consume item",
       "title": "第一个是释放技能要消耗的物品代码",
       "description": "第一个是释放技能要消耗的物品代码\n第二个是最低等级的消耗\n第三个是最高等级的消耗\n\n示例：\n\t3037\t1\t5\n代表最低等级将消耗1个无色小晶块，并随等级逐渐增加消耗数量，最高等级将消耗5个无色小晶块",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 使用技能所需的物品。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "limit count",
       "title": "每副本限制次数",
       "description": "每副本限制次数",
       "closing": true,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 每个地城的次数限制。若为0或不写则为无限。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "cool time",
       "title": "冷却时间",
       "description": "换装和道具冷却时间\n\n赋予词条对象为技能时，左边最低等级冷却，右边最高等级冷却\n\n1000=1秒",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 使用后阻止主动技能和消耗品使用的时间。毫秒单位，仅对主动技能有效。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "icon",
@@ -145,63 +183,81 @@
       "title": "技能指令",
       "description": "技能指令，比如“←→+Z”以默认的手搓指令释放鬼剑士的【十字斩】等等\n↑=`(UP)`\n↓=`(DOWN)`\n←=`(LEFT)`\n→=`(RIGHT)`\nZ=`(SKILL)`\n普攻=`(ATTACK)`\n跳跃=`(JUMP)`\n空格键=`(BUFF)`\n\n{6=`(键位)`} 是需要按的键位\n{8=`,`} 是衔接下一个按键的代码\n{8=`&`} 是按住方向键之后按指令键的代码\n\n比如：\n\t{6=`(RIGHT)`}\n\t{8=`,`}\n\t{6=`(BUFF)`}\n为按一下前进+空格键以默认的手搓指令释放鬼剑士的【刀魂之卡赞】\n\n再比如：\n\t{6=`(UP)`}\n\t{8=`&`}\n\t{6=`(SKILL)`}\n为按住上+Z以默认的手搓指令释放鬼剑士的【鬼斩】，\n//需要注意的是按住类手搓指令只能绑一个移动键\n//以及，若本身就有指令的技能是无法通过PVF修改按住类指令的",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 操作方法。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "static data",
       "title": "静态数据",
       "description": "静态数据\n无法随等级提升的技能数据，修改此数据可以影响到实战，你也可以把动态数据[level info]全改成一个数据来达到伪静态数据的结果（笑）\n\n//通用：\n有些技能的静态数据比如鬼泣的[封印解除]是可以把别的技能编号补充进去以达到用被动增强主动的效果\n以及[攻击类型转换]，将其他主动技能编号写入即可在游戏内切换转职后技能的伤害加成\n\n//魔法师：\n`召唤师`、`魔道学者`的召唤物静态数据里会出现的怪物编号\n[比如魔道学者用变异苍蝇拍击杀怪物后，以大成功召唤出变异牛头巨兽，静态数据里第8位正好有61154编号，对应怪物编号61154的变异牛头巨兽]\n这代表此技能将生效于召唤物，所以这也是为什么召唤物的面板和技能是分开写的\n\n//机械师：\n机械师的机器人比较特殊，生效信息并没有写在静态数据里，但是可以通过\nmonster/gunner/robot\n的路径查看机器人面板信息\n\n//示例：\n[level property]\n\t1\t99                                          ←1级到99级显示\n`鬼印珠多段攻击间隔 : <float2>秒`    ←技能属性(添加<>以调用下方\n                                                                                3个数值为1组的数据)\n\t1\t1\t0.001                               ←调用静态数据从左往右数的第1位\n[/level property]\n静态数据从左往右数就是[level property]会使用<int>、<float1>、<float2>\n按照0、1、2、3的位置调用的数值",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 硬编码中使用的固定资料集合（技能等级提升也不改变的值）。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "level info",
       "title": "级别信息/动态数据",
       "description": "级别信息/动态数据\n可以随技能等级提升的数据，修改此数据可以影响到实战，而无法随等级提升的是静态数据[static data]\n\n第1横排的内容是会生效的动态数据的数量，不计入该技能的第1级，所以可以算第0级\n第1横排的内容为4时，代表从第2横排开始左往右能生效4个动态数据，所以第2横排才能算作此技能的第1级\n—————————————————————————————\n每个等级从左往右数就是[level property]会使用<int>、<float1>、<float2>\n按照0、1、2、3的位置调用的数值\n//示例：\n[level property]\n\t1\t99                               ←1级显示到99级\n\t`银弹装弹数 : <int>发`      ←技能属性(添加<>以调用下方3个数值\n\t                                                                                    为1组的数据)\n\t-1\t0\t1.0                        ←调用动态数据从左往右数的第0位\n[/level property]\n—————————————————————————————\n技能从1级升到2级后就会调用第3横排的数据，5级升到6级后就会调用第7横排的数据，以此类推",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 硬编码中使用的各级别资料集合（技能等级不同值也不同的资料）。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "level property",
       "title": "游戏内的技能属性",
       "description": "游戏内的技能属性\n\n修改此标签里的内容仅影响显示，需搭配能影响实战的\n[level info]（动态数据）或者[static data]（静态数据）使用\n—————————————————————————————\n//示例1：\n[level property]\n\t1\t99                               ←1级显示到99级\n\t`银弹装弹数 : <int>发`      ←技能属性(添加<>以调用下方3个数值\n\t                                                                                    为1组的数据)\n\t-1\t0\t1.0                        ←调用动态数据从左往右数的第0位\n[/level property]\n—————————————————————————————\n//示例2：\n[level property]\n\t1\t99                                          ←1级显示到99级\n\t`鬼印珠多段攻击间隔 : <float2>秒`    ←技能属性(添加<>以调用下方\n                                                                                3个数值为1组的数据)\n\t1\t1\t0.001                               ←调用静态数据从左往右数的第1位\n[/level property]\n—————————————————————————————\n示例第二排引号后边的内容可以自己编辑，也可以打上\n<int>、<float1>、<float2>来调用1.0、0.1、0.01、0.001的内容，\n有一个<>就会调用一组数据，\n比如膝撞的`物理攻击力 : <int>%% + <int>`在游戏里只会显示一排，但在PVF里会调用两组动/静态数据\n\n<int>：特殊效果的等级、数量、技能倍率、技能固伤、穿刺力、吸收伤害、减少延迟、范围、异常抗性、增加面板、技能大小\n\n<float1>：特殊效果的概率、命中率、浮空力、发动速度、暴击率、持续时间、前摇、攻击间隔、增加速度、激活使用技能的时间、蓄力时间\n\n<float2>：同<float1>\n//提示：<float2>相比<float1>可以显示更详细的数值，<float1>在部分情况遇到小数点时会取整，显示大概的数值\n—————————————————————————————\n//示例第三排的3个数值为1组的内容分别为\n第1个 : 为正数时调用静态数据（与第2个数字写一样的）\n            为负数时调用动态数据\n     -2 = 固伤伤害\n     -3 = 中毒伤害\n     -4 = 出血伤害\n     -5 = 灼伤伤害\n     -6 = 感电伤害\n\n第2个 : 动/静态数据位置，0是从左往右数第1个，1是从左往右数第2个，以此类推\n\n第3个 : 调用动/静态数据后在游戏内技能属性显示出来的数值：\n     `1.0（或与1.0相近的）：范围、数量、技能倍率、技能固伤、速度、穿刺力、发动速度、特殊效果的等级、增加面板、技能大小`\n\n     `0.1（或与0.1相近的）：浮空力、命中率、暴击率、特殊效果的概率`\n\n     `0.001（或与0.001相近的）：持续时间`\n\n//1.0=显示100%内容（比如倍率、数量等）\n//0.1=显示10%内容（比如概率的200在游戏内是20%）\n//0.001=显示0.1%内容（持续时间的1000在游戏内是1秒）",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 技能特性说明。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "skill preloading image",
       "title": "预加载图片路径列表",
       "description": "预加载图片路径列表",
       "closing": true,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 预先想要加载的文件写在此处。（例如枪手的凝固汽油弹的情况）。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "basic explain ex",
       "title": "EX 被动技能的简短说明",
       "description": "EX 被动技能的简短说明",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 指定ex被动技能基本说明的标签。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "explain ex",
       "title": "EX 被动技能的详细说明",
       "description": "EX 被动技能的详细说明",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 指定ex被动技能详细说明的标签。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "feature skill type",
       "title": "是否为特性技能(1",
       "description": "是否为特性技能(1=是)",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 决定特性技能的标签，1则为特性，0或没有此标签则为普通技能。\n- 是特性技能还是普通技能（0:普通技能 1:特性技能）。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "feature skill index",
       "title": "相关特性技能索引",
       "description": "相关特性技能索引",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 指定关联的特性被动技能的标签，后面写索引。140号成为与此技能联动的特性技能。\n- 若该技能存在特性技能，则指定特性技能索引。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "active",
@@ -229,7 +285,9 @@
       "title": "成长型适合度",
       "description": "成长型适合度",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 按成长类型的适应度。0为一般，30则只需70%的SP（几乎？完全？未使用）。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "durability decrease rate",
@@ -264,49 +322,63 @@
       "title": "释放技能在部分时候的屏幕抖动效果",
       "description": "释放技能在部分时候的屏幕抖动效果\n比如狂战士释放技能【暴走】在读条结束之后会抖动屏幕\n左边对应抖动强度      右边对应抖动时间，100=0.1秒",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 在特定情况下震动屏幕。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "casting time",
       "title": "施法时间",
       "description": "施法时间\n100=0.1秒",
       "closing": false,
-      "authors": "梦幻物语|Xiti Fox"
+      "authors": "梦幻物语|Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 咏唱时间。毫秒单位。等级1，最终等级。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "seal enable",
       "title": "是否可被封印(技能图标上的on/off)",
       "description": "是否可被封印(技能图标上的on/off)",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 技能是否可被功能封印。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "auto limit count reduce",
       "title": "自动减少限制次数标志",
       "description": "自动减少限制次数标志",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 是否自动减少限制次数。1为默认值。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "skill under cooltime effect",
       "title": "施放过后会一同进入冷却时间的技能",
       "description": "施放过后会一同进入冷却时间的技能，\n将其他技能编号写入即可设置",
       "closing": true,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 此技能发动时，同时进入冷却时间的技能列表。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "auto cooltime apply",
       "title": "自动应用冷却标志",
       "description": "自动应用冷却标志",
       "closing": false,
-      "authors": "lostluna1"
+      "authors": "lostluna1",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 是否自动应用冷却时间。1为默认值，0则需硬编码应用冷却时间，-1则需硬编码应用冷却时间，且在手动应用前技能将处于Disable状态。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "weapon effect type",
       "title": "伤害类型",
       "description": "伤害类型\n物理伤害：`[physical]`\n魔法伤害：`[magical]`",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- MP、冷却时间将跟随武器的哪种参数。可选择 `[none]` `[physical]` `[magical]` 之一。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "none",
@@ -334,21 +406,27 @@
       "title": "手搓指令的释放介绍",
       "description": "手搓指令的释放介绍",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 指定指令说明的标签。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "skill command advantage",
       "title": "以手搓指令而不是快捷键释放技能时所获得的收益",
       "description": "以手搓指令而不是快捷键释放技能时所获得的收益\n\n左边若为20将减少最大冷却时间2%\t 右边若为50将减少魔法值消耗5%\n\n同时会在职业的头上显示你搓了哪些指令",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 冷却时间减少比率（0.1%单位），MP消耗量减少比率（0.1%单位） // 通过指令输入技能时可获得的增益。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "start cool time",
       "title": "开始冷却",
       "description": "对局开始时的冷却时间限制\n20000代表对局开始时有20秒禁用时间\n\n1000=1秒",
       "closing": false,
-      "authors": "Xiti Fox"
+      "authors": "Xiti Fox",
+      "officialDescription": "#### 官方示例: skillsample.skl\n\n- 若希望决斗场、死亡之塔、战争区域等一开始就处于冷却时间，在此输入大于0的数字。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "special level up",

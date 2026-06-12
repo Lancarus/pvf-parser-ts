@@ -1,0 +1,31 @@
+{
+  "tags": [
+    {
+      "name": "cube index",
+      "title": "小晶块的物品索引列表",
+      "closing": true,
+      "officialDescription": "#### 官方示例: disjointsample.etc\n\n- 小晶块的物品索引列表",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "legacy info",
+      "title": "抽取信息",
+      "closing": true,
+      "officialDescription": "#### 官方示例: disjointsample.etc\n\n- 抽取信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill info",
+      "title": "与分解相关的技能信息",
+      "closing": true,
+      "officialDescription": "#### 官方示例: disjointsample.etc\n\n- 与分解相关的技能信息",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill prob",
+      "title": "技能影响的概率",
+      "officialDescription": "#### 官方示例: disjointsample.etc\n\n- 技能影响的概率。%值，可为小数。",
+      "officialAuthors": "官方PVF"
+    }
+  ]
+}

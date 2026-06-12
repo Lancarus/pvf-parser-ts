@@ -16,13 +16,18 @@
       "name": "move variable 1",
       "title": "移动变量1",
       "description": "移动变量1",
-      "authors": "无名氏"
+      "authors": "无名氏",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 移动变量 1。初始值和最终值（移动速度 / 振动最大值）。\n- 移动变量 1。初始值和最终值。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "object",
       "title": "目的",
       "description": "目的",
-      "authors": "无名氏"
+      "authors": "无名氏",
+      "closing": true,
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 对象列表。",
+      "officialAuthors": "官方PVF"
     },
     {
       "name": "straight line",
@@ -35,6 +40,162 @@
       "title": "消失",
       "description": "消失",
       "authors": "飞过半边天"
+    },
+    {
+      "name": "creation pos",
+      "title": "生成 x",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 生成 x, y, z 坐标",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "x axis",
+      "title": "要编辑移动的轴",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 要编辑移动的轴。此标记之后的值是X轴。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move type",
+      "title": "移动类型",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 移动类型。可选择 `[stop]` `[straight line]` `[sin]` `[cos]` 之一。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "move variable 2",
+      "title": "移动变量 2",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 移动变量 2。初始值和最终值（未使用 / 振动周期）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "y axis",
+      "title": "要编辑移动的轴",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 要编辑移动的轴。此标记之后的值是Y轴。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "z axis",
+      "title": "要编辑移动的轴",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 要编辑移动的轴。此标记之后的值是Z轴。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "changing term",
+      "title": "初始值和最终值之间的变化间隔",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 初始值和最终值之间的变化间隔。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "changing type",
+      "title": "初始值和最终值之间的移动类型",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 初始值和最终值之间的移动类型。可选择 `[keep changing]` `[keep last value]` `[ping pong]` 之一。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "gravity",
+      "title": "重力值",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 重力值。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "rotation angle",
+      "title": "旋转角度",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 旋转角度。水平角 / 垂直角 / 旋转角。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "life time",
+      "title": "生命周期",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 生命周期。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "landing type",
+      "title": "接触地面时的处理",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 接触地面时的处理。可选择 `[pierce]` `[slide]` `[stop]` `[vanish]` 之一。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "transparent value",
+      "title": "起始 / 结束透明度（%值）",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 起始 / 结束透明度（%值）。结束的基准是生命周期。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "creation frequency",
+      "title": "每秒粒子生成频率（-1则按最大生成数量生成）",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 每秒粒子生成频率（-1则按最大生成数量生成）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "maximum create number",
+      "title": "粒子最大生成数量（0则为无限）",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 粒子最大生成数量（0则为无限）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "maximum create time",
+      "title": "粒子最大生成时间（0则为无限）",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 粒子最大生成时间（0则为无限）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "create area size",
+      "title": "生成空间大小",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 生成空间大小。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "create area rotation angle",
+      "title": "生成空间旋转角度",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 生成空间旋转角度。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "rotation angle range type",
+      "title": "指定生成角度范围的方法",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 指定生成角度范围的方法。可选择 `[rectangle]` 和 `[circle]` 之一。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "rotation angle variable",
+      "title": "生成角度的变量 1",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 生成角度的变量 1, 2（水平角度范围/直径角，垂直角度范围/未使用）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "random range",
+      "title": "随机范围（%值）",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 随机范围（%值）。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "create pos correct",
+      "title": "是否校正生成坐标",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 是否校正生成坐标。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "how to create object",
+      "title": "两者择一",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 两者择一。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "object type",
+      "title": "要生成的对象的类型",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 要生成的对象的类型。可选择 `[animation]` 和 `[passive object]` 之一。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "layer",
+      "title": "生成的粒子的图层",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 生成的粒子的图层。仅当生成对象为 `[animation]` 时有效。",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "display effect rate",
+      "title": "特效等级（低-中-高）时生成的粒子比例",
+      "officialDescription": "#### 官方示例: particlesample.ptl\n\n- 特效等级（低-中-高）时生成的粒子比例。%值（默认是100 100 100）。",
+      "officialAuthors": "官方PVF"
     }
   ]
 }
