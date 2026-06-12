@@ -3,116 +3,149 @@
     {
       "name": "sub type",
       "title": "表示是怪物卡片！！",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 表示是怪物卡片！！",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[sub type] 1\t\t\t\t\t\t\t\t\t\t// 表示是怪物卡片！！\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "HP MAX",
       "title": "前面的+号可以省略",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 前面的+号可以省略",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n// 变化能力值。变化量为0的可以不写。 //\n\t[HP MAX] +10\t\t\t\t// 前面的+号可以省略\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical absolute damage",
       "title": "物理绝对伤害",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 物理绝对伤害",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[physical absolute damage] 100\t\t// 物理绝对伤害\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical damage reduce",
       "title": "物理伤害修正",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 物理伤害修正",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[physical damage reduce] 100\t\t// 物理伤害修正\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical absolute defense",
       "title": "物理绝对防御",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 物理绝对防御。%值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[physical absolute defense] 20.0\t// 物理绝对防御。%值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical absolute damage",
       "title": "魔法绝对伤害",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 魔法绝对伤害",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[magical absolute damage] 100\t\t// 魔法绝对伤害\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical damage reduce",
       "title": "魔法伤害修正",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 魔法伤害修正",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[magical damage reduce] 100\t\t// 魔法伤害修正\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical absolute defense",
       "title": "魔法绝对防御",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 魔法绝对防御。%值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[magical absolute defense] 20.0\t\t// 魔法绝对防御。%值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "stuck resistance",
       "title": "(0",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- (0.1%单位)",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[stuck resistance] 33 // (0.1%单位)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "MP regen speed rate",
       "title": "%增加 (临时例外处理)",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- %增加 (临时例外处理)",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[MP regen speed rate] 0.1\t// %增加 (临时例外处理)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "room list move speed rate",
       "title": "指定在村庄中的移动速度",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 指定在村庄中的移动速度",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[room list move speed rate] +1.0\t// 指定在村庄中的移动速度\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "elemental property",
       "title": "在      中选择",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 在 `[no element]` `[fire element]` `[water element]` `[dark element]` `[light element]` 中选择。`[no element]` 则可以不写",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n// 攻击修正值：仅对武器有效。没有或0则可以不写 //\n\t[elemental property] `[dark element]`\t\t\t\t// 在 `[no element]` `[fire element]` `[water element]` `[dark element]` `[light element]` 中选择。`[no element]` 则可以不写\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "active status",
       "title": "最前面是攻击时触发的状态异常种类",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 最前面是攻击时触发的状态异常种类。",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[active status] `[curse]` 37.3 100\t// 最前面是攻击时触发的状态异常种类。\n\t\t\t\t\t// `[none]` `[slow]` `[freeze]` `[poison]` `[stun]` `[curse]` `[blind]`\n\t\t\t\t\t// `[lightning]` `[stone]` `[sleep]` `[deelement]` `[deadlystrike]` `[bleeding]`\n\t\t\t\t\t// `[haste]` `[bless]` `[element]`\n\t\t\t\t\t// 中选择 (`[none]` 则可以不写)\n\t\t\t\t\t// 第二个是触发概率 (如果写了 `[none]`，则可以任意填写)\n\t\t\t\t\t// 第三个是触发强度 (如果写了 `[none]`，则可以任意填写)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "critical hit",
       "title": "暴击命中概率上升值",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 暴击命中概率上升值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[critical hit] +5.0\t\t// 暴击命中概率上升值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "stuck",
       "title": "卡住概率变化值",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 卡住概率变化值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[stuck] -1.0\t\t\t// 卡住概率变化值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "human damage rate",
       "title": "对人类伤害比率变化值",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 对人类伤害比率变化值。%值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[human damage rate] +2.5\t// 对人类伤害比率变化值。%值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "fort damage rate",
       "title": "对建筑伤害比率变化值",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 对建筑伤害比率变化值。%值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[fort damage rate] -31.2\t// 对建筑伤害比率变化值。%值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "monster damage rate",
       "title": "对怪兽 (针对装甲类别为0的家伙) 攻击比率",
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 对怪兽 (针对装甲类别为0的家伙) 攻击比率。可小数，%值，100为默认",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[monster damage rate] 100.0\t// 对怪兽 (针对装甲类别为0的家伙) 攻击比率。可小数，%值，100为默认\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "skill levelup",
       "title": "装备时提升的技能和等级列表",
       "closing": true,
-      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n- 装备时提升的技能和等级列表。",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[skill levelup]\t\t\t\t// 装备时提升的技能和等级列表。\n\t`[swordman]` 10 1\t\t\t\t// 职业 (`[swordman]` `[fighter]` `[common]`) 技能索引 等级\n\t`[fighter]` 1 33\n\t[/skill levelup]\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "explain",
+      "title": "怪物出没地下城",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n//[name] `测试怪物卡片`\n//[name2] `Sample of monster cards`\n[explain]\n`燃烧的格拉卡拉克`\t\t\t\t\t\t\t\t\t// 怪物出没地下城\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "string data",
+      "title": "怪物卡片图像包",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[string data]\n`Interface/MonsterCard/cut_cardimage.img`\t// 怪物卡片图像包\n`[weapon]`\t\t\t\t\t// 附魔目标 (装备部位)\n`[foil]` \t\t\t\t\t// 箔\n`[unlimited challenge]`\t\t\t\t// 事件名称\n[/string data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "int data",
+      "title": "怪物卡片图像索引",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[int data]\n1\t\t\t\t// 怪物卡片图像索引\n3000\t\t\t// 怪物索引\n[/int data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "enchant",
+      "title": "变化能力值",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[enchant]\n\t// 变化能力值。变化量为0的可以不写。 //\n\t[HP MAX] +10\t\t\t\t// 前面的+号可以省略\n\t[MP MAX] +27\n\t[physical attack] +100\n\t[physical defense] +10\n\t[magical attack] -10\n\t[magical defense] -26\n\t[equipment physical attack] 100\n\t[equipment physical defense] 25\n\t[equipment magical attack] 100\n\t[equipment magical defense] 38\n\t[physical absolute damage] 100\t\t// 物理绝对伤害\n\t[physical damage reduce] 100\t\t// 物理伤害修正\n\t[physical absolute defense] 20.0\t// 物理绝对防御。%值\n\t[magical absolute damage] 100\t\t// 魔法绝对伤害\n\t[magical damage reduce] 100\t\t// 魔法伤害修正\n\t[magical absolute defense] 20.0\t\t// 魔法绝对防御。%值\n\n\t[fire resistance] +17\n\t[water resistance] +3\n\t[dark resistance] +37\n\t[light resistance] -37\n\t[all elemental resistance] +10\n\n\t[slow resistance] 18\n\t[freeze resistance] 39\n\t[poison resistance] 11\n\t[stun resistance] 33\n\t[curse resistance] 10\n\t[blind resistance] 10\n\t[lightning resistance] 24\n\t[stone resistance] 3\n\t[sleep resistance] 33\n\t[deelement resistance] 1\n\t[deadlystrike resistance] 2\n\t[bleeding resistance] 32\n\t[confuse resistance] 33\n\t[hold resistance] -3\n\t[all activestatus resistance] +2\n\n\t[piercing resistance] 12\n\t[stuck resistance] 33 // (0.1%单位)\n\n\t[inventory limit] +30\n\t[HP regen speed] +2\n\t[MP regen speed] -2\n\t[MP regen speed rate] 0.1\t// %增加 (临时例外处理)\n\t[move speed] +1\n\t[attack speed] +2\n\t[cast speed] +3\n\t[hit recovery] +3\n\t[jump power] +10\n\t[room list move speed rate] +1.0\t// 指定在村庄中的移动速度\n\n\t// 攻击修正值：仅对武器有效。没有或0则可以不写 //\n\t[elemental property] `[dark element]`\t\t\t\t// 在 `[no element]` `[fire element]` `[water element]` `[dark element]` `[light element]` 中选择。`[no element]` 则可以不写\n\t[active status] `[curse]` 37.3 100\t// 最前面是攻击时触发的状态异常种类。\n\t\t\t\t\t// `[none]` `[slow]` `[freeze]` `[poison]` `[stun]` `[curse]` `[blind]`\n\t\t\t\t\t// `[lightning]` `[stone]` `[sleep]` `[deelement]` `[deadlystrike]` `[bleeding]`\n\t\t\t\t\t// `[haste]` `[bless]` `[element]`\n\t\t\t\t\t// 中选择 (`[none]` 则可以不写)\n\t\t\t\t\t// 第二个是触发概率 (如果写了 `[none]`，则可以任意填写)\n\t\t\t\t\t// 第三个是触发强度 (如果写了 `[none]`，则可以任意填写)\n\n\n\n\t[skill data up] `[fighter]` 12 `[static]` 2 1 200\n\t// 职业\n\t// 技能索引，\n\t// 要更改的数据类型[static data, level info]\n\t// 数据索引\n\t// 数值适用(0)，比率适用%(1)\n\t// 数值\n\n\n\n\t[push aside] +10\n\t[lift up] +27\n\t[critical hit] +5.0\t\t// 暴击命中概率上升值\n\t[stuck] -1.0\t\t\t// 卡住概率变化值\n\t[ignore defense] 1\n\t[human damage rate] +2.5\t// 对人类伤害比率变化值。%值\n\t[fort damage rate] -31.2\t// 对建筑伤害比率变化值。%值\n\t[monster damage rate] 100.0\t// 对怪兽 (针对装甲类别为0的家伙) 攻击比率。可小数，%值，100为默认\n\n\t[HP drain] 1\n\t[MP drain] 1\n\n\t[skill levelup]\t\t\t\t// 装备时提升的技能和等级列表。\n\t`[swordman]` 10 1\t\t\t\t// 职业 (`[swordman]` `[fighter]` `[common]`) 技能索引 等级\n\t`[fighter]` 1 33\n\t[/skill levelup]\n[/enchant]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "skill data up",
+      "title": "职业",
+      "officialDescription": "#### 官方示例: stackablesample-monster_card.stk\n\n```pvf\n[skill data up] `[fighter]` 12 `[static]` 2 1 200\n\t// 职业\n\t// 技能索引，\n\t// 要更改的数据类型[static data, level info]\n\t// 数据索引\n\t// 数值适用(0)，比率适用%(1)\n\t// 数值\n```",
       "officialAuthors": "官方PVF"
     }
   ]

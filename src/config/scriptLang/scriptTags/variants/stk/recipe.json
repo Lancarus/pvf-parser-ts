@@ -3,8 +3,22 @@
     {
       "name": "stackable type",
       "title": "类型为",
-      "officialDescription": "#### 官方示例: stackablesample-recipe.stk\n\n- 类型为 `[recipe]`",
+      "officialDescription": "#### 官方示例: stackablesample-recipe.stk\n\n```pvf\n[stackable type] `[recipe]` 0\t\t// 类型为 `[recipe]`\n```",
       "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "int data",
+      "title": "所需物品种类数",
+      "officialDescription": "#### 官方示例: stackablesample-recipe.stk\n\n```pvf\n[int data]\n3\t\t\t\t\t// 所需物品种类数\n27 1\t\t\t\t\t// 物品索引，物品数量。(按所需物品种类重复)\n28 4\t\t\t\t\t// 例) 现在需要 27号 1个 28号 4个 29号 2个\n29 2\n\n2\t\t\t\t\t// 生成物品种类数\n10001 1\t\t\t\t\t// 物品索引，物品数量。(按生成物品种类重复)\n77 3\t\t\t\t\t// 例) 现在生成 10001号 1个，77号 3个\n\n2\t\t\t\t\t// 所需技能种类数 (如果没有则为0，与职业无关，仅按索引检查)\n140 1\t\t\t\t\t// 技能索引，最低等级 (按所需技能种类重复)\n142 7\t\t\t\t\t// 例) 现在需要 140号技能 1级，142号技能 7级以上\n\n1\t\t\t\t\t// 所需等级。0:皆可 1:高级 2:专家职业。不写则为0\n[/int data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "string data",
+      "title": "配方类型",
+      "officialDescription": "#### 官方示例: stackablesample-recipe.stk\n\n```pvf\n[string data]\n// 配方类型。\n// 精工 - [craftmanship]\n// 织造 - [weaving]\n// 机械 - [machinary]\n// 化学 - [chemistry]\n// 附魔 - [enchant]\n// 从以上选择\n// 注意大小写准确！！\n`[craftmanship]`\n[/string data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     }
   ]
 }

@@ -6,7 +6,7 @@
       "description": "在副本接口处代表\n第一个数为副本ID\n第二个为任务ID 假如是-1就代表该副本无前置任务\n如果不为-1 则代表需完成指定任务ID才可开启该副本",
       "authors": "白糖-193284563",
       "closing": true,
-      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 要列出的地下城",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n```pvf\n[dungeon]\t\t\t\t// 要列出的地下城\n1 -1\t\t\t\t// 地下城索引，为显示而需要接收或清除的任务索引\n2 -1\n3 -1\n4 -1\n5 102\n6 [in progress] 203\t\t// 在地下城索引和任务索引之间插入 [in progress]，则仅在任务进行中时才显示该地下城\n[/dungeon]\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -14,7 +14,7 @@
       "title": "副本深渊开启指向 写1代表可以开启深渊",
       "description": "副本深渊开启指向 写1代表可以开启深渊",
       "authors": "白糖-193284563",
-      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 世界中是否存在地狱地下城 (1:有，0:无)",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n```pvf\n[hell dungeon] 1\t// 世界中是否存在地狱地下城 (1:有，0:无)\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -28,7 +28,7 @@
       "title": "进行中",
       "description": "进行中",
       "authors": "无名氏",
-      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 在地下城索引和任务索引之间插入 [in progress]，则仅在任务进行中时才显示该地下城",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n```pvf\n6 [in progress] 203\t\t// 在地下城索引和任务索引之间插入 [in progress]，则仅在任务进行中时才显示该地下城\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -37,7 +37,7 @@
       "description": "在worldmap中表示  深渊门票代码，仅适用于冰雪宫殿以上的副本",
       "authors": "依旧",
       "closing": true,
-      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 进入地狱地下城时消耗的物品索引、数量",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n```pvf\n[item condition]\t// 进入地狱地下城时消耗的物品索引、数量\n4150 1\t\t\t// 如果没有该物品，则无法进入地狱地下城。\n[/item condition]\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -45,7 +45,7 @@
       "title": "选择副本的背景图",
       "description": "选择副本的背景图",
       "authors": "大白：649964267",
-      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 地图图像文件名称，帧索引",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n```pvf\n[map image] `Map.img` 0\t// 地图图像文件名称，帧索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -63,15 +63,22 @@
     {
       "name": "name",
       "title": "名称",
-      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 名称",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n```pvf\n[name] `格兰·弗洛里斯`\t\t// 名称\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "hell quest",
       "title": "地狱任务索引",
       "closing": true,
-      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n- 地狱任务索引：必须完成该任务才能进入地狱地下城",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n```pvf\n[hell quest]\t\t// 地狱任务索引：必须完成该任务才能进入地狱地下城\n2601\n[/hell quest]\n```",
       "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "minimap points",
+      "title": "位置(x",
+      "officialDescription": "#### 官方示例: worldmapsample.wdm\n\n```pvf\n[minimap points]\n1000\t100\t\t\t// 位置(x, y)  step 0\n100\t\t10\t\t\t// 位置(x, y)  step 1\n[/minimap points]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     }
   ]
 }

@@ -3,8 +3,15 @@
     {
       "name": "stackable type",
       "title": "类型为",
-      "officialDescription": "#### 官方示例: stackablesample-stackable_legacy.stk\n\n- 类型为 `[legacy]`",
+      "officialDescription": "#### 官方示例: stackablesample-stackable_legacy.stk\n\n```pvf\n[stackable type] `[stackable legacy]` 0\t\t// 类型为 `[legacy]`\n```",
       "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "int data",
+      "title": "未获得任何物品时出现的基本物品",
+      "officialDescription": "#### 官方示例: stackablesample-stackable_legacy.stk\n\n```pvf\n[int data]\n1001 1\t\t\t\t\t// 未获得任何物品时出现的基本物品。基本物品数量\n\n10001 288 1\t\t\t\t// 出现物品的索引和概率。概率为十万分比 (0.001%)，以及物品会出现多少个。\n2342 301  1\t\t\t\t// 例) 2342号物品 0.301% 概率出现\n3222 1\t  1\t\t\t\t// 例) 3222号物品 0.001% 概率出现\n4222 5000 1\n2222 243  1\n[/int data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     }
   ]
 }

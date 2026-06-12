@@ -3,158 +3,184 @@
     {
       "name": "packagable",
       "title": "无法邮寄包裹",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 无法邮寄包裹，默认值为可以邮寄，请注意",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[packagable] 0\t// 无法邮寄包裹，默认值为可以邮寄，请注意\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "explain",
       "title": "消耗品的说明",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 消耗品的说明。可以换行。",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[explain]\t\t\t\t\t// 消耗品的说明。可以换行。\n`药水\n是临死时\n该喝的东西`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "grade",
       "title": "消耗品的等级",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 消耗品的等级",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[grade] 6\t\t\t\t// 消耗品的等级\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "attach type",
       "title": "绑定类型 在     中选择一个",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 绑定类型 在 `[free]` `[trade]` `[trade delete]` `[sealing]` 中选择一个",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[attach type] `[free]`\t\t\t\t// 绑定类型 在 `[free]` `[trade]` `[trade delete]` `[sealing]` 中选择一个\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "creation rate",
       "title": "生成比率 (注意",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 生成比率 (注意：不要使用过大的数值。建议 10 以下)",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[creation rate] 2\t\t\t\t// 生成比率 (注意：不要使用过大的数值。建议 10 以下)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "rarity",
       "title": "稀有度",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 稀有度。 0:普通 1:罕见 2:稀有 3:独特 4:史诗",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[rarity] 0\t\t\t\t// 稀有度。 0:普通 1:罕见 2:稀有 3:独特 4:史诗\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "weight",
       "title": "重量 (单位",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 重量 (单位：10g)",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[weight] 5\t\t\t\t// 重量 (单位：10g)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "usable job",
       "title": "可使用角色列表的开始",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 可使用角色列表的开始",
-      "officialAuthors": "官方PVF"
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[usable job]\t\t\t// 可使用角色列表的开始\n`[all]`\t\t\t\t\t// 有 `[swordman]` `[fighter]` `[all]` 等选择\n[/usable job]\t\t\t// 必须用这个来结束\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     },
     {
       "name": "minimum level",
       "title": "使用所需的最低等级",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 使用所需的最低等级",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[minimum level] 0\t\t\t\t// 使用所需的最低等级\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "icon",
       "title": "图标图像文件和帧索引",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 图标图像文件和帧索引",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[icon] `StackableIcon.img` 2\t\t// 图标图像文件和帧索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "field image",
       "title": "掉落在地上时的图像文件和帧索引",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 掉落在地上时的图像文件和帧索引",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[field image] `StackableField.img` 1\t// 掉落在地上时的图像文件和帧索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "stackable type",
       "title": "消耗品的类型",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 消耗品的类型",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[stackable type] `[waste]` 14\t\t\t// 消耗品的类型\n// `[waste]` `[material]` `[recipe]` `[throw]` `[set]` `[legacy]` `[quest]` `[etc]` `[creature]` `[feed]`\n// `[cera package]` `[package]` `[cera booster]` `[booster]`\n\t\t\t\t\t// 后面的数字是价格表索引。如果没有价格则输入0。\n\t\t\t\t\t// 即使单独输入价格，卖出/修理价格也会遵循这个索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "price",
       "title": "价格",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 价格。如果从价格表读取则无需填写",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n// `[waste]` `[material]` `[recipe]` `[throw]` `[set]` `[legacy]` `[quest]` `[etc]` `[creature]` `[feed]`\n// `[cera package]` `[package]` `[cera booster]` `[booster]`\n\t\t\t\t\t// 后面的数字是价格表索引。如果没有价格则输入0。\n\t\t\t\t\t// 即使单独输入价格，卖出/修理价格也会遵循这个索引\n[price] 100\t\t\t\t// 价格。如果从价格表读取则无需填写\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "cash",
       "title": "现金价格",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 现金价格",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[cash] 1200\t\t\t\t// 现金价格\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "medal",
       "title": "勋章价格",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 勋章价格",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[medal] 5\t\t\t\t// 勋章价格\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "value",
       "title": "用户在商店卖出的金额",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 用户在商店卖出的金额",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[value] 50\t\t\t\t// 用户在商店卖出的金额\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "finish point price",
       "title": "FP价格",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- FP价格",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[finish point price] 10\t\t\t// FP价格\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "cool time",
       "title": "使用后禁止使用主动技能和消耗品的时间",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 使用后禁止使用主动技能和消耗品的时间。以毫秒为单位，仅对 `[waste]` 和 `[throw]` 有效",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[cool time] 1000\t\t\t\t// 使用后禁止使用主动技能和消耗品的时间。以毫秒为单位，仅对 `[waste]` 和 `[throw]` 有效\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "쿨타입 그룹",
       "title": "所属的冷却时间组",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 所属的冷却时间组。如果是-1或不写，则没有组，仅应用于自身",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[쿨타입 그룹] 0\t\t\t\t// 所属的冷却时间组。如果是-1或不写，则没有组，仅应用于自身\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "party cooltime",
       "title": "如果为1则应用组队冷却时间",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 如果为1则应用组队冷却时间",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[party cooltime] 1\t\t\t// 如果为1则应用组队冷却时间\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "move wav",
       "title": "掉落在地上、移动道具时(包括装备)发出的声音",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 掉落在地上、移动道具时(包括装备)发出的声音",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[move wav] `MOVE_SOUND`\t\t// 掉落在地上、移动道具时(包括装备)发出的声音\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "int data",
       "title": "用于硬编码的整数数据",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 用于硬编码的整数数据",
-      "officialAuthors": "官方PVF"
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[int data]\t\t\t\t// 用于硬编码的整数数据\n3\n4\n[/int data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     },
     {
       "name": "string data",
       "title": "用于硬编码的字符串数据",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 用于硬编码的字符串数据",
-      "officialAuthors": "官方PVF"
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[string data]\t\t\t\t// 用于硬编码的字符串数据\n`ASDF.ptl`\n`ASDF2.ptl`\n[/string data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     },
     {
       "name": "applying range",
       "title": "应用范围",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 应用范围",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[applying range] 100\t\t\t\t// 应用范围\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "booster info",
       "title": "增益道具信息",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 增益道具信息",
-      "officialAuthors": "官方PVF"
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[booster info]\t\t// 增益道具信息\n[avatar]\t\t// 抽取外观\n2\t\t\t// 从外观抽取几个\n39000\t1000\t1\t0\t0\t// 道具索引\t相对概率\t数量\t期限\t属性\n39000\t1000\t1\t0\t0\n39000\t1000\t1\t0\t0\n39000\t1000\t1\t0\t0\n[/avatar]\n[cera]\n1\n8\t1000\t10\t\t\t// 道具索引\t相对概率\t数量\n[/cera]\n// 可能的标签\n[creature]\n1\n8\t1000\t10\n[/creature]\n1\n8\t1000\t10\n[equipment]\n1\n8\t1000\t10\n[/equipment]\n1\n8\t1000\t10\n[stackable]\n1\n8\t1000\t10\n[/stackable]\n[etc]\n1\n8\t1000\t10\n[/etc]\n[/booster info]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     },
     {
       "name": "avatar",
       "title": "抽取外观",
-      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n- 抽取外观",
-      "officialAuthors": "官方PVF"
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[avatar]\t\t// 抽取外观\n2\t\t\t// 从外观抽取几个\n39000\t1000\t1\t0\t0\t// 道具索引\t相对概率\t数量\t期限\t属性\n39000\t1000\t1\t0\t0\n39000\t1000\t1\t0\t0\n39000\t1000\t1\t0\t0\n[/avatar]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "cera",
+      "title": "道具索引 相对概率 数量",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n[cera]\n1\n8\t1000\t10\t\t\t// 道具索引\t相对概率\t数量\n[/cera]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "creature",
+      "title": "可能的标签",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n// 可能的标签\n[creature]\n1\n8\t1000\t10\n[/creature]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "package data",
+      "title": "如果该道具是  或  时",
+      "officialDescription": "#### 官方示例: stackablesample-booster.stk\n\n```pvf\n// 如果该道具是 `[cera package]` 或 `[package]` 时\n[package data]\n整数:道具索引 整数:道具数量\n[/package data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     }
   ]
 }

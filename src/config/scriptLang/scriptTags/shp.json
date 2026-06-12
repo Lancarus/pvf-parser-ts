@@ -11,7 +11,7 @@
       "title": "消息",
       "description": "商店橱窗上的消息",
       "authors": "吧哥",
-      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- 商店窗口显示的消息",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n```pvf\n[message]\t\t\t// 商店窗口显示的消息\n`超便宜的我们店\n买100个爆炸头`\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -26,7 +26,7 @@
       "description": "出售的项目\n-1代表空格-2代表翻页",
       "authors": "李云溪",
       "closing": true,
-      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- 出售道具的索引列表",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n```pvf\n[sell item]\t\t\t// 出售道具的索引列表\n34\n11\n10003\n51003\n2223\n-1\t\t\t\t// -1 为空白\n4413\n[/sell item]\t\t\t// 以此结束\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -51,19 +51,19 @@
       "name": "npc",
       "title": "NPC",
       "authors": "preview",
-      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- NPC 索引",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n```pvf\n// 商店脚本文件示例\n[NPC] 1\t\t\t\t// NPC 索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "type",
       "title": "中选择一个",
-      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- `[etc shop]` `[weapon shop]` `[disjoint shop]` 中选择一个",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n```pvf\n[type] `[etc shop]`\t\t// `[etc shop]` `[weapon shop]` `[disjoint shop]` 中选择一个\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "only buy",
       "title": "商店是否可以卖东西还是只能买东西",
-      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n- 商店是否可以卖东西还是只能买东西。两者都可以则为 0",
+      "officialDescription": "#### 官方示例: itemshopsample.shp\n\n```pvf\n[only buy] 1\t\t\t// 商店是否可以卖东西还是只能买东西。两者都可以则为 0\n```",
       "officialAuthors": "官方PVF"
     }
   ]

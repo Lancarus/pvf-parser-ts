@@ -3,842 +3,1387 @@
     {
       "name": "packagable",
       "title": "无法邮寄",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 无法邮寄，注意默认是可邮寄的",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[packagable] 0\t// 无法邮寄，注意默认是可邮寄的\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "basic explain",
       "title": "装备的简单说明",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备的简单说明。可以换行。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[basic explain]\t\t\t\t\t// 装备的简单说明。可以换行。\n`修罗道是\n布拉布拉布拉布拉\n..据说`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "detail explain",
       "title": "装备的详细说明",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备的详细说明。可以换行。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[detail explain]\t\t\t\t// 装备的详细说明。可以换行。\n`修罗道是\n布拉布拉布拉布拉\n布拉布拉布拉布拉\n布拉布拉布拉布拉\n..据说`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "grade",
       "title": "装备的等级 (佩戴等级 +0",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备的等级 (佩戴等级 +0:普通, +2:稀有 +3:传说 +4:神器 +5:史诗)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[grade] 3\t\t\t\t\t// 装备的等级 (佩戴等级 +0:普通, +2:稀有 +3:传说 +4:神器 +5:史诗)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "spectrum",
       "title": "有残影效果时需要的标签",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 有残影效果时需要的标签。没有残影则不需要写。目前只用于遗物。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[spectrum] 255 0 0 255 1000\t\t\t// 有残影效果时需要的标签。没有残影则不需要写。目前只用于遗物。\n\t\t\t\t\t\t// [spectrum] R G B A 残影残留时间\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "attach type",
       "title": "归属类型     中选择一个",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 归属类型 `[free]` `[trade]` `[trade delete]` `[sealing]` 中选择一个",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// [spectrum] R G B A 残影残留时间\n[attach type] `[free]`\t\t\t\t// 归属类型 `[free]` `[trade]` `[trade delete]` `[sealing]` 中选择一个\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "creation rate",
       "title": "生成比率",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 生成比率",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[creation rate] 3\t\t\t\t// 生成比率\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "rarity",
       "title": "稀有度",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 稀有度. 0:普通 1:高级 2:稀有 3:神器 4:史诗 5:传说)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[rarity] 0\t\t\t\t\t// 稀有度. 0:普通 1:高级 2:稀有 3:神器 4:史诗 5:传说)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "anti evil",
       "title": "异界抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 异界抗性。异界地下城所需的属性。只出现在 50 级以上的装备上。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[anti evil] 50\t\t\t\t\t// 异界抗性。异界地下城所需的属性。只出现在 50 级以上的装备上。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "weight",
       "title": "重量 (单位",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 重量 (单位 : g)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[weight] 3000\t\t\t\t\t// 重量 (单位 : g)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "usable job",
       "title": "可使用的角色列表开始",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 可使用的角色列表开始",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[usable job]\t\t\t\t\t// 可使用的角色列表开始\n`[swordman]`\t\t\t\t\t// `[swordman]` `[fighter]` `[gunner]` `[at gunner]` `[mage]` `[priest]` `[all]` 中选择\n[/usable job]\t\t\t\t\t// 必须用这个结束\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "minimum level",
       "title": "使用所需的最低等级",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 使用所需的最低等级。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[minimum level] 37\t\t\t\t// 使用所需的最低等级。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "required skill",
       "title": "使用所需的技能",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 使用所需的技能。没有则删除此项或填 -1",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[required skill] 128\t\t\t\t// 使用所需的技能。没有则删除此项或填 -1\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "icon",
       "title": "图标图像文件和帧索引",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 图标图像文件和帧索引",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[icon] `EquipmentIcon.img` 0\t\t\t// 图标图像文件和帧索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "icon mark",
       "title": "图标标记图像文件和帧索引 (例如",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 图标标记图像文件和帧索引 (例如：遗物标记)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[icon mark] `Item/IconMark.img` 5\t\t// 图标标记图像文件和帧索引 (例如：遗物标记)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "extra icon",
       "title": "附加图标图像文件和帧索引 // 透明时装 // 穿戴后（复制时）",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 附加图标图像文件和帧索引\t// 透明时装 // 穿戴后（复制时）",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[extra icon] `EquipmentIcon.img` 1\t\t// 附加图标图像文件和帧索引\t// 透明时装 // 穿戴后（复制时）\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "field image",
       "title": "掉落在地上时的图像文件和帧索引",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 掉落在地上时的图像文件和帧索引",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[field image] `EquipmentField.img` 1\t\t// 掉落在地上时的图像文件和帧索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "custom animation",
       "title": "硬编码中使用的自定义动画文件名",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬编码中使用的自定义动画文件名。仅用于称号。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[custom animation]\t\t\t\t// 硬编码中使用的自定义动画文件名。仅用于称号。\n`Title.ani`\n[/custom animation]\n```\n\n#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n///////////////////////////////////////////////////////////////\n//EquipmentSample-gunnerweapon.equ//////////////////////////////////\n///////////////////////////////////////////////////////////////\n{exp}硬编码中使用的自定义动画文件名{/exp}[custom animation]\n\t{string}\n\t{!string}\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "usable even peace",
       "title": "待机时（战争地区",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 待机时（战争地区，决斗场），某些功能（如米歇尔念动力椅子召唤）不会生效。但",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[usable even peace] 1\t\t\t// 待机时（战争地区，决斗场），某些功能（如米歇尔念动力椅子召唤）不会生效。但\n\t\t\t\t\t\t\t\t// 若想此时也生效，则使用本标签。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "equipment type",
       "title": "equipment type",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- `[hat avatar]` `[hair avatar]` `[breast avatar]` `[face avatar]`",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[equipment type] `[weapon]` 2\t\t\t// `[hat avatar]` `[hair avatar]` `[breast avatar]` `[face avatar]`\n\t\t\t\t\t\t// `[waist avatar]` `[coat avatar]` `[pants avatar]` `[shoes avatar]`\n\t\t\t\t\t\t// `[weapon]` `[title name]` `[coat]` `[shoulder]` `[pants]` `[shoes]` `[waist]`\n\t\t\t\t\t\t// `[amulet]` `[wrist]` `[ring]`中选择一个\n\t\t\t\t\t\t// 后面的数字是价格表索引。没有价格或要单独输入价格则输入 0。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "hide equipment",
       "title": "穿戴时要隐藏的装备指定",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 穿戴时要隐藏的装备指定。也需要指定图层。没有要隐藏的装备则不需要。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[hide equipment] `[hat avatar]`\t\t\t// 穿戴时要隐藏的装备指定。也需要指定图层。没有要隐藏的装备则不需要。\n\t\t\t\t\t\t// `[hat avatar]` `[hair avatar]` `[breast avatar]` `[face avatar]`\n\t\t\t\t\t\t// `[waist avatar]` `[coat avatar]` `[pants avatar]` `[shoes avatar]`\n\t\t\t\t\t\t// `[weapon]` 中选择一个。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "hide layer",
       "title": "要隐藏的装备的图层指定",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 要隐藏的装备的图层指定。可指定的图层数量没有限制。没有要隐藏的装备则不需要。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[hide layer] \t\t\t\t\t// 要隐藏的装备的图层指定。可指定的图层数量没有限制。没有要隐藏的装备则不需要。\n800\n2000\n[/hide layer]\t\t\t\t\t// 结束后请关闭。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "sub type",
       "title": "装备的子类型",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备的子类型。(例如：剑、斧头、钝器) 不需要则不写也可以。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[sub type] 1\t\t\t\t\t// 装备的子类型。(例如：剑、斧头、钝器) 不需要则不写也可以。\n\t\t\t\t\t\t// 称号的情况下，0：自由，1：强制（无法脱下）\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "durability",
       "title": "耐久度",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 耐久度。0 为无限。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 称号的情况下，0：自由，1：强制（无法脱下）\n[durability] 133\t\t\t\t// 耐久度。0 为无限。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "price",
       "title": "价格",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 价格。如果从表中读取则不需要写。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[price] 100\t\t\t\t\t// 价格。如果从表中读取则不需要写。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "value",
       "title": "玩家卖给商店的金额",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 玩家卖给商店的金额",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[value] 50\t\t\t\t\t// 玩家卖给商店的金额\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "repair price",
       "title": "修理费",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 修理费",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[repair price] 50\t\t\t\t// 修理费\n\t\t\t\t\t\t// 未单独指定时，以 [value] 的值替代；若 [value] 也未指定，则以 [price] 的值替代。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "need material",
       "title": "所需材料道具索引",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 所需材料道具索引，材料道具数量 (例，黑莲 2个)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 未单独指定时，以 [value] 的值替代；若 [value] 也未指定，则以 [price] 的值替代。\n[need material] 3043  2\t\t\t\t// 所需材料道具索引，材料道具数量 (例，黑莲 2个)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "cash",
       "title": "点券价格",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 点券价格",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[cash] 1200\t\t\t\t\t// 点券价格\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "medal",
       "title": "勋章价格",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 勋章价格",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[medal] 3\t\t\t\t\t// 勋章价格\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "finish point price",
       "title": "FP价格",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- FP价格",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[finish point price] 10\t\t\t\t// FP价格\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "cool time",
       "title": "装备时冷却时间",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备时冷却时间",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[cool time] 1000\t\t\t\t// 装备时冷却时间\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "HP MAX",
       "title": "HP 最大值",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- HP 最大值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 变化能力值。变化量为 0 的可以不写。前面的 + 号可以省略 //\n[HP MAX] +10\t\t\t\t\t// HP 最大值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "MP MAX",
       "title": "MP 最大值",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- MP 最大值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[MP MAX] +27\t\t\t\t\t// MP 最大值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical attack",
       "title": "力量",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 力量",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[physical attack] +100\t\t\t\t// 力量\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical defense",
       "title": "体力",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 体力",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[physical defense] +10\t\t\t\t// 体力\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical attack",
       "title": "智力",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 智力",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[magical attack] -10\t\t\t\t// 智力\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical defense",
       "title": "精神",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 精神",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[magical defense] -26\t\t\t\t// 精神\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "equipment physical attack",
       "title": "物理攻击力(地下城) 物理攻击力(决斗场)",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理攻击力(地下城) 物理攻击力(决斗场)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[equipment physical attack] +100 +100\t\t// 物理攻击力(地下城) 物理攻击力(决斗场)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "equipment physical defense",
       "title": "物理防御力(地下城) 物理防御力(决斗场)",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理防御力(地下城) 物理防御力(决斗场)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[equipment physical defense] +25 +25\t\t// 物理防御力(地下城) 物理防御力(决斗场)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "equipment magical attack",
       "title": "魔法攻击力(地下城) 魔法攻击力(决斗场)",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法攻击力(地下城) 魔法攻击力(决斗场)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[equipment magical attack] +100 +100\t\t// 魔法攻击力(地下城) 魔法攻击力(决斗场)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "equipment magical defense",
       "title": "魔法防御力(地下城) 魔法防御力(决斗场)",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法防御力(地下城) 魔法防御力(决斗场)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[equipment magical defense] +38 +38\t\t// 魔法防御力(地下城) 魔法防御力(决斗场)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical absolute damage",
       "title": "物理绝对伤害",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理绝对伤害",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[physical absolute damage] 100\t\t\t// 物理绝对伤害\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical damage reduce",
       "title": "物理伤害修正",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理伤害修正",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[physical damage reduce] 100\t\t\t// 物理伤害修正\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical absolute defense",
       "title": "物理绝对防御",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理绝对防御。%值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[physical absolute defense] 20.0\t\t// 物理绝对防御。%值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical absolute damage",
       "title": "魔法绝对伤害",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法绝对伤害",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[magical absolute damage] 100\t\t\t// 魔法绝对伤害\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical damage reduce",
       "title": "魔法伤害修正",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法伤害修正",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[magical damage reduce] 100\t\t\t// 魔法伤害修正\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical absolute defense",
       "title": "魔法绝对防御",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法绝对防御。%值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[magical absolute defense] 20.0\t\t\t// 魔法绝对防御。%值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "fire resistance",
       "title": "火属性抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 火属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[fire resistance] +17\t\t\t\t// 火属性抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "water resistance",
       "title": "水属性抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 水属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[water resistance] +3\t\t\t\t// 水属性抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "dark resistance",
       "title": "暗属性抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 暗属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[dark resistance] +37\t\t\t\t// 暗属性抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "light resistance",
       "title": "光属性抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 光属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[light resistance] -37\t\t\t\t// 光属性抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "all elemental resistance",
       "title": "所有属性抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 所有属性抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[all elemental resistance] +10\t\t\t// 所有属性抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "fire attack",
       "title": "火属性强化",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 火属性强化",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[fire attack] +100\t\t\t\t// 火属性强化\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "water attack",
       "title": "水属性强化",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 水属性强化",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[water attack] +101\t\t\t\t// 水属性强化\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "dark attack",
       "title": "暗属性强化",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 暗属性强化",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[dark attack] +102\t\t\t\t// 暗属性强化\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "light attack",
       "title": "光属性强化",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 光属性强化",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[light attack] +103\t\t\t\t// 光属性强化\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "slow resistance",
       "title": "减速抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 减速抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[slow resistance] 18\t\t\t\t// 减速抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "freeze resistance",
       "title": "冰冻抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 冰冻抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[freeze resistance] 39\t\t\t\t// 冰冻抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "poison resistance",
       "title": "中毒抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 中毒抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[poison resistance] 11\t\t\t\t// 中毒抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "stun resistance",
       "title": "眩晕抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 眩晕抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[stun resistance] 33\t\t\t\t// 眩晕抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "curse resistance",
       "title": "诅咒抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 诅咒抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[curse resistance] 10\t\t\t\t// 诅咒抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "blind resistance",
       "title": "失明抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 失明抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[blind resistance] 10\t\t\t\t// 失明抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "lightning resistance",
       "title": "感电抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 感电抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[lightning resistance] 24\t\t\t// 感电抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "stone resistance",
       "title": "石化抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 石化抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[stone resistance] 3\t\t\t\t// 石化抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "sleep resistance",
       "title": "睡眠抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 睡眠抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[sleep resistance] 33\t\t\t\t// 睡眠抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "bleeding resistance",
       "title": "出血抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 出血抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[bleeding resistance] 32\t\t\t// 出血抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "confuse resistance",
       "title": "混乱抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 混乱抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[confuse resistance] 33\t\t\t\t// 混乱抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "hold resistance",
       "title": "束缚抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 束缚抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[hold resistance] -3\t\t\t\t// 束缚抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "burn resistance",
       "title": "灼伤抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 灼伤抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[burn resistance] 10\t\t\t\t// 灼伤抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "weapon break resistance",
       "title": "武器破坏抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 武器破坏抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[weapon break resistance]\t\t\t// 武器破坏抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "armor break resistance",
       "title": "防具破坏抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 防具破坏抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[armor break resistance]\t\t\t// 防具破坏抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "deelement resistance",
       "title": "现在不用",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 现在不用",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[deelement resistance] 1\t\t\t// 现在不用\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "deadlystrike resistance",
       "title": "现在不用",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 现在不用",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[deadlystrike resistance] 2\t\t\t// 现在不用\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "all activestatus resistance",
       "title": "所有状态异常抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 所有状态异常抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[all activestatus resistance] 2\t\t\t// 所有状态异常抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "piercing resistance",
       "title": "破招抗性",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 破招抗性",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[piercing resistance] 12\t\t\t// 破招抗性\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "stuck resistance",
       "title": "回避率 (0",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 回避率 (0.1% 单位)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[stuck resistance] 33\t\t \t\t// 回避率 (0.1% 单位)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "active status control info",
       "title": "出血概率增加(10%) 等级增加(20) 持续时间增加(30%) 其他信",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 出血概率增加(10%) 等级增加(20) 持续时间增加(30%) 其他信息(出血的情况下是伤害增加率 n%)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[active status control info] `bleeding` 10 20 30 n\t// 出血概率增加(10%) 等级增加(20) 持续时间增加(30%) 其他信息(出血的情况下是伤害增加率 n%)\n\t\t\t\t\t\t\t// freeze, stun, sleep, haste, bless, confuse, hold : 无其他信息\n\t\t\t\t\t\t\t// poison, lightning, stone, bleeding : 其他信息 1个(伤害增加率)\n\t\t\t\t\t\t\t// curse : 其他信息 1个(属性减少比率), weapon break, armor break : 其他信息 1个(耐久度消耗检查次数)\n\t\t\t\t\t\t\t// slow : 其他信息 2个(移动速度减少比率, 攻击速度减少比率), blind : 其他信息 2个(视野减少率,僵直率增加率)\n\t\t\t\t\t\t\t// burn : 其他信息 3个(伤害增加率, 周围伤害, 周围伤害应用间隔)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "inventory limit",
       "title": "物品栏上限增加 (g 单位)",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物品栏上限增加 (g 单位)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[inventory limit] 30\t\t\t\t// 物品栏上限增加 (g 单位)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "HP regen speed",
       "title": "HP恢复速度 (输入数值*0",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- HP恢复速度 (输入数值*0.6为实际数值，输入40则实际HP恢复为40*0.6=24)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[HP regen speed] 40\t\t\t\t// HP恢复速度 (输入数值*0.6为实际数值，输入40则实际HP恢复为40*0.6=24)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "MP regen speed",
       "title": "MP恢复速度 (输入数值*3为实际数值",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- MP恢复速度 (输入数值*3为实际数值，输入8则实际MP恢复为8*3=24)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[MP regen speed] 8\t\t\t\t// MP恢复速度 (输入数值*3为实际数值，输入8则实际MP恢复为8*3=24)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "MP regen speed rate",
       "title": "%增加 (临时例外处理)",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- %增加 (临时例外处理)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[MP regen speed rate] 0.1\t\t\t// %增加 (临时例外处理)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "move speed",
       "title": "移动速度 (0",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 移动速度 (0.1% 单位)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[move speed] 10\t\t\t\t\t// 移动速度 (0.1% 单位)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "x move dash speed",
       "title": "X轴移动速度增加 50%",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- X轴移动速度增加 50%",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[x move dash speed] 0.5\t\t\t\t// X轴移动速度增加 50%\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "y move dash speed",
       "title": "Y轴移动速度减少 -50%",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- Y轴移动速度减少 -50%",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[y move dash speed] -0.5\t\t\t// Y轴移动速度减少 -50%\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "attack speed",
       "title": "攻击速度 (0",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 攻击速度 (0.1% 单位)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[attack speed] 20\t\t\t\t// 攻击速度 (0.1% 单位)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "cast speed",
       "title": "施放速度 (0",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 施放速度 (0.1% 单位)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[cast speed] 30\t\t\t\t\t// 施放速度 (0.1% 单位)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "hit recovery",
       "title": "硬直恢复",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬直恢复",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[hit recovery] 3\t\t\t\t// 硬直恢复\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "rigidity",
       "title": "僵直度 (硬直恢复的反概念)",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 僵直度 (硬直恢复的反概念)",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[rigidity] +1000\t\t\t\t// 僵直度 (硬直恢复的反概念)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "jump power",
       "title": "跳跃力",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 跳跃力",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[jump power] 10\t\t\t\t\t// 跳跃力\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "room list move speed rate",
       "title": "在城镇中的移动速度指定",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 在城镇中的移动速度指定",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[room list move speed rate] +1.0\t\t// 在城镇中的移动速度指定\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "elemental property",
       "title": "中选择一个",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- `[no element]` `[fire element]` `[water element]` `[dark element]` `[light element]` 中选择一个。`[no element]` 则可以不写。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 攻击修正值 : 仅对武器有效。没有或为 0 则可以不写 //\n[elemental property] `[dark element]`\t\t// `[no element]` `[fire element]` `[water element]` `[dark element]` `[light element]` 中选择一个。`[no element]` 则可以不写。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "item aura",
       "title": "装备时发动的物品光环",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备时发动的物品光环。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[item aura] `dark element` `+` 20 300\t\t// 装备时发动的物品光环。\n\t\t\t\t\t\t// `要变化的能力值` `+` 变化数值 光环范围\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "active status",
       "title": "状态异常改版前使用的标签",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 状态异常改版前使用的标签。现在不使用。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// `要变化的能力值` `+` 变化数值 光环范围\n[active status] `[curse]` 37.3 100\t\t// 状态异常改版前使用的标签。现在不使用。\n```\n\n#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.7 active status #\n\t{exp}{/exp}[active status]\n\t\t{must1}{exp}状态变化{/exp}{string}\n\t\t{opt1}{exp}等级{/exp}{int(0:)}\n\t\t{opt2}{exp}强度{/exp}{int(0:)}\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "push aside",
       "title": "击退力量",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 击退力量",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[push aside] +10\t\t\t\t// 击退力量\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "lift up",
       "title": "浮空力量",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 浮空力量",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[lift up] +27\t\t\t\t\t// 浮空力量\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "physical critical hit",
       "title": "物理暴击率上升值",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 物理暴击率上升值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[physical critical hit] 5\t\t\t// 物理暴击率上升值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "magical critical hit",
       "title": "魔法暴击率上升值",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 魔法暴击率上升值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[magical critical hit] 5\t\t\t// 魔法暴击率上升值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "stuck",
       "title": "命中率",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 命中率。填写负数值。 -1 : 命中率+1%",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[stuck] -1\t\t\t\t\t// 命中率。填写负数值。 -1 : 命中率+1%\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "ignore defense",
       "title": "现在不用的标签",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 现在不用的标签",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[ignore defense] 1\t\t\t\t// 现在不用的标签\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "human damage rate",
       "title": "对人形伤害比率变化值",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 对人形伤害比率变化值。%值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[human damage rate] +2.5\t\t\t// 对人形伤害比率变化值。%值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "fort damage rate",
       "title": "对建筑伤害比率变化值",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 对建筑伤害比率变化值。%值",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[fort damage rate] -31.2\t\t\t// 对建筑伤害比率变化值。%值\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "monster damage rate",
       "title": "对怪物 (护甲类别为0个的单位准备的) 攻击比率",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 对怪物 (护甲类别为0个的单位准备的) 攻击比率。可为小数，%值，100为默认",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[monster damage rate] 100.0\t\t\t// 对怪物 (护甲类别为0个的单位准备的) 攻击比率。可为小数，%值，100为默认\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "HP drain",
       "title": "HP 吸收",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- HP 吸收",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[HP drain] 1\t\t\t\t\t// HP 吸收\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "MP drain",
       "title": "MP 吸收",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- MP 吸收",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[MP drain] 1\t\t\t\t\t// MP 吸收\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "skill data up",
       "title": "控制技能脚本特定数据的标签",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 控制技能脚本特定数据的标签",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[skill data up]\t\t\t\t\t// 控制技能脚本特定数据的标签\n`[fighter]` 12 `[dungeon]` `[static]` 2 `+` 20\n// 职业\n// 技能索引，\n// 应用到的内容 : dungeon, pvp, all\n// 要更改的数据类型 : static, level, mp, cooltime, skill consume item, casting time\n// 数据索引\n// 数值应用 : `+`, 比率应用 : `%`\n// 数值\n[/skill data up]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "skill levelup",
       "title": "装备时提升的技能和等级限制",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 装备时提升的技能和等级限制。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[skill levelup]\t\t\t\t\t// 装备时提升的技能和等级限制。\n`[swordman]` 10 1\t\t\t\t// 职业 技能索引 等级\n`[fighter]` 1 33\n[/skill levelup]\n```\n\n#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.26 skill levelup #\n\t[skill levelup]\n\t\t{exp}职业{/exp}{string}\n\t\t\t{must1}{exp}技能索引{/exp}{int(0:)}\n\t\t\t{must2}{exp}等级变化量 {/exp}{int(0:)}\n\t\t{!string}\n\t[/skill levelup]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "animation job",
       "title": "使用该动画的职业",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 使用该动画的职业。只有异性角色共享一个脚本时才需要写。\n- 动画的职业。equ 中只有一个职业动画的话可以没有。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[animation job] `[gunner]`\t\t\t// 使用该动画的职业。只有异性角色共享一个脚本时才需要写。\n```\n\n```pvf\n[animation job] `[fighter]`\t\t\t// 动画的职业。equ 中只有一个职业动画的话可以没有。\n```\n\n```pvf\n[animation job] `[at fighter]`\t\t\t// 动画的职业。equ 中只有一个职业动画的话可以没有。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "variation",
       "title": "动画变化索引",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 动画变化索引",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[variation] 0 1\t\t\t\t\t// 动画变化索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "layer variation",
       "title": "图层索引及图层文件夹名",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 图层索引及图层文件夹名",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[layer variation] 2600 `revc`\t\t\t// 图层索引及图层文件夹名\n///不要使用下面的标签///<include> `equipment/character/gunner.lay`\t// 动画列表文件(*.lay) 路径\n```\n\n```pvf\n[layer variation] 2600 `tonfac`\n///不要使用下面的标签///<include> `equipment/character/fighter.lay`\n```\n\n```pvf\n[layer variation] 650 `tonfab`\n//<include> `equipment/character/fighter.lay`\n```\n\n```pvf\n[layer variation] 2600 `knuckleb`\n///不要使用下面的标签///<include> `equipment/character/atfighter.lay`\n```\n\n```pvf\n[layer variation] 650 `knucklea`\n///不要使用下面的标签///<include> `equipment/character/atfighter.lay`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "equipment ani script",
       "title": "动画列表文件(*",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 动画列表文件(*.lay) 路径",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n///不要使用下面的标签///<include> `equipment/character/gunner.lay`\t// 动画列表文件(*.lay) 路径\n[equipment ani script] `equipment/character/gunner.lay`\t// 动画列表文件(*.lay) 路径\n```\n\n```pvf\n///不要使用下面的标签///<include> `equipment/character/fighter.lay`\n[equipment ani script] `equipment/character/fighter.lay`\n```\n\n```pvf\n///不要使用下面的标签///<include> `equipment/character/atfighter.lay`\n[equipment ani script] `equipment/character/atfighter.lay`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "move wav",
       "title": "掉落在地上、移动道具时（包含装备）发出的声音",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 掉落在地上、移动道具时（包含装备）发出的声音",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[move wav] `MOVE_SOUND`\t\t\t\t// 掉落在地上、移动道具时（包含装备）发出的声音\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "use wav",
       "title": "使用道具时发出的声音",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 使用道具时发出的声音",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[use wav] `USE_SOUND`\t\t\t\t// 使用道具时发出的声音\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "set name",
       "title": "套装名",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 套装名",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[set name] `拳击套装`\t\t\t\t// 套装名\n```\n\n#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n////////////////////////////////////////////////////////////////////////////\n// [set~]\n// 标签本身即可使用..\n// 如 [ME] 一样。\n// (为此需是行标签且参数可选处理)\n// 例外 set item (参数 : n int值列表 -> int 行标签是子标签，所以用 /(块标签)处理)\n////////////////////////////////////////////////////////////////////////////\n[set name]\n\t{opt1}{string}\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "set item",
       "title": "与此道具形成套装的道具索引列表（包含自身）",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 与此道具形成套装的道具索引列表（包含自身）",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[set item]\t\t\t\t\t// 与此道具形成套装的道具索引列表（包含自身）\n112\n113\n114\n[/set item]\t\t\t\t\t// 以此关闭\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "set ability",
       "title": "加上这个",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 加上这个，则此后能力值被视为套装道具穿戴时的追加能力值。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[set ability]\t\t\t\t\t// 加上这个，则此后能力值被视为套装道具穿戴时的追加能力值。\n// ... 中间省略。基本能力值中可以写的都可以。格式相同\n[fullset basic explain]\t\t\t\t// 集齐套装道具时出现的基本说明\n`集齐这些的话，糊涂兄会哇喔。`\n[fullset detail explain]\t\t\t// 集齐套装道具时出现的详细说明\n`集齐这些的话，帅气的糊涂兄会哇喔哇喔哇喔哇喔。`\n[set item master] 111\t\t\t\t// 如果某个道具用 [set item] 指定了自身，\n\t\t\t\t\t\t// 则必须用此标签写下该道具的索引。\n\t\t\t\t\t\t// 写这个时不需要写 [set item] [set ability]。\n[/set ability]\t\t\t\t\t// 套装效果结束\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "fullset basic explain",
       "title": "集齐套装道具时出现的基本说明",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 集齐套装道具时出现的基本说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// ... 中间省略。基本能力值中可以写的都可以。格式相同\n[fullset basic explain]\t\t\t\t// 集齐套装道具时出现的基本说明\n`集齐这些的话，糊涂兄会哇喔。`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "fullset detail explain",
       "title": "集齐套装道具时出现的详细说明",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 集齐套装道具时出现的详细说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[fullset detail explain]\t\t\t// 集齐套装道具时出现的详细说明\n`集齐这些的话，帅气的糊涂兄会哇喔哇喔哇喔哇喔。`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "set item master",
       "title": "如果某个道具用 [set item] 指定了自身",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 如果某个道具用 [set item] 指定了自身，",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[set item master] 111\t\t\t\t// 如果某个道具用 [set item] 指定了自身，\n\t\t\t\t\t\t// 则必须用此标签写下该道具的索引。\n\t\t\t\t\t\t// 写这个时不需要写 [set item] [set ability]。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "piece set ability",
       "title": "3件套效果",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 3件套效果",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[piece set ability] 3\t\t\t\t// 3件套效果\n// ... 中间省略。基本能力值中可以写的都可以。格式相同\n[parameter basic explain]\t\t\t// 集齐 3 件套时出现的基本说明\n`集齐3件套的话，善华会请喝饮料。`\n[parameter detail explain]\t\t\t// 集齐 3 件套时出现的详细说明\n`集齐3件套的话，善华会请喝又贵又好喝的饮料。`\n\n[/piece set ability]\t\t\t\t// 部分套装效果结束，部分套装没有主道具。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "parameter basic explain",
       "title": "集齐 3 件套时出现的基本说明",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 集齐 3 件套时出现的基本说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// ... 中间省略。基本能力值中可以写的都可以。格式相同\n[parameter basic explain]\t\t\t// 集齐 3 件套时出现的基本说明\n`集齐3件套的话，善华会请喝饮料。`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "parameter detail explain",
       "title": "集齐 3 件套时出现的详细说明",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 集齐 3 件套时出现的详细说明",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[parameter detail explain]\t\t\t// 集齐 3 件套时出现的详细说明\n`集齐3件套的话，善华会请喝又贵又好喝的饮料。`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "part set index",
       "title": "etc/equipmentPartset",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- etc/equipmentPartset.etc 中指定的数据的部件套装索引。",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[part set index] 0\t\t\t\t// etc/equipmentPartset.etc 中指定的数据的部件套装索引。\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "hardcoding cooltime",
       "title": "硬编码用冷却时间",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬编码用冷却时间",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[hardcoding cooltime] 5000 \t\t\t// 硬编码用冷却时间\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "int data",
       "title": "硬编码用整数数据",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬编码用整数数据",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[int data]\t\t\t\t\t// 硬编码用整数数据\n3\n4\n[/int data]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "string data",
       "title": "硬编码用字符串数据",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 硬编码用字符串数据",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[string data]\t\t\t\t\t// 硬编码用字符串数据\n`ASDF.ptl`\n`ASDF2.ptl`\n[/string data]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "attack info",
       "title": "追加攻击信息 路径/文件名",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 追加攻击信息 路径/文件名",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[attack info] `AttackInfo/equipment_01.atk`\t// 追加攻击信息 路径/文件名\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "expand ani",
       "title": "第一个是要改变部位的索引",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 第一个是要改变部位的索引，第二个是优先级，第三个是是否使用攻击范围，第四个是是否重新设置音效",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 改变其他部位图像的设置\n[expand ani] 9 1 0 1\t\t\t\t// 第一个是要改变部位的索引，第二个是优先级，第三个是是否使用攻击范围，第四个是是否重新设置音效\n\t\t\t\t\t\t// 0:帽子，1:头发，2:脸部，3:上衣，4:下装，5:鞋子，6:颈部胸部，7:腰部，8:身体颜色，9:武器\n\t\t\t\t\t\t// 优先级越高越优先绘制。要替换穿戴装备的图像需要 1 以上的优先级。\n\t\t\t\t\t\t// 攻击范围使用与否设置为 0 则不使用设定动画的攻击范围，而使用原装备的攻击范围。\n\t\t\t\t\t\t// 音效设置设为 0 则使用原装备对应的音效，设为 1 则根据 [expand ani] 内设定的 [custom wav] 和 [sub type] 决定音效。\n\n[animation job] `[fighter]`\t\t\t// 动画的职业。equ 中只有一个职业动画的话可以没有。\n[variation] 1 1\n[layer variation] 2600 `tonfac`\n///不要使用下面的标签///<include> `equipment/character/fighter.lay`\n[equipment ani script] `equipment/character/fighter.lay`\n[layer variation] 650 `tonfab`\n//<include> `equipment/character/fighter.lay`\n\n[animation job] `[at fighter]`\t\t\t// 动画的职业。equ 中只有一个职业动画的话可以没有。\n[variation] 2 3\n[layer variation] 2600 `knuckleb`\n///不要使用下面的标签///<include> `equipment/character/atfighter.lay`\n[equipment ani script] `equipment/character/atfighter.lay`\n[layer variation] 650 `knucklea`\n///不要使用下面的标签///<include> `equipment/character/atfighter.lay`\n[equipment ani script] `equipment/character/atfighter.lay`\n\n[sub type] 2\n\n[custom wav]\n`WHIP_SOUND`\n`HIT_SOUND`\n[/custom wav]\n\n[expand path] `equipment/character/fighter/weapon/tonfa/`\n\n[/expand ani]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "effect",
       "title": "*// 该标签可重复使用",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- *// 该标签可重复使用",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n//1// 必须有且仅有一个\n//0// 可以没有\n//*// 可以没有，可以出现多次\n[effect]\t\t\t\t\t\t\t//*// 该标签可重复使用\n\t[attach target]\t`delegator`\t\t//0// `delegator`, `target`\n\t[type] `animation`\t\t\t\t//1// `animation`, `particle`\n\t[attach pos] `bottom`\t\t\t//1// `bottom`, `middle`, `top`\n\t[z revision] -10 \t\t\t\t//0// z 轴移动距离(px) 没有则忽略\n\t[index] -1\t\t\t\t\t\t//1// <animation> 附加的图层位置\n\t[option]\t\t\t\t\t\t//0// animation 选项\n\t\t`keep direction`\t\t\t//0// animation 选项 (固定方向)\n\t\t`floor`\t\t\t\t\t\t//0// animation 选项 (画在地面上：地板效果等)\n\t\t`auto remove`\t\t\t\t//0// animation 选项 (动画结束后自动移除)\n\t\t`apply custom color`\t\t//0// animation 选项 (应用对象颜色：迷彩等)\n\t\t`sync speed`\t\t\t\t//0// animation 选项 (与对象动画速度同步)\n\t\t`copy horizon`\t\t\t\t//0// animation 选项 (动画横向复制)\n\t\t`copy vertical`\t\t\t\t//0// animation 选项 (动画纵向复制)\n\t\t`resize`\t\t\t\t\t//0// animation 选项 (根据光环范围调整大小) 未实现!!!\n\t[/option]\n\t[module] `[room list]`\t\t\t//0// 效果出现的模块 (没有则所有模块)\n\t[file name] `effect/animation/aura_range.ani`\t//1// 该效果路径及文件名\n[/effect]\n```\n\n```pvf\n[effect]\t\t\t\t\t\t\t//*// 该标签可重复使用\n\t[type] `animation`\t\t\t\t//1// `animation`, `particle`, `range`\n\t[attach pos] `top`\t\t\t\t//1// `bottom`, `middle`, `top`\n\t[index] 1\t\t\t\t\t\t//1// <animation> 附加的图层位置\n\t[option]\t\t\t\t\t\t//0// animation 选项\n\t\t`apply custom color`\t\t//0// animation 选项 (应用对象颜色：迷彩等)\n\t\t`sync speed`\t\t\t\t//0// animation 选项 (与对象动画速度同步)\n\t[/option]\n\t[module] `[room list]`\t\t\t//0// 效果出现的模块 (没有则所有模块)\n\t[file name] `Character/Common/Animation/go2.ani`\t//1// 该效果路径及文件名\n[/effect]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "attach target",
       "title": "0//",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 0// `delegator`, `target`",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[attach target]\t`delegator`\t\t//0// `delegator`, `target`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "type",
       "title": "1//",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 1// `animation`, `particle`\n- 1// `animation`, `particle`, `range`",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[type] `animation`\t\t\t\t//1// `animation`, `particle`\n```\n\n```pvf\n[type] `animation`\t\t\t\t//1// `animation`, `particle`, `range`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "attach pos",
       "title": "1//",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 1// `bottom`, `middle`, `top`",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[attach pos] `bottom`\t\t\t//1// `bottom`, `middle`, `top`\n```\n\n```pvf\n[attach pos] `top`\t\t\t\t//1// `bottom`, `middle`, `top`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "z revision",
       "title": "0// z 轴移动距离(px) 没有则忽略",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 0// z 轴移动距离(px) 没有则忽略",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[z revision] -10 \t\t\t\t//0// z 轴移动距离(px) 没有则忽略\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "index",
       "title": "1// <animation> 附加的图层位置",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 1// <animation> 附加的图层位置",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[index] -1\t\t\t\t\t\t//1// <animation> 附加的图层位置\n```\n\n```pvf\n[index] 1\t\t\t\t\t\t//1// <animation> 附加的图层位置\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "option",
       "title": "0// animation 选项",
       "closing": true,
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 0// animation 选项",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[option]\t\t\t\t\t\t//0// animation 选项\n\t\t`keep direction`\t\t\t//0// animation 选项 (固定方向)\n\t\t`floor`\t\t\t\t\t\t//0// animation 选项 (画在地面上：地板效果等)\n\t\t`auto remove`\t\t\t\t//0// animation 选项 (动画结束后自动移除)\n\t\t`apply custom color`\t\t//0// animation 选项 (应用对象颜色：迷彩等)\n\t\t`sync speed`\t\t\t\t//0// animation 选项 (与对象动画速度同步)\n\t\t`copy horizon`\t\t\t\t//0// animation 选项 (动画横向复制)\n\t\t`copy vertical`\t\t\t\t//0// animation 选项 (动画纵向复制)\n\t\t`resize`\t\t\t\t\t//0// animation 选项 (根据光环范围调整大小) 未实现!!!\n\t[/option]\n```\n\n```pvf\n[option]\t\t\t\t\t\t//0// animation 选项\n\t\t`apply custom color`\t\t//0// animation 选项 (应用对象颜色：迷彩等)\n\t\t`sync speed`\t\t\t\t//0// animation 选项 (与对象动画速度同步)\n\t[/option]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "module",
       "title": "0// 效果出现的模块 (没有则所有模块)",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 0// 效果出现的模块 (没有则所有模块)",
-      "officialAuthors": "官方PVF"
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[module] `[room list]`\t\t\t//0// 效果出现的模块 (没有则所有模块)\n```\n\n#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//####1.1.2 state ######\n\t//1.1.2.1 module #\n\t{exp}模块{/exp}[module]\n\t\t{string}\n\t\t{!string}\n\t[/module]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     },
     {
       "name": "file name",
       "title": "1// 该效果路径及文件名",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 1// 该效果路径及文件名",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[file name] `effect/animation/aura_range.ani`\t//1// 该效果路径及文件名\n```\n\n```pvf\n[file name] `Character/Common/Animation/go2.ani`\t//1// 该效果路径及文件名\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "change type ultimateSkillCurScene",
       "title": "觉醒技能过场图像类型 ( 0",
-      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n- 觉醒技能过场图像类型 ( 0: 使徒 )",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[change type ultimateSkillCurScene]\t0\t//觉醒技能过场图像类型 ( 0: 使徒 )\n//说明: 用于变更觉醒技能过场图像时的类型。\n//追加时必须做的事情:\n//\t第一，添加脚本的同时必须修改 UltimateSkillCutScene.etc 脚本。( 必须与 [CHANGE ULTIMATECUTSCENE ANI FILE] 类型一致 )\n//\t第二，请在源代码中增加 eTYPEULTIMATECUTSCENE 的类型。\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "change status on change hp",
+      "title": "要应用的能力值",
+      "officialDescription": "#### 官方示例: equipmentsample-change status on change hp.equ\n\n```pvf\n[change status on change hp]\n`[magical attack]`\t// 要应用的能力值 : 魔法攻击力\n50 5\t\t\t\t// hp 为 50% 时应用 5% 的值。（实际增加魔法攻击力 100 的道具，则 hp 50% 时只获得 5 的能力值。）\n10 10\t\t\t\t// hp 为 10% 时应用 10% 的值。（实际增加魔法攻击力 100 的道具，则 hp 10% 时只获得 10 的能力值。）\n\t\t\t\t// hp 在 50% 和 10% 之间时，数值会进行线性插值。\n`[magical defense]`\n50 5\n10 10\n\n`[equipment physical defense]`\n50 5\n10 10\n[/change status on change hp]\n```\n\n#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n///////////////////////////////////////////////////////////////\n//EquipmentSample-change status on change hp.equ///////////////////////\n///////////////////////////////////////////////////////////////\n[change status on change hp]\n\t{opt1}{exp}要应用的能力值{/exp}{string}\n\t{int(:)}\n\t\t{must1}{int(:)}\n\t{!int(:)}\n[/change status on change hp]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "avatar select ability",
+      "title": "职业",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[avatar select ability]\n`[MOVE_SPEED]`\t`+`\t100\n`[HP MAX]`\t`+`\t1.0\n`[MAGICAL_DEFENSE]`\t`*`\t2.0\n`[SKILL_LEVEL]`\t`[swordman]`\t40\t2\t// 职业，索引，等级\n[/avatar select ability]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "item category",
+      "title": "是怪物卡片吗？",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[item category]\n`monster card`\t\t// 是怪物卡片吗？\n`cannot bind`\t\t// 是否可以绑定？\n`boss drop`\t\t// 用于在装备词典中区分是否为 BOSS 掉落的史诗装备。\n[/item category]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "limit upgradable level",
+      "title": "强化限制为 x~y 等级 (x 设置为 -1 时设为 1 级",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 强化/增幅/锻造 等级限制\n[limit upgradable level]\n`normal upgrade` x y        // 强化限制为 x~y 等级 (x 设置为 -1 时设为 1 级，y 设置为 -1 时设为满级)\n`amplify upgrade` x y       // 增幅限制为 x~y 等级 (x 设置为 -1 时设为 1 级，y 设置为 -1 时设为满级)\n`separate upgrade` x y      // 锻造限制为 x~y 等级 (x 设置为 -1 时设为 1 级，y 设置为 -1 时设为满级)\n`3rd chronicle upgrade` x y // 3次传说赋予限制为 x~y 等级 (x 设置为 -1 时设为 1 级，y 设置为 -1 时设为满级)\n`all upgrade` x y\t\t\t// 将以上所有限制为 x~y 等级 (x 设置为 -1 时设为 1 级，y 设置为 -1 时设为满级)\n[/limit upgradable  level]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "level section ability",
+      "title": "level section ability",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 按等级区间应用能力值\n// x1 : 等级区间 (像 0, 10, 20, 30... 这样使用)\n// +n1 +n2 : 能力值最小值，最大值\n// 能力值标签可以使用所有现有的\n[level section ability] x1\n        [equipment physical attack] +n1 +n2\n        [separate attack] +n1 +n2\n        [phisical aatack] +n1 +n2\n\t\t//...\n[/level section ability]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "if",
+      "title": "####1",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 攻击时 1% 几率使自己 30 秒内僵直度增加 10000。\n[if]\n[cooltime] 60000\n[attack success] 1\n[/if]\n```\n\n#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n// 条件(if)##########################\n[if]\n\t//####1.1.1 trigger ######\n\t//1.1.1.1 attack success #\n\t{exp}攻击成功时的值{/exp}[attack success]\n\t\t{must1}{exp}值为 2 时使用 attack condition 的 stuck{/exp}{int(1:2)}\n\t[!attack success]\n\n\t//1.1.1.2 check damage #\n\t{exp}受击时 HP 总扣除伤害 %{/exp}[check damage]\n\t\t{must1}{exp}% 或 +{/exp}{string}\n\t\t{must2}{exp}数值{/exp}{int(0:)}\n\t[!check damage]\n\n\t//1.1.1.3 event attack success #\n\t{prereq}[increase damage]|[increase critical damage]|[weakness]{/prereq}{exp}仅在与 increase damage, increase critical damage, weakness 标签组合时使用{/exp}[event attack success]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n\t[!event attack success]\n\n\t//1.1.1.4 after attack #\n\t{prereq}[combo]|[aerial]{/prereq}{exp}仅在与 combo, aerial 标签组合时使用{/exp}[after attack]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n\t[!after attack]\n\n\t//1.1.1.5 hit #\n\t[hit]\n\t\t{must1}{exp}受击时的值{/exp}{int(0:)}\n\t[!hit]\n\n\t//1.1.1.6 event hit #\n\t[event hit]\n\t\t{must1}{exp}受击时的值{/exp}{int(0:)}\n\t[!event hit]\n\n\t//1.1.1.7 my active status on #\n\t[my active status on]\n\t\t{must1}{exp}状态变化{/exp}{string}\n\t[!my active status on]\n\n\t//1.1.1.8 casting #\n\t[casting]\n\t\t{must1}{exp}施放技能使用时的情况检查{/exp}{int(0:)}\n\t[!casting]\n\n\t//1.1.1.9 use skill #\n\t[use skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能编号{/exp}{int(0:)}\n\t[!use skill]\n\n\t//1.1.1.10 event use skill #\n\t[event use skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能编号{/exp}{int(0:)}\n\t[!event use skill]\n\n\t//1.1.1.11 my death #(标签弃用)\n\t//2010-02-10 之后禁止使用\n\n\t//1.1.1.12 party death #\n\t{exp}指定队友死亡时{/exp}[party death]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n\t[!party death]\n\n\t//1.1.1.13 use command #\n\t{exp}指定输入指令时{/exp}[use command]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n\t[!use command]\n\n\t//1.1.1.14 revive #\n\t{exp}指定自己复活时{/exp}[revive]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n\t[!revive]\n\n\t//1.1.1.15 time #\n\t[time]\n\t\t{must1}{exp}时间间隔{/exp}{int(0:)}\n\t\t{must2}{exp}循环与否{/exp}{int(0:1)}\n\t\t{must3}{exp}先冷却时间 {/exp}{int(0:)}\n\t[!time]\n\n\t//1.1.1.16 set my state #\n\t{exp}指定自己状态变更时{/exp}[set my state]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n\t[!set my state]\n\n\t//1.1.1.17 change status #\n\t{exp}条件符合时应用选项{/exp}[change status]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}比较方法{/exp}{string}\n\t\t{must3}{exp}比较单位{/exp}{string}\n\t\t{must4}{exp}数值{/exp}{int(0:)}\n\t[!change status]\n\n\t//1.1.1.18 change status in range #\n\t{prereq}[apply status in range]{/prereq}{exp}数值1~数值2符合时应用选项{/exp}[change status in range]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}数值1{/exp}{int(0:)}\n\t\t{must3}{exp}数值2{/exp}{int(0:)}\n\t[!change status in range]\n\n\t//1.1.1.19 skill frame trigger #\n\t[skill frame trigger]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t\t{must3}{exp}动画名称{/exp}{string}\n\t\t{must4}{exp}帧{/exp}{int(0:)}\n\t[!skill frame trigger]\n\n\t//####1.1.2 state ######\n\t//1.1.2.1 module #\n\t{exp}模块{/exp}[module]\n\t\t{string}\n\t\t{!string}\n\t[/module]\n\n\t//1.1.2.2 attacker #\n\t{exp}攻击成功时控制攻击类型{/exp}[attacker]\n\t\t{must1}{exp}类型{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t[!attacker]\n\n\t//1.1.2.3 element #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}攻击成功时控制攻击类型{/exp}[element]\n\t\t{must1}{exp}属性{/exp}{string}\n\t[!element]\n\n\t//1.1.2.4 character #\n\t{exp}只有自己是该职业时才检查条件{/exp}[character]\n\t\t{must1}{exp}职业{/exp}{string}\n\t[!character]\n\n\t//1.1.2.5 distance #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}距离{/exp}[distance]\n\t\t{must1}{exp}{/exp}{int(0:)}\n\t[!distance]\n\n\t//1.1.2.6 my active status #\n\t{exp}检查自己的状态变化{/exp}[my active status]\n\t\t{must1}{exp}状态{/exp}{string}\n\t[!my active status]\n\n\t//1.1.2.7 my state #\n\t{exp}检查自己的状态{/exp}[my state]\n\t\t{must1}{exp}状态{/exp}{string}\n\t[!my state]\n\n\t//1.1.2.8 target state #\n\t{exp}检查敌人状态{/exp}[target state]\n\t\t{must1}{exp}状态{/exp}{string}\n\t[!target state]\n\n\t//1.1.2.9 target active status #\n\t{exp}检查自己攻击的敌人的状态变化{/exp}[target active status]\n\t\t{must1}{exp}状态变化{/exp}{string}\n\t[!target active status]\n\n\t//1.1.2.10 attack type #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}{/exp}[attacker type]\n\t\t{must1}{exp}类型{/exp}{string}\n\t[!attacker type]\n\n\t//1.1.2.11 target type #\n\t{prereq}[attack success]{/prereq}{exp}检查自己攻击的敌人的类型{/exp}[target type]\n\t\t{must1}{exp}类型{/exp}{string}\n\t[!target type]\n\n\t//1.1.2.12 target grade #\n\t{prereq}[attack success]{/prereq}{exp}检查自己攻击的敌人的等级{/exp}[target grade]\n\t\t{must1}{exp}等级{/exp}{string}\n\t[!target grade]\n\n\t//1.1.2.13 attack condition #\n\t{prereq}[attack success]|[hit]{/prereq}[attack condition]\n\t\t{must1}{exp}攻击条件{/exp}{string}\n\t[!attack condition]\n\n\t//1.1.2.14 skill #\n\t{prereq}[attack success]|[hit]{/prereq}[skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t[!skill]\n\n\t//1.1.2.15 stat change #\n\t[stat change]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}比较方法{/exp}{string}\n\t\t{must3}{exp}比较单位{/exp}{string}\n\t\t{must4}{exp}数值{/exp}{int(0:)}\n\t[!stat change]\n\n\t//1.1.2.16 target stat #\n\t[target stat]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}比较方法{/exp}{string}\n\t\t{must3}{exp}比较单位{/exp}{string}\n\t\t{must4}{exp}数值{/exp}{int(0:)}\n\t[!target stat]\n\n\t//1.1.2.17 cooltime #\n\t{exp}冷却时间内不检查条件{/exp}[cooltime]\n\t\t{must1}{exp}冷却时间单位: ms{/exp}{int(0:)}\n\t[!cooltime]\n\n\t//1.1.2.18 start cooltime #\n\t{exp}每次装备时应用该冷却时间{/exp}[start cooltime]\n\t\t{must1}{exp}冷却时间单位: ms{/exp}{int(0:)}\n\t[!start cooltime]\n\n\t//1.1.2.19 target death #\n\t{prereq}[attack success]{/prereq}{exp}指定自己攻击的敌人死亡时{/exp}[target death]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n\t[!target death]\n\n\t//1.1.2.20 combo #\n\t{exp}指定连击达到数值时{/exp}[combo]\n\t\t{must1}{exp}数值{/exp}{int(0:)}\n\t[!combo]\n\n\t//1.1.2.21 aerial #\n\t{exp}指定空中连击达到数值时{/exp}[aerial]\n\t\t{must1}{exp}{/exp}{string}\n\t[!aerial]\n\n\t//1.1.2.22 overkill #\n\t{exp}指定自己攻击的敌人以 Overkill 方式死亡时{/exp}[overkill]\n\t\t{must1}{exp}{/exp}{string}\n\t[!overkill]\n\n\t//1.1.2.23 party count #\n\t{exp}队友数量{/exp}[party count]\n\t\t{must1}{exp}数量{/exp}{int(0:)}\n\t[!party count]\n\n\t//1.1.2.24 my appendage #\n\t{exp}检查自己身上有 n 号附加物时{/exp}[my appendage]\n\t\t{must1}{exp}附加物索引{/exp}{int(0:)}\n\t[!my appendage]\n\n\t//1.1.2.25 skill frame state #\n\t{exp}该动画开始~结束帧之间成功。{/exp}[skill frame state]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t\t{must3}{exp}动画名称{/exp}{string}\n\t\t{must4}{exp}开始帧{/exp}{int(0:)}\n\t\t{must5}{exp}结束帧{/exp}{int(0:)}\n\t[!skill frame state]\n\n\t//1.1.2.26 skill cooltime  #\n\t{exp}用于限制技能初始化范围的状态{/exp}[skill cooltime]\n\t\t{must1}{exp}比较方法{/exp}{string}\n\t\t{must2}{exp}冷却时间{/exp}{int(0:)}\n\t[!skill cooltime]\n\n[/if]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "then",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//2 效果(than)##########################\n[then]\n\t//1.2.1 consume item #\n\t{exp}消耗该索引的道具{/exp}[consume item ]\n\t\t{must1}{exp}索引{/exp}{int(0:)}\n\t\t{must2}{exp}数量{/exp}{int(0:)}\n\t[!consume item ]\n\n\t//1.2.2 target #\n\t{exp}指定效果发生在哪个目标身上{/exp}[target]\n\t\t{must1}{exp}种类{/exp}{string}\n\t\t{must2}{exp}范围(单位: px){/exp}{int(0:)}\n\t[!target]\n\n\t//1.2.3 duration #\n\t{exp}指定效果持续多久{/exp}[duration]\n\t\t{must1}{exp}数值(单位 : ms){/exp}{int(0:)}\n\t[!duration]\n\n\t//1.2.4 equipment duration #\n\t{exp}指定效果持续多久{/exp}[equipment duration]\n\t\t{must1}{exp}数值(单位 : ms){/exp}{int(0:)}\n\t[!equipment duration]\n\n\t//1.2.5 delay #\n\t{exp}指定效果延迟多久发动{/exp}[delay]\n\t\t{must1}{exp}数值(单位 : ms){/exp}{int(0:)}\n\t[!delay]\n\n\t//1.2.6 probability #\n\t{exp}指定效果发动的概率{exp}[probability]\n\t\t{must1}{exp}默认 100{/exp}{int(0:)}\n\t[!probability]\n\n\t//1.2.7 active status #\n\t{exp}{/exp}[active status]\n\t\t{must1}{exp}状态变化{/exp}{string}\n\t\t{opt1}{exp}等级{/exp}{int(0:)}\n\t\t{opt2}{exp}强度{/exp}{int(0:)}\n\t[!active status]\n\n\t//1.2.8 disenchant #\n\t{exp}解除目标所有状态变化和增益{/exp}[disenchant]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n\t[!disenchant]\n\n\t//1.2.9 buff #\n\t[buff]\n\t\t{must1}{exp}种类{/exp}{string}\n\t\t{must2}{exp}等级{/exp}{int(0:)}\n\t[!buff]\n\n\t//1.2.10 appendage #\n\t{exp}给目标施加该索引的增益{/exp}[appendage]\n\t\t{must1}{exp}索引{/exp}{int(0:)}\n\t[!appendage]\n\n\t//1.2.11 add absolute damage #\n\t[add absolute damage]\n\t\t{must1}{exp}类型{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t[!add absolute damage]\n\n\t//1.2.12 increase damage #\n\t[increase damage]\n\t\t{must1}{exp}比率 {/exp}{string}\n\t\t{must2}{exp}数值{/exp}{int(0:)}\n\t[!increase damage]\n\n\t//1.2.13 increase critical damage #\n\t[increase critical damage]\n\t\t{must1}{exp}比率 {/exp}{string}\n\t\t{must2}{exp}数值{/exp}{int(0:)}\n\t[!increase critical damage]\n\n\t//1.2.14 weakness #\n\t[weakness]\n\t\t{must1}{exp}数值{/exp}{int(0:)}\n\t[!weakness]\n\n\t//1.2.15 add absolute defence #\n\t[add absolute defence]\n\t\t{must1}{exp}类型{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t[!add absolute defence]\n\n\t//1.2.16 add absolute defence percent #\n\t{exp}受击时减少伤害数值%{/exp}[add absolute defence percent]\n\t\t{must1}{exp}类型{/exp}{string}\n\t\t{must2}{exp}数值{/exp}{int(0:)}\n\t[!add absolute defence percent]\n\n\t//1.2.17 aura active #\n\t[aura active]\n\t\t{must1}{exp}光环种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t\t{must4}{exp}光环范围(X轴像素单位数值){/exp}{int(0:)}\n\t[!aura active]\n\n\t//1.2.18 stat #\n\t[stat]\n\t\t{must1}{exp}状态种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t[!stat]\n\n\t//1.2.19 restore #\n\t[restore]\n\t\t{must1}{exp}状态种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t\t{must4}{exp}恢复速度: 时间(单位:ms){/exp}{int(0:)}\n\t[!restore]\n\n\t//1.2.20 active status resistance #\n\t[active status resistance]\n\t\t{must1}{exp}状态变化 {/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t[!active status resistance]\n\n\t//1.2.21 element resistance #\n\t[element resistance]\n\t\t{must1}{exp}属性{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t[!element resistance]\n\n\t//1.2.22 damage rate(未实现) #\n\t[damage rate]\n\t\t{must1}{exp}种类{/exp}{string}\n\t\t{must2}{exp}数值 : 百分比变化值{/exp}{int(0:)}\n\t[!damage rate]\n\n\t//1.2.23 summon monster #\n\t[summon monster]\n\t\t{must1}{exp}索引{/exp}{string}\n\t\t{must2}{exp}等级{/exp}{string}\n\t\t{must3}{exp}最大数量{/exp}{int(0:)}\n\t[!summon monster]\n\n\t//1.2.24 passive object #\n\t[passive object]\n\t\t{must1}{exp}索引{/exp}{int(0:)}\n\t\t{must2}{exp}x轴坐标{/exp}{int(0:)}\n\t\t{must3}{exp}y轴坐标{/exp}{int(0:)}\n\t\t{must4}{exp}z轴坐标{/exp}{int(0:)}\n\t\t{must5}{exp}等级 {/exp}{int(0:)}\n\t\t{must6}{exp}文件名 {/exp}{string}\n\t[!passive object]\n\n\t//1.2.25 skill #\n\t[skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t\t{must3}{exp}等级{/exp}{int(0:)}\n\t[!skill]\n\n\t//1.2.26 skill levelup #\n\t[skill levelup]\n\t\t{exp}职业{/exp}{string}\n\t\t\t{must1}{exp}技能索引{/exp}{int(0:)}\n\t\t\t{must2}{exp}等级变化量 {/exp}{int(0:)}\n\t\t{!string}\n\t[/skill levelup]\n\n\t//1.2.27 thorn #\n\t{prereq}按百分比将伤害返还给敌人{/prereq}{exp}按百分比将伤害返还给敌人{/exp}[thorn]\n\t\t{must1}{exp}数值{/exp}{int(0:)}\n\t[!thorn]\n\n\t//1.2.28 knockback #\n\t[knockback]\n\t\t{must1}{exp}数值{/exp}{int(0:)}\n\t[!knockback]\n\n\t//1.2.29 reduction #\n\t[reduction]\n\t\t{must1}{exp}种类{/exp}{string}\n\t\t{must2}{exp}要减少的耐久度数值{/exp}{int(0:)}\n\t[!reduction]\n\n\t//1.2.30 elemental weapon #\n\t{exp}赋予武器属性{/exp}[elemental weapon]\n\t\t{must1}{exp}属性{/exp}{string}\n\t[!elemental weapon]\n\n\t//1.2.31 stat by condition #\n\t{exp}• 使增益图标实时显示{/exp}[stat by condition]\n\t\t{must1}{exp}状态种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t[!stat by condition]\n\n\t//1.2.32 apply status in range #\n\t[apply status in range]\n\t\t{must1}{exp}状态种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值1{/exp}{int(0:)}\n\t\t{must4}{exp}数值2{/exp}{int(0:)}\n\t[!apply status in range]\n\n\t//1.2.33 skill super armor  #\n\t{exp}使技能施放动作变为霸体状态{/exp}[skill super armor]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t[!skill super armor]\n\n\t//1.2.34 skill unbreakable  #\n\t{exp}使技能施放动作变为无敌状态{/exp}[skill unbreakable]\n\t\t{must1}{exp}技能索引{/exp}{int(0:)}\n\t[!skill unbreakable]\n\n\t//1.2.35 skill duration  #\n\t[skill duration]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t\t{must3}{exp}应用参数{/exp}{string}\n\t\t{must4}{exp}参数索引{/exp}{int(0:)}\n\t[!skill duration]\n\n\t//1.2.36 speech on  #\n\t{exp}对话气泡{/exp}[speech on]\n\t\t{must1}{exp}数值1(ms){/exp}{int(0:)}\n\t\t{must2}{exp}数值2(ms){/exp}{int(0:)}\n\t\t{must3}{exp}输出内容 {/exp}{string}\n\t[!speech on]\n\n\t//1.2.37 skill cooltime reset  #\n\t{exp}技能冷却时间重置{/exp}[skill cooltime reset]\n\t\t{must1}{exp}{/exp}{int(1:2)}\n\t[!skill cooltime reset]\n[/then]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "custom wav",
+      "title": "自定义音效列表",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 自定义音效列表\n[custom wav]\n`WHIP_SOUND`\n`HIT_SOUND`\n[/custom wav]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "level linear ability",
+      "title": "等级线性能力值应用 ex) 成长型武器",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 等级线性能力值应用 ex) 成长型武器，旧版账号绑定道具中使用\n// ->  x1 x2 : 应用能力值的角色最低等级~最高等级\n//     n1 n3 : 地下城攻击力最小值~最大值\n//     n2 n4 : 决斗场攻击力最小值~最大值\n[level linear ability] x1 x2\n        [grade] +min +max\n        [equipment physical attack] +n1 +n2 +n3 +n4\n        [separate attack] +n1 +n2 +n3 +n4\n        [phisical aatack] +n1 +n2 +n3 +n4\n[/level linear ability]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "level section ani",
+      "title": "按等级区间应用不同的装备动画",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n// 按等级区间应用不同的装备动画\n// x1 : 应用该动画的等级\n// `str` : 该动画应应用的职业 (因异性职业，此处必须标明)\n[level section ani] x1  `[swordman]`\n       [equipment type] `[weapon]` 23\n       [variation] 7 0\n       [layer variation] 2790 `swdc`\n       [equipment ani script] `equipment/character/swordman.lay`\n       [layer variation] 650 `ssdb`\n       [equipment ani script] `equipment/character/swordman.lay`\n       [subtype] 0\n[/ level section ani]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "phisical aatack",
+      "title": "phisical aatack",
+      "officialDescription": "#### 官方示例: equipmentsample.equ\n\n```pvf\n[phisical aatack] +n1 +n2\n\t\t//...\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attack success",
+      "title": "####1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//####1.1.1 trigger ######\n\t//1.1.1.1 attack success #\n\t{exp}攻击成功时的值{/exp}[attack success]\n\t\t{must1}{exp}值为 2 时使用 attack condition 的 stuck{/exp}{int(1:2)}\n```\n\n```pvf\n//1.1.2.3 element #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}攻击成功时控制攻击类型{/exp}[element]\n\t\t{must1}{exp}属性{/exp}{string}\n```\n\n```pvf\n//1.1.2.5 distance #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}距离{/exp}[distance]\n\t\t{must1}{exp}{/exp}{int(0:)}\n```\n\n```pvf\n//1.1.2.10 attack type #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}{/exp}[attacker type]\n\t\t{must1}{exp}类型{/exp}{string}\n```\n\n```pvf\n//1.1.2.11 target type #\n\t{prereq}[attack success]{/prereq}{exp}检查自己攻击的敌人的类型{/exp}[target type]\n\t\t{must1}{exp}类型{/exp}{string}\n```\n\n```pvf\n//1.1.2.12 target grade #\n\t{prereq}[attack success]{/prereq}{exp}检查自己攻击的敌人的等级{/exp}[target grade]\n\t\t{must1}{exp}等级{/exp}{string}\n```\n\n```pvf\n//1.1.2.13 attack condition #\n\t{prereq}[attack success]|[hit]{/prereq}[attack condition]\n\t\t{must1}{exp}攻击条件{/exp}{string}\n```\n\n```pvf\n//1.1.2.14 skill #\n\t{prereq}[attack success]|[hit]{/prereq}[skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n```\n\n```pvf\n//1.1.2.19 target death #\n\t{prereq}[attack success]{/prereq}{exp}指定自己攻击的敌人死亡时{/exp}[target death]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "check damage",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.2 check damage #\n\t{exp}受击时 HP 总扣除伤害 %{/exp}[check damage]\n\t\t{must1}{exp}% 或 +{/exp}{string}\n\t\t{must2}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "increase damage",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.3 event attack success #\n\t{prereq}[increase damage]|[increase critical damage]|[weakness]{/prereq}{exp}仅在与 increase damage, increase critical damage, weakness 标签组合时使用{/exp}[event attack success]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n```\n\n```pvf\n//1.2.12 increase damage #\n\t[increase damage]\n\t\t{must1}{exp}比率 {/exp}{string}\n\t\t{must2}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "increase critical damage",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.3 event attack success #\n\t{prereq}[increase damage]|[increase critical damage]|[weakness]{/prereq}{exp}仅在与 increase damage, increase critical damage, weakness 标签组合时使用{/exp}[event attack success]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n```\n\n```pvf\n//1.2.13 increase critical damage #\n\t[increase critical damage]\n\t\t{must1}{exp}比率 {/exp}{string}\n\t\t{must2}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "weakness",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.3 event attack success #\n\t{prereq}[increase damage]|[increase critical damage]|[weakness]{/prereq}{exp}仅在与 increase damage, increase critical damage, weakness 标签组合时使用{/exp}[event attack success]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n```\n\n```pvf\n//1.2.14 weakness #\n\t[weakness]\n\t\t{must1}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "event attack success",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.3 event attack success #\n\t{prereq}[increase damage]|[increase critical damage]|[weakness]{/prereq}{exp}仅在与 increase damage, increase critical damage, weakness 标签组合时使用{/exp}[event attack success]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "combo",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.4 after attack #\n\t{prereq}[combo]|[aerial]{/prereq}{exp}仅在与 combo, aerial 标签组合时使用{/exp}[after attack]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n```\n\n```pvf\n//1.1.2.20 combo #\n\t{exp}指定连击达到数值时{/exp}[combo]\n\t\t{must1}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "aerial",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.4 after attack #\n\t{prereq}[combo]|[aerial]{/prereq}{exp}仅在与 combo, aerial 标签组合时使用{/exp}[after attack]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n```\n\n```pvf\n//1.1.2.21 aerial #\n\t{exp}指定空中连击达到数值时{/exp}[aerial]\n\t\t{must1}{exp}{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "after attack",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.4 after attack #\n\t{prereq}[combo]|[aerial]{/prereq}{exp}仅在与 combo, aerial 标签组合时使用{/exp}[after attack]\n\t\t{must1}{exp}攻击成功时的值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "hit",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.5 hit #\n\t[hit]\n\t\t{must1}{exp}受击时的值{/exp}{int(0:)}\n```\n\n```pvf\n//1.1.2.3 element #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}攻击成功时控制攻击类型{/exp}[element]\n\t\t{must1}{exp}属性{/exp}{string}\n```\n\n```pvf\n//1.1.2.5 distance #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}距离{/exp}[distance]\n\t\t{must1}{exp}{/exp}{int(0:)}\n```\n\n```pvf\n//1.1.2.10 attack type #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}{/exp}[attacker type]\n\t\t{must1}{exp}类型{/exp}{string}\n```\n\n```pvf\n//1.1.2.13 attack condition #\n\t{prereq}[attack success]|[hit]{/prereq}[attack condition]\n\t\t{must1}{exp}攻击条件{/exp}{string}\n```\n\n```pvf\n//1.1.2.14 skill #\n\t{prereq}[attack success]|[hit]{/prereq}[skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "event hit",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.6 event hit #\n\t[event hit]\n\t\t{must1}{exp}受击时的值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "my active status on",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.7 my active status on #\n\t[my active status on]\n\t\t{must1}{exp}状态变化{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "casting",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.8 casting #\n\t[casting]\n\t\t{must1}{exp}施放技能使用时的情况检查{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "use skill",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.9 use skill #\n\t[use skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能编号{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "event use skill",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.10 event use skill #\n\t[event use skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能编号{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "party death",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.12 party death #\n\t{exp}指定队友死亡时{/exp}[party death]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "use command",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.13 use command #\n\t{exp}指定输入指令时{/exp}[use command]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "revive",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.14 revive #\n\t{exp}指定自己复活时{/exp}[revive]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "time",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.15 time #\n\t[time]\n\t\t{must1}{exp}时间间隔{/exp}{int(0:)}\n\t\t{must2}{exp}循环与否{/exp}{int(0:1)}\n\t\t{must3}{exp}先冷却时间 {/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "set my state",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.16 set my state #\n\t{exp}指定自己状态变更时{/exp}[set my state]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "change status",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.17 change status #\n\t{exp}条件符合时应用选项{/exp}[change status]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}比较方法{/exp}{string}\n\t\t{must3}{exp}比较单位{/exp}{string}\n\t\t{must4}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "apply status in range",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.18 change status in range #\n\t{prereq}[apply status in range]{/prereq}{exp}数值1~数值2符合时应用选项{/exp}[change status in range]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}数值1{/exp}{int(0:)}\n\t\t{must3}{exp}数值2{/exp}{int(0:)}\n```\n\n```pvf\n//1.2.32 apply status in range #\n\t[apply status in range]\n\t\t{must1}{exp}状态种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值1{/exp}{int(0:)}\n\t\t{must4}{exp}数值2{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "change status in range",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.18 change status in range #\n\t{prereq}[apply status in range]{/prereq}{exp}数值1~数值2符合时应用选项{/exp}[change status in range]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}数值1{/exp}{int(0:)}\n\t\t{must3}{exp}数值2{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill frame trigger",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.1.19 skill frame trigger #\n\t[skill frame trigger]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t\t{must3}{exp}动画名称{/exp}{string}\n\t\t{must4}{exp}帧{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attacker",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.2 attacker #\n\t{exp}攻击成功时控制攻击类型{/exp}[attacker]\n\t\t{must1}{exp}类型{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "element",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.3 element #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}攻击成功时控制攻击类型{/exp}[element]\n\t\t{must1}{exp}属性{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "character",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.4 character #\n\t{exp}只有自己是该职业时才检查条件{/exp}[character]\n\t\t{must1}{exp}职业{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "distance",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.5 distance #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}距离{/exp}[distance]\n\t\t{must1}{exp}{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "my active status",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.6 my active status #\n\t{exp}检查自己的状态变化{/exp}[my active status]\n\t\t{must1}{exp}状态{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "my state",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.7 my state #\n\t{exp}检查自己的状态{/exp}[my state]\n\t\t{must1}{exp}状态{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "target state",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.8 target state #\n\t{exp}检查敌人状态{/exp}[target state]\n\t\t{must1}{exp}状态{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "target active status",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.9 target active status #\n\t{exp}检查自己攻击的敌人的状态变化{/exp}[target active status]\n\t\t{must1}{exp}状态变化{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attacker type",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.10 attack type #\n\t{prereq}[attack success]|[hit]{/prereq}{exp}{/exp}[attacker type]\n\t\t{must1}{exp}类型{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "target type",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.11 target type #\n\t{prereq}[attack success]{/prereq}{exp}检查自己攻击的敌人的类型{/exp}[target type]\n\t\t{must1}{exp}类型{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "target grade",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.12 target grade #\n\t{prereq}[attack success]{/prereq}{exp}检查自己攻击的敌人的等级{/exp}[target grade]\n\t\t{must1}{exp}等级{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "attack condition",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.13 attack condition #\n\t{prereq}[attack success]|[hit]{/prereq}[attack condition]\n\t\t{must1}{exp}攻击条件{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.14 skill #\n\t{prereq}[attack success]|[hit]{/prereq}[skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n```\n\n```pvf\n//1.2.25 skill #\n\t[skill]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t\t{must3}{exp}等级{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stat change",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.15 stat change #\n\t[stat change]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}比较方法{/exp}{string}\n\t\t{must3}{exp}比较单位{/exp}{string}\n\t\t{must4}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "target stat",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.16 target stat #\n\t[target stat]\n\t\t{must1}{exp}状态{/exp}{string}\n\t\t{must2}{exp}比较方法{/exp}{string}\n\t\t{must3}{exp}比较单位{/exp}{string}\n\t\t{must4}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "cooltime",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.17 cooltime #\n\t{exp}冷却时间内不检查条件{/exp}[cooltime]\n\t\t{must1}{exp}冷却时间单位: ms{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "start cooltime",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.18 start cooltime #\n\t{exp}每次装备时应用该冷却时间{/exp}[start cooltime]\n\t\t{must1}{exp}冷却时间单位: ms{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "target death",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.19 target death #\n\t{prereq}[attack success]{/prereq}{exp}指定自己攻击的敌人死亡时{/exp}[target death]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "overkill",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.22 overkill #\n\t{exp}指定自己攻击的敌人以 Overkill 方式死亡时{/exp}[overkill]\n\t\t{must1}{exp}{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "party count",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.23 party count #\n\t{exp}队友数量{/exp}[party count]\n\t\t{must1}{exp}数量{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "my appendage",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.24 my appendage #\n\t{exp}检查自己身上有 n 号附加物时{/exp}[my appendage]\n\t\t{must1}{exp}附加物索引{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill frame state",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.25 skill frame state #\n\t{exp}该动画开始~结束帧之间成功。{/exp}[skill frame state]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t\t{must3}{exp}动画名称{/exp}{string}\n\t\t{must4}{exp}开始帧{/exp}{int(0:)}\n\t\t{must5}{exp}结束帧{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill cooltime",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.1.2.26 skill cooltime  #\n\t{exp}用于限制技能初始化范围的状态{/exp}[skill cooltime]\n\t\t{must1}{exp}比较方法{/exp}{string}\n\t\t{must2}{exp}冷却时间{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "consume item",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.1 consume item #\n\t{exp}消耗该索引的道具{/exp}[consume item ]\n\t\t{must1}{exp}索引{/exp}{int(0:)}\n\t\t{must2}{exp}数量{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "target",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.2 target #\n\t{exp}指定效果发生在哪个目标身上{/exp}[target]\n\t\t{must1}{exp}种类{/exp}{string}\n\t\t{must2}{exp}范围(单位: px){/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "duration",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.3 duration #\n\t{exp}指定效果持续多久{/exp}[duration]\n\t\t{must1}{exp}数值(单位 : ms){/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "equipment duration",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.4 equipment duration #\n\t{exp}指定效果持续多久{/exp}[equipment duration]\n\t\t{must1}{exp}数值(单位 : ms){/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "delay",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.5 delay #\n\t{exp}指定效果延迟多久发动{/exp}[delay]\n\t\t{must1}{exp}数值(单位 : ms){/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "probability",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.6 probability #\n\t{exp}指定效果发动的概率{exp}[probability]\n\t\t{must1}{exp}默认 100{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "disenchant",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.8 disenchant #\n\t{exp}解除目标所有状态变化和增益{/exp}[disenchant]\n\t\t{must1}{exp}{/exp}{int(1:1)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "buff",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.9 buff #\n\t[buff]\n\t\t{must1}{exp}种类{/exp}{string}\n\t\t{must2}{exp}等级{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "appendage",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.10 appendage #\n\t{exp}给目标施加该索引的增益{/exp}[appendage]\n\t\t{must1}{exp}索引{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "add absolute damage",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.11 add absolute damage #\n\t[add absolute damage]\n\t\t{must1}{exp}类型{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "add absolute defence",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.15 add absolute defence #\n\t[add absolute defence]\n\t\t{must1}{exp}类型{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "add absolute defence percent",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.16 add absolute defence percent #\n\t{exp}受击时减少伤害数值%{/exp}[add absolute defence percent]\n\t\t{must1}{exp}类型{/exp}{string}\n\t\t{must2}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "aura active",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.17 aura active #\n\t[aura active]\n\t\t{must1}{exp}光环种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t\t{must4}{exp}光环范围(X轴像素单位数值){/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stat",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.18 stat #\n\t[stat]\n\t\t{must1}{exp}状态种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "restore",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.19 restore #\n\t[restore]\n\t\t{must1}{exp}状态种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n\t\t{must4}{exp}恢复速度: 时间(单位:ms){/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "active status resistance",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.20 active status resistance #\n\t[active status resistance]\n\t\t{must1}{exp}状态变化 {/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "element resistance",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.21 element resistance #\n\t[element resistance]\n\t\t{must1}{exp}属性{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "damage rate",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.22 damage rate(未实现) #\n\t[damage rate]\n\t\t{must1}{exp}种类{/exp}{string}\n\t\t{must2}{exp}数值 : 百分比变化值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "summon monster",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.23 summon monster #\n\t[summon monster]\n\t\t{must1}{exp}索引{/exp}{string}\n\t\t{must2}{exp}等级{/exp}{string}\n\t\t{must3}{exp}最大数量{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "passive object",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.24 passive object #\n\t[passive object]\n\t\t{must1}{exp}索引{/exp}{int(0:)}\n\t\t{must2}{exp}x轴坐标{/exp}{int(0:)}\n\t\t{must3}{exp}y轴坐标{/exp}{int(0:)}\n\t\t{must4}{exp}z轴坐标{/exp}{int(0:)}\n\t\t{must5}{exp}等级 {/exp}{int(0:)}\n\t\t{must6}{exp}文件名 {/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "thorn",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.27 thorn #\n\t{prereq}按百分比将伤害返还给敌人{/prereq}{exp}按百分比将伤害返还给敌人{/exp}[thorn]\n\t\t{must1}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "knockback",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.28 knockback #\n\t[knockback]\n\t\t{must1}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "reduction",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.29 reduction #\n\t[reduction]\n\t\t{must1}{exp}种类{/exp}{string}\n\t\t{must2}{exp}要减少的耐久度数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "elemental weapon",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.30 elemental weapon #\n\t{exp}赋予武器属性{/exp}[elemental weapon]\n\t\t{must1}{exp}属性{/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "stat by condition",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.31 stat by condition #\n\t{exp}• 使增益图标实时显示{/exp}[stat by condition]\n\t\t{must1}{exp}状态种类{/exp}{string}\n\t\t{must2}{exp}数值单位{/exp}{string}\n\t\t{must3}{exp}数值{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill super armor",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.33 skill super armor  #\n\t{exp}使技能施放动作变为霸体状态{/exp}[skill super armor]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill unbreakable",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.34 skill unbreakable  #\n\t{exp}使技能施放动作变为无敌状态{/exp}[skill unbreakable]\n\t\t{must1}{exp}技能索引{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill duration",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.35 skill duration  #\n\t[skill duration]\n\t\t{must1}{exp}职业{/exp}{string}\n\t\t{must2}{exp}技能索引{/exp}{int(0:)}\n\t\t{must3}{exp}应用参数{/exp}{string}\n\t\t{must4}{exp}参数索引{/exp}{int(0:)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "speech on",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.36 speech on  #\n\t{exp}对话气泡{/exp}[speech on]\n\t\t{must1}{exp}数值1(ms){/exp}{int(0:)}\n\t\t{must2}{exp}数值2(ms){/exp}{int(0:)}\n\t\t{must3}{exp}输出内容 {/exp}{string}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "skill cooltime reset",
+      "title": "1",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n//1.2.37 skill cooltime reset  #\n\t{exp}技能冷却时间重置{/exp}[skill cooltime reset]\n\t\t{must1}{exp}{/exp}{int(1:2)}\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "character name y revision",
+      "title": "////////////////////////////////////",
+      "officialDescription": "#### 官方示例: equipmentsamplebytool.equ\n\n```pvf\n///////////////////////////////////////////////////////////////\n//EquipmentSample.equ/////////////////////////////////////////////\n///////////////////////////////////////////////////////////////\n[character name y revision]\n\t{must1}{int(0:)}\n\t{must2}{int(0:)}\n```",
       "officialAuthors": "官方PVF"
     }
   ]

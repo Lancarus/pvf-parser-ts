@@ -3,120 +3,139 @@
     {
       "name": "name",
       "title": "时装韩文名称索引",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装韩文名称索引",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[name] <3::name_44801>            // 时装韩文名称索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "name2",
       "title": "时装英文名称索引",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装英文名称索引",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[name2] <3::name2_44801>        // 时装英文名称索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "explain",
       "title": "时装说明索引",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装说明索引",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[explain] <3::basic_explain_44801>    // 时装说明索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "grade",
       "title": "时装品级 // 1 普通",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装品级 // 1 普通，2 高级，3 稀有",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[grade] 2                // 时装品级 // 1 普通，2 高级，3 稀有\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "attach type",
       "title": "交换许可 // free 可交换",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 交换许可 // free 可交换，trade 不可交换",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[attach type] `[free]`            // 交换许可 // free 可交换，trade 不可交换\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "usable job",
       "title": "可穿戴职业",
       "closing": true,
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 可穿戴职业",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[usable job]                // 可穿戴职业\n`[fighter]`\n[/usable job]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "minimum level",
       "title": "可穿戴最低等级",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 可穿戴最低等级",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[minimum level] 1            // 可穿戴最低等级\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "usable period",
       "title": "时效性（天数）",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时效性（天数）",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[usable period] 15            // 时效性（天数）\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "icon",
       "title": "图标图像路径",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 图标图像路径",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[icon] `item/avatar/fighter/ft_acoat.img` 171    // 图标图像路径\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "equipment type",
       "title": "穿戴部位",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 穿戴部位",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[equipment type] `[coat avatar]` 0    // 穿戴部位\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "avatar func filter",
       "title": "时装功能 // 0 全部不可",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装功能 // 0 全部不可，1 可合成，2 可分解，3 可合成、可分解",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[avatar func filter] 0            // 时装功能 // 0 全部不可，1 可合成，2 可分解，3 可合成、可分解\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "avatar type select",
       "title": "购买时类型选择",
       "closing": true,
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 购买时类型选择",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[avatar type select]            // 购买时类型选择\n7 0 0 1700 0                // 期限=金币=胜点=点券=孔数=孔信息\n30 0 0 3400 0\n0 0 0 6800 0\n0 0 0 7480 2 `[C socket]` `[C socket]`\n[/avatar type select]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "variation",
       "title": "穿戴图像图层编号",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 穿戴图像图层编号",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[variation] 54 0                // 穿戴图像图层编号\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "move wav",
       "title": "移动/拾取时音效",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 移动/拾取时音效",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[move wav] `CLOTH_TOUCH`        // 移动/拾取时音效\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "part set index",
       "title": "普通套装编号 // 2 高级套装",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 普通套装编号 // 2 高级套装，3 稀有套装",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[part set index] 2                // 普通套装编号 // 2 高级套装，3 稀有套装\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "set name",
       "title": "套装名称（如果指定了套装）",
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 套装名称（如果指定了套装）",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[set name] <3::set_name_44801>            // 套装名称（如果指定了套装）\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "set item",
       "title": "构成套装效果的其他部件索引（如果指定了套装）",
       "closing": true,
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 构成套装效果的其他部件索引（如果指定了套装）",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[set item]                    // 构成套装效果的其他部件索引（如果指定了套装）\n43138\n43575\n43909\n44317\n44801\n45197\n45516\n45976\n46212\n[/set item]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "set ability",
       "title": "套装时装效果（如果指定了套装）",
       "closing": true,
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 套装时装效果（如果指定了套装）",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[set ability]                    // 套装时装效果（如果指定了套装）\n[HP MAX] 150\n[MP MAX] 150\n[physical attack] +15\n[physical defense] +15\n[magical attack] +15\n[magical defense] +15\n[inventory limit] 6000\n[HP regen speed] 20\n[MP regen speed] 4\n[move speed] 20\n[attack speed] 20\n[cast speed] 20\n[skill levelup]\n`[fighter]` 5 1\n[/skill levelup]\n[/set ability]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "avatar select ability",
       "title": "时装选择属性",
       "closing": true,
-      "officialDescription": "#### 官方示例: avatarsample.equ\n\n- 时装选择属性",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[avatar select ability]                // 时装选择属性\n`[SKILL_LEVEL]` `[fighter]` 30 1\n`[SKILL_LEVEL]` `[fighter]` 20 1\n`[SKILL_LEVEL]` `[fighter]` 1 1\n`[SKILL_LEVEL]` `[fighter]` 3 1\n`[SKILL_LEVEL]` `[fighter]` 45 1\n`[SKILL_LEVEL]` `[fighter]` 22 1\n`[SKILL_LEVEL]` `[fighter]` 10 1\n`[SKILL_LEVEL]` `[fighter]` 51 1\n`[SKILL_LEVEL]` `[fighter]` 50 1\n`[SKILL_LEVEL]` `[fighter]` 11 1\n`[SKILL_LEVEL]` `[fighter]` 37 1\n`[SKILL_LEVEL]` `[fighter]` 43 1\n`[SKILL_LEVEL]` `[fighter]` 49 1\n`[SKILL_LEVEL]` `[fighter]` 36 1\n`[SKILL_LEVEL]` `[fighter]` 31 1\n`[SKILL_LEVEL]` `[fighter]` 4 1\n`[SKILL_LEVEL]` `[fighter]` 38 1\n`[SKILL_LEVEL]` `[fighter]` 18 1\n`[SKILL_LEVEL]` `[fighter]` 42 1\n`[SKILL_LEVEL]` `[fighter]` 52 1\n`[SKILL_LEVEL]` `[fighter]` 39 1\n`[SKILL_LEVEL]` `[fighter]` 44 1\n`[SKILL_LEVEL]` `[fighter]` 40 1\n`[SKILL_LEVEL]` `[fighter]` 19 1\n`[SKILL_LEVEL]` `[fighter]` 14 1\n`[SKILL_LEVEL]` `[fighter]` 54 1\n`[SKILL_LEVEL]` `[fighter]` 15 1\n`[SKILL_LEVEL]` `[fighter]` 16 1\n`[SKILL_LEVEL]` `[fighter]` 60 1\n`[SKILL_LEVEL]` `[fighter]` 62 1\n`[SKILL_LEVEL]` `[fighter]` 69 1\n`[SKILL_LEVEL]` `[fighter]` 68 1\n`[SKILL_LEVEL]` `[fighter]` 74 1\n`[SKILL_LEVEL]` `[fighter]` 75 1\n`[SKILL_LEVEL]` `[fighter]` 76 1\n`[SKILL_LEVEL]` `[fighter]` 77 1\n`[SKILL_LEVEL]` `[fighter]` 78 1\n`[SKILL_LEVEL]` `[fighter]` 79 1\n`[SKILL_LEVEL]` `[fighter]` 90 1\n`[SKILL_LEVEL]` `[fighter]` 80 1\n`[SKILL_LEVEL]` `[fighter]` 91 1\n`[SKILL_LEVEL]` `[fighter]` 83 1\n`[SKILL_LEVEL]` `[fighter]` 82 1\n`[SKILL_LEVEL]` `[fighter]` 81 1\n`[SKILL_LEVEL]` `[fighter]` 87 1\n`[SKILL_LEVEL]` `[fighter]` 89 1\n`[SKILL_LEVEL]` `[fighter]` 88 1\n[/avatar select ability]\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "layer variation",
+      "title": "//请勿使用",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[layer variation] 1800 `coat_a`\n////请勿使用，已更改为下方标签 /////<include> `equipment/character/fighter.lay`\n```\n\n```pvf\n[layer variation] 500 `coat_d`\n////请勿使用，已更改为下方标签 /////<include> `equipment/character/fighter.lay`\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "aura ability",
+      "title": "光环时装附加功能",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n// 光环时装附加功能\n// `[none]` // 无附加功能的光环时装\n// `[party teleport]` index  // 队伍瞬间移动（队伍移动冷却时间）\n[aura ability]\n`[party teleport]` 600\n[/aura ability]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "equipment ani script",
+      "title": "//请勿使用",
+      "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n////请勿使用，已更改为下方标签 /////<include> `equipment/character/fighter.lay`\n[equipment ani script] `equipment/character/fighter.lay`\n```",
       "officialAuthors": "官方PVF"
     }
   ]

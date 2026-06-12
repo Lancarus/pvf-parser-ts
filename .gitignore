@@ -24,4 +24,6 @@ Thumbs.db
 # Legacy C# WinForms project (not part of TS extension)
 pvfUtility/
 
+# Local import/source dumps, including official PVF comment samples.
+# Committed runtime configs live under src/config/.
 temporary file/

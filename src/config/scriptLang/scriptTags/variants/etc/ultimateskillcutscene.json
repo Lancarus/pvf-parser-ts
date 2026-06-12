@@ -3,32 +3,46 @@
     {
       "name": "SKILL INDEX",
       "title": "职业编号",
-      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 职业编号，技能索引 (例如: 0 5 = 鬼剑士 鬼斩)",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n```pvf\n//鬼剑士 极·鬼剑术·暴风式\n[SKILL INDEX] \t 0 86\t\t// 职业编号，技能索引 (例如: 0 5 = 鬼剑士 鬼斩)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "ONAIR ONLY",
       "title": "是否仅为广播比赛专用 (0",
-      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 是否仅为广播比赛专用 (0 : 否，1: 是，默认 : 0)",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n```pvf\n[ONAIR ONLY] \t 0\t\t// 是否仅为广播比赛专用 (0 : 否，1: 是，默认 : 0)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "FLIP TYPE",
       "title": "0",
-      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 0 : 无 1 : 根据角色方向 2 : 根据角色位置",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n```pvf\n[FLIP TYPE]   \t  1\t\t// 0 : 无 1 : 根据角色方向 2 : 根据角色位置\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "START POSITION",
       "title": "起始 x",
-      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 起始 x,y 坐标",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n```pvf\n[START POSITION]    -400 480\t// 起始 x,y 坐标\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "ANI FILE",
       "title": "要使用的动画文件",
-      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n- 要使用的动画文件",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n```pvf\n[ANI FILE]      `etc/UltimateSkillAni/Ghost_Weapon.Ani` //要使用的动画文件\n```",
       "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "MOVE DIR",
+      "title": "停止位置 x",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n```pvf\n[MOVE DIR]\n  -5 480 500\t// 停止位置 x,y , 速度 (速度 = 1/10 每秒移动距离)\n   7 480 50\t// 停止位置 x,y , 速度 (速度 = 1/10 每秒移动距离)\n  -5 480 50\t// 停止位置 x,y , 速度 (速度 = 1/10 每秒移动距离)\n  -5 480 800\t// 停止，停止时间\n   7 480 50\t// 停止位置 x,y , 速度 (速度 = 1/10 每秒移动距离)\n-400 480 500\t// 停止位置 x,y , 速度\n-400 480 2000\t// 停止位置 x,y , 速度\n[/MOVE DIR]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "CHANGE ULTIMATECUTSCENE ANI FILE",
+      "title": "0",
+      "officialDescription": "#### 官方示例: ultimateskillcutscene.etc\n\n```pvf\n[CHANGE ULTIMATECUTSCENE ANI FILE]\n0\t\t\t\t\t// 0 : 要更改的觉醒技能过场图像类型 (要添加，请在 eTYPEULTIMATECUTSCENE 中增加类型)\n`etc/UltimateSkillAni/Thief_Rogue.Ani`\t// 要更改的觉醒技能过场动画文件路径\n[/CHANGE ULTIMATECUTSCENE ANI FILE]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     }
   ]
 }

@@ -1,3 +1,41 @@
 {
-  "tags": []
+  "tags": [
+    {
+      "name": "green level penalty",
+      "title": "百分比（自身等级与任务等级差为 12 以上）",
+      "officialDescription": "#### 官方示例: questparameter.etc\n\n```pvf\n// 百分比（自身等级与任务等级差为 7 ~ 11 时适用）\n[green level penalty]   80\n// 百分比（自身等级与任务等级差为 12 以上）\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "exp reward table",
+      "title": "exp reward table",
+      "officialDescription": "#### 官方示例: questparameter.etc\n\n```pvf\n// 各级别经验值基本奖励\n[exp reward table]\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2783\n3214\n3674\n4161\n4675\n5218\n5789\n6387\n7013\n7667\n8349\n9059\n9796\n10561\n11355\n12176\n13024\n139901\n14806\n15738\n16698\n17686\n18702\n19745\n20817\n21916\n23043\n24198\n25381\n26592\n27860\n29096\n30390\n31712\n33062\n34440\n35845\n32278\n38739\n40228\n41745\n43290\n44862\n46462\n48090\n49746\n51430\n53141\n54881\n56648\n58113\n60266\n62117\n63995\n65901\n67836\n69798\n71787\n73805\n85851\n77924\n80025\n82454\n84311\n83493\n88708\n90948\n93217\n95513\n97836\n100188\n105867\n104975\n107410\n109873\n112364\n114882\n117429\n120003\n122605\n025235\n127893\n130578\n133292\n136033\n138802\n141599\n144424\n147276\n150157\n//....\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "gold reward table",
+      "title": "gold reward table",
+      "officialDescription": "#### 官方示例: questparameter.etc\n\n```pvf\n// 各级别金币基本奖励\n[gold reward table]\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n2500\n300\n334\n543\n779\n1044\n1336\n1656\n2004\n2379\n//....\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "difficulty",
+      "title": "difficulty 奖励权重 (百分比)",
+      "officialDescription": "#### 官方示例: questparameter.etc\n\n```pvf\n// difficulty 奖励权重 (百分比)\n[difficulty]\n`S`\t300\n`A`\t250\n`B`\t200\n`C`\t150\n`M`\t100\n[/difficulty]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "grey level penalty",
+      "title": "百分比（自身等级与任务等级差为 12 以上）",
+      "officialDescription": "#### 官方示例: questparameter.etc\n\n```pvf\n// 百分比（自身等级与任务等级差为 12 以上）\n[grey level penalty]    5\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "bal kun penalty",
+      "title": "操作生疏度惩罚保护区间（操作生疏度超过此数值",
+      "officialDescription": "#### 官方示例: questparameter.etc\n\n```pvf\n// 操作生疏度惩罚保护区间（操作生疏度超过此数值，则任务经验值会减少自身操作生疏度的量。）\n[bal kun penalty]\t10\n```",
+      "officialAuthors": "官方PVF"
+    }
+  ]
 }

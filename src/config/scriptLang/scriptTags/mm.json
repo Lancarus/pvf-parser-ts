@@ -17,7 +17,7 @@
       "title": "对应城镇.twn的区域",
       "description": "对应城镇.twn的区域：\n\n[area]\n    0-------------对应这个区域\n    `xxxxxxxx.map`\n    `[gate]`\n[/area]\n-------\n城镇索引，对应Town.lst中的城镇编号。",
       "authors": "FreyaGrace",
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- 世界索引\n- 城镇索引\n- area 索引\n- npc 索引",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[index]\t1\t\t\t\t\t\t\t\t\t// 世界索引\n```\n\n```pvf\n[index] 1\t\t\t\t\t\t\t\t\t// 城镇索引\n```\n\n```pvf\n[index]\t2\t\t\t\t\t\t\t\t// area 索引\n```\n\n```pvf\n[index] 1\t\t\t\t\t\t\t\t\t// npc 索引\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -25,7 +25,7 @@
       "title": "角色在地图中小头像的位置",
       "description": "角色在地图中小头像的位置\n\n在region（区域）文件夹中，代表着角色在地图中小头像的位置\n第一个数值代表 长\n第二个数值代表 高\n\n在mm文件中为X/Y轴坐标。不知道怎么获取坐标的就用QQ截图游戏窗口然后就能看到坐标了。",
       "authors": "by：夜白1229998088",
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- 小地图坐标 开始/结束点(x,y)",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[project rect]\t1\t1\t10\t10\t\t\t// 小地图坐标 开始/结束点(x,y)\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -33,25 +33,25 @@
       "title": "游戏中的角色城镇活动区域范围（X",
       "description": "游戏中的角色城镇活动区域范围（X,Y）\n使用城镇坐标工具填写",
       "authors": "by：夜白1229998088",
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- 实际可移动范围 开始/结束点(x,y)",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[real rect]\t\t1\t1\t100\t100\t\t\t// 实际可移动范围 开始/结束点(x,y)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "level",
       "title": "推荐最低/最高等级",
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- 推荐最低/最高等级\n- 最低等级, 最高等级",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[level]\t40\t50\t\t\t\t\t\t\t\t// 推荐最低/最高等级\n```\n\n```pvf\n[level]\t30\t40\t\t\t\t\t\t\t// 最低等级, 最高等级\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "point",
       "title": "小地图坐标点(x",
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- 小地图坐标点(x,y)",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[point]\t1\t1\t\t\t\t\t\t\t\t// 小地图坐标点(x,y)\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "type",
       "title": "area 类型 0 普通",
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- area 类型   0 普通, 1 传送门, 2 钓鱼点, 3 酒馆, 4 地下城入口",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[type]\t1\t\t\t\t\t\t\t\t// area 类型   0 普通, 1 传送门, 2 钓鱼点, 3 酒馆, 4 地下城入口\n```",
       "officialAuthors": "官方PVF"
     },
     {
@@ -64,28 +64,35 @@
     {
       "name": "name",
       "title": "npc 名称",
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- npc 名称",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[name]\t`吉莎`\t\t\t\t\t\t\t\t// npc 名称\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "shop",
       "title": "商店类型(0 武器商店",
       "closing": true,
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- 商店类型(0 武器商店, 1 防具商店, 2 饰品商店, 3 材料商店, 4 杂货商店, 5 抽奖商店, 6 神器商店",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[shop] 2\t\t\t\t\t\t\t\t\t// 商店类型(0 武器商店, 1 防具商店, 2 饰品商店, 3 材料商店, 4 杂货商店, 5 抽奖商店, 6 神器商店\n\t\t[level]\t30\t40\t\t\t\t\t\t\t// 最低等级, 最高等级\n\t\t[job]\t0\t1\t2\t[/job]\t\t\t\t// 0剑士, 1格斗家, 2枪手, 3法师, 4 精灵骑士\n\t[/shop]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "job",
       "title": "0剑士",
       "closing": true,
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- 0剑士, 1格斗家, 2枪手, 3法师, 4 精灵骑士",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[job]\t0\t1\t2\t[/job]\t\t\t\t// 0剑士, 1格斗家, 2枪手, 3法师, 4 精灵骑士\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "skill",
       "title": "0剑士",
-      "officialDescription": "#### 官方示例: minimap.mm\n\n- 0剑士, 1格斗家, 2枪手, 3法师, 4 精灵骑士, 5女枪手, 6通用, 7盗贼, 8公会",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[skill]\t5\t\t\t\t\t\t\t\t\t// 0剑士, 1格斗家, 2枪手, 3法师, 4 精灵骑士, 5女枪手, 6通用, 7盗贼, 8公会\n```",
       "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "role",
+      "title": "吉莎添加了此项",
+      "officialDescription": "#### 官方示例: minimap.mm\n\n```pvf\n[role]\n\t\t`[item shop]`\n\t\t`[recover stamina]`\n\t\t`[sera shop]`\n\t\t`[guild]`\n\t\t`[upgrade item]`\n\t\t`[disjoint item]`\n\t\t`[product item]`\n\t\t`[mouse register]`\t\t// 吉莎添加了此项\n\t[/role]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     }
   ]
 }

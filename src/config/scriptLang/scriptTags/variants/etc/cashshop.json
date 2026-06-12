@@ -4,14 +4,20 @@
       "name": "avatar",
       "title": "时装店出售的商品列表",
       "closing": true,
-      "officialDescription": "#### 官方示例: cashshopsample.etc\n\n- 时装店出售的商品列表。",
+      "officialDescription": "#### 官方示例: cashshopsample.etc\n\n```pvf\n[avatar]    // 时装店出售的商品列表。\n5        // 自动进行子分类，并保持顺序。\n300\n34\n23\n[/avatar]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "item",
       "title": "道具店出售的商品列表",
       "closing": true,
-      "officialDescription": "#### 官方示例: cashshopsample.etc\n\n- 道具店出售的商品列表。",
+      "officialDescription": "#### 官方示例: cashshopsample.etc\n\n```pvf\n[item]    // 道具店出售的商品列表。\n343        // 同样自动进行子分类，并保持顺序。\n22\n111\n[/item]\n```",
+      "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "npc info",
+      "title": "各商店对应的 NPC 面部图像文件名",
+      "officialDescription": "#### 官方示例: cashshopsample.etc\n\n```pvf\n[npc info]\n`Npc.img` 0 `欢迎光临时装店，布拉布拉...`    // 各商店对应的 NPC 面部图像文件名，帧索引，说明\n`Npc.img` 1 `欢迎光临道具店，拿不拿不...`\n`Npc.img` 2 `欢迎光临杂货店，自家自家讲讲...`\n`Npc.img` 3 `欢迎光临宠物店，呜噜噜...`\n```",
       "officialAuthors": "官方PVF"
     }
   ]

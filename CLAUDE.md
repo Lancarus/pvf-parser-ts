@@ -86,12 +86,10 @@ src/
 │   └── setNpkRoot.ts     # NPK root directory configuration
 ├── scriptLang/           # Custom language definitions
 │   ├── index.ts          # Registers all 9 languages + formatters
-│   ├── tagRegistry.ts    # Central tag definitions shared across languages
+│   ├── tagRegistry.ts    # Central tag registry, variant resolver, hover/completion docs
 │   ├── act/, ani/, skl/, lst/, str/, equ/, ai/, aic/, key/
 │   │   Each: language registration, formatter, TextMate grammar snippets
-│   └── scriptTags/       # Tag metadata (hover info, completion items; moved to src/config/scriptLang/scriptTags)
-│       ├── actTags.ts, aniTags.ts, sklTags.ts, ...
-│       └── ... (tag files for each language)
+│   └── tagCommentEditor.ts # Markdown editor for human tag descriptions
 └── webview/              # Webview apps and browser scripts
     ├── reactDemo.tsx     # Demo/test panel (ping/pong, counter)
     ├── aniPreview.tsx    # ANI animation preview (canvas-based)
@@ -225,3 +223,42 @@ Each language (`act`, `ani`, `skl`, `lst`, `str`, `equ`, `ai`, `aic`, `key`) has
 - A language configuration in the scriptLang subdirectories
 - Optional: a formatter, hover provider, completion provider
 - Tag definitions in `src/config/scriptLang/scriptTags/`
+
+Tag metadata is JSON-driven. Runtime code reads `src/config/scriptLang/scriptTags/<short>.json` or the copied `dist/config/scriptLang/scriptTags/<short>.json`, plus `global.json`. `npm run compile` triggers `scripts/copy-script-tags.cjs`, so keep source-of-truth edits under `src/config/scriptLang/scriptTags/`; `dist/` is generated.
+
+`ScriptTagInfo` deliberately separates human/community comments from official PVF sample comments:
+
+- `description` and `authors` store human/community comments.
+- `officialDescription` and `officialAuthors` store official PVF sample snippets. The tag comment editor provides a second editable Markdown field for `officialDescription`; keep `title` shared and do not introduce a separate official title.
+- Hover and completion documentation should append `officialDescription` content after `description` without extra "官方注释" or "来源官方PVF" labels. Do not append official text into `description`, and do not add `官方PVF` to `authors`. Official source attribution belongs in `officialAuthors`.
+
+Same-extension files can have different tag semantics. Variant configs live in `src/config/scriptLang/scriptTags/variants/<short>/<variant>.json` and use the same `{ "tags": [...] }` format. `src/config/scriptLang/scriptTags/variantRules.json` declares path/content rules. `tagRegistry.ts` resolves variants per document, then merges tags as:
+
+1. Base `<short>.json`
+2. Matched variant JSON, appending descriptions/official descriptions for same-name tags
+3. `global.json` fallback only for missing tag names
+
+Current variant families are:
+
+- `.equ`: `avatar`, `creature`, `equipment`, `piece-set`
+- `.stk`: `stackable`, `booster`, `legacy`, `monster-card`, `pandora`, `recipe`, `stackable-legacy`, `throwitem`
+- `.etc`: `cashshop`, `compoundavatar`, `disjoint`, `questparameter`, `tutorialtip`, `ultimateskillcutscene`
+
+When editing tag comments from hover/quick fix, pass the resolved `variant` argument to `pvf.editScriptTagComment`; otherwise edits to an avatar/equipment-specific tag may be saved to the base file.
+
+Official PVF comments are imported with:
+
+```powershell
+node scripts/import-official-tag-comments.cjs --dry-run
+node scripts/import-official-tag-comments.cjs
+```
+
+The default source is `temporary file/官方pvf注释/翻译后`, which is ignored by Git and is not runtime data. The importer trusts parseable official sample comments and writes the related PVF snippet to `officialDescription`, not just the isolated comment text. It must capture same-line comments, comments inside closable blocks, and contiguous continuation comment lines after scalar tags, while ignoring bracket-like values inside backticks when identifying tag names. It also migrates legacy `#### 官方示例` sections out of `description`. After a successful sync, running the dry-run again should show `updated = 0`.
+
+Validation checklist after changing tag configs or the importer:
+
+```powershell
+node scripts/import-official-tag-comments.cjs --dry-run
+npm run compile
+git diff --check
+```

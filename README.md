@@ -14,6 +14,7 @@
   - `.act`（动作）、`.ani`（动画）、`.skl`（技能）
   - `.lst`（列表）、`.str`（结构）、`.equ`（装备）
   - `.ai`（AI）、`.aic`（AI 编译）、`.key`（键值）
+- **脚本标签注释** — 标签 hover、补全说明和诊断共享 `src/config/scriptLang/scriptTags/` 中的配置。人工注释保存在 `description`，官方 PVF 样例片段独立保存在 `officialDescription`；hover/补全文档会顺序显示两者，但不会额外显示来源标题。
 - **ANI 动画预览** — 在 Webview 面板中基于 Canvas 预览 `.ani` 动画文件。
 - **APC 编辑器** — `.aic` 文件的可视化角色动画编辑器，与源文档实时同步。
 - **NPK / IMG 解析** — 打开 NPK 容器并查看 IMG 精灵表（含索引颜色表）。
@@ -168,6 +169,41 @@ UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
 在已支持的脚本位置悬停数字代码时，插件会根据 `src/config/scriptLang/itemCodeHoverConfig.json` 中的规则判断该数字属于哪类资源，并通过 `.lst` 映射解析名称和脚本路径。例如副本、地图、怪物、NPC、任务、装备、消耗品、对象等代码会在匹配的标签上下文中显示来源类型、名称、LST 路径和可跳转的脚本路径。
 
 代码悬停同时支持两种来源：从 PVF 资源树打开的 `pvf:` 虚拟文件会优先查询当前已打开封包内的 `.lst`；从普通资源管理器打开的解封目录文件会从当前文件目录向上查找候选 `.lst`，例如 `stackable/stackable.lst`、`equipment/equipment.lst`。只有在配置规则能判断该数字属于哪类资源时才会显示，普通数值、注释、反引号字符串中的数字不会被误判。规则命中但查不到代码时，悬停提示会显示候选 LST 和失败原因，便于排查路径或代码映射问题。
+
+### 脚本标签注释
+
+脚本标签配置位于 `src/config/scriptLang/scriptTags/`。每个 JSON 文件使用 `{ "tags": [...] }` 格式，标签项支持：
+
+```json
+{
+  "name": "avatar type select",
+  "title": "购买时类型选择",
+  "description": "人工维护的说明",
+  "authors": "维护者",
+  "officialDescription": "#### 官方示例: avatarsample.equ\n\n```pvf\n[avatar type select] `[selectable]` // 购买时类型选择\n```",
+  "officialAuthors": "官方PVF",
+  "closing": true
+}
+```
+
+`description` 是人工注释，`officialDescription` 是从官方 PVF 样例同步来的官方片段。编辑器中的 **编辑注释** 命令会同时提供两个 Markdown 输入框，分别保存到 `description` 和 `officialDescription`；标题仍然只有一个共享的 `title` 字段，不拆分官方标题。hover 和补全详情会顺序显示这两段内容，中间仅用分隔线隔开，不额外显示“官方注释”或“来源官方PVF”。
+
+同一后缀但不同 PVF 类型的标签注释放在 `src/config/scriptLang/scriptTags/variants/<short>/<variant>.json`。当前 `.equ`、`.stk`、`.etc` 会根据 PVF 路径优先、文件内容兜底选择变体，例如：
+
+- `.equ`: `avatar`、`creature`、`equipment`、`piece-set`
+- `.stk`: `stackable`、`booster`、`legacy`、`monster-card`、`pandora`、`recipe`、`stackable-legacy`、`throwitem`
+- `.etc`: `cashshop`、`compoundavatar`、`disjoint`、`questparameter`、`tutorialtip`、`ultimateskillcutscene`
+
+基础标签、匹配变体和 `global.json` 的合并顺序是：基础 `<short>.json` 优先，变体补充或追加同名标签的说明，`global.json` 只补不存在的标签。未知标签诊断、折叠、语义高亮、补全和 hover 都使用同一套文档感知标签结果。
+
+官方注释同步脚本是：
+
+```powershell
+node scripts/import-official-tag-comments.cjs --dry-run
+node scripts/import-official-tag-comments.cjs
+```
+
+脚本默认读取 `temporary file/官方pvf注释/翻译后`。该目录是本地资料源，已被 `.gitignore` 忽略，不作为运行时资源提交。同步脚本会解析官方样例中的标签注释，并把相关 PVF 片段写入 `officialDescription` / `officialAuthors`：同一行注释、闭合标签块内注释、标签后的连续说明行都会一起保留，例如 `[pvp] ... [/pvp]` 或 `[stackable type]` 后面的多行选项说明。脚本会自动迁移旧版本中误追加到 `description` 的 `#### 官方示例` 段落；重复运行应保持 dry-run 的 `updated = 0`。
 
 ### 大包性能调优
 

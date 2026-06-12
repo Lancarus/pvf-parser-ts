@@ -3,14 +3,28 @@
     {
       "name": "stackable type",
       "title": "类型为",
-      "officialDescription": "#### 官方示例: stackablesample-throwitem.stk\n\n- 类型为 `[throw]`",
+      "officialDescription": "#### 官方示例: stackablesample-throwitem.stk\n\n```pvf\n[stackable type] `[throw]` 0\t\t\t// 类型为 `[throw]`\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "applying range",
       "title": "以像素为单位的正圆形半径",
-      "officialDescription": "#### 官方示例: stackablesample-throwitem.stk\n\n- 以像素为单位的正圆形半径，虽然不是专为投掷物品设置的标签，但常用于赋予特殊效果的物品",
+      "officialDescription": "#### 官方示例: stackablesample-throwitem.stk\n\n```pvf\n[applying range] 200 // 以像素为单位的正圆形半径，虽然不是专为投掷物品设置的标签，但常用于赋予特殊效果的物品\n```",
       "officialAuthors": "官方PVF"
+    },
+    {
+      "name": "int data",
+      "title": "要创建的被动对象索引",
+      "officialDescription": "#### 官方示例: stackablesample-throwitem.stk\n\n```pvf\n[int data]\n50001\t\t\t\t\t// 要创建的被动对象索引\n0\t\t\t\t\t// 创建被动对象时输入的参数\n0\t\t\t\t\t// 发射前延迟 (如果想在发射前长时间蓄力，则增加此变量。默认值 0)\n450\t\t\t\t\t// 发射后延迟 (如果想增加发射后的硬直时间，则增加此变量。默认值 500 左右)\n0\t\t\t\t\t// 要反映的速度类型 (0:攻击速度, 1:施法速度)\n100\t\t\t\t\t// 基本速度倍数 (%) (如果想更快地发射动作，则填写 100 以上。速度 = 要反映的速度类型 * 倍数 / 100)\n[/int data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
+    },
+    {
+      "name": "string data",
+      "title": "指定对象路径的粒子脚本",
+      "officialDescription": "#### 官方示例: stackablesample-throwitem.stk\n\n```pvf\n[string data]\n`PassiveObject/ThrowItem/Particle/Boomerang.ptl`\t// 指定对象路径的粒子脚本。绝对路径\n`THROW`\t\t\t\t\t\t\t// 投掷时发出的音效标签\n[/string data]\n```",
+      "officialAuthors": "官方PVF",
+      "closing": true
     }
   ]
 }

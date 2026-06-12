@@ -173,11 +173,7 @@ function appendTagDocumentationSections(md: vscode.MarkdownString, tag: ScriptTa
         md.appendMarkdown('\n\n' + formatCommentMarkdown(tag.description, options));
     }
     if (tag.officialDescription) {
-        md.appendMarkdown('\n\n---\n\n### 官方注释');
-        if (tag.officialAuthors) {
-            md.appendMarkdown(`\n\n来源: ${escapeMarkdownHeading(tag.officialAuthors)}`);
-        }
-        md.appendMarkdown('\n\n' + formatCommentMarkdown(tag.officialDescription, options));
+        md.appendMarkdown((tag.description ? '\n\n---\n\n' : '\n\n') + formatCommentMarkdown(tag.officialDescription, options));
     }
 }
 

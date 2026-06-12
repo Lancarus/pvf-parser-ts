@@ -81,7 +81,7 @@ async function readTagForEditor(context: vscode.ExtensionContext, short: string,
 }
 
 function createTagForFile(data: TagFile, seed: ScriptTagInfo): ScriptTagInfo {
-    const tag: ScriptTagInfo = { name: normalizeTagDisplayName(seed.name), title: seed.title || normalizeTagDisplayName(seed.name), description: '' };
+    const tag: ScriptTagInfo = { name: normalizeTagDisplayName(seed.name), title: seed.title || normalizeTagDisplayName(seed.name) };
     if (typeof seed.closing === 'boolean') {
         tag.closing = seed.closing;
     } else if ((data.tags || []).some(item => Object.prototype.hasOwnProperty.call(item, 'closing'))) {
@@ -93,7 +93,7 @@ function createTagForFile(data: TagFile, seed: ScriptTagInfo): ScriptTagInfo {
     return tag;
 }
 
-async function saveTagInfo(context: vscode.ExtensionContext, short: string, name: string, title: string, description: string, seed?: ScriptTagInfo, variant?: string): Promise<{ files: number; authors: string; created: number; title: string }> {
+async function saveTagInfo(context: vscode.ExtensionContext, short: string, name: string, title: string, description: string, officialDescription: string, seed?: ScriptTagInfo, variant?: string): Promise<{ files: number; authors: string; created: number; title: string }> {
     const expected = normalizeTagName(name);
     let saved = 0;
     let created = 0;
@@ -122,7 +122,17 @@ async function saveTagInfo(context: vscode.ExtensionContext, short: string, name
             created++;
         }
         tag.title = cleanTitle;
-        tag.description = description.replace(/\r\n?/g, '\n').trimEnd();
+        const cleanDescription = description.replace(/\r\n?/g, '\n').trimEnd();
+        const cleanOfficialDescription = officialDescription.replace(/\r\n?/g, '\n').trimEnd();
+        if (cleanDescription) tag.description = cleanDescription;
+        else delete tag.description;
+        if (cleanOfficialDescription) {
+            tag.officialDescription = cleanOfficialDescription;
+            tag.officialAuthors = tag.officialAuthors || '官方PVF';
+        } else {
+            delete tag.officialDescription;
+            delete tag.officialAuthors;
+        }
         tag.authors = appendAuthor(tag.authors, author);
         savedAuthors = tag.authors || '';
         await fs.writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8');
@@ -227,7 +237,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1px
     min-height: 0;
 }
 .pane { min-height: 0; display: grid; grid-template-rows: auto 1fr; }
-.editorPane { grid-template-rows: auto auto 1fr; }
+.editorPane { grid-template-rows: auto minmax(0, 1fr); }
 .pane + .pane { border-left: 1px solid var(--border); }
 .paneHeader {
     min-height: 34px;
@@ -268,6 +278,17 @@ textarea {
     font-size: var(--vscode-editor-font-size);
     line-height: 1.5;
 }
+.editors {
+    min-height: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+}
+.markdownEditor {
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+.markdownEditor + .markdownEditor { border-top: 1px solid var(--border); }
 .preview {
     overflow: auto;
     padding: 12px 18px 32px;
@@ -325,11 +346,6 @@ textarea {
 }
 .preview a { color: var(--vscode-textLink-foreground); }
 .preview img { max-width: 100%; }
-.officialSource {
-    margin: -4px 0 12px;
-    color: var(--muted);
-    font-size: 12px;
-}
 .status {
     min-height: 28px;
     padding: 5px 12px;
@@ -358,8 +374,16 @@ textarea {
                 <label for="titleInput">Title</label>
                 <input id="titleInput" type="text">
             </div>
-            <div class="paneHeader">Markdown</div>
-            <textarea id="editor" spellcheck="false"></textarea>
+            <div class="editors">
+                <div class="markdownEditor">
+                    <div class="paneHeader">Markdown</div>
+                    <textarea id="editor" spellcheck="false"></textarea>
+                </div>
+                <div class="markdownEditor">
+                    <div class="paneHeader">官方 Markdown</div>
+                    <textarea id="officialEditor" spellcheck="false"></textarea>
+                </div>
+            </div>
         </section>
         <section class="pane">
             <div class="paneHeader">预览</div>
@@ -373,14 +397,17 @@ const vscode = acquireVsCodeApi();
 const init = ${initJson};
 const titleInput = document.getElementById('titleInput');
 const editor = document.getElementById('editor');
+const officialEditor = document.getElementById('officialEditor');
 const preview = document.getElementById('preview');
 const status = document.getElementById('status');
 const saveButton = document.getElementById('save');
 document.querySelector('.tag').textContent = init.short + (init.variant ? ':' + init.variant : '') + ' / [' + init.name + ']';
 titleInput.value = init.title || init.name || '';
 editor.value = init.description || '';
+officialEditor.value = init.officialDescription || '';
 let lastSavedTitle = titleInput.value;
 let lastSavedDescription = editor.value;
+let lastSavedOfficialDescription = officialEditor.value;
 let saveTimer = 0;
 
 function escapeHtml(value) {
@@ -546,18 +573,16 @@ function setStatus(text, isError) {
 
 function updatePreview() {
     const title = titleInput.value.trim() || init.name || '';
-    const source = '### ' + title + '\\n\\n' + (editor.value || '');
+    const parts = [];
+    if (editor.value) parts.push(editor.value);
+    if (officialEditor.value) parts.push(officialEditor.value);
+    const source = '### ' + title + '\\n\\n' + parts.join('\\n\\n---\\n\\n');
     let html = '<pre class="tagName"><code>' + escapeHtml(init.name || '') + '</code></pre>' + renderMarkdown(source);
-    if (init.officialDescription) {
-        html += '<hr><h3>官方注释</h3>';
-        if (init.officialAuthors) html += '<div class="officialSource">来源: ' + escapeHtml(init.officialAuthors) + '</div>';
-        html += renderMarkdown(init.officialDescription);
-    }
     preview.innerHTML = html;
-    vscode.setState({ title: titleInput.value, text: editor.value });
+    vscode.setState({ title: titleInput.value, text: editor.value, officialText: officialEditor.value });
     const authorText = init.authors ? '作者: ' + init.authors : '作者: 未署名';
     const signerText = init.currentAuthor ? '保存签名: ' + init.currentAuthor : '';
-    const saved = editor.value === lastSavedDescription && titleInput.value === lastSavedTitle;
+    const saved = editor.value === lastSavedDescription && officialEditor.value === lastSavedOfficialDescription && titleInput.value === lastSavedTitle;
     setStatus((saved ? '已保存' : '未保存') + '    ' + authorText + (signerText ? '    ' + signerText : ''));
 }
 
@@ -565,11 +590,12 @@ function save() {
     window.clearTimeout(saveTimer);
     saveButton.disabled = true;
     setStatus('保存中...');
-    vscode.postMessage({ type: 'save', title: titleInput.value, description: editor.value });
+    vscode.postMessage({ type: 'save', title: titleInput.value, description: editor.value, officialDescription: officialEditor.value });
 }
 
 titleInput.addEventListener('input', updatePreview);
 editor.addEventListener('input', updatePreview);
+officialEditor.addEventListener('input', updatePreview);
 saveButton.addEventListener('click', save);
 document.addEventListener('keydown', event => {
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
@@ -583,6 +609,7 @@ window.addEventListener('message', event => {
     if (msg.type === 'saved') {
         lastSavedTitle = titleInput.value;
         lastSavedDescription = editor.value;
+        lastSavedOfficialDescription = officialEditor.value;
         init.title = msg.title || titleInput.value;
         init.authors = msg.authors || init.authors;
         setStatus('已保存到 ' + msg.files + ' 个文件    作者: ' + (init.authors || '未署名'));
@@ -593,6 +620,7 @@ window.addEventListener('message', event => {
 const state = vscode.getState();
 if (state && typeof state.title === 'string') titleInput.value = state.title;
 if (state && typeof state.text === 'string') editor.value = state.text;
+if (state && typeof state.officialText === 'string') officialEditor.value = state.officialText;
 updatePreview();
 titleInput.focus();
 requestAnimationFrame(() => vscode.postMessage({ type: 'ready' }));
@@ -652,11 +680,21 @@ export function registerScriptTagCommentEditor(context: vscode.ExtensionContext)
                     markReady();
                     return;
                 }
-                if (msg.type !== 'save' || typeof msg.description !== 'string' || typeof msg.title !== 'string') return;
+                if (msg.type !== 'save' || typeof msg.description !== 'string' || typeof msg.title !== 'string' || typeof msg.officialDescription !== 'string') return;
                 try {
-                    const result = await saveTagInfo(context, short, tag.name, msg.title, msg.description, tag, variant);
+                    const result = await saveTagInfo(context, short, tag.name, msg.title, msg.description, msg.officialDescription, tag, variant);
                     tag.title = result.title;
-                    tag.description = msg.description.replace(/\r\n?/g, '\n').trimEnd();
+                    const cleanDescription = msg.description.replace(/\r\n?/g, '\n').trimEnd();
+                    const cleanOfficialDescription = msg.officialDescription.replace(/\r\n?/g, '\n').trimEnd();
+                    if (cleanDescription) tag.description = cleanDescription;
+                    else delete tag.description;
+                    if (cleanOfficialDescription) {
+                        tag.officialDescription = cleanOfficialDescription;
+                        tag.officialAuthors = tag.officialAuthors || '官方PVF';
+                    } else {
+                        delete tag.officialDescription;
+                        delete tag.officialAuthors;
+                    }
                     tag.authors = result.authors;
                     panel.webview.postMessage({ type: 'saved', files: result.files, authors: result.authors, title: result.title });
                     const action = result.created ? '已创建并保存' : '已保存';

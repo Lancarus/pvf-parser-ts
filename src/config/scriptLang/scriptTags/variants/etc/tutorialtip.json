@@ -1,3 +1,10 @@
 {
-  "tags": []
+  "tags": [
+    {
+      "name": "序号",
+      "title": "教程提示脚本示例",
+      "officialDescription": "#### 官方示例: tutorialtipsample.etc\n\n```pvf\n//教程提示脚本示例\n//顺序为序号、重要性、等级、标题、内容、图片路径。\n//请按序号顺序编写，并且内容应为4行，不足4行时请用空行补足。\n[序号] 1\n```",
+      "officialAuthors": "官方PVF"
+    }
+  ]
 }

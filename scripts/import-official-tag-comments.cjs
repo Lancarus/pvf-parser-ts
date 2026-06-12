@@ -86,8 +86,8 @@ function stripBacktickSegments(line, state) {
   return out;
 }
 
-function findCommentStart(line) {
-  let inBacktick = false;
+function findCommentStart(line, initialInBacktick = false) {
+  let inBacktick = initialInBacktick;
   for (let i = 0; i < line.length - 1; i++) {
     const ch = line[i];
     if (ch === '`') {
@@ -99,13 +99,36 @@ function findCommentStart(line) {
   return -1;
 }
 
-function extractLineComment(line) {
-  const index = findCommentStart(line);
-  if (index < 0) return undefined;
+function splitCodeAndComment(line, initialInBacktick = false) {
+  const index = findCommentStart(line, initialInBacktick);
+  if (index < 0) {
+    const state = { inBacktick: initialInBacktick };
+    stripBacktickSegments(line, state);
+    return { before: line, comment: '', hasComment: false, inBacktickEnd: state.inBacktick };
+  }
+  const before = line.slice(0, index);
+  const state = { inBacktick: initialInBacktick };
+  stripBacktickSegments(before, state);
   return {
-    before: line.slice(0, index),
+    before,
     comment: line.slice(index + 2).trim(),
+    hasComment: true,
+    inBacktickEnd: state.inBacktick,
   };
+}
+
+function shouldCarryBacktickState(lines, index, split, cleanCode, tags, initialInBacktick) {
+  if (!split.inBacktickEnd) return false;
+  if (initialInBacktick) return true;
+  if (cleanCode.trim() || tags.length) return false;
+  for (let i = index + 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.includes('`')) return true;
+    const probeSplit = splitCodeAndComment(line);
+    const probeClean = stripBacktickSegments(probeSplit.before, { inBacktick: false });
+    if (iterateTags(probeClean).length) return false;
+  }
+  return false;
 }
 
 function iterateTags(line) {
@@ -121,42 +144,204 @@ function iterateTags(line) {
 }
 
 function collectClosingTags(text) {
-  const state = { inBacktick: false };
   const closing = new Set();
-  for (const line of text.replace(/\r\n?/g, '\n').split('\n')) {
-    const clean = stripBacktickSegments(line, state);
+  const lines = text.replace(/\r\n?/g, '\n').split('\n');
+  let inBacktick = false;
+  for (let index = 0; index < lines.length; index++) {
+    const line = lines[index];
+    const split = splitCodeAndComment(line, inBacktick);
+    const code = split.before;
+    const stripState = { inBacktick };
+    const clean = stripBacktickSegments(code, stripState);
+    const tags = iterateTags(clean);
     for (const tag of iterateTags(clean)) {
       if (tag.isClose) closing.add(normalizeTagName(tag.name));
     }
+    inBacktick = shouldCarryBacktickState(lines, index, split, clean, tags, inBacktick)
+      ? stripState.inBacktick
+      : false;
   }
   return closing;
+}
+
+function ensureRecord(records, name, closing) {
+  const displayName = normalizeDisplayName(name);
+  const key = normalizeTagName(displayName);
+  if (!records.has(key)) {
+    records.set(key, {
+      name: displayName,
+      comments: new Set(),
+      snippets: new Set(),
+      closing: closing.has(key),
+    });
+  }
+  return records.get(key);
+}
+
+function addOfficialSnippet(records, name, snippet, comments, closing) {
+  const cleanSnippet = String(snippet || '').replace(/\r\n?/g, '\n').trim();
+  if (!cleanSnippet) return;
+  const record = ensureRecord(records, name, closing);
+  record.snippets.add(cleanSnippet);
+  for (const comment of comments || []) {
+    const cleanComment = String(comment || '').trim();
+    if (cleanComment) record.comments.add(cleanComment);
+  }
+}
+
+function lastIndexOfStackTag(stack, key) {
+  for (let i = stack.length - 1; i >= 0; i--) {
+    if (stack[i].key === key) return i;
+  }
+  return -1;
+}
+
+function buildLineInfos(text) {
+  const lines = text.replace(/\r\n?/g, '\n').split('\n');
+  let inBacktick = false;
+  return lines.map((raw, index) => {
+    const split = splitCodeAndComment(raw, inBacktick);
+    const stripState = { inBacktick };
+    const cleanCode = stripBacktickSegments(split.before, stripState);
+    const tags = iterateTags(cleanCode);
+    inBacktick = shouldCarryBacktickState(lines, index, split, cleanCode, tags, inBacktick)
+      ? stripState.inBacktick
+      : false;
+    return {
+      index,
+      raw,
+      before: split.before,
+      comment: split.comment,
+      hasComment: split.hasComment && !!split.comment,
+      tags,
+      openingTags: tags.filter(tag => !tag.isClose),
+      closingTags: tags.filter(tag => tag.isClose),
+    };
+  });
+}
+
+function snippetFromLines(infos, start, end) {
+  let from = Math.max(0, start);
+  let to = Math.min(infos.length - 1, end);
+  while (from <= to && !infos[from].raw.trim()) from++;
+  while (to >= from && !infos[to].raw.trim()) to--;
+  if (from > to) return '';
+  return infos.slice(from, to + 1)
+    .map(info => info.raw.trimEnd())
+    .join('\n')
+    .trimEnd();
+}
+
+function commentsFromLines(infos, start, end) {
+  const comments = [];
+  for (let i = Math.max(0, start); i <= Math.min(infos.length - 1, end); i++) {
+    if (infos[i].hasComment) comments.push(infos[i].comment);
+  }
+  return comments;
+}
+
+function precedingCommentStart(infos, index) {
+  let start = index;
+  for (let i = index - 1; i >= 0; i--) {
+    const info = infos[i];
+    if (!info.hasComment || info.before.trim() || info.tags.length) break;
+    start = i;
+  }
+  return start;
+}
+
+function scalarSnippetEnd(infos, index) {
+  let end = index;
+  for (let i = index + 1; i < infos.length; i++) {
+    const info = infos[i];
+    if (!info.raw.trim()) break;
+    if (info.tags.length) break;
+    end = i;
+  }
+  return end;
+}
+
+function addScalarSnippets(records, infos, closing) {
+  for (const info of infos) {
+    const scalarTags = info.openingTags.filter(tag => !closing.has(normalizeTagName(tag.name)));
+    if (!scalarTags.length) continue;
+    const start = precedingCommentStart(infos, info.index);
+    const end = scalarSnippetEnd(infos, info.index);
+    const comments = commentsFromLines(infos, start, end);
+    if (!comments.length) continue;
+    const snippet = snippetFromLines(infos, start, end);
+    for (const tag of scalarTags) addOfficialSnippet(records, tag.name, snippet, comments, closing);
+  }
+}
+
+function addClosingBlockSnippets(records, infos, closing) {
+  const stack = [];
+  for (const info of infos) {
+    if (info.hasComment && !info.tags.length && stack.length) {
+      const top = stack[stack.length - 1];
+      top.hasComment = true;
+      top.comments.push(info.comment);
+    }
+
+    let lineCommentAttributed = !info.hasComment;
+    for (const tag of info.tags) {
+      const key = normalizeTagName(tag.name);
+      if (tag.isClose) {
+        const index = lastIndexOfStackTag(stack, key);
+        if (index >= 0) {
+          const context = stack[index];
+          if (!lineCommentAttributed) {
+            context.hasComment = true;
+            context.comments.push(info.comment);
+            lineCommentAttributed = true;
+          }
+          stack.splice(index);
+          if (context.hasComment) {
+            addOfficialSnippet(
+              records,
+              context.name,
+              snippetFromLines(infos, context.start, info.index),
+              context.comments,
+              closing
+            );
+          }
+        }
+        continue;
+      }
+
+      if (!closing.has(key)) continue;
+      const start = precedingCommentStart(infos, info.index);
+      const comments = commentsFromLines(infos, start, info.index);
+      const context = {
+        name: normalizeDisplayName(tag.name),
+        key,
+        start,
+        comments,
+        hasComment: comments.length > 0,
+      };
+      if (!lineCommentAttributed && info.hasComment) {
+        context.hasComment = true;
+        context.comments.push(info.comment);
+        lineCommentAttributed = true;
+      }
+      ensureRecord(records, context.name, closing);
+      stack.push(context);
+    }
+  }
 }
 
 function collectOfficialRecords(text) {
   const records = new Map();
   const closing = collectClosingTags(text);
-  for (const line of text.replace(/\r\n?/g, '\n').split('\n')) {
-    const split = extractLineComment(line);
-    if (!split || !split.comment) continue;
-    const cleanBefore = stripBacktickSegments(split.before, { inBacktick: false });
-    const tag = iterateTags(cleanBefore).find(item => !item.isClose);
-    if (!tag) continue;
-    const name = normalizeDisplayName(tag.name);
-    const key = normalizeTagName(name);
-    if (!records.has(key)) {
-      records.set(key, {
-        name,
-        comments: new Set(),
-        closing: closing.has(key),
-      });
-    }
-    records.get(key).comments.add(split.comment);
-  }
+  const infos = buildLineInfos(text);
+  addClosingBlockSnippets(records, infos, closing);
+  addScalarSnippets(records, infos, closing);
   return Array.from(records.values()).map(record => ({
     name: record.name,
     comments: Array.from(record.comments),
+    snippets: Array.from(record.snippets),
     closing: record.closing,
-  }));
+  })).filter(record => record.snippets.length);
 }
 
 function sourceName(sourceDir, file) {
@@ -226,8 +411,8 @@ function titleFromComment(name, comment) {
   return withoutCode.length > 36 ? withoutCode.slice(0, 36) : withoutCode;
 }
 
-function officialSection(sample, comments) {
-  const body = comments.map(comment => `- ${comment}`).join('\n');
+function officialSection(sample, record) {
+  const body = (record.snippets || []).map(snippet => `\`\`\`pvf\n${snippet}\n\`\`\``).join('\n\n');
   return `${sourceHeadingPrefix}${sample}\n\n${body}`;
 }
 
@@ -290,7 +475,7 @@ function uniqueSections(sections) {
 
 function officialDescriptionFromRecords(records) {
   return records
-    .map(record => officialSection(record.sample, record.comments))
+    .map(record => officialSection(record.sample, record))
     .join('\n\n');
 }
 
@@ -366,6 +551,10 @@ function mergeRecordsIntoFile(file, sourceRecords) {
     }
     if ((tag.officialAuthors || '').trim() !== officialAuthor) {
       tag.officialAuthors = officialAuthor;
+      changed = true;
+    }
+    if (typeof tag.description === 'string' && !tag.description.trim()) {
+      delete tag.description;
       changed = true;
     }
     const humanAuthors = removeAuthor(tag.authors, officialAuthor);
