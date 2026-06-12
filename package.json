@@ -10,6 +10,9 @@
   "categories": [
     "Other"
   ],
+  "extensionDependencies": [
+    "marcinbar.vscode-squirrel"
+  ],
   "activationEvents": [
     "onStartupFinished",
     "onFileSystem:pvf",
@@ -37,7 +40,6 @@
     "onLanguage:pvf-mm",
     "onLanguage:pvf-mob",
     "onLanguage:pvf-npc",
-    "onLanguage:pvf-nut",
     "onLanguage:pvf-obj",
     "onLanguage:pvf-pos",
     "onLanguage:pvf-ptl",
@@ -325,17 +327,6 @@
         "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
       },
       {
-        "id": "pvf-nut",
-        "aliases": [
-          "NUT",
-          "pvf-nut"
-        ],
-        "extensions": [
-          ".nut"
-        ],
-        "configuration": "./src/config/scriptLang/languageConfigurations/generic.json"
-      },
-      {
         "id": "pvf-obj",
         "aliases": [
           "OBJ",
@@ -601,11 +592,6 @@
         "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
       },
       {
-        "language": "pvf-nut",
-        "scopeName": "source.pvf-nut",
-        "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
-      },
-      {
         "language": "pvf-obj",
         "scopeName": "source.pvf-obj",
         "path": "./src/config/syntaxes/pvf-generic.tmLanguage.json"
@@ -814,12 +800,6 @@
         "editor.detectIndentation": false
       },
       "[pvf-npc]": {
-        "editor.renderWhitespace": "boundary",
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": false
-      },
-      "[pvf-nut]": {
         "editor.renderWhitespace": "boundary",
         "editor.tabSize": 4,
         "editor.insertSpaces": false,
