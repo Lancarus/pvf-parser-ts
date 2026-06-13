@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
-import type { UnpackHoverPreview, UnpackPreviewSection } from './unpackPreview';
+import type { UnpackHoverPreview, UnpackPreviewSection, UnpackPreviewSkillTreeGroup, UnpackPreviewSkillTreeNode } from './unpackPreview';
+import { normalizeUnpackKey } from './unpackMetadata';
 
 export class UnpackHoverPreviewPanel {
   private panel: vscode.WebviewPanel | undefined;
@@ -50,6 +51,12 @@ export class UnpackHoverPreviewPanel {
       if (!message || typeof message !== 'object') return;
       if ((message as any).type === 'openTag' && typeof (message as any).tagName === 'string') {
         void this.openCurrentPreviewTag((message as any).tagName);
+        return;
+      }
+      if ((message as any).type === 'openSkill') {
+        const key = typeof (message as any).key === 'string' ? (message as any).key : '';
+        const code = typeof (message as any).code === 'number' ? (message as any).code : undefined;
+        void this.openCurrentPreviewSkill(key, code);
       }
     });
     panel.onDidDispose(() => {
@@ -76,6 +83,20 @@ export class UnpackHoverPreviewPanel {
       }
     } catch (err: any) {
       vscode.window.showWarningMessage(`无法跳转到 [${tagName}]: ${String(err && err.message || err)}`);
+    }
+  }
+
+  private async openCurrentPreviewSkill(key: string, code: number | undefined): Promise<void> {
+    const node = findSkillTreeNode(this.currentPreview, key, code);
+    if (!node?.fsPath) {
+      vscode.window.showWarningMessage('无法跳转：这个技能节点没有解析到对应的 .skl 文件。');
+      return;
+    }
+    try {
+      const document = await vscode.workspace.openTextDocument(vscode.Uri.file(node.fsPath));
+      await vscode.window.showTextDocument(document, vscode.ViewColumn.One, false);
+    } catch (err: any) {
+      vscode.window.showWarningMessage(`无法打开技能文件: ${String(err && err.message || err)}`);
     }
   }
 
@@ -122,7 +143,11 @@ body {
   grid-template-columns: repeat(2, minmax(280px, 360px));
 }
 .hover-preview.skill-tree {
-  grid-template-columns: minmax(360px, 420px);
+  grid-template-columns: minmax(520px, 1fr);
+  width: 100%;
+}
+.hover-preview.skill {
+  grid-template-columns: minmax(360px, 620px);
 }
 .hover-preview.skill-tree.split {
   grid-template-columns: repeat(2, minmax(340px, 420px));
@@ -260,6 +285,58 @@ body {
   color: #ddd8cc;
   overflow-wrap: anywhere;
 }
+.preview-table-caption {
+  margin: 6px 0 3px;
+  color: #b7b0a4;
+  font-size: 10px;
+}
+.preview-table-caption.clickable {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.preview-table-caption.clickable:hover {
+  color: #d9c27a;
+  text-decoration: underline;
+}
+.preview-table-wrap {
+  max-width: 100%;
+  max-height: 260px;
+  overflow: auto;
+  border: 1px solid #343943;
+  background: rgba(7, 9, 14, .42);
+}
+.preview-table {
+  min-width: 100%;
+  width: max-content;
+  border-collapse: collapse;
+  font-size: 11px;
+  line-height: 1.35;
+}
+.preview-table th,
+.preview-table td {
+  border-right: 1px solid #303641;
+  border-bottom: 1px solid #303641;
+  padding: 2px 6px;
+  white-space: nowrap;
+  text-align: left;
+}
+.preview-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: #d9c27a;
+  background: #171b24;
+}
+.preview-table td {
+  color: #d6dfef;
+}
+.preview-table td:first-child {
+  color: #aaa39a;
+}
 .preview-entry {
   display: grid;
   grid-template-columns: 34px 1fr;
@@ -309,6 +386,94 @@ body {
 }
 .preview-map-point.unresolved { background: #6a6a6a; box-shadow: none; }
 .preview-map-point.common { background: #d8b657; box-shadow: 0 0 5px rgba(216,182,87,.7); }
+.skill-tree-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 10px;
+}
+.skill-tree-card {
+  min-width: 0;
+  border: 1px solid #4f4b41;
+  background:
+    linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px),
+    #0d0f15;
+  background-size: 36px 36px;
+}
+.skill-tree-title {
+  height: 25px;
+  padding: 4px 8px;
+  border-bottom: 1px solid #38352f;
+  color: #d9c27a;
+  background: rgba(0,0,0,.34);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.skill-tree-canvas {
+  position: relative;
+  height: var(--skill-tree-height, 300px);
+  min-height: 220px;
+  overflow: hidden;
+}
+.skill-tree-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.skill-tree-line {
+  stroke: rgba(132, 147, 168, .44);
+  stroke-width: 1.5;
+}
+.skill-tree-node {
+  position: absolute;
+  left: var(--node-left);
+  top: var(--node-top);
+  width: 34px;
+  height: 34px;
+  padding: 1px;
+  transform: translate(-50%, -50%);
+  border: 1px solid #84735a;
+  background: #111;
+  font: inherit;
+  appearance: none;
+  box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 4px 10px rgba(0,0,0,.45);
+}
+.skill-tree-node.resolved {
+  cursor: pointer;
+}
+.skill-tree-node.common {
+  border-color: #d8b657;
+}
+.skill-tree-node.unresolved {
+  border-color: #575757;
+  background: #1b1b1b;
+  color: #8b8b8b;
+}
+.skill-tree-node:hover {
+  outline: 1px solid #e4c66f;
+  z-index: 2;
+}
+.skill-tree-node img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.skill-tree-fallback {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #aaa39a;
+  font-size: 10px;
+  line-height: 1;
+}
 @media (max-width: 820px) {
   .hover-preview.split,
   .hover-preview.skill-tree.split {
@@ -316,9 +481,13 @@ body {
     width: 100%;
   }
   .hover-preview,
+  .hover-preview.skill,
   .hover-preview.skill-tree {
     grid-template-columns: minmax(280px, 1fr);
     width: 100%;
+  }
+  .skill-tree-list {
+    grid-template-columns: minmax(280px, 1fr);
   }
 }
 </style>
@@ -328,6 +497,17 @@ body {
 <script>
 const vscode = acquireVsCodeApi();
 document.addEventListener('click', event => {
+  const skillTarget = event.target && event.target.closest ? event.target.closest('[data-skill-key]') : null;
+  if (skillTarget) {
+    event.preventDefault();
+    const rawCode = Number(skillTarget.getAttribute('data-skill-code') || '');
+    vscode.postMessage({
+      type: 'openSkill',
+      key: skillTarget.getAttribute('data-skill-key') || '',
+      code: Number.isFinite(rawCode) ? rawCode : undefined,
+    });
+    return;
+  }
   const target = event.target && event.target.closest ? event.target.closest('[data-tag-name]') : null;
   if (!target) return;
   event.preventDefault();
@@ -346,6 +526,7 @@ function loadingMarkup(title: string, key: string): string {
 function renderPreview(preview: UnpackHoverPreview): string {
   const classes = [
     'hover-preview',
+    preview.kind === 'skill' ? 'skill' : '',
     preview.kind === 'skillTree' ? 'skill-tree' : '',
   ].filter(Boolean).join(' ');
   return `<div class="${classes}">${renderFrame(preview, preview.sections || [], true)}</div>`;
@@ -361,6 +542,9 @@ function renderFrame(preview: UnpackHoverPreview, sections: UnpackPreviewSection
     if (preview.miniMap?.points?.length) {
       chunks.push(renderMiniMap(preview));
       chunks.push('<div class="preview-sep"></div>');
+    }
+    if (preview.skillTrees?.length) {
+      chunks.push(renderSkillTrees(preview.skillTrees));
     }
   }
   for (const section of sections) chunks.push(renderSection(section));
@@ -399,11 +583,26 @@ function renderSection(section: UnpackPreviewSection): string {
   for (const line of section.lines || []) {
     chunks.push(`<div class="preview-line">${escapeHtml(line)}</div>`);
   }
+  for (const table of section.tables || []) {
+    chunks.push(renderTable(table));
+  }
   for (const entry of section.entries || []) {
     chunks.push(renderEntry(entry));
   }
   chunks.push('</section>');
   return chunks.join('');
+}
+
+function renderTable(table: NonNullable<UnpackPreviewSection['tables']>[number]): string {
+  const tagAttrs = table.tagName ? ` title="${escapeAttr(table.tagName)}" data-tag-name="${escapeAttr(table.tagName)}"` : '';
+  const caption = table.caption
+    ? table.tagName
+      ? `<button type="button" class="preview-table-caption clickable"${tagAttrs}>${escapeHtml(table.caption)}</button>`
+      : `<div class="preview-table-caption">${escapeHtml(table.caption)}</div>`
+    : '';
+  const headers = `<tr>${(table.headers || []).map(value => `<th>${escapeHtml(value || '')}</th>`).join('')}</tr>`;
+  const rows = (table.rows || []).map(row => `<tr>${row.map(value => `<td>${escapeHtml(value || '')}</td>`).join('')}</tr>`).join('');
+  return `${caption}<div class="preview-table-wrap"><table class="preview-table"><thead>${headers}</thead><tbody>${rows}</tbody></table></div>`;
 }
 
 function renderEntry(entry: NonNullable<UnpackPreviewSection['entries']>[number]): string {
@@ -446,6 +645,116 @@ function renderMiniMap(preview: UnpackHoverPreview): string {
   return `<div class="preview-minimap">${dots}</div>`;
 }
 
+function renderSkillTrees(groups: UnpackPreviewSkillTreeGroup[]): string {
+  return `<div class="skill-tree-list">${groups.map(renderSkillTreeGroup).join('')}</div>`;
+}
+
+function renderSkillTreeGroup(group: UnpackPreviewSkillTreeGroup): string {
+  const positioned = skillTreePositions(group.nodes || []);
+  const lines = renderSkillTreeLines(group.nodes || [], positioned);
+  const nodes = (group.nodes || []).map((node, idx) => renderSkillTreeNode(node, positioned.get(nodePositionKey(node, idx)))).join('');
+  const title = group.title || [group.jobLabel, group.branchLabel].filter(Boolean).join(' / ') || '技能树';
+  return `<section class="skill-tree-card">
+<div class="skill-tree-title" title="${escapeAttr(title)}">${escapeHtml(title)}</div>
+<div class="skill-tree-canvas" style="--skill-tree-height:${skillTreeHeight(group.nodes || [])}px">
+<svg class="skill-tree-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${lines}</svg>
+${nodes}
+</div>
+</section>`;
+}
+
+function renderSkillTreeLines(nodes: UnpackPreviewSkillTreeNode[], positions: Map<string, SkillTreePosition>): string {
+  const byCode = new Map<number, SkillTreePosition>();
+  nodes.forEach((node, idx) => {
+    const pos = positions.get(nodePositionKey(node, idx));
+    if (pos && typeof node.code === 'number') byCode.set(node.code, pos);
+  });
+  const lines: string[] = [];
+  nodes.forEach((node, idx) => {
+    const from = positions.get(nodePositionKey(node, idx));
+    if (!from) return;
+    for (const next of node.nextSkills || []) {
+      const to = byCode.get(next);
+      if (!to) continue;
+      lines.push(`<line class="skill-tree-line" x1="${trimNumber(from.left)}" y1="${trimNumber(from.top)}" x2="${trimNumber(to.left)}" y2="${trimNumber(to.top)}"></line>`);
+    }
+  });
+  return lines.join('');
+}
+
+function renderSkillTreeNode(node: UnpackPreviewSkillTreeNode, position: SkillTreePosition | undefined): string {
+  const pos = position || { left: 8, top: 8 };
+  const cls = `skill-tree-node${node.key ? ' resolved' : ''}${node.unresolved ? ' unresolved' : ''}${node.common ? ' common' : ''}`;
+  const label = skillTreeNodeLabel(node);
+  const icon = node.icon?.src
+    ? `<img src="${escapeAttr(node.icon.src)}" alt="">`
+    : `<span class="skill-tree-fallback">${escapeHtml(String(node.code))}</span>`;
+  const style = `--node-left:${trimNumber(pos.left)}%;--node-top:${trimNumber(pos.top)}%`;
+  if (node.key) {
+    return `<button type="button" class="${cls}" style="${style}" title="${escapeAttr(label)}" data-skill-key="${escapeAttr(node.key)}" data-skill-code="${escapeAttr(String(node.code))}">${icon}</button>`;
+  }
+  return `<span class="${cls}" style="${style}" title="${escapeAttr(label)}">${icon}</span>`;
+}
+
+interface SkillTreePosition {
+  left: number;
+  top: number;
+}
+
+function skillTreePositions(nodes: UnpackPreviewSkillTreeNode[]): Map<string, SkillTreePosition> {
+  const positioned = nodes.filter(node => Number.isFinite(node.x) && Number.isFinite(node.y));
+  const xs = positioned.map(node => Number(node.x));
+  const ys = positioned.map(node => Number(node.y));
+  const minX = xs.length ? Math.min(...xs) : 0;
+  const maxX = xs.length ? Math.max(...xs) : 1;
+  const minY = ys.length ? Math.min(...ys) : 0;
+  const maxY = ys.length ? Math.max(...ys) : 1;
+  const spanX = Math.max(1, maxX - minX);
+  const spanY = Math.max(1, maxY - minY);
+  const fallbackColumns = Math.max(1, Math.ceil(Math.sqrt(Math.max(1, nodes.length))));
+  const map = new Map<string, SkillTreePosition>();
+  nodes.forEach((node, idx) => {
+    if (Number.isFinite(node.x) && Number.isFinite(node.y)) {
+      map.set(nodePositionKey(node, idx), {
+        left: 6 + ((Number(node.x) - minX) / spanX) * 88,
+        top: 8 + ((Number(node.y) - minY) / spanY) * 82,
+      });
+      return;
+    }
+    const col = idx % fallbackColumns;
+    const row = Math.floor(idx / fallbackColumns);
+    map.set(nodePositionKey(node, idx), {
+      left: 8 + (col / Math.max(1, fallbackColumns - 1)) * 84,
+      top: 12 + row * 12,
+    });
+  });
+  return map;
+}
+
+function skillTreeHeight(nodes: UnpackPreviewSkillTreeNode[]): number {
+  const ys = nodes.map(node => Number(node.y)).filter(Number.isFinite);
+  if (!ys.length) return Math.min(620, Math.max(260, Math.ceil(nodes.length / 8) * 62));
+  const spanY = Math.max(1, Math.max(...ys) - Math.min(...ys));
+  return Math.min(760, Math.max(260, Math.round(spanY + 120)));
+}
+
+function nodePositionKey(node: UnpackPreviewSkillTreeNode, index: number): string {
+  return `${index}:${node.code}`;
+}
+
+function skillTreeNodeLabel(node: UnpackPreviewSkillTreeNode): string {
+  const parts = [
+    `ID: ${node.code}`,
+    node.name ? `名称: ${node.name}` : undefined,
+    node.key,
+  ].filter((part): part is string => !!part);
+  return parts.join('\n');
+}
+
+function trimNumber(value: number): string {
+  return value.toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
+}
+
 function escapeHtml(value: string): string {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -453,6 +762,18 @@ function escapeHtml(value: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+function findSkillTreeNode(preview: UnpackHoverPreview | undefined, key: string, code: number | undefined): UnpackPreviewSkillTreeNode | undefined {
+  if (!preview?.skillTrees?.length) return undefined;
+  const normalized = key ? normalizeUnpackKey(key) : '';
+  for (const group of preview.skillTrees) {
+    for (const node of group.nodes || []) {
+      if (normalized && node.key && normalizeUnpackKey(node.key) === normalized) return node;
+      if (!normalized && typeof code === 'number' && node.code === code && node.fsPath) return node;
+    }
+  }
+  return undefined;
 }
 
 function escapeAttr(value: string): string {

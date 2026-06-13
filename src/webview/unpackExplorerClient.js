@@ -65,6 +65,17 @@
     previewEl.addEventListener('wheel', event => {
       event.stopPropagation();
     }, { passive: true });
+    previewEl.addEventListener('click', event => {
+      const skillTarget = event.target && event.target.closest ? event.target.closest('[data-skill-key]') : null;
+      if (!skillTarget) return;
+      event.preventDefault();
+      const rawCode = Number(skillTarget.getAttribute('data-skill-code') || '');
+      post('openPreviewSkill', {
+        id: hoverTargetId,
+        key: skillTarget.getAttribute('data-skill-key') || '',
+        code: Number.isFinite(rawCode) ? rawCode : undefined,
+      });
+    });
     document.body.appendChild(previewEl);
     return previewEl;
   }
@@ -655,7 +666,7 @@
   }
 
   function previewClassName(preview, split) {
-    return `hover-preview${preview.kind === 'skillTree' ? ' skill-tree' : ''}${split ? ' split' : ''}`;
+    return `hover-preview${preview.kind === 'skill' ? ' skill' : ''}${preview.kind === 'skillTree' ? ' skill-tree' : ''}${split ? ' split' : ''}`;
   }
 
   function appendPreviewContent(frame, preview, sections, primary) {
@@ -718,6 +729,9 @@
         frame.appendChild(renderMiniMap(preview.miniMap.points));
         frame.appendChild(separator());
       }
+      if (preview.skillTrees?.length) {
+        frame.appendChild(renderSkillTrees(preview.skillTrees));
+      }
     }
     for (const section of sections) {
       frame.appendChild(renderSection(section));
@@ -756,10 +770,50 @@
       line.textContent = lineText;
       wrap.appendChild(line);
     }
+    for (const table of section.tables || []) {
+      wrap.appendChild(renderTable(table));
+    }
     for (const entry of section.entries || []) {
       wrap.appendChild(renderEntry(entry));
     }
     return wrap;
+  }
+
+  function renderTable(table) {
+    const fragment = document.createDocumentFragment();
+    if (table.caption) {
+      const caption = document.createElement('div');
+      caption.className = 'preview-table-caption';
+      caption.textContent = table.caption;
+      fragment.appendChild(caption);
+    }
+    const wrap = document.createElement('div');
+    wrap.className = 'preview-table-wrap';
+    const element = document.createElement('table');
+    element.className = 'preview-table';
+    const thead = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    for (const headerText of table.headers || []) {
+      const th = document.createElement('th');
+      th.textContent = headerText || '';
+      headRow.appendChild(th);
+    }
+    thead.appendChild(headRow);
+    element.appendChild(thead);
+    const tbody = document.createElement('tbody');
+    for (const row of table.rows || []) {
+      const tr = document.createElement('tr');
+      for (const cellText of row || []) {
+        const td = document.createElement('td');
+        td.textContent = cellText || '';
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+    element.appendChild(tbody);
+    wrap.appendChild(element);
+    fragment.appendChild(wrap);
+    return fragment;
   }
 
   function renderEntry(entry) {
@@ -817,6 +871,146 @@
       map.appendChild(dot);
     }
     return map;
+  }
+
+  function renderSkillTrees(groups) {
+    const list = document.createElement('div');
+    list.className = 'skill-tree-list';
+    for (const group of groups || []) {
+      list.appendChild(renderSkillTreeGroup(group));
+    }
+    return list;
+  }
+
+  function renderSkillTreeGroup(group) {
+    const card = document.createElement('section');
+    card.className = 'skill-tree-card';
+    const title = document.createElement('div');
+    title.className = 'skill-tree-title';
+    title.textContent = group.title || [group.jobLabel, group.branchLabel].filter(Boolean).join(' / ') || '技能树';
+    title.title = title.textContent;
+    card.appendChild(title);
+
+    const canvas = document.createElement('div');
+    canvas.className = 'skill-tree-canvas';
+    const nodes = group.nodes || [];
+    canvas.style.setProperty('--skill-tree-height', `${skillTreeHeight(nodes)}px`);
+    const positions = skillTreePositions(nodes);
+    canvas.appendChild(renderSkillTreeLines(nodes, positions));
+    nodes.forEach((node, index) => {
+      canvas.appendChild(renderSkillTreeNode(node, positions.get(nodePositionKey(node, index))));
+    });
+    card.appendChild(canvas);
+    return card;
+  }
+
+  function renderSkillTreeLines(nodes, positions) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'skill-tree-lines');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('aria-hidden', 'true');
+    const byCode = new Map();
+    nodes.forEach((node, index) => {
+      const pos = positions.get(nodePositionKey(node, index));
+      if (pos && typeof node.code === 'number') byCode.set(node.code, pos);
+    });
+    nodes.forEach((node, index) => {
+      const from = positions.get(nodePositionKey(node, index));
+      if (!from) return;
+      for (const next of node.nextSkills || []) {
+        const to = byCode.get(next);
+        if (!to) continue;
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('class', 'skill-tree-line');
+        line.setAttribute('x1', trimNumber(from.left));
+        line.setAttribute('y1', trimNumber(from.top));
+        line.setAttribute('x2', trimNumber(to.left));
+        line.setAttribute('y2', trimNumber(to.top));
+        svg.appendChild(line);
+      }
+    });
+    return svg;
+  }
+
+  function renderSkillTreeNode(node, position) {
+    const element = node.key ? document.createElement('button') : document.createElement('span');
+    element.className = `skill-tree-node${node.key ? ' resolved' : ''}${node.unresolved ? ' unresolved' : ''}${node.common ? ' common' : ''}`;
+    const pos = position || { left: 8, top: 8 };
+    element.style.setProperty('--node-left', `${trimNumber(pos.left)}%`);
+    element.style.setProperty('--node-top', `${trimNumber(pos.top)}%`);
+    element.title = skillTreeNodeLabel(node);
+    if (node.key) {
+      element.type = 'button';
+      element.dataset.skillKey = node.key;
+      element.dataset.skillCode = String(node.code);
+    }
+    if (node.icon?.src) {
+      const img = document.createElement('img');
+      img.src = node.icon.src;
+      img.alt = '';
+      img.draggable = false;
+      element.appendChild(img);
+    } else {
+      const fallback = document.createElement('span');
+      fallback.className = 'skill-tree-fallback';
+      fallback.textContent = String(node.code);
+      element.appendChild(fallback);
+    }
+    return element;
+  }
+
+  function skillTreePositions(nodes) {
+    const positioned = (nodes || []).filter(node => Number.isFinite(Number(node.x)) && Number.isFinite(Number(node.y)));
+    const xs = positioned.map(node => Number(node.x));
+    const ys = positioned.map(node => Number(node.y));
+    const minX = xs.length ? Math.min(...xs) : 0;
+    const maxX = xs.length ? Math.max(...xs) : 1;
+    const minY = ys.length ? Math.min(...ys) : 0;
+    const maxY = ys.length ? Math.max(...ys) : 1;
+    const spanX = Math.max(1, maxX - minX);
+    const spanY = Math.max(1, maxY - minY);
+    const fallbackColumns = Math.max(1, Math.ceil(Math.sqrt(Math.max(1, (nodes || []).length))));
+    const map = new Map();
+    (nodes || []).forEach((node, index) => {
+      if (Number.isFinite(Number(node.x)) && Number.isFinite(Number(node.y))) {
+        map.set(nodePositionKey(node, index), {
+          left: 6 + ((Number(node.x) - minX) / spanX) * 88,
+          top: 8 + ((Number(node.y) - minY) / spanY) * 82,
+        });
+        return;
+      }
+      const col = index % fallbackColumns;
+      const row = Math.floor(index / fallbackColumns);
+      map.set(nodePositionKey(node, index), {
+        left: 8 + (col / Math.max(1, fallbackColumns - 1)) * 84,
+        top: 12 + row * 12,
+      });
+    });
+    return map;
+  }
+
+  function skillTreeHeight(nodes) {
+    const ys = (nodes || []).map(node => Number(node.y)).filter(Number.isFinite);
+    if (!ys.length) return Math.min(620, Math.max(240, Math.ceil((nodes || []).length / 8) * 62));
+    const spanY = Math.max(1, Math.max(...ys) - Math.min(...ys));
+    return Math.min(720, Math.max(240, Math.round(spanY + 120)));
+  }
+
+  function nodePositionKey(node, index) {
+    return `${index}:${node.code}`;
+  }
+
+  function skillTreeNodeLabel(node) {
+    return [
+      `ID: ${node.code}`,
+      node.name ? `名称: ${node.name}` : '',
+      node.key || '',
+    ].filter(Boolean).join('\n');
+  }
+
+  function trimNumber(value) {
+    return Number(value).toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
   }
 
   function rowContentRight(element) {

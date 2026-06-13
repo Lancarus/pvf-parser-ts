@@ -1817,6 +1817,7 @@
     "watch": "tsc -watch -p ./",
     "postcompile": "node scripts/copy-script-tags.cjs && node scripts/copy-webview.cjs",
     "sync:tab-comments": "node scripts/sync-tab-comments.cjs",
+    "generate:skill-data-parameters": "node scripts/generate-skill-data-parameters.cjs",
     "build:webview": "node scripts/build-webview.mjs",
     "build:all": "npm run compile && npm run postcompile && npm run build:webview",
     "vscode:prepublish": "npm run build:all -- --prod",

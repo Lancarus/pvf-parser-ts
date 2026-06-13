@@ -120,9 +120,9 @@
     {
       "name": "skill fitness growtype",
       "title": "为职业赋予这个技能",
-      "description": "为职业赋予这个技能，需搭配代码：[growtype maximum level]\n                                    //不然的话就光是有技能而无法学得技能\n\n比如【崩山击】\n[skill fitness growtype]\n\t0\t1\t2\t3\t4\n[/skill fitness growtype]\n代表鬼剑士全部职业都可以学得\n\n再比如，还是【崩山击】\n[skill fitness growtype]\n\t0\t2\t4\n[/skill fitness growtype]\n代表只有鬼剑士、鬼泣、阿修罗可以学得\n\n输入数字可为职业赋予此技能\n0男鬼剑士 1剑魂            2鬼泣         3狂战士      4阿修罗\n0女格斗     1女气功        2女散打     3女街霸      4女柔道家\n0女魔法师 1女元素师     2召唤师     3战斗法师  4魔道学者\n0男圣职者 1男圣骑士     2蓝拳圣使 3男驱魔师   4复仇者\n0神枪手     1漫游枪手     2枪炮师     3机械师      4弹药专家\n0暗夜使者 1刺客            2死灵术士  3忍者         4影舞者\n\n//赋予技能之后，还需要将技能加入目标职业的技能树坐标\nsp技能树路径：clientonly/skilltree/职业_sp.co\ntp技能树路径：clientonly/skilltree/职业_tp.co",
+      "description": "为职业赋予这个技能，需搭配代码：[growtype maximum level]\n                                    //不然的话就光是有技能而无法学得技能\n\n比如【崩山击】\n[skill fitness growtype]\n\t0\t1\t2\t3\t4\n[/skill fitness growtype]\n代表鬼剑士全部职业都可以学得\n\n再比如，还是【崩山击】\n[skill fitness growtype]\n\t0\t2\t4\n[/skill fitness growtype]\n代表只有鬼剑士、鬼泣、阿修罗可以学得\n\n输入数字可为职业赋予此技能\n- 0男鬼剑士 1剑魂            2鬼泣         3狂战士      4阿修罗\n- 0女格斗     1女气功        2女散打     3女街霸      4女柔道家\n- 0女魔法师 1女元素师     2召唤师     3战斗法师  4魔道学者\n- 0男圣职者 1男圣骑士     2蓝拳圣使 3男驱魔师   4复仇者\n- 0神枪手     1漫游枪手     2枪炮师     3机械师      4弹药专家\n- 0暗夜使者 1刺客            2死灵术士  3忍者         4影舞者\n\n//赋予技能之后，还需要将技能加入目标职业的技能树坐标\nsp技能树路径：clientonly/skilltree/职业_sp.co\ntp技能树路径：clientonly/skilltree/职业_tp.co",
       "closing": true,
-      "authors": "Xiti Fox",
+      "authors": "Xiti Fox|Lancarus",
       "officialDescription": "#### 官方示例: skillsample.skl\n\n```pvf\n[skill fitness growtype] // 注册可正式学习技能的成长类型编号。\n3\n[/skill fitness growtype]\n```",
       "officialAuthors": "官方PVF"
     },
@@ -447,37 +447,33 @@
     },
     {
       "name": "dungeon",
-      "title": "在副本接口处代表",
-      "description": "在副本接口处代表\n第一个数为副本ID\n第二个为任务ID 假如是-1就代表该副本无前置任务\n如果不为-1 则代表需完成指定任务ID才可开启该副本",
+      "title": "地下城中的效果",
       "closing": true,
-      "authors": "白糖-193284563",
+      "authors": "白糖-193284563|Lancarus",
       "officialDescription": "#### 官方示例: skillsample.skl\n\n```pvf\n[dungeon]\n// 此标签内的数值仅在地城中适用。若没有此类标签，则默认在地城中适用。\n[/dungeon]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "pvp",
-      "title": "模式中的专属技能数据",
-      "description": "PVP模式中的专属技能数据\n\n全称【Player Vs Player】（玩家与玩家对战）",
+      "title": "决斗场中的效果",
       "closing": true,
-      "authors": "Xiti Fox",
+      "authors": "Xiti Fox|Lancarus",
       "officialDescription": "#### 官方示例: skillsample.skl\n\n```pvf\n[pvp]\n// 此标签内的数值仅在决斗场中适用。\n[/pvp]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "death tower",
-      "title": "死亡之塔覆盖块",
-      "description": "死亡之塔覆盖块",
+      "title": "死亡之塔中的效果",
       "closing": true,
-      "authors": "lostluna1",
+      "authors": "lostluna1|Lancarus",
       "officialDescription": "#### 官方示例: skillsample.skl\n\n```pvf\n[death tower]\n// 此标签内的数值在死亡之塔中适用。\n[/death tower]\n```",
       "officialAuthors": "官方PVF"
     },
     {
       "name": "warroom",
-      "title": "战场覆盖块",
-      "description": "战场覆盖块",
+      "title": "战场中的效果",
       "closing": true,
-      "authors": "lostluna1",
+      "authors": "lostluna1|Lancarus",
       "officialDescription": "#### 官方示例: skillsample.skl\n\n```pvf\n[warroom]\n// 此标签内的数值仅在战争房间中适用。\n[/warroom]\n```",
       "officialAuthors": "官方PVF"
     },

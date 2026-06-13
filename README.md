@@ -121,7 +121,7 @@ creature     (NPC卖的宠物)
 - 在 VS Code 原生 Explorer 中打开位于已配置解包根目录下的可预览文件。
 - 将 `pvf.unpackExplorer.hoverPreview.location` 改为 `editorPanel` 后悬停触发。
 
-当 `pvf.unpackExplorer.preview.openWithTextEditor` 为 `true` 时，打开可预览文件会同时显示原始文本编辑器和右侧 DNF-like 富预览面板。富预览会按类型分别渲染，不把道具、商店、任务或技能强行套用装备/套装模板；技能树预览会显示类型、职业、节点列表和基于 `[icon pos]` 的简化 mini-map。
+当 `pvf.unpackExplorer.preview.openWithTextEditor` 为 `true` 时，打开可预览文件会同时显示原始文本编辑器和右侧 DNF-like 富预览面板。富预览会按类型分别渲染，不把道具、商店、任务或技能强行套用装备/套装模板；技能树预览会按每个 `[character job]` 分框，解析技能 `.skl` 图标后按 `[icon pos]` 绘制技能树，悬停节点显示技能 ID 和名称，点击节点可打开对应 `.skl` 文件。
 
 保存当前预览文件后，插件会失效该文件的预览缓存并刷新右侧面板。面板刷新会等待当前文件图标解析完成或失败后再渲染，所以已配置 NPK 根目录时，保存后的装备、道具、任务和技能预览仍应保留图标；未配置 NPK 根目录时文本预览仍可用，只是图标区域为空。
 
