@@ -19,7 +19,7 @@ export class UnpackHoverPreviewPanel {
     this.currentPreview = preview;
     panel.title = preview.title ? `预览: ${preview.title}` : '解包预览';
     const aniScriptUri = this.aniPreviewScriptUri(panel.webview);
-    const body = preview.kind === 'ani' && preview.ani?.timeline?.length
+    const body = (preview.kind === 'ani' || preview.kind === 'als') && preview.ani?.timeline?.length
       ? renderAniPreview(preview, aniScriptUri)
       : renderPreview(preview, aniScriptUri);
     panel.webview.html = this.html(panel.webview, body);

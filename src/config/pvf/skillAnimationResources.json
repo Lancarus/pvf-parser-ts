@@ -1,7 +1,7 @@
 {
   "$schema": "./skillAnimationResources.schema.json",
   "generatedFrom": "g:/dnfsifu/develop/pvf-jie",
-  "generatedAt": "2026-06-14T18:27:53.303Z",
+  "generatedAt": "2026-06-15T12:08:36.647Z",
   "skillCount": 1986,
   "mappedSkillCount": 575,
   "jobs": {
@@ -1553,12 +1553,12 @@
             },
             "skill/demonicswordman/comboskill/grandwave.skl": {
               "obj": [
-                "passiveobject/character/swordman/grandwave.obj"
+                "passiveobject/character/swordman/grandwave_ds.obj"
               ]
             },
             "skill/demonicswordman/comboskill/normalwave.skl": {
               "obj": [
-                "passiveobject/character/swordman/normalwave.obj"
+                "passiveobject/character/swordman/normalwave_ds.obj"
               ],
               "img": [
                 "character/swordman/effect/normalwave1.img",
@@ -1567,23 +1567,22 @@
             },
             "skill/demonicswordman/comboskill/reflectguard.skl": {
               "ani": [
-                "character/swordman/animation/reflectguard.ani",
                 "character/swordman/dsanimation/reflectguard.ani"
               ]
             },
             "skill/demonicswordman/comboskill/shockwavearea.skl": {
               "obj": [
-                "passiveobject/character/swordman/shockwavearea.obj"
+                "passiveobject/character/swordman/shockwavearea_ds.obj"
               ]
             },
             "skill/demonicswordman/comboskill/vaneslash.skl": {
               "obj": [
-                "passiveobject/character/swordman/vaneslash.obj"
+                "passiveobject/character/swordman/vaneslash_ds.obj"
               ]
             },
             "skill/demonicswordman/comboskill/wavespinarea.skl": {
               "obj": [
-                "passiveobject/character/swordman/wavespinarea.obj"
+                "passiveobject/character/swordman/wavespinarea_ds.obj"
               ]
             },
             "skill/demonicswordman/conversion.skl": {},
@@ -1708,7 +1707,6 @@
           "skills": {
             "skill/demonicswordman/ashenfork.skl": {
               "atk": [
-                "character/swordman/attackinfo/ashenfork.atk",
                 "character/swordman/dsattackinfo/ashenfork.atk"
               ],
               "img": [
@@ -1735,11 +1733,9 @@
             "skill/demonicswordman/comboskill/chargecrash.skl": {},
             "skill/demonicswordman/comboskill/flowmindone.skl": {
               "ani": [
-                "character/swordman/animation/flowmindone.ani",
                 "character/swordman/dsanimation/flowmindone.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/flowmindone.atk",
                 "character/swordman/dsattackinfo/flowmindone.atk"
               ]
             },
@@ -1749,14 +1745,11 @@
             "skill/demonicswordman/comboskill/jumpattackmulti.skl": {},
             "skill/demonicswordman/comboskill/momentaryslash.skl": {
               "ani": [
-                "character/swordman/animation/momentaryslash.[pvp].ani",
-                "character/swordman/animation/momentaryslash.ani",
                 "character/swordman/dsanimation/momentaryslash.[pvp].ani",
                 "character/swordman/dsanimation/momentaryslash.ani",
                 "character/swordman/effect/animation/momentaryslash.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/momentaryslash.atk",
                 "character/swordman/dsattackinfo/momentaryslash.atk"
               ],
               "img": [
@@ -1767,17 +1760,14 @@
             "skill/demonicswordman/comboskill/tripleslash.skl": {},
             "skill/demonicswordman/comboskill/upperslash.skl": {
               "atk": [
-                "character/swordman/attackinfo/upperslash.atk",
                 "character/swordman/dsattackinfo/upperslash.atk"
               ]
             },
             "skill/demonicswordman/dashattackmultihit.skl": {
               "ani": [
-                "character/swordman/animation/dashattackmultihit.ani",
                 "character/swordman/dsanimation/dashattackmultihit.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/dashattackmultihit.atk",
                 "character/swordman/dsattackinfo/dashattackmultihit.atk"
               ]
             },
@@ -1793,7 +1783,6 @@
             "skill/demonicswordman/flowmindtwoex.skl": {},
             "skill/demonicswordman/guard.skl": {
               "ani": [
-                "character/swordman/animation/guard.ani",
                 "character/swordman/dsanimation/guard.ani"
               ]
             },
@@ -1801,11 +1790,9 @@
             "skill/demonicswordman/heavyswordmastery.skl": {},
             "skill/demonicswordman/hitback.skl": {
               "ani": [
-                "character/swordman/animation/hitback.ani",
                 "character/swordman/dsanimation/hitback.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/hitback.atk",
                 "character/swordman/dsattackinfo/hitback.atk"
               ]
             },
@@ -1815,12 +1802,10 @@
             "skill/demonicswordman/lightswordmastery.skl": {},
             "skill/demonicswordman/momentaryslashex.skl": {
               "ani": [
-                "character/swordman/animation/momentaryslashex.ani",
-                "character/swordman/dsanimation/momentaryslashex.ani"
+                "character/swordman/animation/momentaryslashex.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/momentaryslashex.atk",
-                "character/swordman/dsattackinfo/momentaryslashex.atk"
+                "character/swordman/attackinfo/momentaryslashex.atk"
               ],
               "img": [
                 "character/swordman/effect/momentaryslashblade.img"
@@ -1859,42 +1844,44 @@
             "skill/demonicswordman/cancelhopsmash.skl": {},
             "skill/demonicswordman/comboskill/bloodblast.skl": {
               "obj": [
-                "passiveobject/character/swordman/blastblood.obj"
+                "passiveobject/character/swordman/blastbloodorigin_ds.obj"
               ]
             },
             "skill/demonicswordman/comboskill/bloodsword.skl": {
-              "obj": [
-                "passiveobject/character/swordman/bloodswordexplosion.obj"
+              "ani": [
+                "character/swordman/dsanimation/bloodswordmake.ani",
+                "character/swordman/dsanimation/bloodswordcharge.ani"
+              ],
+              "als": [
+                "character/swordman/dsanimation/bloodswordmake.ani.als",
+                "character/swordman/dsanimation/bloodswordcharge.ani.als"
               ]
             },
             "skill/demonicswordman/comboskill/bloodyrave.skl": {
               "obj": [
-                "passiveobject/character/swordman/bloodyrave.obj"
+                "passiveobject/character/swordman/bloodyrave_ds.obj"
               ]
             },
             "skill/demonicswordman/comboskill/gorecross.skl": {
               "obj": [
-                "passiveobject/character/swordman/gorecross.obj"
+                "passiveobject/character/swordman/gorecross_ds.obj"
               ]
             },
             "skill/demonicswordman/comboskill/grabblastblood.skl": {
               "obj": [
-                "passiveobject/character/swordman/grabblastblood.obj"
+                "passiveobject/character/swordman/grabblastblood_ds.obj"
               ]
             },
             "skill/demonicswordman/comboskill/hopsmash.skl": {
               "ani": [
-                "character/swordman/animation/hopsmash.ani",
                 "character/swordman/dsanimation/hopsmash.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/hopsmash.atk",
                 "character/swordman/dsattackinfo/hopsmash.atk"
               ]
             },
             "skill/demonicswordman/comboskill/outragebreak.skl": {
               "atk": [
-                "character/swordman/attackinfo/outragebreak.atk",
                 "character/swordman/dsattackinfo/outragebreak.atk"
               ]
             },
@@ -1952,24 +1939,22 @@
             "skill/demonicswordman/canceltriplestab.skl": {},
             "skill/demonicswordman/comboskill/ghostsidewind.skl": {
               "ani": [
-                "character/swordman/animation/ghostsidewind.ani",
                 "character/swordman/dsanimation/ghostsidewind.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/ghostsidewind.atk",
                 "character/swordman/dsattackinfo/ghostsidewind.atk"
               ]
             },
             "skill/demonicswordman/comboskill/ghoststepslash.skl": {
               "obj": [
-                "passiveobject/character/swordman/ghoststepslash.obj"
+                "passiveobject/character/swordman/ghoststepslash_ds.obj"
               ]
             },
             "skill/demonicswordman/comboskill/kalla.skl": {},
             "skill/demonicswordman/comboskill/moonlightslash.skl": {},
             "skill/demonicswordman/comboskill/tombstonerain.skl": {
               "obj": [
-                "passiveobject/character/swordman/tombstonerain.obj"
+                "passiveobject/character/swordman/tombstonerain_ds.obj"
               ],
               "img": [
                 "character/swordman/effect/tombstone.img",
@@ -1980,11 +1965,9 @@
             },
             "skill/demonicswordman/comboskill/triplestab.skl": {
               "ani": [
-                "character/swordman/animation/triplestab.ani",
                 "character/swordman/dsanimation/triplestab.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/triplestab.atk",
                 "character/swordman/dsattackinfo/triplestab.atk"
               ]
             },
@@ -2015,11 +1998,9 @@
             "skill/demonicswordman/ghoststepslashex.skl": {},
             "skill/demonicswordman/hardattack.skl": {
               "ani": [
-                "character/swordman/animation/hardattack.ani",
                 "character/swordman/dsanimation/hardattack.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/hardattack.atk",
                 "character/swordman/dsattackinfo/hardattack.atk"
               ]
             },
@@ -2047,12 +2028,10 @@
             "skill/demonicswordman/moonlightslashex.skl": {},
             "skill/demonicswordman/moonlightslashfull.skl": {
               "ani": [
-                "character/swordman/animation/moonlightslashfull.ani",
                 "character/swordman/dsanimation/moonlightslashfull.ani",
                 "character/swordman/effect/animation/moonlightslashfull.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/moonlightslashfull.atk",
                 "character/swordman/dsattackinfo/moonlightslashfull.atk"
               ]
             },
@@ -4973,8 +4952,7 @@
             "skill/swordman/normalwaveex.skl": {},
             "skill/swordman/reflectguard.skl": {
               "ani": [
-                "character/swordman/animation/reflectguard.ani",
-                "character/swordman/dsanimation/reflectguard.ani"
+                "character/swordman/animation/reflectguard.ani"
               ]
             },
             "skill/swordman/reflectguardex.skl": {},
@@ -5032,8 +5010,7 @@
           "skills": {
             "skill/swordman/ashenfork.skl": {
               "atk": [
-                "character/swordman/attackinfo/ashenfork.atk",
-                "character/swordman/dsattackinfo/ashenfork.atk"
+                "character/swordman/attackinfo/ashenfork.atk"
               ],
               "img": [
                 "character/swordman/effect/jumpattackhold.img"
@@ -5059,12 +5036,10 @@
             "skill/swordman/chargecrashexp.skl": {},
             "skill/swordman/dashattackmultihit.skl": {
               "ani": [
-                "character/swordman/animation/dashattackmultihit.ani",
-                "character/swordman/dsanimation/dashattackmultihit.ani"
+                "character/swordman/animation/dashattackmultihit.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/dashattackmultihit.atk",
-                "character/swordman/dsattackinfo/dashattackmultihit.atk"
+                "character/swordman/attackinfo/dashattackmultihit.atk"
               ]
             },
             "skill/swordman/dashattackmultihitex.skl": {},
@@ -5075,12 +5050,10 @@
             "skill/swordman/flowmind.skl": {},
             "skill/swordman/flowmindone.skl": {
               "ani": [
-                "character/swordman/animation/flowmindone.ani",
-                "character/swordman/dsanimation/flowmindone.ani"
+                "character/swordman/animation/flowmindone.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/flowmindone.atk",
-                "character/swordman/dsattackinfo/flowmindone.atk"
+                "character/swordman/attackinfo/flowmindone.atk"
               ]
             },
             "skill/swordman/flowmindoneex.skl": {},
@@ -5092,20 +5065,17 @@
             "skill/swordman/ghost/ghostsoulrelease.skl": {},
             "skill/swordman/guard.skl": {
               "ani": [
-                "character/swordman/animation/guard.ani",
-                "character/swordman/dsanimation/guard.ani"
+                "character/swordman/animation/guard.ani"
               ]
             },
             "skill/swordman/guardex.skl": {},
             "skill/swordman/heavyswordmastery.skl": {},
             "skill/swordman/hitback.skl": {
               "ani": [
-                "character/swordman/animation/hitback.ani",
-                "character/swordman/dsanimation/hitback.ani"
+                "character/swordman/animation/hitback.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/hitback.atk",
-                "character/swordman/dsattackinfo/hitback.atk"
+                "character/swordman/attackinfo/hitback.atk"
               ]
             },
             "skill/swordman/hitbackex.skl": {},
@@ -5118,13 +5088,10 @@
               "ani": [
                 "character/swordman/animation/momentaryslash.[pvp].ani",
                 "character/swordman/animation/momentaryslash.ani",
-                "character/swordman/dsanimation/momentaryslash.[pvp].ani",
-                "character/swordman/dsanimation/momentaryslash.ani",
                 "character/swordman/effect/animation/momentaryslash.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/momentaryslash.atk",
-                "character/swordman/dsattackinfo/momentaryslash.atk"
+                "character/swordman/attackinfo/momentaryslash.atk"
               ],
               "img": [
                 "character/swordman/effect/momentaryslashblade.img"
@@ -5132,12 +5099,10 @@
             },
             "skill/swordman/momentaryslashex.skl": {
               "ani": [
-                "character/swordman/animation/momentaryslashex.ani",
-                "character/swordman/dsanimation/momentaryslashex.ani"
+                "character/swordman/animation/momentaryslashex.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/momentaryslashex.atk",
-                "character/swordman/dsattackinfo/momentaryslashex.atk"
+                "character/swordman/attackinfo/momentaryslashex.atk"
               ],
               "img": [
                 "character/swordman/effect/momentaryslashblade.img"
@@ -5156,8 +5121,7 @@
             "skill/swordman/tripleslashex.skl": {},
             "skill/swordman/upperslash.skl": {
               "atk": [
-                "character/swordman/attackinfo/upperslash.atk",
-                "character/swordman/dsattackinfo/upperslash.atk"
+                "character/swordman/attackinfo/upperslash.atk"
               ]
             },
             "skill/swordman/upperslashex.skl": {},
@@ -5180,8 +5144,13 @@
             },
             "skill/swordman/bloodblastexp.skl": {},
             "skill/swordman/bloodsword.skl": {
-              "obj": [
-                "passiveobject/character/swordman/bloodswordexplosion.obj"
+              "ani": [
+                "character/swordman/animation/bloodswordmake.ani",
+                "character/swordman/animation/bloodswordcharge.ani"
+              ],
+              "als": [
+                "character/swordman/animation/bloodswordmake.ani.als",
+                "character/swordman/animation/bloodswordcharge.ani.als"
               ]
             },
             "skill/swordman/bloodswordex.skl": {},
@@ -5225,19 +5194,16 @@
             "skill/swordman/hellbenter.skl": {},
             "skill/swordman/hopsmash.skl": {
               "ani": [
-                "character/swordman/animation/hopsmash.ani",
-                "character/swordman/dsanimation/hopsmash.ani"
+                "character/swordman/animation/hopsmash.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/hopsmash.atk",
-                "character/swordman/dsattackinfo/hopsmash.atk"
+                "character/swordman/attackinfo/hopsmash.atk"
               ]
             },
             "skill/swordman/hopsmashex.skl": {},
             "skill/swordman/outragebreak.skl": {
               "atk": [
-                "character/swordman/attackinfo/outragebreak.atk",
-                "character/swordman/dsattackinfo/outragebreak.atk"
+                "character/swordman/attackinfo/outragebreak.atk"
               ]
             },
             "skill/swordman/outragebreakex.skl": {},
@@ -5299,12 +5265,10 @@
             "skill/swordman/ghostpowerup.skl": {},
             "skill/swordman/ghostsidewind.skl": {
               "ani": [
-                "character/swordman/animation/ghostsidewind.ani",
-                "character/swordman/dsanimation/ghostsidewind.ani"
+                "character/swordman/animation/ghostsidewind.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/ghostsidewind.atk",
-                "character/swordman/dsattackinfo/ghostsidewind.atk"
+                "character/swordman/attackinfo/ghostsidewind.atk"
               ]
             },
             "skill/swordman/ghostsidewindex.skl": {},
@@ -5318,12 +5282,10 @@
             "skill/swordman/ghoststepslashex.skl": {},
             "skill/swordman/hardattack.skl": {
               "ani": [
-                "character/swordman/animation/hardattack.ani",
-                "character/swordman/dsanimation/hardattack.ani"
+                "character/swordman/animation/hardattack.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/hardattack.atk",
-                "character/swordman/dsattackinfo/hardattack.atk"
+                "character/swordman/attackinfo/hardattack.atk"
               ]
             },
             "skill/swordman/hardattackcharge.skl": {},
@@ -5353,12 +5315,10 @@
             "skill/swordman/moonlightslashfull.skl": {
               "ani": [
                 "character/swordman/animation/moonlightslashfull.ani",
-                "character/swordman/dsanimation/moonlightslashfull.ani",
                 "character/swordman/effect/animation/moonlightslashfull.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/moonlightslashfull.atk",
-                "character/swordman/dsattackinfo/moonlightslashfull.atk"
+                "character/swordman/attackinfo/moonlightslashfull.atk"
               ]
             },
             "skill/swordman/saya.skl": {
@@ -5410,12 +5370,10 @@
             },
             "skill/swordman/triplestab.skl": {
               "ani": [
-                "character/swordman/animation/triplestab.ani",
-                "character/swordman/dsanimation/triplestab.ani"
+                "character/swordman/animation/triplestab.ani"
               ],
               "atk": [
-                "character/swordman/attackinfo/triplestab.atk",
-                "character/swordman/dsattackinfo/triplestab.atk"
+                "character/swordman/attackinfo/triplestab.atk"
               ]
             },
             "skill/swordman/triplestabex.skl": {}

@@ -8,8 +8,8 @@ const outPath = path.join(repoRoot, 'src', 'config', 'pvf', 'skillAnimationResou
 const PASSIVEOBJECT_LST = 'passiveobject/passiveobject.lst';
 
 const SKILL_JOB_RESOURCES = {
-  swordman: { character: 'swordman', animationDirs: ['animation', 'dsanimation'], sqrJobs: ['swordman'] },
-  demonicswordman: { character: 'swordman', animationDirs: ['dsanimation', 'animation'], sqrJobs: ['demonicswordman', 'swordman'] },
+  swordman: { character: 'swordman', animationDirs: ['animation'], sqrJobs: ['swordman'] },
+  demonicswordman: { character: 'swordman', animationDirs: ['dsanimation'], sqrJobs: ['demonicswordman', 'swordman'] },
   fighter: { character: 'fighter', animationDirs: ['animation'], sqrJobs: ['fighter'] },
   atfighter: { character: 'fighter', animationDirs: ['atanimation', 'animation'], sqrJobs: ['atfighter', 'fighter'] },
   gunner: { character: 'gunner', animationDirs: ['animation'], sqrJobs: ['gunner'] },
@@ -19,6 +19,33 @@ const SKILL_JOB_RESOURCES = {
   creatormage: { character: 'mage', animationDirs: ['creatoranimation', 'animation'], sqrJobs: ['creatormage', 'mage'] },
   priest: { character: 'priest', animationDirs: ['animation'], sqrJobs: ['priest', 'new_priest'] },
   thief: { character: 'thief', animationDirs: ['animation'], sqrJobs: ['thief'] },
+};
+
+const DARK_SWORDMAN_OBJ_ALIASES = {
+  bloodblast: ['blastbloodorigin_ds', 'blastblood_ds'],
+};
+
+const SKILL_RESOURCE_OVERRIDES = {
+  'swordman:bloodsword': {
+    ani: [
+      'character/swordman/animation/bloodswordmake.ani',
+      'character/swordman/animation/bloodswordcharge.ani',
+    ],
+    als: [
+      'character/swordman/animation/bloodswordmake.ani.als',
+      'character/swordman/animation/bloodswordcharge.ani.als',
+    ],
+  },
+  'demonicswordman:bloodsword': {
+    ani: [
+      'character/swordman/dsanimation/bloodswordmake.ani',
+      'character/swordman/dsanimation/bloodswordcharge.ani',
+    ],
+    als: [
+      'character/swordman/dsanimation/bloodswordmake.ani.als',
+      'character/swordman/dsanimation/bloodswordcharge.ani.als',
+    ],
+  },
 };
 
 function parseEnv(text) {
@@ -103,25 +130,46 @@ function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function skillResourceNames(job, baseName) {
+function isSwordmanFamily(job) {
+  return job === 'swordman' || job === 'demonicswordman';
+}
+
+function isSwordmanOriginalExSkill(job, baseName) {
+  return isSwordmanFamily(job) && !/_ds$/i.test(baseName) && /ex$/i.test(baseName);
+}
+
+function isDarkSwordmanSkill(job, baseName) {
+  return (job === 'demonicswordman' && !isSwordmanOriginalExSkill(job, baseName))
+    || (job === 'swordman' && /_ds$/i.test(baseName));
+}
+
+function skillResourceBaseName(job, baseName) {
+  if (job === 'swordman' && /_ds$/i.test(baseName)) return baseName.replace(/_ds$/i, '');
+  return baseName;
+}
+
+function skillResourceNames(job, baseName, options = {}) {
   const names = [];
   const add = (value) => {
     const normalized = String(value || '').toLowerCase().trim();
     if (normalized && !names.includes(normalized)) names.push(normalized);
   };
+  if (options.darkSwordman) {
+    add(`${baseName}_ds`);
+    for (const alias of DARK_SWORDMAN_OBJ_ALIASES[baseName] || []) add(alias);
+  }
   add(baseName);
   const bloodBlast = /^bloodblast(.*)$/i.exec(baseName);
-  if ((job === 'swordman' || job === 'demonicswordman') && bloodBlast) add(`blastblood${bloodBlast[1] || ''}`);
+  if (isSwordmanFamily(job) && bloodBlast) add(`blastblood${bloodBlast[1] || ''}`);
   return names;
 }
 
-function skillObjectResourceNames(job, baseName) {
-  const names = skillResourceNames(job, baseName).slice();
+function skillObjectResourceNames(job, baseName, options = {}) {
+  const names = skillResourceNames(job, baseName, options).slice();
   const add = (value) => {
     const normalized = String(value || '').toLowerCase().trim();
     if (normalized && !names.includes(normalized)) names.push(normalized);
   };
-  if ((job === 'swordman' || job === 'demonicswordman') && baseName === 'bloodsword') add('bloodswordexplosion');
   return names;
 }
 
@@ -129,14 +177,21 @@ function skillInfo(skillKey) {
   const normalized = normalizeKey(skillKey);
   const match = /^skill\/([^/]+)\/(.+)\.skl$/i.exec(normalized);
   if (!match) return undefined;
-  const job = match[1].toLowerCase();
+  const sourceJob = match[1].toLowerCase();
   const baseName = path.posix.basename(match[2]).toLowerCase();
+  const darkSwordman = isDarkSwordmanSkill(sourceJob, baseName);
+  const swordmanOriginalEx = isSwordmanOriginalExSkill(sourceJob, baseName);
+  const job = sourceJob === 'swordman' && darkSwordman ? 'demonicswordman' : sourceJob;
+  const resourceBaseName = skillResourceBaseName(sourceJob, baseName);
   const fallback = { character: job, animationDirs: ['animation'], sqrJobs: [job] };
   return {
     job,
-    baseName,
-    resourceNames: skillResourceNames(job, baseName),
-    objNames: skillObjectResourceNames(job, baseName),
+    sourceJob,
+    baseName: resourceBaseName,
+    darkSwordman,
+    swordmanOriginalEx,
+    resourceNames: skillResourceNames(job, resourceBaseName, { darkSwordman }),
+    objNames: skillObjectResourceNames(job, resourceBaseName, { darkSwordman }),
     jobResource: SKILL_JOB_RESOURCES[job] || fallback,
   };
 }
@@ -161,6 +216,25 @@ function exactStem(key, names) {
   return names.includes(stem);
 }
 
+function resourceStem(key, suffix) {
+  return path.posix.basename(normalizeKey(key), suffix).replace(/\.\[pvp\]$/i, '');
+}
+
+function bestStemMatches(keys, names, suffix) {
+  let bestRank = Infinity;
+  const out = [];
+  for (const key of keys) {
+    const rank = names.indexOf(resourceStem(key, suffix));
+    if (rank < 0) continue;
+    if (rank < bestRank) {
+      bestRank = rank;
+      out.length = 0;
+    }
+    if (rank === bestRank) out.push(key);
+  }
+  return Array.from(new Set(out)).sort();
+}
+
 function keyHasPassiveJob(key, jobs) {
   const normalized = normalizeKey(key);
   const match = /^passiveobject\/(?:character|actionobject)\/([^/]+)\/(.+\.obj)$/i.exec(normalized)
@@ -170,9 +244,10 @@ function keyHasPassiveJob(key, jobs) {
 
 function findObjRefs(root, skill, passiveList) {
   const jobs = passiveJobs(skill);
-  const fromList = passiveList
+  const fromListCandidates = passiveList
     .filter(item => keyHasPassiveJob(item.key, jobs) && exactStem(item.key, skill.objNames))
     .map(item => item.key);
+  const fromList = bestStemMatches(fromListCandidates, skill.objNames, '.obj');
   if (fromList.length) return Array.from(new Set(fromList)).sort();
   const dirs = [
     ...jobs.map(job => `passiveobject/${job}`),
@@ -196,7 +271,7 @@ function findObjRefs(root, skill, passiveList) {
       out.push(archiveKey(root, path.join(dir, entry.name)));
     }
   }
-  return Array.from(new Set(out)).sort();
+  return bestStemMatches(out, skill.objNames, '.obj');
 }
 
 function findActRefs(root, skill) {
@@ -212,7 +287,7 @@ function findActRefs(root, skill) {
 function findAniRefs(root, skill) {
   const c = skill.jobResource.character;
   const dirs = [
-    ...skill.jobResource.animationDirs.map(dir => `character/${c}/${dir}`),
+    ...animationDirsForSkill(skill).map(dir => `character/${c}/${dir}`),
     `character/${c}/effect/animation`,
     ...passiveJobs(skill).map(job => `passiveobject/${job}`),
     ...passiveJobs(skill).map(job => `passiveobject/character/${job}`),
@@ -225,13 +300,38 @@ function findAniRefs(root, skill) {
 function findAtkRefs(root, skill) {
   const c = skill.jobResource.character;
   const dirs = [
-    `character/${c}/attackinfo`,
-    `character/${c}/dsattackinfo`,
+    ...attackInfoDirsForSkill(skill).map(dir => `character/${c}/${dir}`),
     ...passiveJobs(skill).map(job => `passiveobject/${job}/attackinfo`),
     ...passiveJobs(skill).map(job => `passiveobject/character/${job}/attackinfo`),
     ...passiveJobs(skill).map(job => `passiveobject/actionobject/${job}/attackinfo`),
   ];
   return findExactStemFiles(root, dirs, skill.resourceNames, '.atk', 16);
+}
+
+function configuredOverrideRefs(root, skill, kind) {
+  const override = SKILL_RESOURCE_OVERRIDES[`${skill.job}:${skill.baseName}`];
+  const refs = override?.[kind];
+  if (!Array.isArray(refs)) return [];
+  return refs.filter(ref => {
+    const file = safeJoin(root, ref);
+    return !!file && fs.existsSync(file);
+  }).map(normalizeKey);
+}
+
+function animationDirsForSkill(skill) {
+  if (skill.jobResource.character === 'swordman') {
+    if (skill.darkSwordman) return ['dsanimation'];
+    if (skill.swordmanOriginalEx) return ['animation'];
+  }
+  return skill.jobResource.animationDirs;
+}
+
+function attackInfoDirsForSkill(skill) {
+  if (skill.jobResource.character === 'swordman') {
+    if (skill.darkSwordman) return ['dsattackinfo'];
+    return ['attackinfo'];
+  }
+  return ['attackinfo'];
 }
 
 function findExactStemFiles(root, dirKeys, names, suffix, limit) {
@@ -251,10 +351,9 @@ function findExactStemFiles(root, dirKeys, names, suffix, limit) {
       const stem = entry.name.slice(0, -suffix.length).toLowerCase().replace(/\.\[pvp\]$/i, '');
       if (!names.includes(stem)) continue;
       out.push(archiveKey(root, path.join(dir, entry.name)));
-      if (out.length >= limit) return Array.from(new Set(out));
     }
   }
-  return Array.from(new Set(out)).sort();
+  return bestStemMatches(out, names, suffix).slice(0, limit);
 }
 
 function preloadingImgs(text) {
@@ -303,14 +402,19 @@ function build() {
     const text = readText(file);
     const cls = skillClass(text);
     const entry = {};
-    const obj = findObjRefs(root, info, passiveList);
-    const act = findActRefs(root, info);
-    const ani = obj.length || act.length ? [] : findAniRefs(root, info);
-    const atk = obj.length ? [] : findAtkRefs(root, info);
+    const overrideAni = configuredOverrideRefs(root, info, 'ani');
+    const overrideAls = configuredOverrideRefs(root, info, 'als');
+    const hasOverrideAnimation = overrideAni.length || overrideAls.length;
+    const obj = hasOverrideAnimation ? [] : findObjRefs(root, info, passiveList);
+    const act = hasOverrideAnimation ? [] : findActRefs(root, info);
+    const ani = overrideAni.length ? overrideAni : (obj.length || act.length ? [] : findAniRefs(root, info));
+    const als = overrideAls;
+    const atk = obj.length || hasOverrideAnimation ? [] : findAtkRefs(root, info);
     const img = preloadingImgs(text);
     if (obj.length) entry.obj = obj;
     if (act.length) entry.act = act;
     if (ani.length) entry.ani = ani;
+    if (als.length) entry.als = als;
     if (atk.length) entry.atk = atk;
     if (img.length) entry.img = img;
     const job = jobs[info.job] || (jobs[info.job] = { skillClasses: {} });

@@ -23,6 +23,7 @@ export type UnpackPreviewKind =
   | 'skill'
   | 'skillTree'
   | 'ani'
+  | 'als'
   | 'error';
 
 export interface UnpackPreviewIcon {
@@ -641,6 +642,7 @@ export class UnpackPreviewService {
   private previewKind(key: string, text: string): UnpackPreviewKind | undefined {
     const normalized = normalizeUnpackKey(key);
     if (normalized.endsWith('.ani')) return 'ani';
+    if (normalized.endsWith('.ani.als') || normalized.endsWith('.als')) return 'als';
     if (normalized.endsWith('.equ')) {
       return hasSetTags(text) ? 'equipmentSet' : 'equipment';
     }
@@ -669,6 +671,7 @@ export class UnpackPreviewService {
       case 'skill': return this.buildSkillPreview(input, text, tags, metadata, options);
       case 'skillTree': return this.buildSkillTreePreview(input, text, tags, metadata, options);
       case 'ani': return this.buildAniPreview(input, text, options);
+      case 'als': return this.buildAlsPreview(input, text, options);
       default: return this.errorPreview(input, '不支持的预览类型');
     }
   }
@@ -970,6 +973,130 @@ export class UnpackPreviewService {
         missingImageCount,
       },
       ...(!framesSeq.length ? { message: '未解析到任何 [FRAME###] 帧。' } : {}),
+    };
+  }
+
+  private async buildAlsPreview(input: UnpackPreviewInput, text: string, options: UnpackPreviewOptions = {}): Promise<UnpackHoverPreview> {
+    const parsedAls = parseAlsText(text, this.output as vscode.OutputChannel | undefined);
+    const root = await this.resolveNpkRoot();
+    const archiveRoot = input.root;
+    const baseDir = path.dirname(input.fsPath);
+    const mainAniPath = await findAlsMainAni(input.fsPath);
+    let mainFrames: FrameSeqEntry[] = [];
+    let mainImages: string[] = [];
+    if (mainAniPath) {
+      try {
+        const mainText = await readUtf8Text(mainAniPath);
+        const parsedMain = parseAniText(mainText, { silent: true });
+        mainFrames = parsedMain.framesSeq;
+        mainImages = Array.from(new Set(mainFrames.map(frame => (frame.img || '').trim()).filter(Boolean)));
+      } catch (err: any) {
+        this.output?.appendLine(`[PVF] failed to load ALS main ANI ${input.key}: ${String(err && err.message || err)}`);
+      }
+    }
+
+    let timeline: TimelineFrame[] = [];
+    let layers: PreviewLayerMeta[] = [];
+    let uses: Array<{ id: string; path: string }> = Array.from(parsedAls.uses.values()).map(use => ({ id: use.id, path: use.path }));
+    let loadedImageCount = 0;
+    const allImages = new Set<string>(mainImages);
+
+    if (root && options.renderRich === true && parsedAls.adds.length) {
+      try {
+        const layerMap = await expandAlsLayers(false, this.context, undefined, root, baseDir, parsedAls, this.output as vscode.OutputChannel | undefined);
+        if (mainFrames.length) {
+          const built = await buildCompositeTimeline(this.context, root, mainFrames, parsedAls, layerMap, this.output as vscode.OutputChannel | undefined, { skipImageScan: true });
+          timeline = built.timeline;
+          loadedImageCount = built.albumMap.size;
+          for (const layer of layerMap.values()) {
+            for (const frame of layer.frames) {
+              const img = (frame.img || '').trim();
+              if (img) allImages.add(img);
+            }
+          }
+          layers = parsedAls.adds.map((add, seq) => ({
+            id: alsLayerInstanceId(parsedAls.adds, seq) || add.id,
+            sourceId: add.id,
+            relLayer: add.relLayer,
+            order: add.order,
+            startMs: frameStartTimeMs(mainFrames, add.order),
+            ...(add.kind ? { kind: add.kind } : {}),
+            seq,
+          }));
+        } else if (layerMap.size) {
+          const components = Array.from(layerMap.values()).map((layer, seq) => {
+            const add = parsedAls.adds[seq];
+            const startMs = Math.max(0, (add?.order || layer.order) * STAGE_TIMELINE_TICK_MS);
+            for (const frame of layer.frames) {
+              const img = (frame.img || '').trim();
+              if (img) allImages.add(img);
+            }
+            return {
+              id: layer.id,
+              sourceId: layer.id.replace(/#\d+$/i, ''),
+              source: layer.source,
+              frames: layer.frames,
+              relLayer: layer.relLayer,
+              order: layer.order,
+              startMs,
+              kind: add?.kind || 'als-add',
+              isMain: seq === 0,
+            };
+          });
+          const built = await buildTimeCompositeTimeline(this.context, root, components, this.output as vscode.OutputChannel | undefined, { skipImageScan: true, tickMs: STAGE_TIMELINE_TICK_MS });
+          timeline = built.timeline;
+          loadedImageCount = built.albumMap.size;
+          layers = components.map((component, seq) => ({
+            id: component.id,
+            sourceId: component.sourceId,
+            relLayer: component.relLayer,
+            order: component.order,
+            startMs: component.startMs,
+            durationMs: framesDurationMs(component.frames),
+            keyframes: buildStageKeyframes(component.frames, component.startMs),
+            kind: component.kind,
+            seq,
+          }));
+        }
+      } catch (err: any) {
+        this.output?.appendLine(`[PVF] failed to build ALS timeline ${input.key}: ${String(err && err.message || err)}`);
+      }
+    }
+
+    if (!timeline.length && mainFrames.length) timeline = fallbackTimeline(mainFrames);
+    const imageCount = allImages.size || mainImages.length;
+    const missingImageCount = Math.max(0, imageCount - loadedImageCount);
+    const sections: UnpackPreviewSection[] = [{
+      title: 'ALS 动画信息',
+      fields: compactFields([
+        field('use animation', numText(parsedAls.uses.size)),
+        field('add 图层', numText(parsedAls.adds.length)),
+        mainAniPath ? field('主 ANI', isPathInsideRoot(archiveRoot, mainAniPath) ? normalizeTreeRelative(archiveRoot, mainAniPath) : mainAniPath) : field('主 ANI', '未找到同名 .ani，按 ALS 图层独立合成'),
+        field('图片引用', numText(imageCount)),
+        field('已加载图片', numText(loadedImageCount)),
+        missingImageCount ? field('未解析图片', numText(missingImageCount), 'warning') : undefined,
+        root ? field('NPK 根目录', root) : field('NPK 根目录', '未配置，当前仅显示透明帧/坐标盒', 'warning'),
+      ]),
+      ...(uses.length ? { lines: uses.slice(0, 12).map(use => `${use.id}: ${use.path}`) } : {}),
+    }];
+    return {
+      kind: 'als',
+      title: input.name || path.basename(input.fsPath),
+      subtitle: '.ALS 动画图层',
+      key: input.key,
+      fsPath: input.fsPath,
+      sections,
+      badges: ['Canvas 预览', 'ALS'],
+      ani: {
+        timeline,
+        layers,
+        uses,
+        state: { axes: true, atk: true, dmg: true, als: true, sync: false, bg: 'dark', speed: 1, zoom: 1 },
+        frameCount: timeline.length,
+        imageCount,
+        missingImageCount,
+      },
+      ...(!timeline.length ? { message: '未能从 ALS 生成可绘制时间轴。' } : {}),
     };
   }
 
@@ -1839,7 +1966,7 @@ export class UnpackPreviewService {
     const candidates = [
       path.join(this.context.extensionUri.fsPath, 'dist', 'config', 'pvf', 'skillAnimationResources.json'),
       path.join(this.context.extensionUri.fsPath, 'src', 'config', 'pvf', 'skillAnimationResources.json'),
-    ];
+    ].sort((a, b) => fileMtimeMsSync(b) - fileMtimeMsSync(a));
     for (const candidate of candidates) {
       try {
         const raw = await fs.readFile(candidate, 'utf8');
@@ -1994,6 +2121,23 @@ async function readUtf8Text(filePath: string): Promise<string> {
   return text;
 }
 
+async function findAlsMainAni(alsFsPath: string): Promise<string | undefined> {
+  for (const candidate of alsMainAniCandidates(alsFsPath)) {
+    try {
+      const stat = await fs.stat(candidate);
+      if (stat.isFile()) return candidate;
+    } catch {
+    }
+  }
+  return undefined;
+}
+
+function alsMainAniCandidates(alsFsPath: string): string[] {
+  if (/\.ani\.als$/i.test(alsFsPath)) return [alsFsPath.replace(/\.als$/i, '')];
+  if (/\.als$/i.test(alsFsPath)) return [alsFsPath.replace(/\.als$/i, '.ani'), alsFsPath.replace(/\.als$/i, '')];
+  return [];
+}
+
 async function loadSidecarAls(aniFsPath: string): Promise<{ fsPath: string; text: string } | undefined> {
   const fsPath = `${aniFsPath}.als`;
   try {
@@ -2040,6 +2184,15 @@ function fallbackTimeline(framesSeq: FrameSeqEntry[]): TimelineFrame[] {
     atk: frame.atk || [],
     dmg: frame.dmg || [],
   }));
+}
+
+function fileMtimeMsSync(filePath: string): number {
+  try {
+    const stat = require('fs').statSync(filePath);
+    return stat.isFile() ? stat.mtimeMs : 0;
+  } catch {
+    return 0;
+  }
 }
 
 interface SkillPathInfo {
