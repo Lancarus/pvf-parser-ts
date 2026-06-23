@@ -4270,6 +4270,13 @@
     }
   },
   "versions": {
+    "0": {
+      "comments": {
+        "character/knight": {
+          "comment": "守护者"
+        }
+      }
+    },
     "66282": {
       "comments": {
         "equipment/character/swordman/avatar": {

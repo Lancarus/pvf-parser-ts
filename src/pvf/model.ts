@@ -213,6 +213,24 @@ export class PvfModel {
     if (!f) return new Uint8Array();
     const raw = await this.loadFileData(f);
     if (this.archiveFormat === 'nkpi' && this.nkpiState) {
+      const lowerKey = key.toLowerCase();
+      // NKPI 格式的 .lst 文件使用专用反编译器
+      if (lowerKey.endsWith('.lst') && f.data) {
+        const arc = this.nkpiState.archive;
+        const readStrA = (b: Buffer, o: number) => { let e = o; while(e < b.length && b[e] !== 0) e++; return b.toString('utf8', o, e); };
+        const readStrW = (b: Buffer, o: number) => { let e = o; while(e + 1 < b.length && (b[e] !== 0 || b[e+1] !== 0)) e += 2; return b.toString('utf16le', o, e); };
+        const resolve = (off: number) => {
+          if (off < 0) return '';
+          return (off & 1) !== 0
+            ? readStrW(arc.strW, (off >> 1) * 2)
+            : readStrA(arc.strA, off >> 1);
+        };
+        const lstText = decompileLst(this, f, lowerKey, true, resolve);
+        if (lstText) {
+          const out = Buffer.concat([Buffer.from([0xEF, 0xBB, 0xBF]), Buffer.from(lstText, 'utf8')]);
+          return new Uint8Array(out.buffer, out.byteOffset, out.byteLength);
+        }
+      }
       const rendered = decodeNkpiFileForEditor(raw.subarray(0, f.dataLen), (f as any).nkpiDataType ?? 0, this.nkpiState.archive);
       if (rendered) return new Uint8Array(rendered.buffer, rendered.byteOffset, rendered.byteLength);
     }
