@@ -27,6 +27,16 @@ import {
   createArchivePathResolver,
   runConcurrent,
 } from './directoryArchive';
+import {
+  PvfArchiveFormat,
+  NkpiModelState,
+  decodeNkpiFileForEditor,
+  encodeNkpiEditorContent,
+  isNkpiPvf,
+  openNkpiIntoModel,
+  readNkpiFileData,
+  repackNkpiFromModel,
+} from './nkpiArchive';
 
 export interface Progress { (n: number): void }
 
@@ -60,8 +70,18 @@ export class PvfModel {
   // 记录文本文件原始信息（目前用于 .ani.als / .als 原样写回）
   private originalTextMeta = new Map<string, { encoding: string; newline: string; hadBom: boolean; finalNewline: boolean }>();
   private originalAlsBytes = new Map<string, Uint8Array>(); // 保存首次读取到的原始 ALS 字节（解密后原始，不含我们再解码重编码）
+  archiveFormat: PvfArchiveFormat = 'classic';
+  nkpiState?: NkpiModelState;
 
-  async open(filePath: string, progress?: Progress) {
+  async open(filePath: string, progress?: Progress, options?: { archiveFormat?: PvfArchiveFormat | 'auto' }) {
+    const format = options?.archiveFormat || 'auto';
+    const useNkpi = format === 'nkpi' || (format === 'auto' && isNkpiPvf(filePath));
+    if (useNkpi) {
+      await openNkpiIntoModel(this as any, filePath, progress);
+      return;
+    }
+    this.archiveFormat = 'classic';
+    this.nkpiState = undefined;
     await openImpl.call(this, filePath, progress);
     // AUTO 模式：尝试基于 stringtable.bin 的可解析度推断区域编码（gb18030 / big5 / cp949 / shift_jis / utf8）
     try {
@@ -111,7 +131,10 @@ export class PvfModel {
   public getStringFromTable(index: number): string | undefined { return this.strtable?.get(index); }
   public getFileByKey(key: string): PvfFile | undefined { return this.fileList.get(key); }
   public getStringView(): StringView | undefined { return this.strview; }
-  public async loadFileData(f: PvfFile): Promise<Uint8Array> { return await readAndDecryptImpl.call(this, f); }
+  public async loadFileData(f: PvfFile): Promise<Uint8Array> {
+    if (this.archiveFormat === 'nkpi' && this.nkpiState) return readNkpiFileData(this.nkpiState, f);
+    return await readAndDecryptImpl.call(this, f);
+  }
 
   // 对外提供代码/显示名查询
   public getCodeForFile(key: string): number { return this.fileCodeMap.get(key) ?? -1; }
@@ -124,7 +147,10 @@ export class PvfModel {
     await parseMetadataForKeys(this, keys);
   }
 
-  async save(filePath: string, progress?: Progress) { return saveImpl.call(this, filePath, progress); }
+  async save(filePath: string, progress?: Progress) {
+    if (this.archiveFormat === 'nkpi') return repackNkpiFromModel(this as any, filePath, progress);
+    return saveImpl.call(this, filePath, progress);
+  }
 
   getChildren(parent?: string): PvfFileEntry[] {
     if (!parent) {
@@ -172,7 +198,11 @@ export class PvfModel {
   async getTextViewAsync(key: string): Promise<string> {
     const f = this.fileList.get(key);
     if (!f) return '';
-    const data = await this.readAndDecrypt(f);
+    const data = await this.loadFileData(f);
+    if (this.archiveFormat === 'nkpi' && this.nkpiState) {
+      const rendered = decodeNkpiFileForEditor(data.subarray(0, f.dataLen), (f as any).nkpiDataType ?? 0, this.nkpiState.archive);
+      if (rendered) return rendered.toString('utf8').replace(/^\uFEFF/, '');
+    }
     const enc = detectEncoding(key, data.subarray(0, f.dataLen));
     this.encodingCache.set(key, enc);
     return iconv.decode(Buffer.from(data.subarray(0, f.dataLen)), enc);
@@ -181,7 +211,11 @@ export class PvfModel {
   async readFileBytes(key: string): Promise<Uint8Array> {
     const f = this.fileList.get(key);
     if (!f) return new Uint8Array();
-    const raw = await this.readAndDecrypt(f);
+    const raw = await this.loadFileData(f);
+    if (this.archiveFormat === 'nkpi' && this.nkpiState) {
+      const rendered = decodeNkpiFileForEditor(raw.subarray(0, f.dataLen), (f as any).nkpiDataType ?? 0, this.nkpiState.archive);
+      if (rendered) return new Uint8Array(rendered.buffer, rendered.byteOffset, rendered.byteLength);
+    }
     // pvfUtility 行为对齐：
     // - 脚本文件：反编译为文本
     // - .nut：按KR(cp949)文本
@@ -277,6 +311,12 @@ export class PvfModel {
     const f = this.fileList.get(key);
     if (!f) return false;
     const lower = key.toLowerCase();
+    if (this.archiveFormat === 'nkpi' && this.nkpiState) {
+      const encoded = encodeNkpiEditorContent(content, (f as any).nkpiDataType ?? 0, this.nkpiState.archive);
+      f.writeFileData(encoded ? new Uint8Array(encoded.buffer, encoded.byteOffset, encoded.byteLength) : content);
+      f.changed = true;
+      return true;
+    }
 
     // 自动 ALS 文本识别：即便原始数据是脚本二进制，只要用户当前写入内容看起来是 ALS（含核心标签），就强制按文本 ALS 保存
     if ((lower.endsWith('.ani.als') || lower.endsWith('.als')) && content.length > 0) {
@@ -704,6 +744,7 @@ export class PvfModel {
       version: PVF_DIRECTORY_MANIFEST_VERSION,
       guid: this.guid.toString('hex'),
       guidLen: this.guidLen,
+      sourcePvfPath: this.pvfPath,
       fileVersion: this.fileVersion,
       encodingMode,
       defaultEncoding,

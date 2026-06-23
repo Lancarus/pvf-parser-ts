@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
+import * as nodeFs from 'fs';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import * as iconv from 'iconv-lite';
+import { createHash } from 'crypto';
 import { performance } from 'perf_hooks';
 import { Deps } from './types';
 import { PvfFile } from '../pvf/pvfFile';
@@ -24,12 +26,38 @@ import {
   runConcurrent,
   stripUtf8Bom,
 } from '../pvf/directoryArchive';
+import {
+  PvfArchiveFormat,
+  isNkpiPvf,
+  repackNkpiDirectory,
+  unpackNkpiToDirectory,
+} from '../pvf/nkpiArchive';
 
 interface RepackFile {
   key: string;
   diskPath: string;
   kind: PvfDiskFileKind;
   encoding?: string;
+}
+
+const ARCHIVE_FORMAT_ITEMS: Array<vscode.QuickPickItem & { format: PvfArchiveFormat | 'auto' }> = [
+  { label: '自动识别', description: '推荐', detail: '根据文件头判断旧版 PVF 或新版 nkpi PVF', format: 'auto' },
+  { label: '旧版 PVF', description: 'classic', detail: '使用本项目原有 PVF 头和文件树格式', format: 'classic' },
+  { label: '新版 PVF', description: 'nkpi', detail: '使用 PVF 新方法的 nkpi 格式', format: 'nkpi' },
+];
+
+async function pickArchiveFormat(prompt: string, includeAuto = true): Promise<PvfArchiveFormat | 'auto' | undefined> {
+  const item = await vscode.window.showQuickPick(includeAuto ? ARCHIVE_FORMAT_ITEMS : ARCHIVE_FORMAT_ITEMS.filter(i => i.format !== 'auto'), {
+    placeHolder: prompt,
+    ignoreFocusOut: true,
+  });
+  return item?.format;
+}
+
+function formatLabel(format: PvfArchiveFormat | 'auto' | undefined): string {
+  if (format === 'nkpi') return '新版 PVF';
+  if (format === 'classic') return '旧版 PVF';
+  return '自动识别';
 }
 
 /** 将磁盘目录重新封装为 .pvf 文件。脚本/文本文件从 UTF-8 转回原始格式，二进制文件原样写入。 */
@@ -307,65 +335,286 @@ function formatArchiveStats(label: string, stats: PvfArchivePhaseStats, extra?: 
   return `[PVF] ${label}: total=${stats.totalMs.toFixed(0)}ms, rate=${rate}/s, files=${stats.files}${stats.dirs !== undefined ? `, dirs=${stats.dirs}` : ''} | ${phases}${extras}`;
 }
 
+async function readDirectoryManifest(srcDir: string): Promise<Partial<PvfDirectoryManifest> | undefined> {
+  try {
+    return JSON.parse(await fs.readFile(path.join(srcDir, PVF_MANIFEST_FILE), 'utf8'));
+  } catch {
+    return undefined;
+  }
+}
+
+async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    const stat = await fs.stat(filePath);
+    return stat.isFile();
+  } catch {
+    return false;
+  }
+}
+
+async function md5File(filePath: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const hash = createHash('md5');
+    const stream = nodeFs.createReadStream(filePath);
+    stream.on('data', chunk => hash.update(chunk));
+    stream.on('error', reject);
+    stream.on('end', () => resolve(hash.digest('hex')));
+  });
+}
+
+async function compareRepackedMd5(
+  originalPath: string | undefined,
+  outputPath: string,
+  output: vscode.OutputChannel,
+  expectedOriginalMd5?: string,
+): Promise<'same' | 'different' | 'missing'> {
+  if (!expectedOriginalMd5 && (!originalPath || !(await fileExists(originalPath)))) {
+    output.appendLine(`[PVF] repack md5 skipped: original PVF not found (${originalPath || 'empty'})`);
+    vscode.window.showWarningMessage('封包完成，但找不到原 PVF，已跳过 MD5 校验');
+    return 'missing';
+  }
+  const originalMd5 = expectedOriginalMd5 || await md5File(originalPath!);
+  const outputMd5 = await md5File(outputPath);
+  const same = originalMd5.toLowerCase() === outputMd5.toLowerCase();
+  output.appendLine(`[PVF] repack md5 original=${originalMd5} output=${outputMd5} same=${same} originalPath=${originalPath}`);
+  if (same) {
+    vscode.window.showInformationMessage(`封包完成，MD5 一致：${outputMd5}`);
+    return 'same';
+  }
+  vscode.window.showWarningMessage(`封包完成，但 MD5 不一致。原=${originalMd5}，新=${outputMd5}`);
+  return 'different';
+}
+
 export function registerPvfFileOps(context: vscode.ExtensionContext, deps: Deps) {
   const { model, tree, deco, output } = deps;
   context.subscriptions.push(
-    vscode.commands.registerCommand('pvf._setClipboard', (payload: any) => { context.workspaceState.update('pvf.clipboard', payload); }),
-    vscode.commands.registerCommand('pvf._getClipboard', async () => { deco.refreshAll(); return context.workspaceState.get('pvf.clipboard'); }),
-    vscode.commands.registerCommand('pvf.selectForCompare', async (node) => { if (!node) return; await context.workspaceState.update('pvf.compareSelection', node.key); vscode.window.showInformationMessage(`已选择 ${node.name} 用于比较`); }),
-    vscode.commands.registerCommand('pvf.compareWithSelection', async (node) => {
-      if (!node) return; const sel = context.workspaceState.get<string>('pvf.compareSelection'); if (!sel) { vscode.window.showWarningMessage('请先选择一个文件用于比较'); return; }
-      const left = vscode.Uri.parse(`pvf:/${sel}`); const right = vscode.Uri.parse(`pvf:/${node.key}`); vscode.commands.executeCommand('vscode.diff', left, right, `${sel} ↔ ${node.key}`);
+    vscode.commands.registerCommand('pvf._setClipboard', (payload: any) => {
+      context.workspaceState.update('pvf.clipboard', payload);
     }),
-    vscode.commands.registerCommand('pvf.cut', async (node) => { if (!node) return; await context.workspaceState.update('pvf.clipboard', { op: 'cut', key: node.key }); vscode.window.showInformationMessage(`已剪切 ${node.name}`); }),
-    vscode.commands.registerCommand('pvf.copy', async (node) => { if (!node) return; await context.workspaceState.update('pvf.clipboard', { op: 'copy', key: node.key }); vscode.window.showInformationMessage(`已复制 ${node.name}`); }),
+    vscode.commands.registerCommand('pvf._getClipboard', async () => {
+      deco.refreshAll();
+      return context.workspaceState.get('pvf.clipboard');
+    }),
+    vscode.commands.registerCommand('pvf.selectForCompare', async (node) => {
+      if (!node) return;
+      await context.workspaceState.update('pvf.compareSelection', node.key);
+      vscode.window.showInformationMessage(`已选择 ${node.name} 用于比较`);
+    }),
+    vscode.commands.registerCommand('pvf.compareWithSelection', async (node) => {
+      if (!node) return;
+      const sel = context.workspaceState.get<string>('pvf.compareSelection');
+      if (!sel) {
+        vscode.window.showWarningMessage('请先选择一个文件用于比较');
+        return;
+      }
+      const left = vscode.Uri.parse(`pvf:/${sel}`);
+      const right = vscode.Uri.parse(`pvf:/${node.key}`);
+      vscode.commands.executeCommand('vscode.diff', left, right, `${sel} ↔ ${node.key}`);
+    }),
+    vscode.commands.registerCommand('pvf.cut', async (node) => {
+      if (!node) return;
+      await context.workspaceState.update('pvf.clipboard', { op: 'cut', key: node.key });
+      vscode.window.showInformationMessage(`已剪切 ${node.name}`);
+    }),
+    vscode.commands.registerCommand('pvf.copy', async (node) => {
+      if (!node) return;
+      await context.workspaceState.update('pvf.clipboard', { op: 'copy', key: node.key });
+      vscode.window.showInformationMessage(`已复制 ${node.name}`);
+    }),
     vscode.commands.registerCommand('pvf.paste', async (node) => {
-      if (!node || node.isFile) { vscode.window.showWarningMessage('请选择目标文件夹粘贴'); return; }
-      const clip = context.workspaceState.get<any>('pvf.clipboard'); if (!clip) { vscode.window.showWarningMessage('剪贴板为空'); return; }
-      const destBase = node.key; const f = model.getFileByKey(clip.key); if (!f) { vscode.window.showErrorMessage('源文件不存在'); return; }
-      const baseName = clip.key.split('/').pop() || clip.key; const idx = baseName.lastIndexOf('.'); const namePart = idx >= 0 ? baseName.substring(0, idx) : baseName; const extPart = idx >= 0 ? baseName.substring(idx) : '';
-      let candidate = baseName; let n = 1; while (model.getFileByKey(`${destBase}/${candidate}`)) { candidate = `${namePart} (${n})${extPart}`; n++; }
-      const destKey = `${destBase}/${candidate}`; const bytes = await model.loadFileData(f); model.createEmptyFile(destKey); const pf = model.getFileByKey(destKey); if (pf) { pf.writeFileData(bytes); pf.changed = true; }
-      if (clip.op === 'cut') { model.deleteFile(clip.key); await context.workspaceState.update('pvf.clipboard', undefined); vscode.window.showInformationMessage('移动完成'); } else { vscode.window.showInformationMessage('粘贴完成'); }
+      if (!node || node.isFile) {
+        vscode.window.showWarningMessage('请选择目标文件夹粘贴');
+        return;
+      }
+      const clip = context.workspaceState.get<any>('pvf.clipboard');
+      if (!clip) {
+        vscode.window.showWarningMessage('剪贴板为空');
+        return;
+      }
+      const destBase = node.key;
+      const f = model.getFileByKey(clip.key);
+      if (!f) {
+        vscode.window.showErrorMessage('源文件不存在');
+        return;
+      }
+      const baseName = clip.key.split('/').pop() || clip.key;
+      const idx = baseName.lastIndexOf('.');
+      const namePart = idx >= 0 ? baseName.substring(0, idx) : baseName;
+      const extPart = idx >= 0 ? baseName.substring(idx) : '';
+      let candidate = baseName;
+      let n = 1;
+      while (model.getFileByKey(`${destBase}/${candidate}`)) {
+        candidate = `${namePart} (${n})${extPart}`;
+        n++;
+      }
+      const destKey = `${destBase}/${candidate}`;
+      const bytes = await model.loadFileData(f);
+      model.createEmptyFile(destKey);
+      const pf = model.getFileByKey(destKey);
+      if (pf) {
+        pf.writeFileData(bytes);
+        pf.changed = true;
+      }
+      if (clip.op === 'cut') {
+        model.deleteFile(clip.key);
+        await context.workspaceState.update('pvf.clipboard', undefined);
+        vscode.window.showInformationMessage('移动完成');
+      } else {
+        vscode.window.showInformationMessage('粘贴完成');
+      }
       tree.refresh();
     }),
-    vscode.commands.registerCommand('pvf.copyPath', async (node) => { if (!node) return; await vscode.env.clipboard.writeText(node.key); vscode.window.showInformationMessage('已复制路径到剪贴板'); }),
+    vscode.commands.registerCommand('pvf.copyPath', async (node) => {
+      if (!node) return;
+      await vscode.env.clipboard.writeText(node.key);
+      vscode.window.showInformationMessage('已复制路径到剪贴板');
+    }),
     vscode.commands.registerCommand('pvf.openPack', async () => {
-      const uris = await vscode.window.showOpenDialog({ canSelectFiles: true, canSelectFolders: false, canSelectMany: false, filters: { 'PVF': ['pvf'] } }); if (!uris || uris.length === 0) { return; }
+      const uris = await vscode.window.showOpenDialog({
+        canSelectFiles: true,
+        canSelectFolders: false,
+        canSelectMany: false,
+        filters: { 'PVF': ['pvf'] },
+      });
+      if (!uris || uris.length === 0) return;
+      const archiveFormat = await pickArchiveFormat('请选择要打开的 PVF 格式', false);
+      if (!archiveFormat) return;
       await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '打开 PVF…' }, async (p) => {
-        const t0 = Date.now(); output.appendLine(`[PVF] open start: ${uris[0].fsPath}`); await model.open(uris[0].fsPath, (n: number) => { p.report({ increment: 0, message: `${n}%` }); }); const ms = Date.now() - t0; output.appendLine(`[PVF] open done in ${ms}ms (parsed header+tree only)`);
-      }); tree.refresh(); deco.refreshAll();
+        const t0 = Date.now();
+        output.appendLine(`[PVF] open start: ${uris[0].fsPath} format=${archiveFormat}`);
+        await model.open(
+          uris[0].fsPath,
+          (n: number) => { p.report({ increment: 0, message: `${n}%` }); },
+          { archiveFormat },
+        );
+        const ms = Date.now() - t0;
+        output.appendLine(`[PVF] open done in ${ms}ms format=${(model as any).archiveFormat || archiveFormat}`);
+      });
+      tree.refresh();
+      deco.refreshAll();
       try { await vscode.commands.executeCommand('setContext', 'pvf.hasOpenPack', true); } catch {}
     }),
     vscode.commands.registerCommand('pvf.savePack', async () => {
       if (!model || !(model as any).pvfPath) {
         vscode.window.showWarningMessage('尚未打开任何 PVF 文件'); return;
       }
-      const dest = await vscode.window.showSaveDialog({ filters: { 'PVF': ['pvf'] } }); if (!dest) { return; }
+      const dest = await vscode.window.showSaveDialog({ filters: { 'PVF': ['pvf'] } });
+      if (!dest) return;
       await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '保存 PVF…' }, async (p) => {
-        let last = 0; const ok = await model.save(dest.fsPath, (n: number) => { const inc = Math.max(0, Math.min(100, n) - last); last = Math.max(last, Math.min(100, n)); p.report({ increment: inc, message: `${last}%` }); });
-        if (ok) { vscode.window.showInformationMessage('另存为成功'); (model as any).pvfPath = dest.fsPath; try { await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '重新加载 PVF…' }, async (pp) => { await model.open(dest.fsPath, (n: number) => { pp.report({ increment: 0, message: `${n}%` }); }); }); tree.refresh(); deco.refreshAll(); } catch { vscode.window.showWarningMessage('保存成功，但重新加载封包失败'); } }
-        else { vscode.window.showErrorMessage('保存失败'); }
+        let last = 0;
+        const ok = await model.save(dest.fsPath, (n: number) => {
+          const inc = Math.max(0, Math.min(100, n) - last);
+          last = Math.max(last, Math.min(100, n));
+          p.report({ increment: inc, message: `${last}%` });
+        });
+        if (!ok) {
+          vscode.window.showErrorMessage('保存失败');
+          return;
+        }
+        vscode.window.showInformationMessage('另存为成功');
+        (model as any).pvfPath = dest.fsPath;
+        try {
+          await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '重新加载 PVF…' }, async (pp) => {
+            await model.open(dest.fsPath, (n: number) => { pp.report({ increment: 0, message: `${n}%` }); });
+          });
+          tree.refresh();
+          deco.refreshAll();
+        } catch {
+          vscode.window.showWarningMessage('保存成功，但重新加载封包失败');
+        }
       });
     }),
     vscode.commands.registerCommand('pvf.savePackInPlace', async () => {
-      if (!model.pvfPath) { vscode.window.showWarningMessage('尚未打开任何 PVF 文件'); return; }
+      if (!model.pvfPath) {
+        vscode.window.showWarningMessage('尚未打开任何 PVF 文件');
+        return;
+      }
       await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '保存 PVF…' }, async (p) => {
-        let last = 0; const ok = await model.save(model.pvfPath, (n: number) => { const inc = Math.max(0, Math.min(100, n) - last); last = Math.max(last, Math.min(100, n)); p.report({ increment: inc, message: `${last}%` }); });
-        if (ok) { vscode.window.showInformationMessage('已保存到当前文件'); try { await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '重新加载 PVF…' }, async (pp) => { await model.open(model.pvfPath, (n: number) => { pp.report({ increment: 0, message: `${n}%` }); }); }); tree.refresh(); deco.refreshAll(); } catch { vscode.window.showWarningMessage('保存成功，但重新加载封包失败'); } }
-        else { vscode.window.showErrorMessage('保存失败'); }
+        let last = 0;
+        const ok = await model.save(model.pvfPath, (n: number) => {
+          const inc = Math.max(0, Math.min(100, n) - last);
+          last = Math.max(last, Math.min(100, n));
+          p.report({ increment: inc, message: `${last}%` });
+        });
+        if (!ok) {
+          vscode.window.showErrorMessage('保存失败');
+          return;
+        }
+        vscode.window.showInformationMessage('已保存到当前文件');
+        try {
+          await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '重新加载 PVF…' }, async (pp) => {
+            await model.open(model.pvfPath, (n: number) => { pp.report({ increment: 0, message: `${n}%` }); });
+          });
+          tree.refresh();
+          deco.refreshAll();
+        } catch {
+          vscode.window.showWarningMessage('保存成功，但重新加载封包失败');
+        }
       });
     }),
-    vscode.commands.registerCommand('pvf.exportFile', async (node) => { if (!node || !node.isFile) return; const dest = await vscode.window.showSaveDialog({ defaultUri: vscode.Uri.file(node.name) }); if (!dest) return; await model.exportFile(node.key, dest.fsPath); vscode.window.showInformationMessage('导出完成'); }),
-    vscode.commands.registerCommand('pvf.replaceFile', async (node) => { if (!node || !node.isFile) return; const src = await vscode.window.showOpenDialog({ canSelectFiles: true, canSelectMany: false }); if (!src || src.length === 0) return; const res = await model.replaceFile(node.key, src[0].fsPath); if (!res.success) { vscode.window.showErrorMessage('替换失败'); } tree.refresh(); deco.refreshUris([vscode.Uri.parse(`pvf:/${node.key}`)]); }),
-    vscode.commands.registerCommand('pvf.deleteFile', async (node) => { if (!node || !node.isFile) return; model.deleteFile(node.key); tree.refresh(); deco.refreshAll(); }),
-    vscode.commands.registerCommand('pvf.createFolder', async (node) => { const base = node && !node.isFile ? node.key : ''; const name = await vscode.window.showInputBox({ prompt: '输入新文件夹名称', placeHolder: '例如: new_folder' }); if (!name) return; model.createFolder(base ? `${base}/${name}` : name); tree.refresh(); deco.refreshAll(); }),
-    vscode.commands.registerCommand('pvf.deleteFolder', async (node) => { if (!node || node.isFile) return; const ok = await vscode.window.showWarningMessage(`确定删除文件夹 ${node.name} 及其所有子项吗？`, { modal: true }, '删除'); if (ok !== '删除') return; model.deleteFolder(node.key); tree.refresh(); deco.refreshAll(); }),
-    vscode.commands.registerCommand('pvf.createFile', async (node) => { const base = node && !node.isFile ? node.key : ''; const name = await vscode.window.showInputBox({ prompt: '输入新文件名（含扩展名）', placeHolder: '例如: readme.txt' }); if (!name) return; const key = base ? `${base}/${name}` : name; model.createEmptyFile(key); tree.refresh(); deco.refreshUris([vscode.Uri.parse(`pvf:/${key}`)]); }),
+    vscode.commands.registerCommand('pvf.exportFile', async (node) => {
+      if (!node || !node.isFile) return;
+      const dest = await vscode.window.showSaveDialog({ defaultUri: vscode.Uri.file(node.name) });
+      if (!dest) return;
+      await model.exportFile(node.key, dest.fsPath);
+      vscode.window.showInformationMessage('导出完成');
+    }),
+    vscode.commands.registerCommand('pvf.replaceFile', async (node) => {
+      if (!node || !node.isFile) return;
+      const src = await vscode.window.showOpenDialog({ canSelectFiles: true, canSelectMany: false });
+      if (!src || src.length === 0) return;
+      const res = await model.replaceFile(node.key, src[0].fsPath);
+      if (!res.success) vscode.window.showErrorMessage('替换失败');
+      tree.refresh();
+      deco.refreshUris([vscode.Uri.parse(`pvf:/${node.key}`)]);
+    }),
+    vscode.commands.registerCommand('pvf.deleteFile', async (node) => {
+      if (!node || !node.isFile) return;
+      model.deleteFile(node.key);
+      tree.refresh();
+      deco.refreshAll();
+    }),
+    vscode.commands.registerCommand('pvf.createFolder', async (node) => {
+      const base = node && !node.isFile ? node.key : '';
+      const name = await vscode.window.showInputBox({ prompt: '输入新文件夹名称', placeHolder: '例如: new_folder' });
+      if (!name) return;
+      model.createFolder(base ? `${base}/${name}` : name);
+      tree.refresh();
+      deco.refreshAll();
+    }),
+    vscode.commands.registerCommand('pvf.deleteFolder', async (node) => {
+      if (!node || node.isFile) return;
+      const ok = await vscode.window.showWarningMessage(
+        `确定删除文件夹 ${node.name} 及其所有子项吗？`,
+        { modal: true },
+        '删除',
+      );
+      if (ok !== '删除') return;
+      model.deleteFolder(node.key);
+      tree.refresh();
+      deco.refreshAll();
+    }),
+    vscode.commands.registerCommand('pvf.createFile', async (node) => {
+      const base = node && !node.isFile ? node.key : '';
+      const name = await vscode.window.showInputBox({ prompt: '输入新文件名（含扩展名）', placeHolder: '例如: readme.txt' });
+      if (!name) return;
+      const key = base ? `${base}/${name}` : name;
+      model.createEmptyFile(key);
+      tree.refresh();
+      deco.refreshUris([vscode.Uri.parse(`pvf:/${key}`)]);
+    }),
     // ===== 解封 / 封装 =====
     vscode.commands.registerCommand('pvf.unpackPack', async () => {
-      if (!model.pvfPath) { vscode.window.showWarningMessage('请先打开一个 PVF 文件'); return; }
-      const dirs = await vscode.window.showOpenDialog({ canSelectFiles: false, canSelectFolders: true, canSelectMany: false, openLabel: '选择解封目标目录' });
+      if (!model.pvfPath) {
+        vscode.window.showWarningMessage('请先打开一个 PVF 文件');
+        return;
+      }
+      const dirs = await vscode.window.showOpenDialog({
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false,
+        openLabel: '选择解封目标目录',
+      });
       if (!dirs || dirs.length === 0) return;
       const destDir = dirs[0].fsPath;
       const total = model.getAllKeys().length;
@@ -377,44 +626,123 @@ export function registerPvfFileOps(context: vscode.ExtensionContext, deps: Deps)
       const chineseConversion = normalizeChineseConversion(cfg.get<string>('pvf.unpack.chineseConversion', 'tw2cn'));
       const mkdirConcurrency = cfg.get<number>('pvf.unpack.mkdirConcurrency', 128);
       let phaseStats: PvfArchivePhaseStats | undefined;
-      await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '正在解封 PVF…' }, async (p) => {
+      const archiveFormat = ((model as any).archiveFormat || 'classic') as PvfArchiveFormat;
+      await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: `正在解封 ${formatLabel(archiveFormat)}…` }, async (p) => {
         let lastReport = 0;
-        await model.unpackTo(destDir, (current, _total, key) => {
+        const reportUnpackProgress = (current: number, _total: number, key: string) => {
           const pct = Math.floor((current / _total) * 100);
-          if (pct !== lastReport) { const inc = pct - lastReport; lastReport = pct; p.report({ increment: inc, message: `(${current}/${_total}) ${key.split('/').pop()}` }); }
-        }, { writeConcurrency, workerCount, writeBatchSize, chineseConversion, mkdirConcurrency, onStats: stats => { phaseStats = stats; } });
+          if (pct === lastReport) return;
+          const inc = pct - lastReport;
+          lastReport = pct;
+          p.report({ increment: inc, message: `(${current}/${_total}) ${key.split('/').pop()}` });
+        };
+        if (archiveFormat === 'nkpi') {
+          await unpackNkpiToDirectory(model.pvfPath, destDir, reportUnpackProgress, {
+            onStats: stats => { phaseStats = stats; },
+          });
+        } else {
+          await model.unpackTo(destDir, reportUnpackProgress, {
+            writeConcurrency,
+            workerCount,
+            writeBatchSize,
+            chineseConversion,
+            mkdirConcurrency,
+            onStats: stats => { phaseStats = stats; },
+          });
+        }
       });
       const seconds = Math.max(0.001, (Date.now() - t0) / 1000);
       const rate = Math.round(total / seconds);
-      output.appendLine(`[PVF] unpack done: ${total} files in ${seconds.toFixed(1)}s (${rate}/s) -> ${destDir}`);
+      output.appendLine(`[PVF] unpack done: ${total} files in ${seconds.toFixed(1)}s (${rate}/s) format=${archiveFormat} -> ${destDir}`);
       if (phaseStats) output.appendLine(formatArchiveStats('unpack phases', phaseStats, { writeConcurrency, workerCount, writeBatchSize, mkdirConcurrency }));
       output.appendLine(`[PVF] unpack chineseConversion=${chineseConversion}`);
       vscode.window.showInformationMessage(`解封完成：${total} 个文件，${rate} 文件/秒 → ${destDir}`);
     }),
     vscode.commands.registerCommand('pvf.repackPack', async () => {
-      const dirs = await vscode.window.showOpenDialog({ canSelectFiles: false, canSelectFolders: true, canSelectMany: false, openLabel: '选择要封装的目录' });
+      const dirs = await vscode.window.showOpenDialog({
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false,
+        openLabel: '选择要封装的目录',
+      });
       if (!dirs || dirs.length === 0) return;
       const srcDir = dirs[0].fsPath;
+      const manifest = await readDirectoryManifest(srcDir);
+      const archiveFormat = await pickArchiveFormat('请选择封装输出的 PVF 格式', false);
+      if (!archiveFormat) return;
+      let templatePvfPath = '';
+      if (archiveFormat === 'nkpi') {
+        if ((model as any).archiveFormat === 'nkpi' && model.pvfPath && isNkpiPvf(model.pvfPath)) {
+          templatePvfPath = model.pvfPath;
+        } else {
+          const template = await vscode.window.showOpenDialog({
+            canSelectFiles: true,
+            canSelectFolders: false,
+            canSelectMany: false,
+            filters: { 'PVF': ['pvf'] },
+            openLabel: '选择新版 PVF 模板',
+          });
+          if (!template || template.length === 0) return;
+          templatePvfPath = template[0].fsPath;
+          if (!isNkpiPvf(templatePvfPath)) {
+            vscode.window.showErrorMessage('选择的模板不是新版 nkpi PVF');
+            return;
+          }
+        }
+      }
       const dest = await vscode.window.showSaveDialog({ filters: { 'PVF': ['pvf'] }, defaultUri: vscode.Uri.file(srcDir + '.pvf') });
       if (!dest) return;
+      const originalPvfPath = typeof manifest?.sourcePvfPath === 'string'
+        ? manifest.sourcePvfPath
+        : archiveFormat === 'nkpi'
+          ? templatePvfPath
+          : model.pvfPath;
+      const expectedOriginalMd5 = typeof manifest?.sourcePvfMd5 === 'string'
+        ? manifest.sourcePvfMd5
+        : originalPvfPath && await fileExists(originalPvfPath)
+          ? await md5File(originalPvfPath)
+          : undefined;
       const t0 = Date.now();
       let finalTotal = 0;
       const cfg = vscode.workspace.getConfiguration();
       const readConcurrency = cfg.get<number>('pvf.repack.readConcurrency', 192);
       let phaseStats: PvfArchivePhaseStats | undefined;
-      await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '正在封装 PVF…' }, async (p) => {
+      await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: `正在封装 ${formatLabel(archiveFormat)}…` }, async (p) => {
         let lastReport = 0;
-        await repackDirectory(srcDir, dest.fsPath, (current, total, _key) => {
-          finalTotal = total;
-          const pct = Math.floor((current / total) * 100);
-          if (pct !== lastReport) { const inc = pct - lastReport; lastReport = pct; p.report({ increment: inc, message: `${current}/${total}` }); }
-        }, { readConcurrency, onStats: stats => { phaseStats = stats; } });
+        if (archiveFormat === 'nkpi') {
+          const result = await repackNkpiDirectory(srcDir, templatePvfPath, dest.fsPath, {
+            progress: (current, total) => {
+              finalTotal = total;
+              const pct = Math.floor((current / total) * 100);
+              if (pct !== lastReport) { const inc = pct - lastReport; lastReport = pct; p.report({ increment: inc, message: `${current}/${total}` }); }
+            },
+            onStats: stats => { phaseStats = stats; },
+          });
+          finalTotal = result.totalFiles;
+          output.appendLine([
+            '[PVF] nkpi repack detail:',
+            `replaced=${result.replaced}`,
+            `unchanged=${result.unchanged}`,
+            `skippedChunks=${result.skippedChunks}`,
+            `rebuiltChunks=${result.rebuiltChunks}`,
+            `outputSize=${result.outputSize}`,
+          ].join(' '));
+        } else {
+          await repackDirectory(srcDir, dest.fsPath, (current, total, _key) => {
+            finalTotal = total;
+            const pct = Math.floor((current / total) * 100);
+            if (pct !== lastReport) { const inc = pct - lastReport; lastReport = pct; p.report({ increment: inc, message: `${current}/${total}` }); }
+          }, { readConcurrency, onStats: stats => { phaseStats = stats; } });
+        }
       });
       const seconds = Math.max(0.001, (Date.now() - t0) / 1000);
       const rate = finalTotal > 0 ? Math.round(finalTotal / seconds) : 0;
-      output.appendLine(`[PVF] repack done: ${finalTotal} files in ${seconds.toFixed(1)}s (${rate}/s) -> ${dest.fsPath}`);
+      output.appendLine(`[PVF] repack done: ${finalTotal} files in ${seconds.toFixed(1)}s (${rate}/s) format=${archiveFormat} -> ${dest.fsPath}`);
       if (phaseStats) output.appendLine(formatArchiveStats('repack phases', phaseStats, { readConcurrency }));
-      vscode.window.showInformationMessage(`封装完成：${finalTotal} 个文件，${rate} 文件/秒 → ${dest.fsPath}`);
+      const md5Result = await compareRepackedMd5(originalPvfPath, dest.fsPath, output, expectedOriginalMd5);
+      if (md5Result === 'missing') {
+        vscode.window.showInformationMessage(`封装完成：${finalTotal} 个文件，${rate} 文件/秒 → ${dest.fsPath}`);
+      }
     }),
   );
 }

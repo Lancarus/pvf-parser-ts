@@ -20,6 +20,8 @@ export class PvfFile {
 
   get fileNameLen() { return this.fileNameBytes.length; }
   get fileName() {
+    const override = (this as any).fileNameOverride;
+    if (typeof override === 'string') return override;
     // pvfUtility uses codepage 0x3b5 (949, Korean) for file names
     return iconv.decode(Buffer.from(this.fileNameBytes), 'cp949').replace(/\0+$/, '').replace(/\\/g, '/').toLowerCase();
   }

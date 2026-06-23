@@ -9,14 +9,18 @@ export type PvfDiskFileManifestEntry = [key: string, kind: PvfDiskFileKind, enco
 
 export interface PvfDirectoryManifest {
   version: number;
+  archiveFormat?: 'classic' | 'nkpi' | string;
   guid: string;
   guidLen: number;
+  sourcePvfPath?: string;
+  sourcePvfMd5?: string;
   fileVersion: number;
   encodingMode: string;
   defaultEncoding: string;
   chineseConversion?: 'off' | 'tw2cn';
   fileCount: number;
   files: PvfDiskFileManifestEntry[];
+  nkpi?: unknown;
 }
 
 export interface PvfArchivePhaseStats {
