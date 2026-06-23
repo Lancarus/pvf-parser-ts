@@ -160,6 +160,10 @@ Keep native hover fast. `UnpackPreviewService.resolvePreview(input)` defaults to
 
 Do not make unsupported `.co`/`.etc` files display "no preview" on hover in the custom view; preserve normal path tooltips unless the file is a real preview candidate. Skill-tree detection is path-based for `clientonly/skilltree/*_sp.co`, `*_tp.co`, `clientonly/skillshoptreespindex.co`, `clientonly/skillshoptreetpindex.co`, `etc/pvpskilltree/*.etc`, and content-based for files containing `[character job]`, `[skill info]`, and `[icon pos]`.
 
+Skill and animation related-resource discovery must not depend only on `.nut` scripts or static `[skill preloading image]` data. `UnpackPreviewService` traces `.skl`, `.act`, `.obj`, `.ani`, and `.als` chains and inserts IMG references found in ANI `[IMAGE]` blocks as logical related resources even when the `.img` file is not present in the unpacked tree. `parseAniText` must keep the image path and frame index separate, including inline syntax such as `` `Character/Fighter/.../fm_body%04d.img` 91 ``, path-only lines followed by numeric frame lines, frame-only lines inheriting the last image path, and empty image markers such as `` `` 3 ``.
+
+`scripts/generate-skill-animation-resources.cjs` should mirror that runtime discovery model when refreshing the built-in skill animation resource map: follow `.act/.obj` animation fields, `.als` `[use animation]` links, and `.ani` image blocks, then collect IMG paths from the resulting animation chain. Do not regenerate the large JSON resource map just because parser code changed; regenerate it only when the source PVF data or shipped resource map intentionally needs updating.
+
 ### Built-In Bookmarks
 Built-in bookmarks are stored in `src/config/pvf/bookmarks.json` as a cleaned tree:
 
@@ -188,13 +192,16 @@ Disk lookup uses `readConfiguredUnpackRoots()` and a case-insensitive path walk 
 
 ### Core Data Model (`PvfModel`)
 - Holds a `Map<string, PvfFile>` (key = normalized path), plus caches for children, encodings, display names, and codes
-- `open()` decrypts the PVF header/file tree, then builds LST indices and auto-detects encoding from `stringtable.bin`
-- `save()` encrypts all changed files and writes back the PVF
+- `open()` decrypts the PVF header/file tree, or opens the newer `nkpi` archive when the user selects that format, then builds LST indices and auto-detects encoding from `stringtable.bin`
+- `save()` encrypts all changed files and writes back the PVF; directory repack compares the output MD5 against the source/template MD5 recorded in `.pvfmanifest.json` and reports the result
 - `readFileBytes()` returns different representations based on file type:
   - Script files (magic `0xd0b0`) → decompiled to text
+  - `nkpi` type-1 script files → decoded to editable text, with `.lst` entries and `.skl` `[level info]` blocks split across readable lines
   - `.nut` files → decoded as cp949 text
   - `stringtable.bin` → rendered as human-readable table
   - Everything else → raw bytes
+
+For directory unpack/repack, `.pvfmanifest.json` records `archiveFormat`, `sourcePvfPath`, `sourcePvfMd5`, encoding, conversion mode, and archive-specific metadata. New `nkpi` repack relies on the original/template archive metadata for chunking and header details. Whole-file MD5 equality is a diagnostic result, not a guarantee, because zlib recompression can produce byte-different chunks even when decoded file content round-trips correctly.
 
 ### Encoding Model
 Files are decoded based on `pvf.encodingMode` (AUTO/KR/TW/CN/JP/UTF8). AUTO mode detects encoding from stringtable.bin by scoring printable-character ratios across candidate codecs. `.nut` files always use cp949 independent of the mode setting. Decoding uses `iconv-lite`.

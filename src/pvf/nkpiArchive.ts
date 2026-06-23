@@ -466,7 +466,14 @@ export async function repackNkpiFromModel(model: any, outputPvfPath: string, pro
   }
 
   if (modifiedChunks.size === 0) {
-    await fsp.writeFile(outputPvfPath, assembleNkpiBytes(archive, buildFileItemTable(newItems), archive.rawHashBytes, archive.rawNameBytes, archive.rawGrpiBytes, archive.bodyLength));
+    await fsp.writeFile(outputPvfPath, assembleNkpiBytes(
+      archive,
+      buildFileItemTable(newItems),
+      archive.rawHashBytes,
+      archive.rawNameBytes,
+      archive.rawGrpiBytes,
+      archive.bodyLength,
+    ));
     return true;
   }
 
@@ -544,8 +551,8 @@ export async function repackNkpiFromModel(model: any, outputPvfPath: string, pro
   return true;
 }
 
-export function decodeNkpiFileForEditor(data: Uint8Array, dataType: number, archive: NkpiArchiveData): Buffer | undefined {
-  if (dataType === 1) return Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), Buffer.from(decodeType1(Buffer.from(data), archive), 'utf8')]);
+export function decodeNkpiFileForEditor(data: Uint8Array, dataType: number, archive: NkpiArchiveData, key?: string): Buffer | undefined {
+  if (dataType === 1) return Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), Buffer.from(decodeType1(Buffer.from(data), archive, key), 'utf8')]);
   if (dataType === 3) return Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), Buffer.from(Buffer.from(data).toString('utf16le'), 'utf8')]);
   return undefined;
 }
@@ -846,7 +853,67 @@ function formatFloat32(value: number): string {
   return fixed.replace(/\.0+$/, '').replace(/(\.\d*[1-9])0+$/, '$1');
 }
 
-function decodeType1(data: Buffer, archive: NkpiArchiveData): string {
+interface NkpiType1Token {
+  kind: 'tag' | 'marker' | 'data';
+  text: string;
+}
+
+function decodeType1(data: Buffer, archive: NkpiArchiveData, key = ''): string {
+  const tokens = decodeType1Tokens(data, archive);
+  if (key.toLowerCase().endsWith('.lst')) return formatNkpiLst(tokens);
+  return formatNkpiScript(tokens, key);
+}
+
+function decodeType1Tokens(data: Buffer, archive: NkpiArchiveData): NkpiType1Token[] {
+  const tokens: NkpiType1Token[] = [];
+  for (let off = 0; off + 4 < data.length; off += 5) {
+    const type = data[off];
+    const value = data.readInt32LE(off + 1);
+    const uvalue = value >>> 0;
+    switch (type) {
+      case 0:
+        tokens.push({ kind: 'data', text: String(value) });
+        break;
+      case 2:
+        tokens.push({ kind: 'data', text: formatFloat32(uvalue) });
+        break;
+      case 3:
+        tokens.push({ kind: 'tag', text: resolveString(archive.strA, archive.strW, value) });
+        break;
+      case 5:
+        tokens.push({ kind: 'marker', text: '{5=``}' });
+        break;
+      case 6:
+        tokens.push({ kind: 'data', text: '`' + resolveString(archive.strA, archive.strW, value) + '`' });
+        break;
+      case 7:
+        tokens.push({ kind: 'marker', text: '{7=``}' });
+        break;
+      default:
+        tokens.push({ kind: 'data', text: `{${type}=${value}}` });
+        break;
+    }
+  }
+  return tokens;
+}
+
+function formatNkpiLst(tokens: NkpiType1Token[]): string {
+  const lines = ['#PVF_File'];
+  for (let i = 0; i < tokens.length;) {
+    const a = tokens[i++];
+    if (!a) break;
+    const b = tokens[i];
+    if (b && a.kind === 'data' && b.kind === 'data') {
+      lines.push(`${a.text}\t${b.text}`);
+      i++;
+    } else {
+      lines.push(a.text);
+    }
+  }
+  return lines.join('\n') + '\n';
+}
+
+function formatNkpiScript(tokens: NkpiType1Token[], key: string): string {
   const lines = ['#PVF_File', ''];
   let line: string[] = [];
   const flushLine = () => {
@@ -855,39 +922,50 @@ function decodeType1(data: Buffer, archive: NkpiArchiveData): string {
       line = [];
     }
   };
-  for (let off = 0; off + 4 < data.length; off += 5) {
-    const type = data[off];
-    const value = data.readInt32LE(off + 1);
-    const uvalue = value >>> 0;
-    switch (type) {
-      case 0:
-        line.push(String(value));
-        break;
-      case 2:
-        line.push(formatFloat32(uvalue));
-        break;
-      case 3:
-        flushLine();
-        lines.push(resolveString(archive.strA, archive.strW, value));
-        break;
-      case 5:
-        flushLine();
-        lines.push('{5=``}');
-        break;
-      case 6:
-        line.push('`' + resolveString(archive.strA, archive.strW, value) + '`');
-        break;
-      case 7:
-        flushLine();
-        lines.push('{7=``}');
-        break;
-      default:
-        line.push(`{${type}=${value}}`);
-        break;
+  const isSkl = key.toLowerCase().endsWith('.skl');
+  let currentSection = '';
+  for (let i = 0; i < tokens.length;) {
+    const token = tokens[i];
+    if (token.kind === 'tag') {
+      flushLine();
+      lines.push(token.text);
+      currentSection = token.text.toLowerCase();
+      i++;
+      continue;
     }
+    if (token.kind === 'marker') {
+      flushLine();
+      lines.push(token.text);
+      i++;
+      continue;
+    }
+    if (isSkl && currentSection === '[level info]') {
+      const dataTokens: string[] = [];
+      while (i < tokens.length && tokens[i].kind === 'data') {
+        dataTokens.push(tokens[i].text);
+        i++;
+      }
+      emitSklLevelInfoLines(dataTokens, lines);
+      continue;
+    }
+    line.push(token.text);
+    i++;
   }
   flushLine();
   return lines.join('\n');
+}
+
+function emitSklLevelInfoLines(tokens: string[], lines: string[]): void {
+  if (tokens.length === 0) return;
+  const colCount = Number(tokens[0]);
+  if (!Number.isInteger(colCount) || colCount <= 0) {
+    lines.push(tokens.join(' '));
+    return;
+  }
+  lines.push(tokens[0]);
+  for (let start = 1; start < tokens.length; start += colCount) {
+    lines.push(tokens.slice(start, start + colCount).join('\t'));
+  }
 }
 
 function prepareUnpackFileData(archive: NkpiArchiveData, file: NkpiFileRecord, chunk: Buffer | null): { kind: PvfDiskFileKind; encoding?: string; data: Buffer } | null {
@@ -900,7 +978,7 @@ function prepareUnpackFileData(archive: NkpiArchiveData, file: NkpiFileRecord, c
   }
   const raw = chunk.subarray(item.dataOffset, item.dataOffset + item.dataSize);
   if (item.dataType === 1) {
-    return { kind: 'script', data: Buffer.from(decodeType1(raw, archive), 'utf8') };
+    return { kind: 'script', data: Buffer.from(decodeType1(raw, archive, file.key), 'utf8') };
   }
   if (item.dataType === 3) {
     return { kind: 'text', encoding: 'utf16le', data: Buffer.from(raw.toString('utf16le'), 'utf8') };
@@ -918,8 +996,8 @@ function encodeType1Text(text: string, archive: NkpiArchiveData | undefined): Bu
   const out: number[] = [];
   const getOffset = (s: string): number => archive ? findOrResolveNameOffset(archive, s) : 0;
   const lines = text.replace(/\r/g, '').split('\n');
-  for (const rawLine of lines) {
-    const line = rawLine;
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    let line = lines[lineIndex];
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith('#')) continue;
     if (trimmed.length >= 2 && trimmed.startsWith('[') && trimmed.endsWith(']')) {
@@ -939,10 +1017,27 @@ function encodeType1Text(text: string, archive: NkpiArchiveData | undefined): Bu
       while (i < line.length && /\s/.test(line[i])) i++;
       if (i >= line.length) break;
       if (line[i] === '`') {
-        const j = line.indexOf('`', i + 1);
-        const end = j >= 0 ? j : line.length - 1;
-        pushType1(out, 6, getOffset(line.slice(i + 1, end)));
-        i = end + 1;
+        let token = '';
+        let cursor = i + 1;
+        while (true) {
+          const close = line.indexOf('`', cursor);
+          if (close >= 0) {
+            token += line.slice(cursor, close);
+            pushType1(out, 6, getOffset(token));
+            i = close + 1;
+            break;
+          }
+          token += line.slice(cursor);
+          if (lineIndex + 1 >= lines.length) {
+            pushType1(out, 6, getOffset(token));
+            i = line.length;
+            break;
+          }
+          token += '\n';
+          lineIndex++;
+          line = lines[lineIndex];
+          cursor = 0;
+        }
         continue;
       }
       const start = i;

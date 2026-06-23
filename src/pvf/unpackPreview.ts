@@ -1,7 +1,16 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { buildCompositeTimeline, buildStageKeyframes, buildTimeCompositeTimeline, framesDurationMs, frameStartTimeMs, buildTimelineFromFrames, STAGE_TIMELINE_TICK_MS, expandAlsLayers } from '../commander/previewAni/buildTimeline';
+import {
+  STAGE_TIMELINE_TICK_MS,
+  buildCompositeTimeline,
+  buildStageKeyframes,
+  buildTimeCompositeTimeline,
+  buildTimelineFromFrames,
+  expandAlsLayers,
+  framesDurationMs,
+  frameStartTimeMs,
+} from '../commander/previewAni/buildTimeline';
 import { parseAniText } from '../commander/previewAni/parseAni';
 import { alsLayerInstanceId, parseAlsText } from '../commander/previewAni/parseAls';
 import type { FrameSeqEntry, TimelineFrame } from '../commander/previewAni/types';
@@ -352,8 +361,8 @@ const SKILL_LISTS_BY_JOB: Record<string, string[]> = {
 const COMMON_SKILL_LSTS = ['skill/skilllist.lst', 'skill/skill.lst'];
 const PASSIVEOBJECT_LST = 'passiveobject/passiveobject.lst';
 const TRANSPARENT_1X1 = 'AAAAAA==';
-const LINKED_RESOURCE_TRACE_MAX_DEPTH = 2;
-const LINKED_RESOURCE_TRACE_MAX_ENTRIES = 48;
+const LINKED_RESOURCE_TRACE_MAX_DEPTH = 3;
+const LINKED_RESOURCE_TRACE_MAX_ENTRIES = 96;
 
 const BLOCK_VALUE_TAGS = new Set([
   'a condition item',
@@ -606,7 +615,12 @@ export class UnpackPreviewService {
       if (!stat.isFile()) return undefined;
       const cacheKey = `${path.resolve(input.root)}\0${normalizeUnpackKey(input.key)}\0${input.version}`;
       const cached = this.cache.get(cacheKey);
-      if (cached && cached.mtimeMs === stat.mtimeMs && cached.size === stat.size && (!shouldResolveIcon || cached.iconSettled) && (!shouldResolveRichRender || cached.renderSettled)) {
+      const cacheUsable = cached
+        && cached.mtimeMs === stat.mtimeMs
+        && cached.size === stat.size
+        && (!shouldResolveIcon || cached.iconSettled)
+        && (!shouldResolveRichRender || cached.renderSettled);
+      if (cacheUsable) {
         return cached.preview;
       }
 
@@ -928,7 +942,7 @@ export class UnpackPreviewService {
   private async buildAniPreview(input: UnpackPreviewInput, text: string, options: UnpackPreviewOptions = {}): Promise<UnpackHoverPreview> {
     const parsed = parseAniText(text, { silent: true });
     const framesSeq = parsed.framesSeq;
-    const uniqueImages = Array.from(new Set(framesSeq.map(frame => (frame.img || '').trim()).filter(Boolean)));
+    const uniqueImages = collectUniqueFrameImages(framesSeq);
     const root = await this.resolveNpkRoot();
     let timeline: TimelineFrame[] = [];
     let loadedImageCount = 0;
@@ -953,7 +967,7 @@ export class UnpackPreviewService {
         missingImageCount ? field('未解析图片', numText(missingImageCount), 'warning') : undefined,
         root ? field('NPK 根目录', root) : field('NPK 根目录', '未配置，当前仅显示透明帧/坐标盒', 'warning'),
       ]),
-      ...(uniqueImages.length ? { lines: uniqueImages.slice(0, 10) } : {}),
+      ...(uniqueImages.length ? { entries: imageReferenceEntries(uniqueImages, '动画帧引用').slice(0, 16) } : {}),
     }];
     return {
       kind: 'ani',
@@ -989,7 +1003,7 @@ export class UnpackPreviewService {
         const mainText = await readUtf8Text(mainAniPath);
         const parsedMain = parseAniText(mainText, { silent: true });
         mainFrames = parsedMain.framesSeq;
-        mainImages = Array.from(new Set(mainFrames.map(frame => (frame.img || '').trim()).filter(Boolean)));
+        mainImages = collectUniqueFrameImages(mainFrames);
       } catch (err: any) {
         this.output?.appendLine(`[PVF] failed to load ALS main ANI ${input.key}: ${String(err && err.message || err)}`);
       }
@@ -1003,9 +1017,25 @@ export class UnpackPreviewService {
 
     if (root && options.renderRich === true && parsedAls.adds.length) {
       try {
-        const layerMap = await expandAlsLayers(false, this.context, undefined, root, baseDir, parsedAls, this.output as vscode.OutputChannel | undefined);
+        const layerMap = await expandAlsLayers(
+          false,
+          this.context,
+          undefined,
+          root,
+          baseDir,
+          parsedAls,
+          this.output as vscode.OutputChannel | undefined,
+        );
         if (mainFrames.length) {
-          const built = await buildCompositeTimeline(this.context, root, mainFrames, parsedAls, layerMap, this.output as vscode.OutputChannel | undefined, { skipImageScan: true });
+          const built = await buildCompositeTimeline(
+            this.context,
+            root,
+            mainFrames,
+            parsedAls,
+            layerMap,
+            this.output as vscode.OutputChannel | undefined,
+            { skipImageScan: true },
+          );
           timeline = built.timeline;
           loadedImageCount = built.albumMap.size;
           for (const layer of layerMap.values()) {
@@ -1043,7 +1073,13 @@ export class UnpackPreviewService {
               isMain: seq === 0,
             };
           });
-          const built = await buildTimeCompositeTimeline(this.context, root, components, this.output as vscode.OutputChannel | undefined, { skipImageScan: true, tickMs: STAGE_TIMELINE_TICK_MS });
+          const built = await buildTimeCompositeTimeline(
+            this.context,
+            root,
+            components,
+            this.output as vscode.OutputChannel | undefined,
+            { skipImageScan: true, tickMs: STAGE_TIMELINE_TICK_MS },
+          );
           timeline = built.timeline;
           loadedImageCount = built.albumMap.size;
           layers = components.map((component, seq) => ({
@@ -1071,7 +1107,14 @@ export class UnpackPreviewService {
       fields: compactFields([
         field('use animation', numText(parsedAls.uses.size)),
         field('add 图层', numText(parsedAls.adds.length)),
-        mainAniPath ? field('主 ANI', isPathInsideRoot(archiveRoot, mainAniPath) ? normalizeTreeRelative(archiveRoot, mainAniPath) : mainAniPath) : field('主 ANI', '未找到同名 .ani，按 ALS 图层独立合成'),
+        mainAniPath
+          ? field(
+            '主 ANI',
+            isPathInsideRoot(archiveRoot, mainAniPath)
+              ? normalizeTreeRelative(archiveRoot, mainAniPath)
+              : mainAniPath,
+          )
+          : field('主 ANI', '未找到同名 .ani，按 ALS 图层独立合成'),
         field('图片引用', numText(imageCount)),
         field('已加载图片', numText(loadedImageCount)),
         missingImageCount ? field('未解析图片', numText(missingImageCount), 'warning') : undefined,
@@ -1133,6 +1176,10 @@ export class UnpackPreviewService {
       for (const file of configuredEntries) push(file);
       const linkedEntries = await this.resolveLinkedResourceEntries(input, entries, resourceOptions.includeAnimation === true);
       for (const file of linkedEntries) push(file);
+      if (resourceOptions.includeAnimation === true) {
+        const animationImageEntries = await this.resolveLinkedResourceEntries(input, entries.filter(entry => entry.resourceKind === 'ani' || entry.resourceKind === 'als'), true);
+        for (const file of animationImageEntries) push(file);
+      }
       const animation = resourceOptions.includeAnimation === true
         ? await this.buildSkillAnimationPreview(input, dedupePreviewEntries(entries), options)
         : undefined;
@@ -1159,6 +1206,10 @@ export class UnpackPreviewService {
         ]))
       : [];
     for (const file of aniEntries) push(file);
+    if (resourceOptions.includeAnimation === true) {
+      const animationImageEntries = await this.resolveLinkedResourceEntries(input, aniEntries, true);
+      for (const file of animationImageEntries) push(file);
+    }
 
     const animation = resourceOptions.includeAnimation === true
       ? await this.buildSkillAnimationPreview(input, dedupePreviewEntries(entries), options)
@@ -1176,7 +1227,7 @@ export class UnpackPreviewService {
     const scanned = new Set<string>();
     const queue: Array<{ entry: UnpackPreviewEntry; depth: number }> = [];
     for (const source of sources) {
-      if (source.fsPath) outSeen.add(canonicalFsPathKey(source.fsPath));
+      outSeen.add(previewEntryIdentity(source));
       if (canTraceLinkedResources(source)) queue.push({ entry: source, depth: 0 });
     }
 
@@ -1200,9 +1251,10 @@ export class UnpackPreviewService {
         const kind = resourceKindFromKey(ref);
         if (!kind || (kind === 'ani' && !includeAnimation)) continue;
         const resolved = await resolveReferencedArchiveFile(input.root, baseDir, ref);
-        if (!resolved) continue;
-        const resolvedKey = canonicalFsPathKey(resolved);
-        const key = normalizeTreeRelative(input.root, resolved);
+        const logicalImgKey = kind === 'img' ? normalizeUnpackKey(ref) : '';
+        if (!resolved && !logicalImgKey) continue;
+        const resolvedKey = resolved ? canonicalFsPathKey(resolved) : '';
+        const key = resolved ? normalizeTreeRelative(input.root, resolved) : logicalImgKey;
         const role = resourceRoleFromKey(key, kind);
         const refOrder = typeof item.order === 'number' ? item.order : fallbackRefOrder;
         const resourceOrder = source.resourceKind === 'obj' && typeof source.resourceOrder === 'number'
@@ -1210,24 +1262,25 @@ export class UnpackPreviewService {
           : undefined;
         fallbackRefOrder++;
         const entry: UnpackPreviewEntry = {
-          name: path.basename(resolved),
+          name: path.basename(resolved || key),
           key,
-          fsPath: resolved,
+          ...(resolved ? { fsPath: resolved } : {}),
           resourceKind: kind,
           resourceRole: role,
           resourceSource: 'linked',
           ...(typeof resourceOrder === 'number' ? { resourceOrder } : {}),
           detail: `${resourceLabel(kind, role)} / ${source.name || path.basename(source.fsPath)}`,
         };
-        if (!outSeen.has(resolvedKey)) {
-          outSeen.add(resolvedKey);
+        const entryIdentity = previewEntryIdentity(entry);
+        if (!outSeen.has(entryIdentity)) {
+          outSeen.add(entryIdentity);
           out.push(entry);
           if (out.length >= LINKED_RESOURCE_TRACE_MAX_ENTRIES) break;
         }
-        if (depth + 1 < LINKED_RESOURCE_TRACE_MAX_DEPTH && canTraceLinkedResources(entry) && !scanned.has(resolvedKey)) {
+        if (resolvedKey && depth + 1 < LINKED_RESOURCE_TRACE_MAX_DEPTH && canTraceLinkedResources(entry) && !scanned.has(resolvedKey)) {
           queue.push({ entry, depth: depth + 1 });
         }
-        if (kind === 'ani' && includeAnimation) {
+        if (kind === 'ani' && includeAnimation && resolved) {
           const alsEntry = await sidecarAlsEntry(input.root, resolved, entry, typeof resourceOrder === 'number' ? resourceOrder + 0.1 : undefined);
           if (alsEntry?.fsPath) {
             const alsKey = canonicalFsPathKey(alsEntry.fsPath);
@@ -1276,10 +1329,33 @@ export class UnpackPreviewService {
         let built: { timeline: TimelineFrame[]; albumMap: Map<string, any> } | undefined;
         if (parsedAls?.adds.length) {
           try {
-            const layerMap = await expandAlsLayers(false, this.context, undefined, npkRoot, path.dirname(source.fsPath), parsedAls, this.output as vscode.OutputChannel | undefined);
+            const layerMap = await expandAlsLayers(
+              false,
+              this.context,
+              undefined,
+              npkRoot,
+              path.dirname(source.fsPath),
+              parsedAls,
+              this.output as vscode.OutputChannel | undefined,
+            );
             if (layerMap.size) {
-              built = await buildCompositeTimeline(this.context, npkRoot, parsed.framesSeq, parsedAls, layerMap, this.output as vscode.OutputChannel | undefined, { skipImageScan: true });
-              layers = parsedAls.adds.map((add, seq) => ({ id: alsLayerInstanceId(parsedAls.adds, seq) || add.id, sourceId: add.id, relLayer: add.relLayer, order: add.order, ...(add.kind ? { kind: add.kind } : {}), seq }));
+              built = await buildCompositeTimeline(
+                this.context,
+                npkRoot,
+                parsed.framesSeq,
+                parsedAls,
+                layerMap,
+                this.output as vscode.OutputChannel | undefined,
+                { skipImageScan: true },
+              );
+              layers = parsedAls.adds.map((add, seq) => ({
+                id: alsLayerInstanceId(parsedAls.adds, seq) || add.id,
+                sourceId: add.id,
+                relLayer: add.relLayer,
+                order: add.order,
+                ...(add.kind ? { kind: add.kind } : {}),
+                seq,
+              }));
               uses = Array.from(parsedAls.uses.values()).map(use => ({ id: use.id, path: use.path }));
             }
           } catch (err: any) {
@@ -1293,7 +1369,9 @@ export class UnpackPreviewService {
         const uniqueImages = new Set(parsed.framesSeq.map(frame => (frame.img || '').trim()).filter(Boolean));
         missingImageCount = Math.max(0, uniqueImages.size - built.albumMap.size);
       } catch (err: any) {
-        this.output?.appendLine(`[PVF] failed to build skill ANI timeline ${input.key} -> ${source.key}: ${String(err && err.message || err)}`);
+        this.output?.appendLine(
+          `[PVF] failed to build skill ANI timeline ${input.key} -> ${source.key}: ${String(err && err.message || err)}`,
+        );
         timeline = fallbackTimeline(parsed.framesSeq);
       }
     }
@@ -1308,7 +1386,10 @@ export class UnpackPreviewService {
     };
   }
 
-  private async firstRenderableAni(entries: UnpackPreviewEntry[]): Promise<{ source: UnpackPreviewEntry & { fsPath: string }; parsed: ReturnType<typeof parseAniText> } | undefined> {
+  private async firstRenderableAni(entries: UnpackPreviewEntry[]): Promise<{
+    source: UnpackPreviewEntry & { fsPath: string };
+    parsed: ReturnType<typeof parseAniText>;
+  } | undefined> {
     for (const candidate of entries) {
       if (!candidate.fsPath) continue;
       let text = '';
@@ -1408,7 +1489,11 @@ export class UnpackPreviewService {
     const distinctDepths = new Set(relativeComponents.map(item => item.relLayer));
     const lastFrame = built.timeline[built.timeline.length - 1] as any;
     const durationMs = (lastFrame?.timeMs || 0) + (lastFrame?.delay || 0);
-    this.output?.appendLine(`[PVF] skill stage timeline ${input.key}: main=${main.key || main.path} components=${relativeComponents.length} base=${components.length} layers=${distinctDepths.size} frames=${built.timeline.length} duration=${durationMs}ms`);
+    this.output?.appendLine(
+      `[PVF] skill stage timeline ${input.key}: main=${main.key || main.path}`
+      + ` components=${relativeComponents.length} base=${components.length}`
+      + ` layers=${distinctDepths.size} frames=${built.timeline.length} duration=${durationMs}ms`,
+    );
     return {
       timeline: built.timeline,
       source: mainEntry,
@@ -1537,7 +1622,15 @@ export class UnpackPreviewService {
       } else if (entry.resourceKind === 'obj' || /\.obj$/i.test(entry.fsPath)) {
         let text = '';
         try { text = await readUtf8Text(entry.fsPath); } catch { continue; }
-        for (const ref of extractObjStageAniRefs(text)) add({ ...ref, source: entry, orderHint: typeof entry.resourceOrder === 'number' ? entry.resourceOrder * 100 + ref.orderHint : ref.orderHint + 500 });
+        for (const ref of extractObjStageAniRefs(text)) {
+          add({
+            ...ref,
+            source: entry,
+            orderHint: typeof entry.resourceOrder === 'number'
+              ? entry.resourceOrder * 100 + ref.orderHint
+              : ref.orderHint + 500,
+          });
+        }
       }
     }
     const hasDeclaredStageRefs = refs.length > 0;
@@ -2383,7 +2476,14 @@ function canonicalFsPathKey(fsPath: string): string {
 }
 
 function canTraceLinkedResources(entry: UnpackPreviewEntry): boolean {
-  return !!entry.fsPath && (entry.resourceKind === 'nut' || entry.resourceKind === 'obj' || entry.resourceKind === 'act' || entry.resourceKind === 'als');
+  return !!entry.fsPath
+    && (
+      entry.resourceKind === 'nut'
+      || entry.resourceKind === 'obj'
+      || entry.resourceKind === 'act'
+      || entry.resourceKind === 'ani'
+      || entry.resourceKind === 'als'
+    );
 }
 
 function dedupePreviewEntries(entries: UnpackPreviewEntry[]): UnpackPreviewEntry[] {
@@ -2456,6 +2556,38 @@ function animationPreviewEntryScore(entry: UnpackPreviewEntry): number {
   if (name.includes('effect') || name.includes('particle') || name.includes('floor') || name.includes('light') || name.includes('magic')) score -= 4;
   if (name.includes('[pvp]')) score += 5;
   return score;
+}
+
+function collectUniqueFrameImages(frames: FrameSeqEntry[]): string[] {
+  const out: string[] = [];
+  const seen = new Set<string>();
+  for (const frame of frames) {
+    const img = normalizeUnpackKey((frame.img || '').trim());
+    if (!img || seen.has(img)) continue;
+    seen.add(img);
+    out.push(img);
+  }
+  return out;
+}
+
+function imageReferenceEntries(images: string[], detail: string): UnpackPreviewEntry[] {
+  const out: UnpackPreviewEntry[] = [];
+  const seen = new Set<string>();
+  for (const image of images) {
+    const key = normalizeUnpackKey(image);
+    if (!key || !key.endsWith('.img') || seen.has(key)) continue;
+    seen.add(key);
+    const role = resourceRoleFromKey(key, 'img');
+    out.push({
+      name: path.basename(key),
+      key,
+      resourceKind: 'img',
+      resourceRole: role,
+      resourceSource: 'linked',
+      detail: `${resourceLabel('img', role)} / ${detail}`,
+    });
+  }
+  return out;
 }
 
 function aniTextImagePathRatio(text: string): number {
@@ -2910,7 +3042,13 @@ function field(label: string, value: string | undefined, tone?: UnpackPreviewFie
   return value ? { label, value, ...(tone ? { tone } : {}) } : undefined;
 }
 
-function tagField(titles: PreviewTagTitles | undefined, tag: string, fallbackLabel: string, value: string | undefined, tone?: UnpackPreviewField['tone']): UnpackPreviewField | undefined {
+function tagField(
+  titles: PreviewTagTitles | undefined,
+  tag: string,
+  fallbackLabel: string,
+  value: string | undefined,
+  tone?: UnpackPreviewField['tone'],
+): UnpackPreviewField | undefined {
   if (!value) return undefined;
   return { ...tagLabel(titles, tag, fallbackLabel), value, ...(tone ? { tone } : {}) };
 }

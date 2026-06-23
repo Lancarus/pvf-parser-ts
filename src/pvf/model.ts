@@ -200,7 +200,7 @@ export class PvfModel {
     if (!f) return '';
     const data = await this.loadFileData(f);
     if (this.archiveFormat === 'nkpi' && this.nkpiState) {
-      const rendered = decodeNkpiFileForEditor(data.subarray(0, f.dataLen), (f as any).nkpiDataType ?? 0, this.nkpiState.archive);
+      const rendered = decodeNkpiFileForEditor(data.subarray(0, f.dataLen), (f as any).nkpiDataType ?? 0, this.nkpiState.archive, key);
       if (rendered) return rendered.toString('utf8').replace(/^\uFEFF/, '');
     }
     const enc = detectEncoding(key, data.subarray(0, f.dataLen));
@@ -213,7 +213,7 @@ export class PvfModel {
     if (!f) return new Uint8Array();
     const raw = await this.loadFileData(f);
     if (this.archiveFormat === 'nkpi' && this.nkpiState) {
-      const rendered = decodeNkpiFileForEditor(raw.subarray(0, f.dataLen), (f as any).nkpiDataType ?? 0, this.nkpiState.archive);
+      const rendered = decodeNkpiFileForEditor(raw.subarray(0, f.dataLen), (f as any).nkpiDataType ?? 0, this.nkpiState.archive, key);
       if (rendered) return new Uint8Array(rendered.buffer, rendered.byteOffset, rendered.byteLength);
     }
     // pvfUtility 行为对齐：
@@ -364,7 +364,15 @@ export class PvfModel {
           const txtGuess = iconv.decode(Buffer.from(origSlice), encGuess);
           let newline = '\n';
           if (txtGuess.indexOf('\r\n') >= 0) newline = '\r\n'; else if (txtGuess.indexOf('\r') >= 0 && txtGuess.indexOf('\n') < 0) newline = '\r';
-          this.originalTextMeta.set(lower, { encoding: encGuess, newline, hadBom: origSlice.length >= 3 && origSlice[0] === 0xEF && origSlice[1] === 0xBB && origSlice[2] === 0xBF, finalNewline: /\r?\n$/.test(txtGuess) });
+          this.originalTextMeta.set(lower, {
+            encoding: encGuess,
+            newline,
+            hadBom: origSlice.length >= 3
+              && origSlice[0] === 0xEF
+              && origSlice[1] === 0xBB
+              && origSlice[2] === 0xBF,
+            finalNewline: /\r?\n$/.test(txtGuess),
+          });
         }
       }
       const meta = this.originalTextMeta.get(lower);
@@ -406,7 +414,15 @@ export class PvfModel {
           const txtGuess = iconv.decode(Buffer.from(origSlice), encGuess);
           let newline = '\n';
           if (txtGuess.indexOf('\r\n') >= 0) newline = '\r\n'; else if (txtGuess.indexOf('\r') >= 0 && txtGuess.indexOf('\n') < 0) newline = '\r';
-          this.originalTextMeta.set(lower, { encoding: encGuess, newline, hadBom: origSlice.length >= 3 && origSlice[0] === 0xEF && origSlice[1] === 0xBB && origSlice[2] === 0xBF, finalNewline: /\r?\n$/.test(txtGuess) });
+          this.originalTextMeta.set(lower, {
+            encoding: encGuess,
+            newline,
+            hadBom: origSlice.length >= 3
+              && origSlice[0] === 0xEF
+              && origSlice[1] === 0xBB
+              && origSlice[2] === 0xBF,
+            finalNewline: /\r?\n$/.test(txtGuess),
+          });
         }
       }
       const meta = this.originalTextMeta.get(lower);

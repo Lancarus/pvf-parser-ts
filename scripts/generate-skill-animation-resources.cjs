@@ -384,6 +384,173 @@ function preloadingImgs(text) {
   return Array.from(new Set(out)).sort();
 }
 
+function aniImgs(text) {
+  const out = [];
+  const seen = new Set();
+  const blockRegex = /\[FRAME\d{3}\]([\s\S]*?)(?=\n\[FRAME|$)/gi;
+  let lastImagePath = '';
+  let match;
+  while ((match = blockRegex.exec(text))) {
+    const block = match[1] || '';
+    const image = /\[IMAGE\]\s*\r?\n\s*([^\r\n]*)/i.exec(block)?.[1];
+    const parsed = parseAniImageLine(image, lastImagePath);
+    if (parsed.path) lastImagePath = parsed.path;
+    if (!parsed.path || !/\.img$/i.test(parsed.path)) continue;
+    const key = normalizeKey(parsed.path);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(key);
+  }
+  return out;
+}
+
+function parseAniImageLine(value, lastImagePath) {
+  const text = String(value || '').trim();
+  if (!text) return { path: '' };
+  if (/^-?\d+$/.test(text)) return { path: lastImagePath };
+  const quoted = text.match(/^[`'"]([^`'"]+)[`'"]\s*(.*)$/);
+  if (quoted) return { path: quoted[1].trim() };
+  const bare = text.match(/^([^\s]+\.img)\s*(.*)$/i);
+  if (bare) return { path: bare[1].trim() };
+  const cleaned = cleanValue(text);
+  return { path: cleaned || '' };
+}
+
+function taggedBlockLines(text, tagName) {
+  const lines = text.replace(/\r\n?/g, '\n').split('\n');
+  const target = tagName.trim().toLowerCase();
+  const out = [];
+  let collecting = false;
+  for (const rawLine of lines) {
+    const trimmed = rawLine.trim();
+    const tagMatch = trimmed.match(/^\[([^\]]+)\]\s*(.*)$/);
+    if (!collecting) {
+      if (!tagMatch || tagMatch[1].trim().toLowerCase() !== target) continue;
+      collecting = true;
+      const inline = tagMatch[2]?.trim();
+      if (inline && !inline.startsWith('//')) out.push(inline);
+      continue;
+    }
+    if (tagMatch) break;
+    if (trimmed && !trimmed.startsWith('//')) out.push(trimmed);
+  }
+  return out;
+}
+
+function animationRefsFromText(text) {
+  const refs = [];
+  const seen = new Set();
+  const add = (value) => {
+    const cleaned = cleanValue(value);
+    if (!cleaned || !/\.ani$/i.test(cleaned)) return;
+    const key = normalizeKey(cleaned);
+    if (seen.has(key)) return;
+    seen.add(key);
+    refs.push(cleaned);
+  };
+  add(firstTaggedLine(text, 'base ani'));
+  add(firstTaggedLine(text, 'basic motion'));
+  for (const line of taggedBlockLines(text, 'sub ani')) add(extractAniPath(line));
+  for (const line of taggedBlockLines(text, 'sub ani with xy')) add(extractAniPath(line));
+  for (const line of taggedBlockLines(text, 'sub ani with xyz')) add(extractAniPath(line));
+  for (const line of taggedBlockLines(text, 'etc motion')) add(extractAniPath(line));
+  for (const line of taggedBlockLines(text, 'add object effect')) add(extractAniPath(line));
+  for (const match of text.matchAll(/[`'"]([^`'"]+\.ani)[`'"]/gi)) add(match[1]);
+  return refs;
+}
+
+function extractAniPath(line) {
+  const text = String(line || '');
+  const quoted = text.match(/[`'"]([^`'"]+\.ani)[`'"]/i);
+  if (quoted) return quoted[1];
+  const bare = text.match(/(^|[\s\t])([A-Za-z0-9_./\\-]+\.ani)(?=$|[\s\t),;])/i);
+  return bare?.[2];
+}
+
+function alsUseAnimationRefs(text) {
+  const out = [];
+  const seen = new Set();
+  const lines = text.replace(/\r\n?/g, '\n').split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const tag = lines[i].trim().match(/^\[use\s+animation\]\s*(.*)$/i);
+    if (!tag) continue;
+    const inline = cleanValue(tag[1]);
+    const next = cleanValue(lines[i + 1]);
+    const value = inline && /\.ani$/i.test(inline) ? inline : next;
+    if (!value || !/\.ani$/i.test(value)) continue;
+    const key = normalizeKey(value);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(key);
+  }
+  return out;
+}
+
+function resolveArchiveRef(root, baseKey, ref) {
+  const normalized = normalizeKey(ref);
+  const candidates = [];
+  if (/^[a-z]+\//i.test(normalized)) candidates.push(normalized);
+  const baseDir = path.posix.dirname(normalizeKey(baseKey));
+  candidates.push(normalizeKey(path.posix.join(baseDir, normalized)));
+  for (const key of candidates) {
+    const file = safeJoin(root, key);
+    if (file && fs.existsSync(file)) return { key, file };
+  }
+  return undefined;
+}
+
+function collectAnimationImgs(root, entries) {
+  const out = [];
+  const seenImgs = new Set();
+  const queue = [];
+  const seenAni = new Set();
+  const addImg = (value) => {
+    const key = normalizeKey(value);
+    if (!key || !key.endsWith('.img') || seenImgs.has(key)) return;
+    seenImgs.add(key);
+    out.push(key);
+  };
+  const enqueueAni = (key) => {
+    const normalized = normalizeKey(key);
+    if (!normalized || seenAni.has(normalized)) return;
+    const file = safeJoin(root, normalized);
+    if (!file || !fs.existsSync(file)) return;
+    seenAni.add(normalized);
+    queue.push({ key: normalized, file });
+  };
+  const enqueueRefsFromScript = (key) => {
+    const file = safeJoin(root, key);
+    if (!file || !fs.existsSync(file)) return;
+    for (const ref of animationRefsFromText(readText(file))) {
+      const resolved = resolveArchiveRef(root, key, ref);
+      if (resolved) enqueueAni(resolved.key);
+    }
+  };
+  for (const key of entries.act || []) enqueueRefsFromScript(key);
+  for (const key of entries.obj || []) enqueueRefsFromScript(key);
+  for (const key of entries.ani || []) enqueueAni(key);
+  for (const key of entries.als || []) {
+    const file = safeJoin(root, key);
+    if (!file || !fs.existsSync(file)) continue;
+    for (const ref of alsUseAnimationRefs(readText(file))) {
+      const resolved = resolveArchiveRef(root, key, ref);
+      if (resolved) enqueueAni(resolved.key);
+    }
+  }
+  for (let i = 0; i < queue.length && i < 64; i++) {
+    const item = queue[i];
+    const text = readText(item.file);
+    for (const img of aniImgs(text)) addImg(img);
+    const als = safeJoin(root, `${item.key}.als`);
+    if (!als || !fs.existsSync(als)) continue;
+    for (const ref of alsUseAnimationRefs(readText(als))) {
+      const resolved = resolveArchiveRef(root, `${item.key}.als`, ref);
+      if (resolved) enqueueAni(resolved.key);
+    }
+  }
+  return out.sort();
+}
+
 function build() {
   const env = parseEnv(fs.existsSync(envPath) ? fs.readFileSync(envPath, 'utf8') : '');
   const unpackDir = env.UNPACK_DIR || env.PVF_UNPACK_DIR || env.pvf_unpack_dir;
@@ -410,7 +577,10 @@ function build() {
     const ani = overrideAni.length ? overrideAni : (obj.length || act.length ? [] : findAniRefs(root, info));
     const als = overrideAls;
     const atk = obj.length || hasOverrideAnimation ? [] : findAtkRefs(root, info);
-    const img = preloadingImgs(text);
+    const img = Array.from(new Set([
+      ...preloadingImgs(text),
+      ...collectAnimationImgs(root, { act, obj, ani, als }),
+    ])).sort();
     if (obj.length) entry.obj = obj;
     if (act.length) entry.act = act;
     if (ani.length) entry.ani = ani;
