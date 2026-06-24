@@ -297,13 +297,13 @@
       "comment": "游戏内视频列表"
     },
     "cashshop": {
-      "comment": "SHP"
+      "comment": "商城"
     },
     "common": {
-      "comment": "C"
+      "comment": "通用"
     },
     "clientonly": {
-      "comment": "test"
+      "comment": "本地文件？"
     },
     "creature/aquajello/aquajello.cre": {
       "comment": "test"
@@ -4270,11 +4270,8 @@
     }
   },
   "versions": {
-    "0": {
+    "jp86": {
       "comments": {
-        "clientonly": {
-          "comment": "本地文件？"
-        },
         "character/knight": {
           "comment": "守护者"
         }
