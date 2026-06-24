@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as fsp from 'fs/promises';
 import * as path from 'path';
 import * as zlib from 'zlib';
+import * as iconv from 'iconv-lite';
 import { performance } from 'perf_hooks';
 import { PvfFile } from './pvfFile';
 import {
@@ -71,6 +72,7 @@ export interface NkpiArchiveData {
   rawHashBytes: Buffer;
   rawNameBytes: Buffer;
   rawGrpiBytes: Buffer;
+  stringOffsetCache?: Map<string, number>;
 }
 
 export interface NkpiModelState {
@@ -162,7 +164,7 @@ export async function openNkpiIntoModel(model: any, filePath: string, progress?:
 export function readNkpiFileData(state: NkpiModelState, f: PvfFile): Uint8Array {
   if (f.data) return f.data;
   const key = state.keyByFile.get(f) || (f as any).fileNameOverride;
-  const index = typeof key === 'string' ? state.indexByKey.get(key) : undefined;
+  const index = typeof key === 'string' ? findNkpiFileIndex(state.indexByKey, key) : undefined;
   if (index === undefined) {
     f.data = new Uint8Array(0);
     return f.data;
@@ -176,6 +178,13 @@ export function readNkpiFileData(state: NkpiModelState, f: PvfFile): Uint8Array 
   const raw = chunk.subarray(file.entry.dataOffset, file.entry.dataOffset + file.entry.dataSize);
   f.data = new Uint8Array(raw.buffer, raw.byteOffset, raw.byteLength).slice();
   return f.data;
+}
+
+function findNkpiFileIndex(indexByKey: Map<string, number>, key: string): number | undefined {
+  const normalized = normalizeArchiveKey(key);
+  return indexByKey.get(normalized)
+    ?? indexByKey.get(`./${normalized}`)
+    ?? (normalized.startsWith('./') ? indexByKey.get(normalized.slice(2)) : undefined);
 }
 
 export async function unpackNkpiToDirectory(
@@ -377,7 +386,7 @@ export async function repackNkpiDirectory(
           const sourceKey = archive.files[fileIndex].key;
           let rawDisk = await fsp.readFile(diskPath);
           const manifestEntry = manifestEntries.get(sourceKey);
-          rawDisk = prepareRepackData(rawDisk, manifestEntry?.[1], item.dataType, archive);
+          rawDisk = prepareRepackData(rawDisk, manifestEntry?.[1], item.dataType, archive, sourceKey);
           if (diskSize !== item.dataSize || await fileContentDiffersBuffer(rawDisk, archive, archive.files[fileIndex])) {
             result.replaced++;
             updates.push({ fileIndex, newData: rawDisk });
@@ -557,10 +566,10 @@ export function decodeNkpiFileForEditor(data: Uint8Array, dataType: number, arch
   return undefined;
 }
 
-export function encodeNkpiEditorContent(content: Uint8Array, dataType: number, archive: NkpiArchiveData): Buffer | undefined {
+export function encodeNkpiEditorContent(content: Uint8Array, dataType: number, archive: NkpiArchiveData, key?: string): Buffer | undefined {
   let text = Buffer.from(content).toString('utf8');
   text = stripUtf8Bom(text);
-  if (dataType === 1) return encodeType1Text(text, archive);
+  if (dataType === 1) return encodeType1Text(text, archive, key);
   if (dataType === 3) return Buffer.from(text, 'utf16le');
   return undefined;
 }
@@ -799,6 +808,49 @@ function resolveString(strA: Buffer, strW: Buffer, magicOffset: number): string 
     : readUtf8String(strA, magicOffset >> 1);
 }
 
+function resolveDisplayString(strA: Buffer, strW: Buffer, magicOffset: number, restoreCp949MojibakeText: boolean): string {
+  const text = resolveString(strA, strW, magicOffset);
+  return restoreCp949MojibakeText ? restoreCp949Mojibake(text) : text;
+}
+
+function restoreCp949Mojibake(text: string): string {
+  if (!looksLikeChineseMojibake(text)) return text;
+  const restored = iconv.decode(iconv.encode(text, 'gb18030'), 'cp949');
+  return isLikelyRestoredCp949(restored) ? restored : text;
+}
+
+function looksLikeChineseMojibake(text: string): boolean {
+  let cjk = 0;
+  let hangul = 0;
+  for (const ch of text) {
+    const code = ch.charCodeAt(0);
+    if (code >= 0x4e00 && code <= 0x9fff) cjk++;
+    else if (code >= 0xac00 && code <= 0xd7af) hangul++;
+  }
+  return cjk > 0 && hangul === 0;
+}
+
+function isLikelyRestoredCp949(text: string): boolean {
+  let hangul = 0;
+  let cjk = 0;
+  let other = 0;
+  for (const ch of text) {
+    const code = ch.charCodeAt(0);
+    if (code >= 0xac00 && code <= 0xd7af) hangul++;
+    else if (code >= 0x4e00 && code <= 0x9fff) cjk++;
+    else if (isSafeRestoredCp949Char(ch)) {
+      // Safe punctuation/ASCII commonly appears in Korean name lists.
+    }
+    else other++;
+  }
+  return hangul > 0 && cjk === 0 && other === 0 && hangul >= Math.ceil((hangul + cjk) * 0.8);
+}
+
+function isSafeRestoredCp949Char(ch: string): boolean {
+  return /[A-Za-z0-9\s`~!@#$%^&*()[\]{}_\-+=:;"',.<>/?\\|]/.test(ch)
+    || '☆★○●◎◇◆□■△▲▽▼※·ㆍ…，。、：；！？（）【】《》〈〉'.includes(ch);
+}
+
 function sanitizePathPart(part: string): string {
   return part.replace(WINDOWS_INVALID_NAME_CHARS, '_');
 }
@@ -858,13 +910,19 @@ interface NkpiType1Token {
   text: string;
 }
 
+interface NkpiScriptTagToken {
+  name: string;
+  closing: boolean;
+}
+
 function decodeType1(data: Buffer, archive: NkpiArchiveData, key = ''): string {
-  const tokens = decodeType1Tokens(data, archive);
-  if (key.toLowerCase().endsWith('.lst')) return formatNkpiLst(tokens);
+  const normalizedKey = normalizeArchiveKey(key);
+  const tokens = decodeType1Tokens(data, archive, shouldRestoreNkpiLstCp949Mojibake(normalizedKey));
+  if (normalizedKey.endsWith('.lst')) return formatNkpiLst(tokens);
   return formatNkpiScript(tokens, key);
 }
 
-function decodeType1Tokens(data: Buffer, archive: NkpiArchiveData): NkpiType1Token[] {
+function decodeType1Tokens(data: Buffer, archive: NkpiArchiveData, restoreCp949MojibakeText: boolean): NkpiType1Token[] {
   const tokens: NkpiType1Token[] = [];
   for (let off = 0; off + 4 < data.length; off += 5) {
     const type = data[off];
@@ -878,16 +936,16 @@ function decodeType1Tokens(data: Buffer, archive: NkpiArchiveData): NkpiType1Tok
         tokens.push({ kind: 'data', text: formatFloat32(uvalue) });
         break;
       case 3:
-        tokens.push({ kind: 'tag', text: resolveString(archive.strA, archive.strW, value) });
+        tokens.push({ kind: 'tag', text: resolveDisplayString(archive.strA, archive.strW, value, restoreCp949MojibakeText) });
         break;
       case 5:
-        tokens.push({ kind: 'marker', text: '{5=``}' });
+        tokens.push({ kind: 'marker', text: formatType1Marker(5, value) });
         break;
       case 6:
-        tokens.push({ kind: 'data', text: '`' + resolveString(archive.strA, archive.strW, value) + '`' });
+        tokens.push({ kind: 'data', text: '`' + resolveDisplayString(archive.strA, archive.strW, value, restoreCp949MojibakeText) + '`' });
         break;
       case 7:
-        tokens.push({ kind: 'marker', text: '{7=``}' });
+        tokens.push({ kind: 'marker', text: formatType1Marker(7, value) });
         break;
       default:
         tokens.push({ kind: 'data', text: `{${type}=${value}}` });
@@ -904,7 +962,7 @@ function formatNkpiLst(tokens: NkpiType1Token[]): string {
     if (!a) break;
     const b = tokens[i];
     if (b && a.kind === 'data' && b.kind === 'data') {
-      lines.push(`${a.text}\t${b.text}`);
+      lines.push(formatNkpiLstPair(a.text, b.text));
       i++;
     } else {
       lines.push(a.text);
@@ -913,59 +971,175 @@ function formatNkpiLst(tokens: NkpiType1Token[]): string {
   return lines.join('\n') + '\n';
 }
 
+function formatType1Marker(type: number, value: number): string {
+  return value === 0 ? `{${type}=\`\`}` : `{${type}=${value}}`;
+}
+
+function formatNkpiLstPair(left: string, right: string): string {
+  if (isIntegerToken(left) && !isIntegerToken(right)) return `${left}\t${right}`;
+  if (isIntegerToken(right) && !isIntegerToken(left)) return `${right}\t${left}`;
+  return `${left}\t${right}`;
+}
+
+function isIntegerToken(value: string): boolean {
+  return /^-?\d+$/.test(value);
+}
+
 function formatNkpiScript(tokens: NkpiType1Token[], key: string): string {
   const lines = ['#PVF_File', ''];
-  let line: string[] = [];
-  const flushLine = () => {
-    if (line.length > 0) {
-      lines.push(line.join(' '));
-      line = [];
+  const isSkl = key.toLowerCase().endsWith('.skl');
+  const pairedTags = collectPairedScriptTags(tokens);
+  const stack: string[] = [];
+  let currentSection = '';
+  let currentIndent = 0;
+  let dataTokens: NkpiType1Token[] = [];
+  const flushData = () => {
+    if (dataTokens.length > 0) {
+      emitScriptDataLines(dataTokens, lines, currentIndent, currentSection, isSkl);
+      dataTokens = [];
     }
   };
-  const isSkl = key.toLowerCase().endsWith('.skl');
-  let currentSection = '';
-  for (let i = 0; i < tokens.length;) {
+  const pushTagLine = (text: string, indent: number, closing = false) => {
+    if (!closing && indent === 0 && lines.length > 0 && lines[lines.length - 1] !== '') lines.push('');
+    lines.push(`${indentTabs(indent)}${text}`);
+  };
+  for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
     if (token.kind === 'tag') {
-      flushLine();
-      lines.push(token.text);
-      currentSection = token.text.toLowerCase();
-      i++;
+      flushData();
+      const tag = parseNkpiScriptTag(token.text);
+      if (tag?.closing) {
+        const top = stack[stack.length - 1];
+        let indent = Math.max(0, stack.length - 1);
+        if (top === tag.name) {
+          stack.pop();
+          indent = stack.length;
+        } else {
+          const matchIndex = stack.lastIndexOf(tag.name);
+          if (matchIndex >= 0) {
+            stack.length = matchIndex;
+            indent = stack.length;
+          }
+        }
+        pushTagLine(token.text, indent, true);
+        currentSection = stack[stack.length - 1] || '';
+        currentIndent = stack.length;
+      } else {
+        const name = tag?.name || token.text.toLowerCase();
+        const indent = stack.length;
+        pushTagLine(token.text, indent, false);
+        currentSection = name;
+        currentIndent = indent + 1;
+        if (pairedTags.has(name)) stack.push(name);
+      }
       continue;
     }
     if (token.kind === 'marker') {
-      flushLine();
-      lines.push(token.text);
-      i++;
+      dataTokens.push(token);
       continue;
     }
-    if (isSkl && currentSection === '[level info]') {
-      const dataTokens: string[] = [];
-      while (i < tokens.length && tokens[i].kind === 'data') {
-        dataTokens.push(tokens[i].text);
-        i++;
-      }
-      emitSklLevelInfoLines(dataTokens, lines);
-      continue;
-    }
-    line.push(token.text);
-    i++;
+    dataTokens.push(token);
   }
-  flushLine();
+  flushData();
   return lines.join('\n');
 }
 
-function emitSklLevelInfoLines(tokens: string[], lines: string[]): void {
+function collectPairedScriptTags(tokens: NkpiType1Token[]): Set<string> {
+  const paired = new Set<string>();
+  for (const token of tokens) {
+    if (token.kind !== 'tag') continue;
+    const tag = parseNkpiScriptTag(token.text);
+    if (tag?.closing) paired.add(tag.name);
+  }
+  return paired;
+}
+
+function parseNkpiScriptTag(text: string): NkpiScriptTagToken | undefined {
+  const match = text.trim().match(/^\[(\/?)([^\]]+)\]$/);
+  if (!match) return undefined;
+  return { name: match[2].trim().toLowerCase(), closing: match[1] === '/' };
+}
+
+function indentTabs(indent: number): string {
+  return '\t'.repeat(Math.max(0, indent));
+}
+
+function emitScriptDataLines(
+  tokens: NkpiType1Token[],
+  lines: string[],
+  indent: number,
+  sectionName: string,
+  isSkl: boolean,
+): void {
+  const values = tokens.map(token => token.text);
+  if (values.length === 0) return;
+  if (isSkl && sectionName === 'level info') {
+    emitSklLevelInfoLines(values, lines, indent);
+    return;
+  }
+  if (tokens.every(token => token.kind === 'marker')) {
+    emitFixedWidthTokenLines(values, lines, indent, 1);
+    return;
+  }
+  if (sectionName === 'icon' && values.length > 2 && values.length % 2 === 0) {
+    emitFixedWidthTokenLines(values, lines, indent, 2);
+    return;
+  }
+  emitWrappedTokenLines(values, lines, indent);
+}
+
+function emitSklLevelInfoLines(tokens: string[], lines: string[], indent: number): void {
   if (tokens.length === 0) return;
   const colCount = Number(tokens[0]);
   if (!Number.isInteger(colCount) || colCount <= 0) {
-    lines.push(tokens.join(' '));
+    emitWrappedTokenLines(tokens, lines, indent);
     return;
   }
-  lines.push(tokens[0]);
-  for (let start = 1; start < tokens.length; start += colCount) {
-    lines.push(tokens.slice(start, start + colCount).join('\t'));
+  const prefix = indentTabs(indent);
+  lines.push(`${prefix}${tokens[0]}`);
+  const bodyColumnCount = levelInfoBodyColumnCount(tokens, colCount, prefix.length);
+  for (let start = 1; start < tokens.length; start += bodyColumnCount) {
+    lines.push(`${prefix}${tokens.slice(start, start + bodyColumnCount).join('\t')}`);
   }
+}
+
+function levelInfoBodyColumnCount(tokens: string[], declaredColumnCount: number, prefixLength: number): number {
+  const maxLineLength = 160;
+  const sample = tokens.slice(1, Math.min(tokens.length, declaredColumnCount + 1));
+  const declaredLineLength = prefixLength + sample.join('\t').length;
+  if (declaredColumnCount <= 32 && declaredLineLength <= maxLineLength) return declaredColumnCount;
+  let columns = Math.min(declaredColumnCount, 16);
+  while (columns > 1) {
+    const sampleLine = tokens.slice(1, Math.min(tokens.length, columns + 1)).join('\t');
+    if (prefixLength + sampleLine.length <= maxLineLength) return columns;
+    columns--;
+  }
+  return 1;
+}
+
+function emitFixedWidthTokenLines(tokens: string[], lines: string[], indent: number, width: number): void {
+  const prefix = indentTabs(indent);
+  for (let start = 0; start < tokens.length; start += width) {
+    lines.push(`${prefix}${tokens.slice(start, start + width).join('\t')}`);
+  }
+}
+
+function emitWrappedTokenLines(tokens: string[], lines: string[], indent: number): void {
+  const prefix = indentTabs(indent);
+  let row: string[] = [];
+  const maxLineLength = 160;
+  const flush = () => {
+    if (row.length > 0) {
+      lines.push(`${prefix}${row.join('\t')}`);
+      row = [];
+    }
+  };
+  for (const token of tokens) {
+    const next = row.length ? `${row.join('\t')}\t${token}` : token;
+    if (row.length > 0 && prefix.length + next.length > maxLineLength) flush();
+    row.push(token);
+  }
+  flush();
 }
 
 function prepareUnpackFileData(archive: NkpiArchiveData, file: NkpiFileRecord, chunk: Buffer | null): { kind: PvfDiskFileKind; encoding?: string; data: Buffer } | null {
@@ -986,19 +1160,34 @@ function prepareUnpackFileData(archive: NkpiArchiveData, file: NkpiFileRecord, c
   return { kind: 'binary', data: Buffer.from(raw) };
 }
 
-function prepareRepackData(rawDisk: Buffer, kind: PvfDiskFileKind | undefined, dataType: number, archive: NkpiArchiveData): Buffer {
-  if (dataType === 1 && (kind === 'script' || looksUtf8Text(rawDisk))) return encodeType1Text(stripUtf8Bom(rawDisk.toString('utf8')), archive);
+function prepareRepackData(
+  rawDisk: Buffer,
+  kind: PvfDiskFileKind | undefined,
+  dataType: number,
+  archive: NkpiArchiveData,
+  key?: string,
+): Buffer {
+  if (dataType === 1 && (kind === 'script' || looksUtf8Text(rawDisk))) {
+    return encodeType1Text(stripUtf8Bom(rawDisk.toString('utf8')), archive, key);
+  }
   if (dataType === 3 && (kind === 'text' || looksUtf8Text(rawDisk))) return Buffer.from(stripUtf8Bom(rawDisk.toString('utf8')), 'utf16le');
   return rawDisk;
 }
 
-function encodeType1Text(text: string, archive: NkpiArchiveData | undefined): Buffer {
+function encodeType1Text(text: string, archive: NkpiArchiveData | undefined, key?: string): Buffer {
   const out: number[] = [];
   const getOffset = (s: string): number => {
     if (!s) return archive ? findEmptyStringOffset(archive) : 0;
     return archive ? findOrResolveNameOffset(archive, s) : 0;
   };
+  const lowerKey = normalizeArchiveKey(key || '');
+  if (lowerKey.endsWith('.lst')) return encodeType1LstText(text, getOffset, shouldEncodeNkpiLstStringFirst(lowerKey));
   const lines = text.replace(/\r/g, '').split('\n');
+  encodeType1Lines(lines, out, getOffset);
+  return Buffer.from(out);
+}
+
+function encodeType1Lines(lines: string[], out: number[], getOffset: (s: string) => number): void {
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
     let line = lines[lineIndex];
     const trimmed = line.trim();
@@ -1058,7 +1247,8 @@ function encodeType1Text(text: string, archive: NkpiArchiveData | undefined): Bu
         const type = parseInt(body.slice(0, eq), 10);
         const rawValue = body.slice(eq + 1);
         let value = 0;
-        if (rawValue.startsWith('`') && rawValue.endsWith('`')) value = getOffset(rawValue.slice(1, -1));
+        if ((type === 5 || type === 7) && rawValue === '``') value = 0;
+        else if (rawValue.startsWith('`') && rawValue.endsWith('`')) value = getOffset(rawValue.slice(1, -1));
         else value = parseInt(rawValue, 10) | 0;
         pushType1(out, type, value);
       } else {
@@ -1066,7 +1256,6 @@ function encodeType1Text(text: string, archive: NkpiArchiveData | undefined): Bu
       }
     }
   }
-  return Buffer.from(out);
 }
 
 function pushType1(out: number[], type: number, value: number): void {
@@ -1085,25 +1274,107 @@ function findEmptyStringOffset(archive: NkpiArchiveData): number {
   return 0;
 }
 
+function encodeType1LstText(text: string, getOffset: (s: string) => number, stringFirst: boolean): Buffer {
+  const out: number[] = [];
+  const body = text.replace(/\r/g, '\n').replace(/^#PVF_File\b[^\n]*(?:\n|$)/i, '');
+  const pattern = /(-?\d+)\s+`([^`]*)`/g;
+  let matched = false;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(body)) !== null) {
+    matched = true;
+    const code = parseInt(match[1], 10) | 0;
+    const valueOffset = getOffset(match[2]);
+    if (stringFirst) {
+      pushType1(out, 6, valueOffset);
+      pushType1(out, 0, code);
+    } else {
+      pushType1(out, 0, code);
+      pushType1(out, 6, valueOffset);
+    }
+  }
+  return matched ? Buffer.from(out) : encodeType1GenericText(text, getOffset);
+}
+
+function shouldEncodeNkpiLstStringFirst(key: string): boolean {
+  const normalized = normalizeArchiveKey(key);
+  const base = normalized.startsWith('./') ? normalized.slice(2) : normalized;
+  return !base.includes('/')
+    && /^(?:aicharactername|itemname|monstername|npcname|passiveobjectname|skillname\d*)\.lst$/i.test(base);
+}
+
+function shouldRestoreNkpiLstCp949Mojibake(key: string): boolean {
+  return shouldEncodeNkpiLstStringFirst(key);
+}
+
+function encodeType1GenericText(text: string, getOffset: (s: string) => number): Buffer {
+  const out: number[] = [];
+  const lines = text.replace(/\r/g, '').split('\n');
+  encodeType1Lines(lines, out, getOffset);
+  return Buffer.from(out);
+}
+
 function findOrResolveNameOffset(archive: NkpiArchiveData, text: string): number {
   if (!text) return findEmptyStringOffset(archive);
-  const utf8 = Buffer.from(text, 'utf8');
-  for (let i = 0; i + utf8.length < archive.strA.length; i++) {
-    let ok = true;
-    for (let j = 0; j < utf8.length; j++) {
-      if (archive.strA[i + j] !== utf8[j]) { ok = false; break; }
-    }
-    if (ok && archive.strA[i + utf8.length] === 0) return i << 1;
-  }
-  const utf16 = Buffer.from(text, 'utf16le');
-  for (let i = 0; i + utf16.length + 1 < archive.strW.length; i += 2) {
-    let ok = true;
-    for (let j = 0; j < utf16.length; j++) {
-      if (archive.strW[i + j] !== utf16[j]) { ok = false; break; }
-    }
-    if (ok && archive.strW[i + utf16.length] === 0 && archive.strW[i + utf16.length + 1] === 0) return (i / 2) << 1 | 1;
+  const direct = findNameOffset(archive, text);
+  if (direct !== undefined) return direct;
+  const legacyCp949 = toLegacyCp949Mojibake(text);
+  if (legacyCp949 !== text) {
+    const legacy = findNameOffset(archive, legacyCp949);
+    if (legacy !== undefined) return legacy;
   }
   return appendNameString(archive, text);
+}
+
+function findNameOffset(archive: NkpiArchiveData, text: string): number | undefined {
+  return getStringOffsetCache(archive).get(text);
+}
+
+function getStringOffsetCache(archive: NkpiArchiveData): Map<string, number> {
+  if (!archive.stringOffsetCache) {
+    const cache = new Map<string, number>();
+    addStringOffsetCacheEntries(cache, archive.strA, false);
+    addStringOffsetCacheEntries(cache, archive.strW, true);
+    archive.stringOffsetCache = cache;
+  }
+  return archive.stringOffsetCache;
+}
+
+function addStringOffsetCacheEntries(cache: Map<string, number>, buffer: Buffer, utf16: boolean): void {
+  let start = 0;
+  while (start < buffer.length) {
+    let end = start;
+    if (utf16) {
+      for (; end + 1 < buffer.length; end += 2) {
+        if (buffer[end] === 0 && buffer[end + 1] === 0) break;
+      }
+      const len = Math.max(0, end - start);
+      if (len > 0) {
+        const text = buffer.subarray(start, start + (len & ~1)).toString('utf16le');
+        if (!cache.has(text)) cache.set(text, (start / 2) << 1 | 1);
+      }
+      start = end + 2;
+    } else {
+      while (end < buffer.length && buffer[end] !== 0) end++;
+      if (end > start) {
+        const text = buffer.subarray(start, end).toString('utf8');
+        if (!cache.has(text)) cache.set(text, start << 1);
+      }
+      start = end + 1;
+    }
+  }
+}
+
+function toLegacyCp949Mojibake(text: string): string {
+  if (!hasHangul(text)) return text;
+  return iconv.decode(iconv.encode(text, 'cp949'), 'gb18030');
+}
+
+function hasHangul(text: string): boolean {
+  for (const ch of text) {
+    const code = ch.charCodeAt(0);
+    if (code >= 0xac00 && code <= 0xd7af) return true;
+  }
+  return false;
 }
 
 function appendNameString(archive: NkpiArchiveData, text: string): number {
@@ -1131,6 +1402,7 @@ function appendNameString(archive: NkpiArchiveData, text: string): number {
     magicOffset = oldLen << 1;
   }
   archive.rawNameBytes = buildRawNameBytes(archive.rawNameBytes, archive.strA, archive.strW);
+  archive.stringOffsetCache = undefined;
   return magicOffset;
 }
 

@@ -343,6 +343,8 @@ function codeFromFileName(key: string): number | undefined {
 
 const SKILL_LST_CANDIDATES = [
   'skill/swordmanskill.lst',
+  'skill/atswordmanskill.lst',
+  'skill/dsswordmanskill.lst',
   'skill/fighterskill.lst',
   'skill/gunnerskill.lst',
   'skill/mageskill.lst',
@@ -351,11 +353,14 @@ const SKILL_LST_CANDIDATES = [
   'skill/thiefskill.lst',
   'skill/atfighterskill.lst',
   'skill/atmageskill.lst',
+  'skill/creatormageskill.lst',
+  'skill/knight.lst',
+  'skill/autoskill.lst',
+  'skill/skilllist.lst',
+  'skill/skilllist.jpn.lst',
   'skill/demonicswordman.lst',
   'skill/creatormage.lst',
-  'skill/autoskill.lst',
   'skill/skill.lst',
-  'skill/skilllist.lst',
 ] as const;
 
 function skillClassText(_key: string, value: number | undefined): string | undefined {
@@ -508,7 +513,7 @@ async function readUtf8Text(filePath: string): Promise<string> {
   return text;
 }
 
-export async function readLstFileToCodeMap(lstDiskPath: string): Promise<Map<string, number>> {
+export async function readLstFileToCodeMap(lstDiskPath: string, lstKey?: string): Promise<Map<string, number>> {
   const text = await readUtf8Text(lstDiskPath);
   const fileToCode = new Map<string, number>();
   for (const rawLine of text.replace(/\r\n?/g, '\n').split('\n')) {
@@ -518,9 +523,25 @@ export async function readLstFileToCodeMap(lstDiskPath: string): Promise<Map<str
     if (!match) continue;
     const code = Number(match[1]);
     if (!Number.isSafeInteger(code)) continue;
-    fileToCode.set(normalizeUnpackKey(match[2]), code);
+    for (const key of lstEntryKeys(match[2], lstKey)) {
+      if (!fileToCode.has(key)) fileToCode.set(key, code);
+    }
   }
   return fileToCode;
+}
+
+function lstEntryKeys(value: string, lstKey: string | undefined): string[] {
+  const entry = normalizeUnpackKey(value).replace(/^(?:\.\/)+/, '');
+  if (!entry) return [];
+  const normalizedLstKey = normalizeUnpackKey(lstKey || '');
+  const slash = normalizedLstKey.lastIndexOf('/');
+  const prefix = slash > 0 ? normalizedLstKey.slice(0, slash) : '';
+  if (!prefix || entry.startsWith(`${prefix}/`)) return [entry];
+  return [`${prefix}/${entry}`, entry];
+}
+
+function lstCacheKey(lstDiskPath: string, lstKey: string | undefined): string {
+  return `${path.resolve(lstDiskPath)}\0${normalizeUnpackKey(lstKey || '')}`;
 }
 
 async function readStrFile(strDiskPath: string): Promise<Map<string, string>> {
@@ -739,7 +760,7 @@ export class UnpackMetadataService {
     for (const lstKey of lstCandidatesForKey(key)) {
       const lstPath = safeJoinArchivePath(input.root, lstKey);
       if (!lstPath) continue;
-      const entry = await this.loadLst(lstPath);
+      const entry = await this.loadLst(lstPath, lstKey);
       const code = entry?.fileToCode.get(key);
       if (typeof code === 'number') return code;
     }
@@ -791,7 +812,8 @@ export class UnpackMetadataService {
     return codes;
   }
 
-  private async loadLst(lstDiskPath: string): Promise<LstCacheEntry | undefined> {
+  private async loadLst(lstDiskPath: string, lstKey?: string): Promise<LstCacheEntry | undefined> {
+    const cacheKey = lstCacheKey(lstDiskPath, lstKey);
     let stat: import('fs').Stats;
     try {
       stat = await fs.stat(lstDiskPath);
@@ -800,28 +822,28 @@ export class UnpackMetadataService {
       return undefined;
     }
 
-    const cached = this.lstCache.get(lstDiskPath);
+    const cached = this.lstCache.get(cacheKey);
     if (cached && cached.mtimeMs === stat.mtimeMs && cached.size === stat.size) return cached;
 
-    const existing = this.lstPromises.get(lstDiskPath);
+    const existing = this.lstPromises.get(cacheKey);
     if (existing) return existing;
 
-      const promise = readLstFileToCodeMap(lstDiskPath)
+    const promise = readLstFileToCodeMap(lstDiskPath, lstKey)
       .then(fileToCode => {
         const codeToFile = new Map<number, string>();
         for (const [file, code] of fileToCode) {
           if (!codeToFile.has(code)) codeToFile.set(code, file);
         }
         const entry = { mtimeMs: stat.mtimeMs, size: stat.size, fileToCode, codeToFile };
-        this.lstCache.set(lstDiskPath, entry);
+        this.lstCache.set(cacheKey, entry);
         return entry;
       })
       .catch((err: any) => {
         this.output?.appendLine(`[PVF] failed to read unpack lst ${lstDiskPath}: ${String(err && err.message || err)}`);
         return undefined;
       })
-      .finally(() => this.lstPromises.delete(lstDiskPath));
-    this.lstPromises.set(lstDiskPath, promise);
+      .finally(() => this.lstPromises.delete(cacheKey));
+    this.lstPromises.set(cacheKey, promise);
     return promise;
   }
 

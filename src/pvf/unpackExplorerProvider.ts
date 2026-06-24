@@ -204,7 +204,7 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
   }
 
   private pumpMetadataQueue(): void {
-    const limit = 8;
+    const limit = 3;
     while (this.activeMetadataTasks < limit && this.metadataQueue.length > 0) {
       const element = this.metadataQueue.shift()!;
       const key = this.queueKey(element);

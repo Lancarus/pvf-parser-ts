@@ -330,7 +330,7 @@ export class PvfModel {
     if (!f) return false;
     const lower = key.toLowerCase();
     if (this.archiveFormat === 'nkpi' && this.nkpiState) {
-      const encoded = encodeNkpiEditorContent(content, (f as any).nkpiDataType ?? 0, this.nkpiState.archive);
+      const encoded = encodeNkpiEditorContent(content, (f as any).nkpiDataType ?? 0, this.nkpiState.archive, key);
       f.writeFileData(encoded ? new Uint8Array(encoded.buffer, encoded.byteOffset, encoded.byteLength) : content);
       f.changed = true;
       return true;

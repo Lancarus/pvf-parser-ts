@@ -336,10 +336,34 @@ interface ParsedSkillTreeGroup {
 const EQUIPMENT_LST = ['equipment/equipment.lst'];
 const STACKABLE_LST = ['stackable/stackable.lst'];
 const ITEM_LSTS = [...EQUIPMENT_LST, ...STACKABLE_LST];
+const ALL_SKILL_LSTS = [
+  'skill/swordmanskill.lst',
+  'skill/atswordmanskill.lst',
+  'skill/dsswordmanskill.lst',
+  'skill/fighterskill.lst',
+  'skill/gunnerskill.lst',
+  'skill/mageskill.lst',
+  'skill/priestskill.lst',
+  'skill/atgunnerskill.lst',
+  'skill/thiefskill.lst',
+  'skill/atfighterskill.lst',
+  'skill/atmageskill.lst',
+  'skill/creatormageskill.lst',
+  'skill/knight.lst',
+  'skill/autoskill.lst',
+  'skill/skilllist.lst',
+  'skill/skilllist.jpn.lst',
+  'skill/demonicswordman.lst',
+  'skill/creatormage.lst',
+  'skill/skill.lst',
+] as const;
 const SKILL_LISTS_BY_JOB: Record<string, string[]> = {
   swordman: ['skill/swordmanskill.lst'],
   'at swordman': ['skill/atswordmanskill.lst'],
   atswordman: ['skill/atswordmanskill.lst'],
+  dsswordman: ['skill/dsswordmanskill.lst', 'skill/demonicswordman.lst'],
+  'ds swordman': ['skill/dsswordmanskill.lst', 'skill/demonicswordman.lst'],
+  'dark knight': ['skill/dsswordmanskill.lst', 'skill/demonicswordman.lst'],
   fighter: ['skill/fighterskill.lst'],
   'at fighter': ['skill/atfighterskill.lst'],
   atfighter: ['skill/atfighterskill.lst'],
@@ -353,6 +377,7 @@ const SKILL_LISTS_BY_JOB: Record<string, string[]> = {
   thief: ['skill/thiefskill.lst'],
   'demonic swordman': ['skill/demonicswordman.lst'],
   demonicswordman: ['skill/demonicswordman.lst'],
+  knight: ['skill/knight.lst'],
   creator: ['skill/creatormageskill.lst', 'skill/creatormage.lst'],
   'creator mage': ['skill/creatormageskill.lst', 'skill/creatormage.lst'],
   creatormage: ['skill/creatormageskill.lst', 'skill/creatormage.lst'],
@@ -481,6 +506,12 @@ const JOB_LABELS: Record<string, string> = {
   'creator mage': '缔造者',
   creatormage: '缔造者',
   none: '未转职',
+  swordmaster: '驭剑士',
+  demonslayer: '契魔者',
+  darktempler: '暗殿骑士',
+  darktemplar: '暗殿骑士',
+  vegabond: '流浪武士',
+  vagabond: '流浪武士',
   weaponmaster: '剑魂',
   soulbringer: '鬼泣',
   berserker: '狂战士',
@@ -848,8 +879,12 @@ export class UnpackPreviewService {
   ): Promise<UnpackHoverPreview> {
     const sections: UnpackPreviewSection[] = [];
     const titles = await this.loadTagTitles('skl');
+    const skillCode = await this.resolveSkillFileCode(input) ?? metadata?.itemCode;
+    const skillMetadata = typeof skillCode === 'number' && skillCode !== metadata?.itemCode
+      ? { ...metadata, itemCode: skillCode }
+      : metadata;
     const fields = compactFields([
-      field('代码', numText(metadata?.itemCode)),
+      field('代码', numText(skillMetadata?.itemCode)),
       tagField(titles, 'type', '类型', labelToken(firstValue(tags, 'type'))),
       tagField(titles, 'skill class', '技能类', cleanValue(firstValue(tags, 'skill class'))),
       tagField(titles, 'required level', '学习等级', levelText(firstNumber(tags, 'required level'))),
@@ -867,11 +902,11 @@ export class UnpackPreviewService {
     addTextSection(sections, '前置/消耗', tagLines(tags, 'pre required skill', 'consume item', 'purchase cost', 'special purchase cost'), 'skill');
     addTextSection(sections, '指令', tagLines(tags, 'command', 'command key explain', 'skill command advantage'), 'skill');
     const dataParameterConfig = await this.loadSkillDataParameters();
-    const dataParameters = findSkillDataParameters(dataParameterConfig, input, metadata);
+    const dataParameters = findSkillDataParameters(dataParameterConfig, input, skillMetadata);
     const dataTables = buildSkillDataTables(text, dataParameters);
     if (dataTables.length) sections.push({ title: '动态/静态数据', tables: dataTables, tone: 'blue' });
     addTextSection(sections, '特殊效果', tagLines(tags, 'skill under cooltime effect', 'skill under cooltime effect each'), 'blue');
-    const preview = this.basePreview(input, metadata, 'skill', displayTitle(input, tags, metadata), '技能', sections);
+    const preview = this.basePreview(input, skillMetadata, 'skill', displayTitle(input, tags, skillMetadata), '技能', sections);
     const related = await this.resolveSkillRelatedResources(input, options, {
       includeAnimation: isActiveSkill(tags),
       parameters: dataParameters,
@@ -1800,7 +1835,7 @@ export class UnpackPreviewService {
   private async findPassiveObjectListEntries(input: UnpackPreviewInput, skill: SkillPathInfo): Promise<UnpackPreviewEntry[]> {
     const lstPath = safeJoinArchivePath(input.root, PASSIVEOBJECT_LST);
     if (!lstPath) return [];
-    const lst = await this.loadLst(lstPath);
+    const lst = await this.loadLst(lstPath, PASSIVEOBJECT_LST);
     if (!lst?.fileToCode.size) return [];
     const passiveJobs = new Set(skillPassiveObjectJobs(skill).map(job => job.toLowerCase()));
     const out: UnpackPreviewEntry[] = [];
@@ -1850,7 +1885,7 @@ export class UnpackPreviewService {
     if (!nutSources.length) return [];
     const lstPath = safeJoinArchivePath(input.root, PASSIVEOBJECT_LST);
     if (!lstPath) return [];
-    const lst = await this.loadLst(lstPath);
+    const lst = await this.loadLst(lstPath, PASSIVEOBJECT_LST);
     if (!lst?.codeToFile.size) return [];
     const passiveJobs = new Set(skillPassiveObjectJobs(skill).map(job => job.toLowerCase()));
     const out: UnpackPreviewEntry[] = [];
@@ -2142,7 +2177,7 @@ export class UnpackPreviewService {
     for (const lstKey of lstKeys) {
       const lstPath = safeJoinArchivePath(input.root, lstKey);
       if (!lstPath) continue;
-      const entry = await this.loadLst(lstPath);
+      const entry = await this.loadLst(lstPath, lstKey);
       const key = entry?.codeToFile.get(code);
       if (!key) continue;
       const fsPath = safeJoinArchivePath(input.root, key);
@@ -2174,7 +2209,26 @@ export class UnpackPreviewService {
     return { code, unresolved: true };
   }
 
-  private async loadLst(lstDiskPath: string): Promise<LstCacheEntry | undefined> {
+  private async resolveSkillFileCode(input: UnpackPreviewInput): Promise<number | undefined> {
+    const key = normalizeUnpackKey(input.key);
+    if (!key.startsWith('skill/') || !key.endsWith('.skl')) return undefined;
+    const info = skillPathInfo(key);
+    const lstKeys = uniqueStrings([
+      ...(info ? skillLstsForJob(info.job) : []),
+      ...ALL_SKILL_LSTS,
+    ]);
+    for (const lstKey of lstKeys) {
+      const lstPath = safeJoinArchivePath(input.root, lstKey);
+      if (!lstPath) continue;
+      const entry = await this.loadLst(lstPath, lstKey);
+      const code = entry?.fileToCode.get(key);
+      if (typeof code === 'number') return code;
+    }
+    return undefined;
+  }
+
+  private async loadLst(lstDiskPath: string, lstKey?: string): Promise<LstCacheEntry | undefined> {
+    const cacheKey = lstCacheKey(lstDiskPath, lstKey);
     let stat: import('fs').Stats;
     try {
       stat = await fs.stat(lstDiskPath);
@@ -2182,27 +2236,27 @@ export class UnpackPreviewService {
     } catch {
       return undefined;
     }
-    const cached = this.lstCache.get(lstDiskPath);
+    const cached = this.lstCache.get(cacheKey);
     if (cached && cached.mtimeMs === stat.mtimeMs && cached.size === stat.size) return cached;
-    const existing = this.lstPromises.get(lstDiskPath);
+    const existing = this.lstPromises.get(cacheKey);
     if (existing) return existing;
-    const promise = readLstFileToCodeMap(lstDiskPath)
+    const promise = readLstFileToCodeMap(lstDiskPath, lstKey)
       .then(fileToCode => {
         const codeToFile = new Map<number, string>();
         for (const [file, code] of fileToCode) {
           if (!codeToFile.has(code)) codeToFile.set(code, file);
         }
         const entry = { mtimeMs: stat.mtimeMs, size: stat.size, fileToCode, codeToFile };
-        this.lstCache.set(lstDiskPath, entry);
+        this.lstCache.set(cacheKey, entry);
         return entry;
       })
       .catch((err: any) => {
         this.output?.appendLine(`[PVF] failed to read preview lst ${lstDiskPath}: ${String(err && err.message || err)}`);
-        this.lstCache.set(lstDiskPath, undefined);
+        this.lstCache.set(cacheKey, undefined);
         return undefined;
       })
-      .finally(() => this.lstPromises.delete(lstDiskPath));
-    this.lstPromises.set(lstDiskPath, promise);
+      .finally(() => this.lstPromises.delete(cacheKey));
+    this.lstPromises.set(cacheKey, promise);
     return promise;
   }
 }
@@ -2286,6 +2340,14 @@ function fileMtimeMsSync(filePath: string): number {
   } catch {
     return 0;
   }
+}
+
+function lstCacheKey(lstDiskPath: string, lstKey: string | undefined): string {
+  return `${path.resolve(lstDiskPath)}\0${normalizeUnpackKey(lstKey || '')}`;
+}
+
+function uniqueStrings(values: readonly string[]): string[] {
+  return Array.from(new Set(values.filter(isString)));
 }
 
 interface SkillPathInfo {
@@ -3008,8 +3070,9 @@ function isActiveSkill(tags: ParsedTags): boolean {
 }
 
 function labelJob(value: string): string {
-  const normalized = labelToken(value)?.toLowerCase() || value.toLowerCase();
-  return JOB_LABELS[normalized] || value;
+  const normalized = normalizeSkillTreeLookupKey(value);
+  const compact = compactSkillTreeLookupKey(value);
+  return JOB_LABELS[normalized] || JOB_LABELS[compact] || value;
 }
 
 function numbersFromLines(lines: string[]): number[] {
@@ -3770,14 +3833,15 @@ function parseSkillTreeGroups(text: string): ParsedSkillTreeGroup[] {
     if (!group) return;
     const stripped = stripLineComment(value).trim();
     if (!stripped) return;
-    const cleaned = labelToken(stripped) || cleanValue(stripped) || stripped;
     if (!inSkillInfo) {
-      if (!group.job && looksLikeSkillTreeToken(cleaned)) {
-        group.job = cleaned;
-        return;
-      }
-      if (!group.branch && group.job && looksLikeSkillTreeToken(cleaned)) {
-        group.branch = cleaned;
+      for (const token of skillTreeValueTokens(stripped)) {
+        if (!group.job && looksLikeSkillTreeToken(token)) {
+          group.job = token;
+          continue;
+        }
+        if (!group.branch && group.job && looksLikeSkillTreeToken(token)) {
+          group.branch = token;
+        }
       }
       return;
     }
@@ -3787,6 +3851,9 @@ function parseSkillTreeGroups(text: string): ParsedSkillTreeGroup[] {
     else if (currentTag === 'icon pos' && nums.length >= 2) {
       node.x = nums[0];
       node.y = nums[1];
+    } else if (currentTag === 'cell pos' && nums.length >= 2 && !Number.isFinite(node.x) && !Number.isFinite(node.y)) {
+      node.x = nums[0] * 47;
+      node.y = nums[1] * 67;
     } else if (currentTag === 'next skill' && nums.length) {
       node.nextSkills.push(...nums.filter(n => n >= 0));
     }
@@ -3830,6 +3897,10 @@ function parseSkillTreeGroups(text: string): ParsedSkillTreeGroup[] {
         currentTag = '';
         continue;
       }
+      if (!inSkillInfo && looksLikeSkillTreeToken(name)) {
+        consumeValue(line);
+        continue;
+      }
       currentTag = name;
       if (inline) consumeValue(inline);
       continue;
@@ -3839,6 +3910,26 @@ function parseSkillTreeGroups(text: string): ParsedSkillTreeGroup[] {
   }
   flushGroup();
   return groups;
+}
+
+function skillTreeValueTokens(value: string): string[] {
+  const stripped = stripLineComment(value).trim();
+  if (!stripped) return [];
+  const out: string[] = [];
+  const quoted = stripped.matchAll(/`([^`]*)`|"([^"]*)"|'([^']*)'/g);
+  for (const match of quoted) {
+    const token = labelToken(match[1] || match[2] || match[3]) || cleanValue(match[1] || match[2] || match[3]);
+    if (token) out.push(token);
+  }
+  if (out.length) return out;
+  const bracketed = stripped.matchAll(/\[([^\]]+)\]/g);
+  for (const match of bracketed) {
+    const token = (match[1] || '').trim();
+    if (token) out.push(token);
+  }
+  if (out.length) return out;
+  const cleaned = labelToken(stripped) || cleanValue(stripped) || stripped;
+  return cleaned ? [cleaned] : [];
 }
 
 function looksLikeSkillTreeToken(value: string): boolean {
@@ -3860,8 +3951,17 @@ function firstSkillTreeJob(text: string): string | undefined {
 }
 
 function skillLstsForJob(job: string | undefined): string[] {
-  const normalized = (labelToken(job) || job || '').toLowerCase();
-  return [...(SKILL_LISTS_BY_JOB[normalized] || []), ...COMMON_SKILL_LSTS];
+  const normalized = normalizeSkillTreeLookupKey(job);
+  const compact = compactSkillTreeLookupKey(job);
+  return [...(SKILL_LISTS_BY_JOB[normalized] || SKILL_LISTS_BY_JOB[compact] || []), ...COMMON_SKILL_LSTS];
+}
+
+function normalizeSkillTreeLookupKey(value: string | undefined): string {
+  return (labelToken(value) || value || '').toLowerCase().trim().replace(/[\s_-]+/g, ' ');
+}
+
+function compactSkillTreeLookupKey(value: string | undefined): string {
+  return normalizeSkillTreeLookupKey(value).replace(/\s+/g, '');
 }
 
 function skillTreeType(key: string): string {
