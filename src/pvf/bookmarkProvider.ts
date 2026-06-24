@@ -3,7 +3,7 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import bundledBookmarks from '../config/pvf/bookmarks.json';
 import type { PvfFileEntry } from './model';
-import { pathContains, readConfiguredUnpackRoots } from './unpackEnv';
+import { pathContains, readUnpackExplorerRoots } from './unpackEnv';
 import type { UnpackExplorerEntry } from './unpackExplorerProvider';
 
 interface BookmarkJsonNode {
@@ -196,7 +196,7 @@ export function bookmarkPathFromUnpackTarget(target: unknown): string {
 export async function findBookmarkInUnpackRoots(context: vscode.ExtensionContext, key: string): Promise<vscode.Uri | undefined> {
   const normalized = normalizeBookmarkPath(key);
   if (!normalized || normalized.split('/').includes('..')) return undefined;
-  const roots = await readConfiguredUnpackRoots(context);
+  const roots = await readUnpackExplorerRoots(context);
   for (const root of roots) {
     const fsPath = await resolveCaseInsensitive(root, normalized);
     if (fsPath) return vscode.Uri.file(fsPath);

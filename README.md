@@ -28,7 +28,7 @@
 - **元数据解析** — 自动解析 `[name]` 和 `[icon]` 标签，用于显示文件别名和自定义图标。
 - **多编码支持** — 支持韩文（cp949）、繁体中文（big5）、简体中文（gb18030）、日文（shift_jis）和 UTF8，并可自动检测。
 - **解封目录编辑优化** — 解封后的磁盘脚本文件会自动切换到对应 `pvf-*` 语言模式，使用真实制表符缩进，并通过 VS Code 原生空白字符渲染显示制表符箭头。
-- **解包目录资源视图** — 从 `.env` 的 `UNPACK_DIR` 读取磁盘解包目录，在 PVF 侧边栏的 **解包目录** Webview 中显示路径注释、脚本真实名称、物品代码和 NPK/任务图标，例如 `101000001.equ 古代遗骨的青铜剑[活动] <101000001>`。文件名保持默认颜色，解析出的名称按 `rarity` 或字符串颜色显示，代码使用数字颜色显示。
+- **解包目录资源视图** — 从当前 VS Code 工作区中的解包根目录（包含 `.pvfmanifest.json`）或 `pvf.unpackExplorer.roots` 读取磁盘解包目录，在 PVF 侧边栏的 **解包目录** Webview 中显示路径注释、脚本真实名称、物品代码和 NPK/任务图标，例如 `101000001.equ 古代遗骨的青铜剑[活动] <101000001>`。文件名保持默认颜色，解析出的名称按 `rarity` 或字符串颜色显示，代码使用数字颜色显示。
 - **DNF-like 解包预览** — 悬停或打开解包目录中的装备、套装、道具、商店、任务、技能和技能树文件时，可显示仿 DNF 游戏内层级的预览。默认悬停使用 VS Code 原生 tooltip 显示纯文本摘要；打开文件或右键显示预览会在编辑器旁打开深色富预览面板，支持品质色标题、蓝色效果文本、任务/物品图标和保存后刷新。
 - **可编辑书签视图** — PVF 侧边栏的 **书签** 视图内置常用资源路径，可新建/重命名/删除文件夹和书签、拖拽移动目录；可从 PVF 资源树或解包目录右键添加文件/目录到书签。
 
@@ -46,6 +46,7 @@
 | `pvf.unpackExplorer.npkIcon.paths` | `[]` | **解包目录** 使用的 NPK 图包目录列表，可填写 `ImagePacks2` 或其上级目录；为空时回退到 `.env` 的 `NPK_DIR` 和 `pvf.npkRoot` |
 | `pvf.unpackExplorer.npkIcon.cache.enabled` | `true` | 是否复用解码后的解包目录 PNG 图标缓存 |
 | `pvf.unpackExplorer.npkIcon.size` | `16` | **解包目录** 行内图标基准尺寸；任务标签按高度等比显示为矩形 |
+| `pvf.unpackExplorer.roots` | `[]` | **解包目录** 使用的磁盘根目录列表；为空时自动使用当前 VS Code 工作区中包含 `.pvfmanifest.json` 的文件夹，不读取源码仓库 `.env` |
 | `pvf.unpackExplorer.metadata.showComment` | `true` | **解包目录** 是否显示路径注释 |
 | `pvf.unpackExplorer.metadata.showItemName` | `true` | **解包目录** 是否显示脚本内解析出的真实名称 |
 | `pvf.unpackExplorer.metadata.showItemCode` | `true` | **解包目录** 是否显示 `.lst` 或文件名解析出的物品、技能等资源代码 |
@@ -85,26 +86,27 @@
 PVF 活动栏中按顺序提供这些视图：
 
 - **PVF 资源树**：浏览当前打开的 PVF 封包内容。
-- **解包目录**：读取 `.env` 中的 `UNPACK_DIR` / `PVF_UNPACK_DIR` / `pvf_unpack_dir`，展示真实磁盘目录，并通过 Webview 行渲染异步补齐路径注释、脚本名称、物品代码和 NPK/任务图标。
+- **解包目录**：读取当前 VS Code 工作区中的解包根目录（包含 `.pvfmanifest.json`）或 `pvf.unpackExplorer.roots`，展示真实磁盘目录，并通过 Webview 行渲染异步补齐路径注释、脚本名称、物品代码和 NPK/任务图标。
 - **书签**：内置常用 PVF 路径分组，并支持用户自定义整理，用于快速跳转到解包目录或当前 PVF 封包中的文件。
 
 ### 解包目录注释
 
-项目根目录的 `.env` 可配置解包目录位置：
+解包目录视图优先使用 `pvf.unpackExplorer.roots` 配置的磁盘根目录；如果该设置为空，会自动使用当前 VS Code 工作区中包含 `.pvfmanifest.json` 的文件夹。开发源码仓库里的 `.env` 仅用于本仓库分析/脚本辅助，不会驱动宿主开发窗口的解包目录视图。
 
-```env
-# 解包文件所在位置
-UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
+```json
+"pvf.unpackExplorer.roots": [
+  "G:\\dnfsifu\\develop\\pvf-jie"
+]
 ```
 
-插件会读取 `UNPACK_DIR`，并在 PVF 活动栏里的 **解包目录** 视图展示该目录的真实磁盘结构。命中内置路径注释或用户自定义注释时，节点会显示为文件/文件夹名加说明文字，例如：
+插件会在 PVF 活动栏里的 **解包目录** 视图展示这些目录的真实磁盘结构。命中内置路径注释或用户自定义注释时，节点会显示为文件/文件夹名加说明文字，例如：
 
 ```text
 equipment    (装备)
 creature     (NPC卖的宠物)
 ```
 
-其中 `equipment`、`creature` 使用正常文件名颜色，括号里的注释使用 VS Code 的说明文字颜色。视图标题栏的刷新按钮会重新读取 `.env`、磁盘目录和解包目录元数据缓存。
+其中 `equipment`、`creature` 使用正常文件名颜色，括号里的注释使用 VS Code 的说明文字颜色。视图标题栏的刷新按钮会重新读取解包根目录、磁盘目录和解包目录元数据缓存。
 
 对于 `.equ`、`.qst` 等脚本文件，**解包目录** 会先立即显示文件名，再在后台解析脚本、字符串链接和 `.lst` 映射，补齐脚本内 `[name]` / `[set name]` / 其它带 `name` 的字段、物品代码、`rarity`、任务 `grade` 和图标。例如：
 
@@ -149,10 +151,10 @@ creature     (NPC卖的宠物)
 
 在 **PVF 资源浏览器** 或 **解包目录** 视图中右键文件可选择 **添加到书签**；右键目录时会在选定书签目录下创建同名书签文件夹，便于把常用路径按业务重新分组。
 
-单击书签文件时，插件会先根据 `.env` 解析解包目录并尝试打开真实磁盘文件，例如：
+单击书签文件时，插件会先根据 **解包目录** 使用的根目录解析真实磁盘文件，例如：
 
 ```text
-UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
+解包目录根=G:\dnfsifu\develop\pvf-jie\
 书签路径=etc/newcashshop.etc
 实际打开=G:\dnfsifu\develop\pvf-jie\etc\newcashshop.etc
 ```
@@ -174,7 +176,7 @@ UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
 
 默认的简繁转换适合“解包目录给 agent/编辑器直接读”的工作流：解封时将繁体脚本文本写成简体，便于理解和修改；重新封装时根据 `.pvfmanifest.json` 把这些文本转回繁体，再按 PVF 格式写入封包。关闭 `pvf.unpack.chineseConversion` 后，解封文本会尽量保持原文字形，不再执行繁简互转。
 
-悬停提示、悬浮窗和原生资源管理器 hover 效果主要在打开磁盘解包后的真实文件时验证。也就是说，应在 VS Code 中打开 `UNPACK_DIR` 指向的目录，再从原生 Explorer 或 **解包目录** 视图打开 `.equ`、`.skl`、`.act` 等磁盘文件进行测试；仅查看 PVF 包内 `pvf:` 虚拟文件或未配置 `UNPACK_DIR` 的目录，不能完整覆盖磁盘路径解析、`.lst` 查找、Explorer hover tooltip 和右键编辑入口。
+悬停提示、悬浮窗和原生资源管理器 hover 效果主要在打开磁盘解包后的真实文件时验证。也就是说，应在 VS Code 中打开解包根目录，或把该目录加入 `pvf.unpackExplorer.roots`，再从原生 Explorer 或 **解包目录** 视图打开 `.equ`、`.skl`、`.act` 等磁盘文件进行测试；仅查看 PVF 包内 `pvf:` 虚拟文件或未配置解包根目录，不能完整覆盖磁盘路径解析、`.lst` 查找、Explorer hover tooltip 和右键编辑入口。
 
 ### 数字代码悬停
 

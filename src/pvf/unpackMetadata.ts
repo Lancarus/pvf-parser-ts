@@ -667,6 +667,16 @@ export class UnpackMetadataService {
     this.npkRootsCache = undefined;
   }
 
+  invalidate(input: UnpackMetadataInput): void {
+    const key = normalizeUnpackKey(input.key);
+    if (!key) return;
+    if (key.endsWith('.lst') || key.endsWith('.str') || key.endsWith('stringtable.bin')) {
+      this.clear();
+      return;
+    }
+    this.metadataCache.delete(this.cacheKey(input));
+  }
+
   getCached(input: UnpackMetadataInput): UnpackResolvedMetadata | undefined {
     return this.metadataCache.get(this.cacheKey(input))?.metadata;
   }
