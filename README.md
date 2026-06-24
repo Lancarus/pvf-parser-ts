@@ -141,7 +141,7 @@ creature     (NPC卖的宠物)
 
 原生 VS Code Explorer 不能通过扩展 API 在文件名后追加完整说明文字，且 `FileDecoration.badge` 超过 2 个字符会被 VS Code 直接截断或不显示。因此插件不会在原生 Explorer 中显示注释 badge；原生 Explorer 只保留完整注释的 hover tooltip 和右键菜单 **编辑路径注释**。需要完整行内注释时，请使用 PVF 侧边栏的 **解包目录** 视图。
 
-路径注释来自内置文件 `src/config/pvf/treeComments.json`。用户通过 **编辑路径注释** 保存的覆盖项会直接写回这个内置路径注释文件，并按 PVF `fileVersion` 写入 `versions` 覆盖段；旧版本曾保存到 VS Code `globalStorage/tree-comments.user.json` 的覆盖项会在首次加载时迁移进内置文件。若解包目录里存在 `.pvfmanifest.json`，插件会读取其中的 `fileVersion`；没有 manifest 时使用通用版本 `0`。
+路径注释来自内置文件 `src/config/pvf/treeComments.json`。其中 `globalJobComments` 是全局职业名词典，只按当前文件夹名或文件名去掉扩展名后的 stem 匹配，例如 `swordman`、`atfighter`、`creatormage`、`knight`；因此 `character/swordman`、`skill/swordman`、`equipment/character/swordman`、`passiveobject/character/swordman` 会显示同一个职业注释，`equipment/character/atfighter.lay` 也会按 `atfighter` 显示统一注释。普通 `comments` 仍保存具体路径注释，并按内置 `version` 生效。用户通过 **编辑路径注释** 保存的覆盖项会直接写回这个内置路径注释文件，并按 PVF `fileVersion` 写入 `versions` 覆盖段，优先级高于职业名词典；旧版本曾保存到 VS Code `globalStorage/tree-comments.user.json` 的覆盖项会在首次加载时迁移进内置文件。若解包目录里存在 `.pvfmanifest.json`，插件会读取其中的 `fileVersion`；没有 manifest 时使用通用版本 `0`。
 
 ### 书签视图
 

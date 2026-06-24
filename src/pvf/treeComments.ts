@@ -12,6 +12,7 @@ export interface PvfTreeCommentEntry {
 interface PersistedTreeCommentFile {
   schemaVersion?: number;
   version?: number | string;
+  globalJobComments?: Record<string, PvfTreeCommentEntry | string | null>;
   comments?: Record<string, PvfTreeCommentEntry | string | null>;
   versions?: Record<string, {
     comments?: Record<string, PvfTreeCommentEntry | string | null>;
@@ -60,6 +61,13 @@ function mapToJson(comments: Map<string, PvfTreeCommentEntry>): Record<string, P
   return out;
 }
 
+function globalJobCommentKeyForPath(normalizedKey: string): string | undefined {
+  const name = normalizedKey.split('/').filter(Boolean).pop();
+  if (!name) return undefined;
+  const dot = name.lastIndexOf('.');
+  return dot > 0 ? name.slice(0, dot) : name;
+}
+
 function serializeVersion(value: string): string | number {
   const n = Number(value);
   return Number.isFinite(n) && String(Math.trunc(n)) === value ? Math.trunc(n) : value;
@@ -91,6 +99,7 @@ export function normalizeTreeCommentVersion(value: unknown): string {
 
 export class PvfTreeCommentService {
   private baseVersion = normalizeTreeCommentVersion((bundledTreeComments as PersistedTreeCommentFile).version ?? 0);
+  private globalJobComments = normalizeCommentMap((bundledTreeComments as PersistedTreeCommentFile).globalJobComments as Record<string, unknown>);
   private baseComments = normalizeCommentMap((bundledTreeComments as PersistedTreeCommentFile).comments as Record<string, unknown>);
   private readonly overrideCommentsByVersion = new Map<string, Map<string, PvfTreeCommentEntry>>();
   private treeCommentFilePath: string | undefined;
@@ -133,6 +142,9 @@ export class PvfTreeCommentService {
     const versionKey = normalizeTreeCommentVersion(version);
     const userEntry = this.overrideCommentsByVersion.get(versionKey)?.get(normalizedKey);
     if (userEntry) return userEntry;
+    const globalJobEntry = this.globalJobComments.get(normalizedKey)
+      || this.globalJobComments.get(globalJobCommentKeyForPath(normalizedKey) || '');
+    if (globalJobEntry) return globalJobEntry;
     if (this.baseVersion === '0' || this.baseVersion === versionKey) {
       return this.baseComments.get(normalizedKey);
     }
@@ -235,6 +247,7 @@ export class PvfTreeCommentService {
 
   private applyTreeCommentFile(data: PersistedTreeCommentFile): void {
     this.baseVersion = normalizeTreeCommentVersion(data.version ?? 0);
+    this.globalJobComments = normalizeCommentMap(data.globalJobComments as Record<string, unknown>);
     this.baseComments = normalizeCommentMap(data.comments as Record<string, unknown>);
     this.overrideCommentsByVersion.clear();
     this.mergeVersionOverrides(data);
@@ -306,6 +319,7 @@ export class PvfTreeCommentService {
     const snapshot: PersistedTreeCommentFile = {
       schemaVersion: 1,
       version: serializeVersion(this.baseVersion),
+      globalJobComments: mapToJson(this.globalJobComments),
       comments: mapToJson(this.baseComments),
       ...(versions && Object.keys(versions).length > 0 ? { versions } : {}),
     };
