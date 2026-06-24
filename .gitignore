@@ -16,7 +16,6 @@ Thumbs.db
 
 # Environment
 .env
-.env.*
 
 # Packaged extension
 *.vsix
