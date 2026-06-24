@@ -477,18 +477,16 @@ export function registerPvfFileOps(context: vscode.ExtensionContext, deps: Deps)
         filters: { 'PVF': ['pvf'] },
       });
       if (!uris || uris.length === 0) return;
-      const archiveFormat = await pickArchiveFormat('请选择要打开的 PVF 格式', false);
-      if (!archiveFormat) return;
       await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: '打开 PVF…' }, async (p) => {
         const t0 = Date.now();
-        output.appendLine(`[PVF] open start: ${uris[0].fsPath} format=${archiveFormat}`);
+        output.appendLine(`[PVF] open start: ${uris[0].fsPath}`);
         await model.open(
           uris[0].fsPath,
           (n: number) => { p.report({ increment: 0, message: `${n}%` }); },
-          { archiveFormat },
+          { archiveFormat: 'auto' },
         );
         const ms = Date.now() - t0;
-        output.appendLine(`[PVF] open done in ${ms}ms format=${(model as any).archiveFormat || archiveFormat}`);
+        output.appendLine(`[PVF] open done in ${ms}ms format=${(model as any).archiveFormat || 'auto'}`);
       });
       tree.refresh();
       deco.refreshAll();

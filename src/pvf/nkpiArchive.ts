@@ -804,7 +804,7 @@ function sanitizePathPart(part: string): string {
 }
 
 function sanitizeArchiveKey(key: string): string {
-  return normalizeArchiveKey(key).split('/').filter(Boolean).map(sanitizePathPart).join('/');
+  return normalizeArchiveKey(key).split('/').filter(p => p.length > 0 && p !== '.').map(sanitizePathPart).join('/');
 }
 
 function safeJoinArchivePath(root: string, key: string): string {
@@ -994,7 +994,10 @@ function prepareRepackData(rawDisk: Buffer, kind: PvfDiskFileKind | undefined, d
 
 function encodeType1Text(text: string, archive: NkpiArchiveData | undefined): Buffer {
   const out: number[] = [];
-  const getOffset = (s: string): number => archive ? findOrResolveNameOffset(archive, s) : 0;
+  const getOffset = (s: string): number => {
+    if (!s) return archive ? findEmptyStringOffset(archive) : 0;
+    return archive ? findOrResolveNameOffset(archive, s) : 0;
+  };
   const lines = text.replace(/\r/g, '').split('\n');
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
     let line = lines[lineIndex];
@@ -1070,8 +1073,20 @@ function pushType1(out: number[], type: number, value: number): void {
   out.push(type & 0xff, value & 0xff, (value >> 8) & 0xff, (value >> 16) & 0xff, (value >> 24) & 0xff);
 }
 
+function findEmptyStringOffset(archive: NkpiArchiveData): number {
+  // NKPI 名称表中空串表示为孤立 null 字节。搜索第一个连续 null 的位置
+  for (let i = 0; i < archive.strA.length - 1; i++) {
+    if (archive.strA[i] === 0 && archive.strA[i + 1] === 0) return i << 1;
+  }
+  if (archive.strA.length > 0 && archive.strA[archive.strA.length - 1] === 0) return (archive.strA.length - 1) << 1;
+  for (let i = 0; i < archive.strW.length - 2; i += 2) {
+    if (archive.strW[i] === 0 && archive.strW[i + 1] === 0 && archive.strW[i + 2] === 0 && archive.strW[i + 3] === 0) return (i / 2) << 1 | 1;
+  }
+  return 0;
+}
+
 function findOrResolveNameOffset(archive: NkpiArchiveData, text: string): number {
-  if (!text) return -1;
+  if (!text) return findEmptyStringOffset(archive);
   const utf8 = Buffer.from(text, 'utf8');
   for (let i = 0; i + utf8.length < archive.strA.length; i++) {
     let ok = true;

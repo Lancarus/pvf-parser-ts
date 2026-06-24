@@ -4274,6 +4274,9 @@
       "comments": {
         "clientonly": {
           "comment": "本地文件？"
+        },
+        "character/knight": {
+          "comment": "守护者"
         }
       }
     },
