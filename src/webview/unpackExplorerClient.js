@@ -261,7 +261,7 @@
     }
     setExpanded(element, true);
     if (childrenCache.has(id)) {
-      renderChildRows(element, childrenCache.get(id));
+      renderChildRows(element, id);
       return;
     }
     if (element.dataset.loaded === '1') return;
@@ -304,30 +304,88 @@
     pendingChildLoadingTimers.set(parentId, timer);
   }
 
-  function renderChildRows(parent, dataRows) {
+  function renderChildRows(parent, parentId) {
     removeDescendants(parent);
     const depth = depthOf(parent) + 1;
-    let anchor = parent;
-    for (const row of dataRows || []) {
-      const element = rowElement(row, depth);
-      if (row.isDirectory && childrenCache.has(row.id)) element.dataset.loaded = '1';
-      anchor.after(element);
-      rows.set(row.id, element);
-      anchor = element;
+    const cacheEntry = childrenCache.get(parentId);
+    if (!cacheEntry) return;
+    const rowsArr = cacheEntry.rows;
+    const batchSize = 60;
+    let idx = 0;
+
+    function renderBatch() {
+      const end = Math.min(idx + batchSize, rowsArr.length);
+      let anchor = idx === 0 ? parent : parent;
+      if (idx > 0) {
+        anchor = parent;
+        while (anchor.nextElementSibling && depthOf(anchor.nextElementSibling) > depth) {
+          anchor = anchor.nextElementSibling;
+        }
+      }
+      for (; idx < end; idx++) {
+        const row = rowsArr[idx];
+        const element = rowElement(row, depth);
+        if (row.isDirectory && childrenCache.has(row.id)) element.dataset.loaded = '1';
+        anchor.after(element);
+        rows.set(row.id, element);
+        anchor = element;
+      }
+      if (idx < rowsArr.length) {
+        requestAnimationFrame(renderBatch);
+      } else {
+        parent.dataset.loaded = '1';
+        setExpanded(parent, true);
+      }
     }
-    parent.dataset.loaded = '1';
-    setExpanded(parent, true);
+
+    renderBatch();
   }
 
-  function insertChildren(parentId, dataRows) {
+  function appendChildren(parentId, dataRows, total, offset) {
+    const parent = rows.get(parentId);
+    if (!parent) return;
+    let cacheEntry = childrenCache.get(parentId);
+    if (!cacheEntry) {
+      cacheEntry = { rows: [], total: typeof total === 'number' ? total : 0 };
+      childrenCache.set(parentId, cacheEntry);
+    }
+    for (const row of dataRows) cacheEntry.rows.push(row);
+
+    if (parent.dataset.expanded === '1') {
+      const depth = depthOf(parent) + 1;
+      let anchor = parent;
+      while (anchor.nextElementSibling && depthOf(anchor.nextElementSibling) > depth) {
+        anchor = anchor.nextElementSibling;
+      }
+      for (const row of dataRows) {
+        const element = rowElement(row, depth);
+        if (row.isDirectory && childrenCache.has(row.id)) element.dataset.loaded = '1';
+        anchor.after(element);
+        rows.set(row.id, element);
+        anchor = element;
+      }
+    }
+
+    const haveAll = cacheEntry.rows.length >= cacheEntry.total;
+    if (haveAll) {
+      pendingChildRequests.delete(parentId);
+      clearChildLoadingTimer(parentId);
+      removeLoading(parentId);
+      parent.dataset.loaded = '1';
+      if (parent.dataset.expanded === '1') setExpanded(parent, true);
+      applyPendingReveal();
+    }
+  }
+
+  function insertChildren(parentId, dataRows, total) {
     const parent = rows.get(parentId);
     pendingChildRequests.delete(parentId);
     clearChildLoadingTimer(parentId);
     if (!parent) return;
     removeLoading(parentId);
-    childrenCache.set(parentId, dataRows || []);
+    childrenCache.set(parentId, { rows: dataRows || [], total: typeof total === 'number' ? total : (dataRows || []).length });
     parent.dataset.loaded = '1';
-    if (parent.dataset.expanded === '1') renderChildRows(parent, dataRows);
+    if (parent.dataset.expanded === '1') renderChildRows(parent, parentId);
     applyPendingReveal();
   }
 
@@ -350,12 +408,10 @@
   }
 
   function updateCachedChildRow(row) {
-    for (const [parentId, cachedRows] of childrenCache) {
-      const index = (cachedRows || []).findIndex(item => item && item.id === row.id);
+    for (const [, cacheEntry] of childrenCache) {
+      const index = (cacheEntry.rows || []).findIndex(item => item && item.id === row.id);
       if (index < 0) continue;
-      const nextRows = cachedRows.slice();
-      nextRows[index] = row;
-      childrenCache.set(parentId, nextRows);
+      cacheEntry.rows[index] = row;
       return;
     }
   }
@@ -413,7 +469,7 @@
       if (!element || element.dataset.directory !== '1') return;
       if (element.dataset.expanded !== '1') setExpanded(element, true);
       if (childrenCache.has(id)) {
-        if (!rows.has(ids[index + 1])) renderChildRows(element, childrenCache.get(id));
+        if (!rows.has(ids[index + 1])) renderChildRows(element, id);
         continue;
       }
       if (element.dataset.loaded !== '1') scheduleChildLoading(id, element);
@@ -1088,7 +1144,11 @@
       return;
     }
     if (message.type === 'children') {
-      insertChildren(message.id, message.rows || []);
+      insertChildren(message.id, message.rows || [], message.total);
+      return;
+    }
+    if (message.type === 'appendChildren') {
+      appendChildren(message.id, message.rows || [], message.total, message.offset || 0);
       return;
     }
     if (message.type === 'rows') {

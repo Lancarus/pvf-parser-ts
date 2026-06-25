@@ -12,7 +12,9 @@ interface Entry extends FileIndexEntry { }
 
 function toItem(e: FileIndexEntry): QuickPickItem {
   // alwaysShow 以绕过 QuickPick 内部再次过滤（我们自定义过滤），detail 保留完整路径供用户查看/匹配
-  return { key: e.key, label: e.base, detail: e.key, alwaysShow: true } as QuickPickItem;
+  const label = e.displayName || e.base;
+  const description = e.displayName && e.displayName !== e.base ? e.base : undefined;
+  return { key: e.key, label, description, detail: e.key, alwaysShow: true } as QuickPickItem;
 }
 
 
@@ -23,11 +25,11 @@ export function registerSearchInPack(context: vscode.ExtensionContext, model: Pv
       return;
     }
 
-    // 懒构建文件索引（异步）
-    await vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: '构建文件索引…' }, async () => {
+    // 懒构建文件索引（异步），同时解析元数据获取 [name] 中文名
+    await vscode.window.withProgress({ location: vscode.ProgressLocation.Window, title: '解析元数据并构建文件索引…' }, async () => {
       await ensureFileIndexAsync(model, p => {
-        if (p.phase === 'index' && p.total) {
-          // 进度条由 VS Code 控制，这里仅可选更新窗口标题（暂省略以减少刷新）
+        if (p.phase === 'metadata' && p.total) {
+          // 进度条由 VS Code 控制
         }
       });
     });
@@ -173,8 +175,27 @@ export function registerSearchInPack(context: vscode.ExtensionContext, model: Pv
           }
         });
         if (ranked.length === 0) { qp.items = []; qp.title = '无匹配文件'; phase = 'idle'; currentType = null; return; }
-        qp.items = ranked.map(toItem); qp.title = `文件结果: ${ranked.length}${ranked.length >= 600 ? '+' : ''}`;
-        phase = 'results'; currentType = 'file'; lastQuery = raw; return;
+        const fileQpItems = ranked.map(toItem);
+        qp.items = fileQpItems; qp.title = `文件结果: ${ranked.length}${ranked.length >= 600 ? '+' : ''}`;
+        phase = 'results'; currentType = 'file'; lastQuery = raw;
+        // 异步刷新已匹配文件的显示名（如果元数据之前未解析完）
+        const matchedKeys = ranked.map(r => r.key).filter(k => !model.getDisplayNameForFile(k));
+        if (matchedKeys.length > 0) {
+          (async () => {
+            try {
+              await (model as any).ensureMetadataForFiles?.(matchedKeys);
+              if (phase === 'results' && currentType === 'file' && qp.value.trim() === raw) {
+                const refreshed = ranked.map(r => {
+                  const disp = model.getDisplayNameForFile(r.key);
+                  if (disp) return { ...r, displayName: disp, displayNameLower: disp.toLowerCase() };
+                  return r;
+                });
+                qp.items = refreshed.map(toItem);
+              }
+            } catch { /* ignore */ }
+          })();
+        }
+        return;
       } finally {
         qp.busy = false; searching = false;
       }

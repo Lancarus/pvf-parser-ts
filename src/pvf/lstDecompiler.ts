@@ -33,7 +33,7 @@ export function decompileLst(
     if (code < 0 || nameIdx < 0) continue;
     const name = nkpiResolve ? nkpiResolve(nameIdx) : model.getStringFromTable(nameIdx);
     if (!name) continue;
-    const filePath = (basePath + name).replace(/\\/g, '/');
+    const filePath = name.replace(/\\/g, '/');
     lines.push(code + '\t`' + filePath + '`');
   }
   if (lines.length === 1) return null;

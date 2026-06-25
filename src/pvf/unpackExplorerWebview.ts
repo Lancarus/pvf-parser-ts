@@ -198,6 +198,41 @@ function previewText(preview: UnpackHoverPreview): string {
   return text.length > 6000 ? `${text.slice(0, 6000)}\n... 内容过长，已截断` : text;
 }
 
+// 性能计时
+interface TimingSpan { label: string; start: number; }
+const timings: TimingSpan[] = [];
+const TIMING_LOG_LIMIT = 40;
+function startTiming(label: string): void {
+  if (timings.length >= TIMING_LOG_LIMIT) return;
+  timings.push({ label, start: Date.now() });
+}
+function endTiming(label: string, output?: vscode.OutputChannel): void {
+  const idx = timings.findIndex(t => t.label === label && t.start > 0);
+  if (idx === -1) return;
+  const elapsed = Date.now() - timings[idx].start;
+  timings[idx] = { label: `${label} (${elapsed}ms)`, start: 0 };
+  output?.appendLine(`[PVF perf] ${label}: ${elapsed}ms`);
+}
+function flushTimings(output?: vscode.OutputChannel): void {
+  // 按标签去重保留最后一条
+  const map = new Map<string, number>();
+  for (const t of timings) {
+    if (t.start !== 0) continue;
+    const key = t.label;
+    map.set(key, (map.get(key) || 0) + 1);
+  }
+  if (map.size === 0) return;
+  output?.appendLine(`[PVF perf] ── timing summary ──`);
+  for (const [label, count] of map) {
+    const m = label.match(/^(.+)\((\d+)ms\)$/);
+    if (m && m[1] && m[2]) {
+      output?.appendLine(`[PVF perf]   ${m[1]}: ${m[2]}ms${count > 1 ? ` (x${count})` : ''}`);
+    }
+  }
+  output?.appendLine(`[PVF perf] ────────────────────`);
+  timings.length = 0;
+}
+
 export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider {
   private webviewView: vscode.WebviewView | undefined;
   private rootsCache: Promise<UnpackExplorerEntry[]> | undefined;
@@ -210,6 +245,8 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
   private readonly iconQueue: UnpackExplorerEntry[] = [];
   private readonly iconQueued = new Set<string>();
   private readonly pendingRows = new Map<string, UnpackExplorerEntry>();
+  private readonly dirChildrenCache = new Map<string, UnpackExplorerEntry[]>();
+  private preloading = false;
   private refreshTimer: NodeJS.Timeout | undefined;
   private activeMetadataTasks = 0;
   private activeIconTasks = 0;
@@ -253,7 +290,16 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
     webviewView.webview.onDidReceiveMessage(message => {
       void this.handleMessage(message);
     });
-    void this.postRoots().then(() => this.syncActiveEditorToExplorer(false));
+    startTiming('resolveWebviewView init');
+    void this.postRoots().then(() => {
+      startTiming('postRoots done → preloadUnpackTree');
+      this.syncActiveEditorToExplorer(false);
+      void this.preloadUnpackTree().finally(() => {
+        endTiming('preloadUnpackTree', this.output);
+        flushTimings(this.output);
+        endTiming('resolveWebviewView init', this.output);
+      });
+    });
   }
 
   refresh(): void {
@@ -262,6 +308,8 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
     this.metadata.clear();
     this.preview.clear();
     this.entriesById.clear();
+    this.dirChildrenCache.clear();
+    this.preloading = false;
     this.metadataQueue.length = 0;
     this.iconQueue.length = 0;
     this.metadataQueued.clear();
@@ -580,23 +628,94 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
     await this.postPendingReveal();
   }
 
+  private async preloadUnpackTree(): Promise<void> {
+    if (this.preloading) return;
+    this.preloading = true;
+    startTiming('preloadUnpackTree');
+    try {
+      const roots = await this.getRoots();
+      const concurrency = 8;
+      for (const root of roots) {
+        await this.preloadDir(root);
+        const children = this.dirChildrenCache.get(stableId(root));
+        if (children) {
+          const dirs = children.filter(c => c.isDirectory);
+          // 并发 preloadDir，限制 concurrency 避免 fd 耗尽
+          let i = 0;
+          const next = (): Promise<void> => {
+            if (i >= dirs.length) return Promise.resolve();
+            const dir = dirs[i++];
+            return this.preloadDir(dir).then(next);
+          };
+          const workers: Promise<void>[] = [];
+          for (let w = 0; w < Math.min(concurrency, dirs.length); w++) workers.push(next());
+          await Promise.all(workers);
+        }
+      }
+    } catch { /* 预载是后台任务，失败不影响核心功能 */ }
+    this.preloading = false;
+  }
+
   private async postChildren(parent: UnpackExplorerEntry): Promise<void> {
+    startTiming('postChildren');
     const view = this.webviewView;
     if (!view) return;
     const generation = this.generation;
-    let rows: UnpackExplorerEntry[] = [];
-    try {
-      rows = await this.getChildren(parent);
-    } catch (err: any) {
-      this.output?.appendLine(`[PVF] failed to read unpack dir ${parent.fsPath}: ${String(err && err.message || err)}`);
+    let entries = this.dirChildrenCache.get(stableId(parent));
+    if (!entries) {
+      try {
+        startTiming('getChildren (uncached)');
+        entries = await this.getChildren(parent);
+        endTiming('getChildren (uncached)', this.output);
+      } catch (err: any) {
+        this.output?.appendLine(`[PVF] failed to read unpack dir ${parent.fsPath}: ${String(err && err.message || err)}`);
+      }
+      if (!this.webviewView || generation !== this.generation) {
+        endTiming('postChildren', this.output);
+        return;
+      }
+      if (entries) {
+        for (const entry of entries) this.entriesById.set(stableId(entry), entry);
+        this.dirChildrenCache.set(stableId(parent), entries);
+      }
     }
-    if (!this.webviewView || generation !== this.generation) return;
-    for (const row of rows) this.entriesById.set(stableId(row), row);
-    await view.webview.postMessage({
-      type: 'children',
-      id: stableId(parent),
-      rows: rows.map(row => this.rowFor(row)),
-    });
+    if (!entries) { endTiming('postChildren', this.output); return; }
+    const batchSize = 500;
+    if (entries.length > batchSize) {
+      // 大批量时分批发送，避免单次 JSON.stringify block 事件循环
+      for (let i = 0; i < entries.length; i += batchSize) {
+        const batch = entries.slice(i, i + batchSize);
+        const rows = batch.map(entry => this.rowFor(entry));
+        await view.webview.postMessage({
+          type: 'appendChildren',
+          id: stableId(parent),
+          rows,
+          total: entries.length,
+          offset: i,
+        });
+        // 每批让出事件循环
+        await new Promise(r => setTimeout(r, 0));
+      }
+    } else {
+      const rows = entries.map(entry => this.rowFor(entry));
+      await view.webview.postMessage({
+        type: 'children',
+        id: stableId(parent),
+        rows,
+        total: entries.length,
+      });
+    }
+    endTiming('postChildren', this.output);
+  }
+
+  private async preloadDir(entry: UnpackExplorerEntry): Promise<void> {
+    const id = stableId(entry);
+    if (this.dirChildrenCache.has(id)) return;
+    try {
+      const children = await this.getChildren(entry);
+      for (const child of children) this.entriesById.set(stableId(child), child);
+      this.dirChildrenCache.set(id, children);
+    } catch { /* ignore */ }
   }
 
   private async revealElement(element: UnpackExplorerEntry): Promise<void> {
