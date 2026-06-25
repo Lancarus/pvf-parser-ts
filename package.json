@@ -1566,6 +1566,11 @@
         "command": "pvf.webApi.diagnostics",
         "title": "PVF WebApi: Run Diagnostics",
         "icon": "$(pulse)"
+      },
+      {
+        "command": "pvf.batchReplace",
+        "title": "批量替换…",
+        "icon": "$(replace)"
       }
     ],
     "keybindings": [
@@ -1769,6 +1774,11 @@
           "command": "pvf.editTreeComment",
           "when": "view == pvfExplorerView && viewItem == pvf.folder",
           "group": "inline@0"
+        },
+        {
+          "command": "pvf.batchReplace",
+          "when": "view == pvfExplorerView && viewItem == pvf.folder",
+          "group": "navigation@10"
         },
         {
           "command": "pvf.editTreeComment",

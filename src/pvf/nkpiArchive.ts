@@ -922,7 +922,7 @@ function decodeType1(data: Buffer, archive: NkpiArchiveData, key = ''): string {
   return formatNkpiScript(tokens, key);
 }
 
-function decodeType1Tokens(data: Buffer, archive: NkpiArchiveData, restoreCp949MojibakeText: boolean): NkpiType1Token[] {
+export function decodeType1Tokens(data: Buffer, archive: NkpiArchiveData, restoreCp949MojibakeText: boolean): NkpiType1Token[] {
   const tokens: NkpiType1Token[] = [];
   for (let off = 0; off + 4 < data.length; off += 5) {
     const type = data[off];
@@ -985,7 +985,7 @@ function isIntegerToken(value: string): boolean {
   return /^-?\d+$/.test(value);
 }
 
-function formatNkpiScript(tokens: NkpiType1Token[], key: string): string {
+export function formatNkpiScript(tokens: NkpiType1Token[], key: string): string {
   const lines = ['#PVF_File', ''];
   const isSkl = key.toLowerCase().endsWith('.skl');
   const pairedTags = collectPairedScriptTags(tokens);

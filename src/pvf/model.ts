@@ -10,7 +10,7 @@ import { openImpl, saveImpl, readAndDecryptImpl } from './modelIO';
 import { performance } from 'perf_hooks';
 import { decompileBinaryAni } from './binaryAni';
 import { compileBinaryAni } from './aniCompiler';
-import { encodingForKey, isTextByExtension, detectEncoding, isTextEncoding, isPrintableText, isTextByExtensionForExport } from './helpers';
+import { encodingForKey, isPvfScriptExtension, isTextByExtension, detectEncoding, isTextEncoding, isPrintableText, isTextByExtensionForExport } from './helpers';
 import { getFileNameHashCode as utilGetFileNameHashCode, renderStringTableText as utilRenderStringTableText } from './util';
 import { decompileScript } from './scriptDecompiler';
 import { compileLstText, decompileLst } from './lstDecompiler';
@@ -31,7 +31,9 @@ import {
   PvfArchiveFormat,
   NkpiModelState,
   decodeNkpiFileForEditor,
+  decodeType1Tokens,
   encodeNkpiEditorContent,
+  formatNkpiScript,
   isNkpiPvf,
   openNkpiIntoModel,
   readNkpiFileData,
@@ -233,6 +235,17 @@ export class PvfModel {
       }
       const rendered = decodeNkpiFileForEditor(raw.subarray(0, f.dataLen), (f as any).nkpiDataType ?? 0, this.nkpiState.archive, key);
       if (rendered) return new Uint8Array(rendered.buffer, rendered.byteOffset, rendered.byteLength);
+      // NKPI fallback for script files without dataType 1/3: try token-based decompile
+      if (isPvfScriptExtension(key.toLowerCase())) {
+        const tokens = decodeType1Tokens(Buffer.from(raw.subarray(0, f.dataLen)), this.nkpiState.archive, false);
+        if (tokens.length > 0) {
+          const text = formatNkpiScript(tokens, key);
+          if (text) {
+            const out = Buffer.concat([Buffer.from([0xEF, 0xBB, 0xBF]), Buffer.from(text, 'utf8')]);
+            return new Uint8Array(out.buffer, out.byteOffset, out.byteLength);
+          }
+        }
+      }
     }
     // pvfUtility 行为对齐：
     // - 脚本文件：反编译为文本

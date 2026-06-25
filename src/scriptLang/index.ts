@@ -21,94 +21,73 @@ import { registerScriptTagCommentEditor } from './tagCommentEditor';
 import { registerGenericScriptTagLanguages } from './genericTags';
 import { registerItemCodeHover } from './itemCodeHover';
 
-interface PathLinkEntry { version: number; links: vscode.DocumentLink[] }
-const pathLinkCache = new Map<string, PathLinkEntry>();
 const PATH_LINK_LANGS = ['pvf-act','pvf-ani','pvf-skl','pvf-lst','pvf-str','pvf-equ','pvf-ai','pvf-aic','pvf-key','pvf-stk','pvf-shp','pvf-qst','pvf-etc','pvf-co','pvf-nut'];
 
-function resolveBacktickPath(rawPath: string, docDir: string): vscode.Uri | undefined {
+function resolveBacktickPath(rawPath: string, docDir: string, scheme: string, pvfDir: string): vscode.Uri | undefined {
   if (rawPath.length < 3) return undefined;
   const low = rawPath.toLowerCase();
   if (!low.includes('/') && !low.includes('\\') && !/\.\w{1,6}$/.test(low)) return undefined;
   try {
+    if (scheme === 'pvf') {
+      const resolved = path.posix.join(pvfDir, rawPath).replace(/\\/g, '/');
+      return vscode.Uri.parse('pvf:/' + resolved);
+    }
     return low.endsWith('.img')
       ? vscode.Uri.file(path.resolve(docDir, rawPath.replace(/\.img$/i, '.npk')))
       : vscode.Uri.file(path.resolve(docDir, rawPath));
   } catch { return undefined; }
 }
 
-function scanDocumentLinks(document: vscode.TextDocument): vscode.DocumentLink[] {
-  const links: vscode.DocumentLink[] = [];
-  const docDir = path.dirname(document.uri.fsPath);
-  const lines = document.lineCount;
+// ═══════════════════════════════════════════════════════════
+// InlayHints — 反引号路径可点击打开
+// provideInlayHints 的 range 参数即可见行范围，配合 scroll 事件强制刷新
+// ═══════════════════════════════════════════════════════════
+function registerPvfPathLens(context: vscode.ExtensionContext) {
+  const selectors = PATH_LINK_LANGS.map(lang => ({ language: lang } as vscode.DocumentFilter));
   const re = /`([^`]+)`/g;
+  const changeEmitter = new vscode.EventEmitter<void>();
 
-  for (let i = 0; i < lines; i++) {
-    const line = document.lineAt(i).text;
-    re.lastIndex = 0;
-    let m: RegExpExecArray | null;
-    while ((m = re.exec(line)) !== null) {
-      const target = resolveBacktickPath(m[1], docDir);
-      if (!target) continue;
-      links.push(new vscode.DocumentLink(
-        new vscode.Range(i, m.index + 1, i, m.index + 1 + m[1].length),
-        target,
-      ));
-    }
-  }
-  return links;
-}
-
-// ═══════════════════════════════════════════════════════════
-// 通用 DocumentLink + Hover：所有 PVF 脚本文件中反引号路径可点击跳转
-//   - DocumentLink：全量异步扫描，VS Code 约 1000 条渲染上限内行内可见
-//   - Hover：任意位置悬停显示可点击的打开链接，弥补行内上限
-// ═══════════════════════════════════════════════════════════
-function registerPvfPathLinkProvider(context: vscode.ExtensionContext) {
-  const selectors = PATH_LINK_LANGS.map(lang => ({ language: lang, scheme: 'file' } as vscode.DocumentFilter));
-
-  // ─── DocumentLink provider（全量异步扫描） ───────────────
-  const linkProvider: vscode.DocumentLinkProvider = {
-    provideDocumentLinks(document) {
-      const key = document.uri.toString();
-      const cached = pathLinkCache.get(key);
-      if (cached && cached.version === document.version) return cached.links;
-
-      const links = scanDocumentLinks(document);
-      pathLinkCache.set(key, { version: document.version, links });
-      return links;
-    },
-  };
-
-  // ─── Hover provider（任意位置悬停回退） ──────────────────
-  const hoverProvider: vscode.HoverProvider = {
-    provideHover(document, position) {
-      const line = document.lineAt(position.line).text;
-      // 找到当前行中最接近 position 的反引号路径
-      const re = /`([^`]+)`/g;
-      let m: RegExpExecArray | null;
-      while ((m = re.exec(line)) !== null) {
-        const start = m.index + 1;
-        const end = m.index + 1 + m[1].length;
-        if (position.character >= start && position.character <= end) {
-          const rawPath = m[1];
-          const docDir = path.dirname(document.uri.fsPath);
-          const target = resolveBacktickPath(rawPath, docDir);
-          if (!target) return;
-          const range = new vscode.Range(position.line, start - 1, position.line, end + 1);
-          const cmdUri = vscode.Uri.parse(`command:vscode.open?${encodeURIComponent(JSON.stringify([target]))}`);
-          const md = new vscode.MarkdownString(`[${target.fsPath}](${cmdUri})`, true);
-          md.isTrusted = true;
-          return new vscode.Hover(md, range);
+  const provider: vscode.InlayHintsProvider = {
+    onDidChangeInlayHints: changeEmitter.event,
+    provideInlayHints(document, range) {
+      const docDir = path.dirname(document.uri.fsPath);
+      const scheme = document.uri.scheme;
+      const pvfRaw = document.uri.path.replace(/^\//, '');
+      const pvfDir = pvfRaw.includes('/') ? pvfRaw.substring(0, pvfRaw.lastIndexOf('/')) : '';
+      const hints: vscode.InlayHint[] = [];
+      for (let i = range.start.line; i <= range.end.line; i++) {
+        const line = document.lineAt(i).text;
+        re.lastIndex = 0;
+        let m: RegExpExecArray | null;
+        const parts: vscode.InlayHintLabelPart[] = [];
+        while ((m = re.exec(line)) !== null) {
+          const target = resolveBacktickPath(m[1], docDir, scheme, pvfDir);
+          if (!target) continue;
+          const part = new vscode.InlayHintLabelPart(path.basename(target.fsPath || target.path));
+          part.command = { command: 'vscode.open', arguments: [target], title: '打开文件' };
+          parts.push(part);
+        }
+        if (parts.length > 0) {
+          const hint = new vscode.InlayHint(
+            new vscode.Position(i, line.length),
+            parts,
+            vscode.InlayHintKind.Parameter,
+          );
+          hint.paddingLeft = true;
+          hints.push(hint);
         }
       }
+      return hints;
     },
   };
 
   context.subscriptions.push(
-    vscode.languages.registerDocumentLinkProvider(selectors, linkProvider),
-    vscode.languages.registerHoverProvider(selectors, hoverProvider),
-    vscode.workspace.onDidCloseTextDocument(doc => {
-      if (doc.uri.scheme === 'file') pathLinkCache.delete(doc.uri.toString());
+    vscode.languages.registerInlayHintsProvider(selectors, provider),
+  );
+  // 滚动时强制刷新 InlayHints
+  context.subscriptions.push(
+    vscode.window.onDidChangeTextEditorVisibleRanges(() => {
+      changeEmitter.fire();
     }),
   );
 }
@@ -135,6 +114,6 @@ export function registerScriptLanguages(context: vscode.ExtensionContext, model?
     registerKeyLanguage(context);
     registerKeyFormatter(context);
     registerItemCodeHover(context);
-    // 通用路径超链接（所有 pvf-* 语言）
-    registerPvfPathLinkProvider(context);
+    // 通用路径超链接（所有 pvf-* 语言）— 使用 InlayHints，VS Code 自动按可见行渲染
+    registerPvfPathLens(context);
 }
