@@ -8,14 +8,14 @@
 
 - **PVF 资源浏览器** — 侧边栏树形视图，可浏览 PVF 包内文件，显示路径注释、脚本别名和物品代码。支持新建、删除、重命名、剪切/复制/粘贴文件和文件夹。
 - **虚拟文件系统** — 将包内文件以常规编辑器标签页（`pvf://` 协议）打开。编辑会被跟踪，可保存回封包。
-- **目录解封 / 重新封装** — 可将 PVF 解封到普通目录，脚本、`stringtable.bin`、`.ani` 和已知文本文件会写成 UTF-8 文本，二进制资源原样保留；目录可再封装回 PVF。
+- **目录解封 / 重新封装** — 可将旧版 PVF 和新版 `nkpi` PVF 解封到普通目录，脚本、`stringtable.bin`、`.ani` 和已知文本文件会写成 UTF-8 文本，二进制资源原样保留；目录可再封装回 PVF。
 - **原地保存 / 另存为** — 支持直接保存或另存为新 PVF 文件。
 - **脚本语言支持** — 语法高亮、自动补全、标签悬停提示、物品/怪物/任务等数字代码悬停提示和格式化，覆盖以下文件类型：
   - `.act`（动作）、`.ani`（动画）、`.skl`（技能）
   - `.lst`（列表）、`.str`（结构）、`.equ`（装备）
   - `.ai`（AI）、`.aic`（AI 编译）、`.key`（键值）
 - **脚本标签注释** — 标签 hover、补全说明和诊断共享 `src/config/scriptLang/scriptTags/` 中的配置。人工注释保存在 `description`，官方 PVF 样例片段独立保存在 `officialDescription`；hover/补全文档会顺序显示两者，但不会额外显示来源标题。
-- **ANI 动画预览** — 在 Webview 面板中基于 Canvas 预览 `.ani` 动画文件。
+- **ANI 动画预览** — 在 Webview 面板中基于 Canvas 预览 `.ani` 动画文件，并可从技能、动作和动画链路追踪相关 IMG 图集引用。
 - **APC 编辑器** — `.aic` 文件的可视化角色动画编辑器，与源文档实时同步。
 - **NPK / IMG 解析** — 打开 NPK 容器并查看 IMG 精灵表（含索引颜色表）。
 - **统一搜索**（`Ctrl+Alt+P`）— 三种搜索模式：
@@ -28,7 +28,7 @@
 - **元数据解析** — 自动解析 `[name]` 和 `[icon]` 标签，用于显示文件别名和自定义图标。
 - **多编码支持** — 支持韩文（cp949）、繁体中文（big5）、简体中文（gb18030）、日文（shift_jis）和 UTF8，并可自动检测。
 - **解封目录编辑优化** — 解封后的磁盘脚本文件会自动切换到对应 `pvf-*` 语言模式，使用真实制表符缩进，并通过 VS Code 原生空白字符渲染显示制表符箭头。
-- **解包目录资源视图** — 从 `.env` 的 `UNPACK_DIR` 读取磁盘解包目录，在 PVF 侧边栏的 **解包目录** Webview 中显示路径注释、脚本真实名称、物品代码和 NPK/任务图标，例如 `101000001.equ 古代遗骨的青铜剑[活动] <101000001>`。文件名保持默认颜色，解析出的名称按 `rarity` 或字符串颜色显示，代码使用数字颜色显示。
+- **解包目录资源视图** — 从当前 VS Code 工作区中的解包根目录（包含 `.pvfmanifest.json`）或 `pvf.unpackExplorer.roots` 读取磁盘解包目录，在 PVF 侧边栏的 **解包目录** Webview 中显示路径注释、脚本真实名称、物品代码和 NPK/任务图标，例如 `101000001.equ 古代遗骨的青铜剑[活动] <101000001>`。文件名保持默认颜色，解析出的名称按 `rarity` 或字符串颜色显示，代码使用数字颜色显示。
 - **DNF-like 解包预览** — 悬停或打开解包目录中的装备、套装、道具、商店、任务、技能和技能树文件时，可显示仿 DNF 游戏内层级的预览。默认悬停使用 VS Code 原生 tooltip 显示纯文本摘要；打开文件或右键显示预览会在编辑器旁打开深色富预览面板，支持品质色标题、蓝色效果文本、任务/物品图标和保存后刷新。
 - **可编辑书签视图** — PVF 侧边栏的 **书签** 视图内置常用资源路径，可新建/重命名/删除文件夹和书签、拖拽移动目录；可从 PVF 资源树或解包目录右键添加文件/目录到书签。
 
@@ -46,6 +46,7 @@
 | `pvf.unpackExplorer.npkIcon.paths` | `[]` | **解包目录** 使用的 NPK 图包目录列表，可填写 `ImagePacks2` 或其上级目录；为空时回退到 `.env` 的 `NPK_DIR` 和 `pvf.npkRoot` |
 | `pvf.unpackExplorer.npkIcon.cache.enabled` | `true` | 是否复用解码后的解包目录 PNG 图标缓存 |
 | `pvf.unpackExplorer.npkIcon.size` | `16` | **解包目录** 行内图标基准尺寸；任务标签按高度等比显示为矩形 |
+| `pvf.unpackExplorer.roots` | `[]` | **解包目录** 使用的磁盘根目录列表；为空时自动使用当前 VS Code 工作区中包含 `.pvfmanifest.json` 的文件夹，不读取源码仓库 `.env` |
 | `pvf.unpackExplorer.metadata.showComment` | `true` | **解包目录** 是否显示路径注释 |
 | `pvf.unpackExplorer.metadata.showItemName` | `true` | **解包目录** 是否显示脚本内解析出的真实名称 |
 | `pvf.unpackExplorer.metadata.showItemCode` | `true` | **解包目录** 是否显示 `.lst` 或文件名解析出的物品、技能等资源代码 |
@@ -70,31 +71,42 @@
 
 解封和封装均采用受控并发处理，适合几十万小文件的 PVF 包；实际速度主要受磁盘随机写入性能、杀毒软件扫描和文本反编译/编译比例影响。
 
+### PVF 格式选择与回封校验
+
+打开 PVF、解封 PVF 和将目录封装为 PVF 都继续使用原有命令，不额外增加按钮。打开封包时插件会询问当前文件是旧版 PVF 还是新版 `nkpi` PVF；从目录重新封装时也会询问输出旧版还是新版格式。
+
+解封目录中的 `.pvfmanifest.json` 会记录 `archiveFormat`、`sourcePvfPath`、`sourcePvfMd5`、编码和新版 `nkpi` 所需的头部/分块元数据。重新封装新版 PVF 时，插件会以原始或模板 PVF 的结构信息为基准写回，避免丢失新版格式需要的归档参数。
+
+重新封装完成后，插件会计算输出 PVF 的 MD5，并与 manifest 中记录的原始或模板 PVF MD5 做对比，在 **PVF 输出面板**报告是否一致。需要注意的是，即使脚本内容能正确往返，新版 PVF 的 zlib 分块重新压缩后也不一定与原文件逐字节相同，所以 MD5 校验用于明确报告结果和辅助排查，不代表每次无修改回封都必然相同。
+
+新版 `nkpi` 脚本解码时会针对可读性做格式化：`.lst` 按条目拆成多行；`.skl` 的 `[level info]` 会根据第一列数字识别列数并换行，避免生成超长单行；反引号包裹的多行字符串会按原语义保留，重新封装时再编码回新版脚本格式。
+
 ### PVF 侧边栏视图
 
 PVF 活动栏中按顺序提供这些视图：
 
 - **PVF 资源树**：浏览当前打开的 PVF 封包内容。
-- **解包目录**：读取 `.env` 中的 `UNPACK_DIR` / `PVF_UNPACK_DIR` / `pvf_unpack_dir`，展示真实磁盘目录，并通过 Webview 行渲染异步补齐路径注释、脚本名称、物品代码和 NPK/任务图标。
+- **解包目录**：读取当前 VS Code 工作区中的解包根目录（包含 `.pvfmanifest.json`）或 `pvf.unpackExplorer.roots`，展示真实磁盘目录，并通过 Webview 行渲染异步补齐路径注释、脚本名称、物品代码和 NPK/任务图标。
 - **书签**：内置常用 PVF 路径分组，并支持用户自定义整理，用于快速跳转到解包目录或当前 PVF 封包中的文件。
 
 ### 解包目录注释
 
-项目根目录的 `.env` 可配置解包目录位置：
+解包目录视图优先使用 `pvf.unpackExplorer.roots` 配置的磁盘根目录；如果该设置为空，会自动使用当前 VS Code 工作区中包含 `.pvfmanifest.json` 的文件夹。开发源码仓库里的 `.env` 仅用于本仓库分析/脚本辅助，不会驱动宿主开发窗口的解包目录视图。
 
-```env
-# 解包文件所在位置
-UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
+```json
+"pvf.unpackExplorer.roots": [
+  "G:\\dnfsifu\\develop\\pvf-jie"
+]
 ```
 
-插件会读取 `UNPACK_DIR`，并在 PVF 活动栏里的 **解包目录** 视图展示该目录的真实磁盘结构。命中内置路径注释或用户自定义注释时，节点会显示为文件/文件夹名加说明文字，例如：
+插件会在 PVF 活动栏里的 **解包目录** 视图展示这些目录的真实磁盘结构。命中内置路径注释或用户自定义注释时，节点会显示为文件/文件夹名加说明文字，例如：
 
 ```text
 equipment    (装备)
 creature     (NPC卖的宠物)
 ```
 
-其中 `equipment`、`creature` 使用正常文件名颜色，括号里的注释使用 VS Code 的说明文字颜色。视图标题栏的刷新按钮会重新读取 `.env`、磁盘目录和解包目录元数据缓存。
+其中 `equipment`、`creature` 使用正常文件名颜色，括号里的注释使用 VS Code 的说明文字颜色。视图标题栏的刷新按钮会重新读取解包根目录、磁盘目录和解包目录元数据缓存。
 
 对于 `.equ`、`.qst` 等脚本文件，**解包目录** 会先立即显示文件名，再在后台解析脚本、字符串链接和 `.lst` 映射，补齐脚本内 `[name]` / `[set name]` / 其它带 `name` 的字段、物品代码、`rarity`、任务 `grade` 和图标。例如：
 
@@ -125,9 +137,11 @@ creature     (NPC卖的宠物)
 
 保存当前预览文件后，插件会失效该文件的预览缓存并刷新右侧面板。面板刷新会等待当前文件图标解析完成或失败后再渲染，所以已配置 NPK 根目录时，保存后的装备、道具、任务和技能预览仍应保留图标；未配置 NPK 根目录时文本预览仍可用，只是图标区域为空。
 
+技能相关资源不再只依赖 `.nut` 脚本。预览会沿 `.skl`、`.act`、`.obj`、`.ani` 和 `.als` 的动画链路追踪引用，并解析 `.ani` 中 `[IMAGE]` 的 IMG 图集路径和帧号，包括 `` `xxx.img` 14 `` 这种路径与帧号写在同一行的格式。追踪到的 IMG 会作为逻辑相关资源显示在技能/动画预览中；实际图片渲染仍需要配置可找到对应图包的 NPK 根目录。
+
 原生 VS Code Explorer 不能通过扩展 API 在文件名后追加完整说明文字，且 `FileDecoration.badge` 超过 2 个字符会被 VS Code 直接截断或不显示。因此插件不会在原生 Explorer 中显示注释 badge；原生 Explorer 只保留完整注释的 hover tooltip 和右键菜单 **编辑路径注释**。需要完整行内注释时，请使用 PVF 侧边栏的 **解包目录** 视图。
 
-路径注释来自内置文件 `src/config/pvf/treeComments.json`。用户通过 **编辑路径注释** 保存的覆盖项会直接写回这个内置路径注释文件，并按 PVF `fileVersion` 写入 `versions` 覆盖段；旧版本曾保存到 VS Code `globalStorage/tree-comments.user.json` 的覆盖项会在首次加载时迁移进内置文件。若解包目录里存在 `.pvfmanifest.json`，插件会读取其中的 `fileVersion`；没有 manifest 时使用通用版本 `0`。
+路径注释来自内置文件 `src/config/pvf/treeComments.json`。其中 `globalJobComments` 是全局职业名词典，只按当前文件夹名或文件名去掉扩展名后的 stem 匹配，例如 `swordman`、`atfighter`、`creatormage`、`knight`；因此 `character/swordman`、`skill/swordman`、`equipment/character/swordman`、`passiveobject/character/swordman` 会显示同一个职业注释，`equipment/character/atfighter.lay` 也会按 `atfighter` 显示统一注释。普通 `comments` 仍保存具体路径注释，并按内置 `version` 生效。用户通过 **编辑路径注释** 保存的覆盖项会直接写回这个内置路径注释文件，并按 PVF `fileVersion` 写入 `versions` 覆盖段，优先级高于职业名词典；旧版本曾保存到 VS Code `globalStorage/tree-comments.user.json` 的覆盖项会在首次加载时迁移进内置文件。若解包目录里存在 `.pvfmanifest.json`，插件会读取其中的 `fileVersion`；没有 manifest 时使用通用版本 `0`。
 
 ### 书签视图
 
@@ -137,10 +151,10 @@ creature     (NPC卖的宠物)
 
 在 **PVF 资源浏览器** 或 **解包目录** 视图中右键文件可选择 **添加到书签**；右键目录时会在选定书签目录下创建同名书签文件夹，便于把常用路径按业务重新分组。
 
-单击书签文件时，插件会先根据 `.env` 解析解包目录并尝试打开真实磁盘文件，例如：
+单击书签文件时，插件会先根据 **解包目录** 使用的根目录解析真实磁盘文件，例如：
 
 ```text
-UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
+解包目录根=G:\dnfsifu\develop\pvf-jie\
 书签路径=etc/newcashshop.etc
 实际打开=G:\dnfsifu\develop\pvf-jie\etc\newcashshop.etc
 ```
@@ -162,7 +176,7 @@ UNPACK_DIR=G:\dnfsifu\develop\pvf-jie\
 
 默认的简繁转换适合“解包目录给 agent/编辑器直接读”的工作流：解封时将繁体脚本文本写成简体，便于理解和修改；重新封装时根据 `.pvfmanifest.json` 把这些文本转回繁体，再按 PVF 格式写入封包。关闭 `pvf.unpack.chineseConversion` 后，解封文本会尽量保持原文字形，不再执行繁简互转。
 
-悬停提示、悬浮窗和原生资源管理器 hover 效果主要在打开磁盘解包后的真实文件时验证。也就是说，应在 VS Code 中打开 `UNPACK_DIR` 指向的目录，再从原生 Explorer 或 **解包目录** 视图打开 `.equ`、`.skl`、`.act` 等磁盘文件进行测试；仅查看 PVF 包内 `pvf:` 虚拟文件或未配置 `UNPACK_DIR` 的目录，不能完整覆盖磁盘路径解析、`.lst` 查找、Explorer hover tooltip 和右键编辑入口。
+悬停提示、悬浮窗和原生资源管理器 hover 效果主要在打开磁盘解包后的真实文件时验证。也就是说，应在 VS Code 中打开解包根目录，或把该目录加入 `pvf.unpackExplorer.roots`，再从原生 Explorer 或 **解包目录** 视图打开 `.equ`、`.skl`、`.act` 等磁盘文件进行测试；仅查看 PVF 包内 `pvf:` 虚拟文件或未配置解包根目录，不能完整覆盖磁盘路径解析、`.lst` 查找、Explorer hover tooltip 和右键编辑入口。
 
 ### 数字代码悬停
 

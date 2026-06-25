@@ -250,6 +250,12 @@ export function activate(context: vscode.ExtensionContext) {
         diskTreeCommentDeco.refreshAll();
     }));
 
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(event => {
+        if (!event.affectsConfiguration('pvf.unpackExplorer.roots')) return;
+        unpackTree.refresh();
+        diskTreeCommentDeco.refreshAll();
+    }));
+
     context.subscriptions.push(vscode.commands.registerCommand('pvf.copyUnpackPath', async (target?: { fsPath?: string; key?: string }) => {
         const text = typeof target?.fsPath === 'string'
             ? target.fsPath

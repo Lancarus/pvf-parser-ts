@@ -47,7 +47,7 @@ src/
 │   ├── bookmarkProvider.ts # TreeDataProvider for the built-in bookmark view
 │   ├── decorations.ts    # File status decorations (modified, etc.)
 │   ├── treeComments.ts   # Built-in/user path comments keyed by PVF path/version
-│   ├── unpackEnv.ts      # Reads .env UNPACK_DIR/PVF_UNPACK_DIR and NPK_DIR
+│   ├── unpackEnv.ts      # Resolves unpack explorer roots and legacy .env NPK/unpack settings
 │   ├── unpackMetadata.ts # Lazy disk metadata/code/icon resolver for unpack tree
 │   ├── unpackPreview.ts  # DNF-like typed preview parser/model for unpack files
 │   ├── unpackPreviewPanel.ts # Rich preview WebviewPanel shown beside text editors
@@ -113,11 +113,13 @@ The extension implements `vscode.FileSystemProvider` for the `pvf:` URI scheme. 
 Do not add a separate "native resource tree" or alternate resource-manager view for unpack-directory metadata. The expected user-visible target for disk validation is `pvfUnpackExplorerView`.
 
 ### Disk Unpack Directory Comments
-Path comments are stored in `src/config/pvf/treeComments.json` as `{ schemaVersion, version, comments }`, with user overrides persisted under VS Code `globalStorage` by PVF `fileVersion`. `PvfTreeCommentService` merges built-in comments with per-version user edits.
+Path comments are stored in `src/config/pvf/treeComments.json` as `{ schemaVersion, version, globalJobComments, comments, versions }`. `globalJobComments` is a global job-name dictionary keyed by the current file/folder basename or file stem, such as `swordman`, `atgunner`, `creatormage`, and `knight`; it is not a path list. Keep direct job-name annotations out of path-specific `comments` and `versions` so `character/swordman`, `skill/swordman`, `equipment/character/swordman`, `passiveobject/character/swordman`, and files such as `atfighter.lay` all resolve to the same canonical job label. `PvfTreeCommentService` resolves per-version overrides first, then `globalJobComments` by full key or basename/stem, then version-gated built-in `comments`.
 
-The disk unpack root is configured through `.env` (`UNPACK_DIR`, `PVF_UNPACK_DIR`, or `pvf_unpack_dir`) and resolved by `unpackEnv.ts`. NPK icon roots for the unpack tree come from `pvf.unpackExplorer.npkIcon.paths`, `.env` `NPK_DIR`/`PVF_NPK_DIR`, then legacy `pvf.npkRoot`.
+The disk unpack roots for `pvfUnpackExplorerView`, native Explorer decorations, and bookmark-on-disk resolution come from `pvf.unpackExplorer.roots` plus current VS Code workspace folders that contain `.pvfmanifest.json`. The extension development workspace `.env` is for local analysis/scripts and must not drive the host development window's unpack explorer. Legacy `.env` `UNPACK_DIR`/`PVF_UNPACK_DIR` remains available through `readConfiguredUnpackRoots()` for compatibility paths such as WebApi, but do not use it for the unpack explorer UI. NPK icon roots for the unpack tree come from `pvf.unpackExplorer.npkIcon.paths`, `.env` `NPK_DIR`/`PVF_NPK_DIR` from workspace folders, then legacy `pvf.npkRoot`.
 
-The custom `pvfUnpackExplorerView` uses `UnpackExplorerWebviewProvider` to show the real disk tree from `UNPACK_DIR`. It renders rows in a Webview so file/folder names can remain in normal resource-tree text color while comments, parsed item names, rarity colors, item codes, and game icons are rendered as separate spans. Example row: `101000001.equ    古代遗骨的青铜剑[活动] <101000001>`.
+Important Chinese note: 本仓库源码根目录的 `.env` 只是为了开发时方便 agent/脚本定位本机分析目录，例如 PVF、解包目录和 NPK 图包目录；它不是宿主开发窗口的用户配置。Extension Development Host 中的 **解包目录**、原生 Explorer 装饰、书签磁盘跳转等 UI 行为不应该受这个 `.env` 影响，必须使用 `pvf.unpackExplorer.roots` 或当前 VS Code 工作区中包含 `.pvfmanifest.json` 的真实解包根。
+
+The custom `pvfUnpackExplorerView` uses `UnpackExplorerWebviewProvider` to show the real disk tree from the resolved unpack explorer roots. It renders rows in a Webview so file/folder names can remain in normal resource-tree text color while comments, parsed item names, rarity colors, item codes, and game icons are rendered as separate spans. Example row: `101000001.equ    古代遗骨的青铜剑[活动] <101000001>`.
 
 `UnpackMetadataService` lazily reads encountered files and likely `.lst` files in the background, resolves string links from `stringtable.bin` and `.str`, parses `[name]`, `[set name]`, other `name`-like tags, `[icon]`, `rarity`, and quest `grade`, then decodes NPK/IMG frames into `globalStorage/unpack-icon-cache`. The decoded PNG is also read as a data URI and sent to the Webview; this avoids broken Webview image URLs for cached icons.
 
@@ -133,7 +135,7 @@ In the Webview row renderer:
 
 Native VS Code Explorer cannot append arbitrary full text after file names. Its `FileDecoration.badge` is only a very short marker and labels longer than about two characters may be clipped or omitted. Therefore `diskTreeCommentDecorations.ts` must not be used for full inline comments; it only provides native Explorer hover tooltips and the context-menu command path for disk files. Full visible comments belong in the custom `pvfUnpackExplorerView`.
 
-When verifying hover/tooltip/floating-window behavior, test primarily against real disk files opened from the configured `UNPACK_DIR`. This covers disk path normalization, `.env` root resolution, `.lst` lookup from unpacked folders, native Explorer hover tooltip behavior, and the right-click `pvf.editTreeComment` command. Testing only `pvf:` virtual files does not validate the disk-unpack workflow.
+When verifying hover/tooltip/floating-window behavior, test primarily against real disk files opened from an unpack explorer root, either a VS Code workspace folder containing `.pvfmanifest.json` or a path in `pvf.unpackExplorer.roots`. This covers disk path normalization, root resolution, `.lst` lookup from unpacked folders, native Explorer hover tooltip behavior, and the right-click `pvf.editTreeComment` command. Testing only `pvf:` virtual files does not validate the disk-unpack workflow.
 
 #### DNF-like Unpack Previews
 DNF-like previews for unpacked files are implemented only for the disk-unpack workflow, not editor token hover and not the packed `pvf:` resource tree. The main pieces are:
@@ -160,6 +162,10 @@ Keep native hover fast. `UnpackPreviewService.resolvePreview(input)` defaults to
 
 Do not make unsupported `.co`/`.etc` files display "no preview" on hover in the custom view; preserve normal path tooltips unless the file is a real preview candidate. Skill-tree detection is path-based for `clientonly/skilltree/*_sp.co`, `*_tp.co`, `clientonly/skillshoptreespindex.co`, `clientonly/skillshoptreetpindex.co`, `etc/pvpskilltree/*.etc`, and content-based for files containing `[character job]`, `[skill info]`, and `[icon pos]`.
 
+Skill and animation related-resource discovery must not depend only on `.nut` scripts or static `[skill preloading image]` data. `UnpackPreviewService` traces `.skl`, `.act`, `.obj`, `.ani`, and `.als` chains and inserts IMG references found in ANI `[IMAGE]` blocks as logical related resources even when the `.img` file is not present in the unpacked tree. `parseAniText` must keep the image path and frame index separate, including inline syntax such as `` `Character/Fighter/.../fm_body%04d.img` 91 ``, path-only lines followed by numeric frame lines, frame-only lines inheriting the last image path, and empty image markers such as `` `` 3 ``.
+
+`scripts/generate-skill-animation-resources.cjs` should mirror that runtime discovery model when refreshing the built-in skill animation resource map: follow `.act/.obj` animation fields, `.als` `[use animation]` links, and `.ani` image blocks, then collect IMG paths from the resulting animation chain. Do not regenerate the large JSON resource map just because parser code changed; regenerate it only when the source PVF data or shipped resource map intentionally needs updating.
+
 ### Built-In Bookmarks
 Built-in bookmarks are stored in `src/config/pvf/bookmarks.json` as a cleaned tree:
 
@@ -177,24 +183,27 @@ The source import was `temporary file/BookMarkGroup.json`, but that directory is
 `BookmarkProvider` exposes folders and file bookmarks in `pvfBookmarkView`. It loads built-in bookmarks on first use, then persists user edits to `context.globalStorageUri/bookmarks.json`. Register the view with `vscode.window.createTreeView(..., { dragAndDropController: bookmarkTree })`, not `registerTreeDataProvider`, otherwise drag/drop reordering will not work. File bookmarks use `TreeItem.resourceUri = pvf:/...` for PVF-style decorations and call these commands:
 
 - `pvf.openBookmark`: first tries a real disk file under configured unpack roots, then falls back to `pvf.openFuzzyPath`.
-- `pvf.openBookmarkOnDisk`: opens only the matching disk file from `.env` unpack roots.
+- `pvf.openBookmarkOnDisk`: opens only the matching disk file from unpack explorer roots.
 - `pvf.openBookmarkInPack`: opens only the current PVF pack entry.
 - `pvf.copyBookmarkPath`: copies the normalized PVF path.
 - `pvf.createBookmarkFolder`, `pvf.renameBookmark`, `pvf.deleteBookmark`, `pvf.resetBookmarks`: edit the persisted bookmark tree.
 - `pvf.addPvfToBookmarks`: adds a `PvfFileEntry` from `pvfExplorerView`; folder entries create bookmark folders.
 - `pvf.addUnpackToBookmarks`: adds an `UnpackExplorerEntry` from `pvfUnpackExplorerView`; folder entries create bookmark folders.
 
-Disk lookup uses `readConfiguredUnpackRoots()` and a case-insensitive path walk so bookmarks with mixed-case legacy PVF paths can still resolve on Windows unpack directories. Keep bookmark paths normalized with `/` separators and no leading slash.
+Disk lookup uses `readUnpackExplorerRoots()` and a case-insensitive path walk so bookmarks with mixed-case legacy PVF paths can still resolve on Windows unpack directories. Keep bookmark paths normalized with `/` separators and no leading slash.
 
 ### Core Data Model (`PvfModel`)
 - Holds a `Map<string, PvfFile>` (key = normalized path), plus caches for children, encodings, display names, and codes
-- `open()` decrypts the PVF header/file tree, then builds LST indices and auto-detects encoding from `stringtable.bin`
-- `save()` encrypts all changed files and writes back the PVF
+- `open()` decrypts the PVF header/file tree, or opens the newer `nkpi` archive when the user selects that format, then builds LST indices and auto-detects encoding from `stringtable.bin`
+- `save()` encrypts all changed files and writes back the PVF; directory repack compares the output MD5 against the source/template MD5 recorded in `.pvfmanifest.json` and reports the result
 - `readFileBytes()` returns different representations based on file type:
   - Script files (magic `0xd0b0`) → decompiled to text
+  - `nkpi` type-1 script files → decoded to editable text, with `.lst` entries and `.skl` `[level info]` blocks split across readable lines
   - `.nut` files → decoded as cp949 text
   - `stringtable.bin` → rendered as human-readable table
   - Everything else → raw bytes
+
+For directory unpack/repack, `.pvfmanifest.json` records `archiveFormat`, `sourcePvfPath`, `sourcePvfMd5`, encoding, conversion mode, and archive-specific metadata. New `nkpi` repack relies on the original/template archive metadata for chunking and header details. Whole-file MD5 equality is a diagnostic result, not a guarantee, because zlib recompression can produce byte-different chunks even when decoded file content round-trips correctly.
 
 ### Encoding Model
 Files are decoded based on `pvf.encodingMode` (AUTO/KR/TW/CN/JP/UTF8). AUTO mode detects encoding from stringtable.bin by scoring printable-character ratios across candidate codecs. `.nut` files always use cp949 independent of the mode setting. Decoding uses `iconv-lite`.

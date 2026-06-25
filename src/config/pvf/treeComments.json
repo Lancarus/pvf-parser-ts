@@ -1,6 +1,50 @@
 {
   "schemaVersion": 1,
   "version": 0,
+  "globalJobComments": {
+    "swordman": {
+      "comment": "男鬼剑士"
+    },
+    "atswordman": {
+      "comment": "女鬼剑士"
+    },
+    "dsswordman": {
+      "comment": "黑暗武士"
+    },
+    "demonicswordman": {
+      "comment": "黑暗武士"
+    },
+    "priest": {
+      "comment": "男圣职者"
+    },
+    "mage": {
+      "comment": "女魔法师"
+    },
+    "atmage": {
+      "comment": "男魔法师"
+    },
+    "creatormage": {
+      "comment": "缔造者"
+    },
+    "gunner": {
+      "comment": "男神枪手"
+    },
+    "atgunner": {
+      "comment": "女神枪手"
+    },
+    "fighter": {
+      "comment": "女格斗家"
+    },
+    "atfighter": {
+      "comment": "男格斗家"
+    },
+    "thief": {
+      "comment": "暗夜使者"
+    },
+    "knight": {
+      "comment": "守护者"
+    }
+  },
   "comments": {
     "aicharacter/aicharacter.lst": {
       "comment": "所有APC列表"
@@ -52,21 +96,6 @@
     },
     "monster/monster.lst": {
       "comment": "所有怪物列表"
-    },
-    "skill/swordmanskill.lst": {
-      "comment": "男鬼剑所有技能列表"
-    },
-    "skill/priestskill.lst": {
-      "comment": "男圣职所有技能列表"
-    },
-    "skill/mageskill.lst": {
-      "comment": "女魔法所有技能列表"
-    },
-    "skill/gunnerskill.lst": {
-      "comment": "男枪手所有技能列表"
-    },
-    "skill/fighterskill.lst": {
-      "comment": "女格斗所有技能列表"
     },
     "itemshop/itemshop.lst": {
       "comment": "所有NPC商店列表"
@@ -297,13 +326,13 @@
       "comment": "游戏内视频列表"
     },
     "cashshop": {
-      "comment": "SHP"
+      "comment": "商城"
     },
     "common": {
-      "comment": "C"
+      "comment": "通用"
     },
     "clientonly": {
-      "comment": "test"
+      "comment": "本地文件？"
     },
     "creature/aquajello/aquajello.cre": {
       "comment": "test"
@@ -341,48 +370,6 @@
     },
     "character/exptable.tbl": {
       "comment": "职业升级经验"
-    },
-    "character/swordman": {
-      "comment": "鬼剑士"
-    },
-    "character/priest": {
-      "comment": "圣职者"
-    },
-    "character/mage": {
-      "comment": "魔法师"
-    },
-    "character/thief": {
-      "comment": "暗夜使者"
-    },
-    "character/thief/animation": {
-      "comment": "暗夜动画"
-    },
-    "character/swordman/animation": {
-      "comment": "男鬼动画"
-    },
-    "character/priest/animation": {
-      "comment": "男圣职动画"
-    },
-    "character/mage/animation": {
-      "comment": "女法动画"
-    },
-    "character/gunner": {
-      "comment": "神枪手"
-    },
-    "character/gunner/animation": {
-      "comment": "男枪动画"
-    },
-    "character/fighter": {
-      "comment": "格斗家"
-    },
-    "character/fighter/animation": {
-      "comment": "女格斗动画"
-    },
-    "skill/thiefskill.lst": {
-      "comment": "暗夜使者所有技能列表"
-    },
-    "skill/demonicswordman.lst": {
-      "comment": "黑暗武士所有技能列表"
     },
     "itemshop/magic2.shp": {
       "comment": "莎兰商店"
@@ -536,33 +523,6 @@
     },
     "character/swordman/animation/vaneslash.ani": {
       "comment": "裂波斩二段"
-    },
-    "equipment/character/atfighter.lay": {
-      "comment": "男格斗动作模组"
-    },
-    "equipment/character/atgunner.lay": {
-      "comment": "女枪手动作模组"
-    },
-    "equipment/character/atmage.lay": {
-      "comment": "男魔法动作模组"
-    },
-    "equipment/character/fighter.lay": {
-      "comment": "女格斗动作模组"
-    },
-    "equipment/character/gunner.lay": {
-      "comment": "男枪手动作模组"
-    },
-    "equipment/character/mage.lay": {
-      "comment": "女魔法动作模组"
-    },
-    "equipment/character/priest.lay": {
-      "comment": "男圣职动作模组"
-    },
-    "equipment/character/swordman.lay": {
-      "comment": "男鬼剑动作模组"
-    },
-    "equipment/character/thief.lay": {
-      "comment": "暗夜使者动作模组"
     },
     "character/gunner/animation/aerialknee.ani": {
       "comment": "膝撞"
@@ -849,9 +809,6 @@
     "passiveobject/monster/goblin/attackinfo/thunderbolt.atk": {
       "comment": "凯诺的闪电"
     },
-    "skill/atgunnerskill.lst": {
-      "comment": "女枪手所有技能列表"
-    },
     "character/gunner/atattackinfo/randomshoot.atk": {
       "comment": "乱射"
     },
@@ -927,12 +884,6 @@
     "passiveobject/monster/goblin/attackinfo/hodorthrowstone.atk": {
       "comment": "赫德尔投掷石头"
     },
-    "skill/atmageskill.lst": {
-      "comment": "男魔法所有技能列表"
-    },
-    "skill/atfighterskill.lst": {
-      "comment": "男格斗所有技能列表"
-    },
     "character/fighter/animation/crouch.ani": {
       "comment": "蹲伏"
     },
@@ -984,39 +935,6 @@
     "character/priest/animation/ducking.ani": {
       "comment": "俯冲"
     },
-    "skill/thief": {
-      "comment": "暗夜使者"
-    },
-    "skill/swordman": {
-      "comment": "男鬼剑"
-    },
-    "skill/priest": {
-      "comment": "男圣职"
-    },
-    "skill/mage": {
-      "comment": "女魔法"
-    },
-    "skill/gunner": {
-      "comment": "男枪手"
-    },
-    "skill/fighter": {
-      "comment": "女格斗"
-    },
-    "skill/demonicswordman": {
-      "comment": "黑暗武士"
-    },
-    "skill/creatormage": {
-      "comment": "缔造者"
-    },
-    "skill/atmage": {
-      "comment": "男魔法"
-    },
-    "skill/atgunner": {
-      "comment": "女枪手"
-    },
-    "skill/atfighter": {
-      "comment": "男格斗"
-    },
     "character/gunner/atanimation/aerialknee.ani": {
       "comment": "后撩踢"
     },
@@ -1046,9 +964,6 @@
     },
     "ui/hud/mainmenuwindow.ui": {
       "comment": "菜单按钮位置"
-    },
-    "skill/creatormage.lst": {
-      "comment": "缔造者所有技能列表"
     },
     "passiveobject/monster/goblin/attackinfo/hillgabsizzle.atk": {
       "comment": "赤哥布林的火焰"
@@ -1151,72 +1066,6 @@
     },
     "monster/monsterapcdifficultybonus.tbl": {
       "comment": "全局怪物"
-    },
-    "skill/atswordmanskill.lst": {
-      "comment": "女鬼剑所有技能列表"
-    },
-    "skill/dsswordmanskill.lst": {
-      "comment": "黑暗武士所有技能列表"
-    },
-    "skill/creatormageskill.lst": {
-      "comment": "缔造者所有技能列表"
-    },
-    "skill/atswordman": {
-      "comment": "女鬼剑"
-    },
-    "character/swordman/atanimation": {
-      "comment": "女鬼动画"
-    },
-    "character/swordman/dsanimation": {
-      "comment": "黑武动画"
-    },
-    "character/swordman/attackinfo": {
-      "comment": "男鬼动作值"
-    },
-    "character/swordman/atattackinfo": {
-      "comment": "女鬼动作值"
-    },
-    "character/swordman/dsattackinfo": {
-      "comment": "黑武动作值"
-    },
-    "character/gunner/atanimation": {
-      "comment": "女枪动画"
-    },
-    "character/gunner/atattackinfo": {
-      "comment": "女枪动作值"
-    },
-    "character/gunner/attackinfo": {
-      "comment": "男枪动作值"
-    },
-    "character/fighter/atanimation": {
-      "comment": "男格斗动画"
-    },
-    "character/fighter/atattackinfo": {
-      "comment": "男格斗动作值"
-    },
-    "character/fighter/attackinfo": {
-      "comment": "女格斗动作值"
-    },
-    "character/mage/atanimation": {
-      "comment": "男法动画"
-    },
-    "character/mage/atattackinfo": {
-      "comment": "男法动作值"
-    },
-    "character/mage/attackinfo": {
-      "comment": "女法动作值"
-    },
-    "character/thief/attackinfo": {
-      "comment": "暗夜动作值"
-    },
-    "character/priest/attackinfo": {
-      "comment": "男圣职动作值"
-    },
-    "character/mage/creatoranimation": {
-      "comment": "缔造者动画"
-    },
-    "character/mage/creatorattackinfo": {
-      "comment": "缔造者动作值"
     },
     "asdf": {
       "comment": "asdf"
@@ -1524,12 +1373,6 @@
     "equipment/character/common/wrist": {
       "comment": "手鐲"
     },
-    "equipment/character/fighter": {
-      "comment": "格斗家"
-    },
-    "equipment/character/gunner/avatar": {
-      "comment": "神槍手"
-    },
     "equipment/character/gunner/avatar/weapon": {
       "comment": "神槍手武器"
     },
@@ -1557,23 +1400,11 @@
     "equipment/character/swordman/weapon/beamsword/hellkariumswdc1": {
       "comment": "光剑"
     },
-    "equipment/character/swordman/avatar": {
-      "comment": "鬼剑士系列"
-    },
     "equipment/character/thief/avatar/skin": {
       "comment": "盗贼皮肤"
     },
     "equipment/character/thief/avatar/shoes": {
       "comment": "女盗贼"
-    },
-    "equipment/character/thief": {
-      "comment": "盗贼"
-    },
-    "equipment/character/gunner": {
-      "comment": "神枪手"
-    },
-    "equipment/character/mage": {
-      "comment": "魔法师"
     },
     "itemshop/chn_3kingdoms2.shp": {
       "comment": "诸葛亮"
@@ -1659,12 +1490,6 @@
     "stackable/cdklibao": {
       "comment": "CDK天空"
     },
-    "equipment/character/swordman": {
-      "comment": "鬼剑士"
-    },
-    "equipment/character/priest": {
-      "comment": "圣职者"
-    },
     "stackable/zzsjt": {
       "comment": "自己设置的设计图"
     },
@@ -1749,9 +1574,6 @@
     "stackable/zzcailiao": {
       "comment": "装备打造的材料"
     },
-    "equipment/character/swordman/at_avatar": {
-      "comment": "黑武士系列"
-    },
     "itemshop/jeep.shp": {
       "comment": "小黑NPC"
     },
@@ -1806,12 +1628,6 @@
     "equipment/character/fighter/avatar/skin": {
       "comment": "女格斗皮肤"
     },
-    "equipment/character/mage/at_avatar": {
-      "comment": "男法"
-    },
-    "equipment/character/mage/avatar": {
-      "comment": "女法"
-    },
     "equipment/chongwu": {
       "comment": "梦太晓宠物"
     },
@@ -1844,12 +1660,6 @@
     },
     "etc/chn_server_limititemusageinfo.etc": {
       "comment": "每天重置的门票"
-    },
-    "equipment/character/gunner/at_avatar": {
-      "comment": "女枪手"
-    },
-    "equipment/character/fighter/at_avatar": {
-      "comment": "男格斗"
     },
     "dungeon/riskdungeon": {
       "comment": "真:远古地下城"
@@ -1887,9 +1697,6 @@
     "equipment/character/mage/avatar/skin": {
       "comment": "女法皮肤"
     },
-    "equipment/character/fighter/avatar": {
-      "comment": "女格斗"
-    },
     "monster/dragondungeon": {
       "comment": "巨龙怪物"
     },
@@ -1904,12 +1711,6 @@
     },
     "equipment/character/creature": {
       "comment": "低级异界SS宠物装备"
-    },
-    "character/fighter/fighter.chr": {
-      "comment": "女格斗"
-    },
-    "character/fighter/atfighter.chr": {
-      "comment": "男格斗"
     },
     "clientonly/skilltree/atfighter_sp.co": {
       "comment": "男格斗"
@@ -1944,29 +1745,11 @@
     "itemshop/nessman.shp": {
       "comment": "马蒂亚斯"
     },
-    "equipment/character/swordman/swordman": {
-      "comment": "时装"
-    },
     "equipment/character/swordman/weapon": {
       "comment": "武器"
     },
     "equipment/character/common/etc/bravery.equ": {
       "comment": "成长契约"
-    },
-    "character/gunner/atgunner.chr": {
-      "comment": "女枪手"
-    },
-    "character/gunner/gunner.chr": {
-      "comment": "男枪手"
-    },
-    "character/mage/atmage.chr": {
-      "comment": "男法"
-    },
-    "character/mage/mage.chr": {
-      "comment": "女法"
-    },
-    "equipment/character/dsswordman.lay": {
-      "comment": "黑武士"
     },
     "map/event/170413_hell_party": {
       "comment": "深渊刷刷乐"
@@ -3634,24 +3417,6 @@
     "n_quest/northmyre": {
       "comment": "诺斯玛尔"
     },
-    "passiveobject/character/fighter": {
-      "comment": "格斗家 被动对象"
-    },
-    "passiveobject/character/gunner": {
-      "comment": "神枪手 被动对象"
-    },
-    "passiveobject/character/mage": {
-      "comment": "魔法师 被动对象"
-    },
-    "passiveobject/character/priest": {
-      "comment": "圣职者 被动对象"
-    },
-    "passiveobject/character/swordman": {
-      "comment": "鬼剑士 被动对象"
-    },
-    "passiveobject/character/thief": {
-      "comment": "暗夜使者 被动对象"
-    },
     "passiveobject/monster/bantu": {
       "comment": "班图战士 被动对象"
     },
@@ -3666,9 +3431,6 @@
     },
     "passiveobject/monster/tau": {
       "comment": "牛头怪 被动对象"
-    },
-    "passiveobject/monster/thief": {
-      "comment": "疯狂盗贼 被动对象"
     },
     "passiveobject/monster/zombie": {
       "comment": "僵尸 被动对象"
@@ -3766,9 +3528,6 @@
     "monster/evileye": {
       "comment": "罪恶之眼"
     },
-    "monster/fighter": {
-      "comment": "格斗家的分身、千莲怒放"
-    },
     "monster/flydragon": {
       "comment": "旧翼龙"
     },
@@ -3786,9 +3545,6 @@
     },
     "monster/golem": {
       "comment": "旧石巨人"
-    },
-    "monster/gunner": {
-      "comment": "枪手的机器人"
     },
     "monster/gunner/robot": {
       "comment": "机器人"
@@ -3813,9 +3569,6 @@
     },
     "monster/lugaru": {
       "comment": "猫妖"
-    },
-    "monster/mage": {
-      "comment": "魔法师的召唤物"
     },
     "monster/magma": {
       "comment": "熔岩洞穴的怪物"
@@ -3894,9 +3647,6 @@
     },
     "monster/tau": {
       "comment": "牛头怪"
-    },
-    "monster/thief": {
-      "comment": "疯狂盗贼"
     },
     "monster/toy": {
       "comment": "玩具士兵"
@@ -4267,23 +4017,148 @@
     },
     "map/villageattack": {
       "comment": "怪物攻城战 房间"
+    },
+    "equipment/character/gunner/avatar": {
+      "comment": "神槍手"
+    },
+    "equipment/character/swordman/avatar": {
+      "comment": "鬼剑士系列"
+    },
+    "equipment/character/swordman/at_avatar": {
+      "comment": "黑武士系列"
+    },
+    "equipment/character/mage/at_avatar": {
+      "comment": "男法"
+    },
+    "equipment/character/mage/avatar": {
+      "comment": "女法"
+    },
+    "equipment/character/gunner/at_avatar": {
+      "comment": "女枪手"
+    },
+    "equipment/character/fighter/at_avatar": {
+      "comment": "男格斗"
+    },
+    "equipment/character/fighter/avatar": {
+      "comment": "女格斗"
+    },
+    "character/thief/animation": {
+      "comment": "暗夜动画"
+    },
+    "character/swordman/animation": {
+      "comment": "男鬼动画"
+    },
+    "character/priest/animation": {
+      "comment": "男圣职动画"
+    },
+    "character/mage/animation": {
+      "comment": "女法动画"
+    },
+    "character/gunner/animation": {
+      "comment": "男枪动画"
+    },
+    "character/fighter/animation": {
+      "comment": "女格斗动画"
+    },
+    "character/swordman/atanimation": {
+      "comment": "女鬼动画"
+    },
+    "character/swordman/dsanimation": {
+      "comment": "黑武动画"
+    },
+    "character/swordman/attackinfo": {
+      "comment": "男鬼动作值"
+    },
+    "character/swordman/atattackinfo": {
+      "comment": "女鬼动作值"
+    },
+    "character/swordman/dsattackinfo": {
+      "comment": "黑武动作值"
+    },
+    "character/gunner/atanimation": {
+      "comment": "女枪动画"
+    },
+    "character/gunner/atattackinfo": {
+      "comment": "女枪动作值"
+    },
+    "character/gunner/attackinfo": {
+      "comment": "男枪动作值"
+    },
+    "character/fighter/atanimation": {
+      "comment": "男格斗动画"
+    },
+    "character/fighter/atattackinfo": {
+      "comment": "男格斗动作值"
+    },
+    "character/fighter/attackinfo": {
+      "comment": "女格斗动作值"
+    },
+    "character/mage/atanimation": {
+      "comment": "男法动画"
+    },
+    "character/mage/atattackinfo": {
+      "comment": "男法动作值"
+    },
+    "character/mage/attackinfo": {
+      "comment": "女法动作值"
+    },
+    "character/thief/attackinfo": {
+      "comment": "暗夜动作值"
+    },
+    "character/priest/attackinfo": {
+      "comment": "男圣职动作值"
+    },
+    "character/mage/creatoranimation": {
+      "comment": "缔造者动画"
+    },
+    "character/mage/creatorattackinfo": {
+      "comment": "缔造者动作值"
+    },
+    "skill/swordmanskill.lst": {
+      "comment": "男鬼剑士所有技能列表"
+    },
+    "skill/priestskill.lst": {
+      "comment": "男圣职者所有技能列表"
+    },
+    "skill/mageskill.lst": {
+      "comment": "女魔法师所有技能列表"
+    },
+    "skill/gunnerskill.lst": {
+      "comment": "男神枪手所有技能列表"
+    },
+    "skill/fighterskill.lst": {
+      "comment": "女格斗家所有技能列表"
+    },
+    "skill/thiefskill.lst": {
+      "comment": "暗夜使者所有技能列表"
+    },
+    "skill/atgunnerskill.lst": {
+      "comment": "女神枪手所有技能列表"
+    },
+    "skill/atmageskill.lst": {
+      "comment": "男魔法师所有技能列表"
+    },
+    "skill/atfighterskill.lst": {
+      "comment": "男格斗家所有技能列表"
+    },
+    "skill/atswordmanskill.lst": {
+      "comment": "女鬼剑士所有技能列表"
+    },
+    "skill/dsswordmanskill.lst": {
+      "comment": "黑暗武士所有技能列表"
+    },
+    "skill/creatormageskill.lst": {
+      "comment": "缔造者所有技能列表"
     }
   },
   "versions": {
-    "0": {
-      "comments": {
-        "character/knight": {
-          "comment": "守护者"
-        }
-      }
-    },
     "66282": {
       "comments": {
-        "equipment/character/swordman/avatar": {
-          "comment": "时装"
-        },
         "etc/equipmentpartset.etc": {
           "comment": "套装列表"
+        },
+        "equipment/character/swordman/avatar": {
+          "comment": "时装"
         }
       }
     }

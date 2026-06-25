@@ -1068,6 +1068,14 @@
           "maximum": 64,
           "description": "解包目录行内 NPK 图标尺寸。"
         },
+        "pvf.unpackExplorer.roots": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "description": "解包目录视图使用的磁盘根目录列表。为空时自动使用当前 VS Code 工作区中包含 .pvfmanifest.json 的文件夹；不会读取源码仓库 .env。"
+        },
         "pvf.unpackExplorer.metadata.showComment": {
           "type": "boolean",
           "default": true,

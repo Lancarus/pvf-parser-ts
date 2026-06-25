@@ -3,7 +3,7 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { PVF_MANIFEST_FILE, PvfDirectoryManifest } from './directoryArchive';
 import { normalizeTreeCommentPath, normalizeTreeCommentVersion, PvfTreeCommentService } from './treeComments';
-import { pathContains, readConfiguredUnpackRoots } from './unpackEnv';
+import { pathContains, readUnpackExplorerRoots } from './unpackEnv';
 import {
   UnpackMetadataService,
   UnpackResolvedMetadata,
@@ -102,6 +102,11 @@ function codeTextFor(code: number | undefined): string | undefined {
   if (typeof code !== 'number') return undefined;
   const format = vscode.workspace.getConfiguration().get<string>('pvf.unpackExplorer.metadata.itemCodeFormat', '<{code}>') || '<{code}>';
   return format.replace(/\{code\}/g, String(code));
+}
+
+function affectsSharedUnpackMetadata(key: string): boolean {
+  const normalized = normalizeUnpackKey(key);
+  return normalized === 'stringtable.bin' || normalized.endsWith('.lst') || normalized.endsWith('.str');
 }
 
 function skillKindLabel(kind: UnpackResolvedMetadata['skillKind']): string {
@@ -247,7 +252,10 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
   private readonly pendingRows = new Map<string, UnpackExplorerEntry>();
   private readonly dirChildrenCache = new Map<string, UnpackExplorerEntry[]>();
   private preloading = false;
+  private readonly pendingChangedFiles = new Set<string>();
   private refreshTimer: NodeJS.Timeout | undefined;
+  private structureRefreshTimer: NodeJS.Timeout | undefined;
+  private changedFileTimer: NodeJS.Timeout | undefined;
   private activeMetadataTasks = 0;
   private activeIconTasks = 0;
   private activePreviewPanelRequestId = '';
@@ -272,6 +280,18 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
       }),
       vscode.workspace.onDidSaveTextDocument(document => {
         void this.onTextDocumentSaved(document);
+      }),
+      vscode.workspace.onDidCreateFiles(event => {
+        void this.scheduleExplorerFileOperationRefresh(event.files);
+      }),
+      vscode.workspace.onDidDeleteFiles(event => {
+        void this.scheduleExplorerFileOperationRefresh(event.files);
+      }),
+      vscode.workspace.onDidRenameFiles(event => {
+        void this.scheduleExplorerFileOperationRefresh(event.files.flatMap(item => [item.oldUri, item.newUri]));
+      }),
+      vscode.workspace.onDidChangeWorkspaceFolders(() => {
+        this.refresh();
       }),
     );
   }
@@ -317,6 +337,11 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
     this.pendingRows.clear();
     if (this.refreshTimer) clearTimeout(this.refreshTimer);
     this.refreshTimer = undefined;
+    if (this.structureRefreshTimer) clearTimeout(this.structureRefreshTimer);
+    this.structureRefreshTimer = undefined;
+    if (this.changedFileTimer) clearTimeout(this.changedFileTimer);
+    this.changedFileTimer = undefined;
+    this.pendingChangedFiles.clear();
     this.activeMetadataTasks = 0;
     this.activeIconTasks = 0;
     this.activePreviewElement = undefined;
@@ -531,9 +556,10 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
   }
 
   private async onTextDocumentSaved(document: vscode.TextDocument): Promise<void> {
-    if (!this.shouldOpenPreviewWithTextEditor() && !this.activePreviewElement) return;
     if (document.uri.scheme !== 'file') return;
     const fsPath = path.resolve(document.uri.fsPath);
+    this.scheduleChangedFileSync(fsPath);
+    if (!this.shouldOpenPreviewWithTextEditor() && !this.activePreviewElement) return;
     const activePath = this.activePreviewElement ? path.resolve(this.activePreviewElement.fsPath) : '';
     if (activePath && activePath === fsPath) {
       await this.syncDiskFileWithExplorer(fsPath, true, true);
@@ -543,6 +569,66 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
     if (activeEditor?.scheme === 'file' && path.resolve(activeEditor.fsPath) === fsPath) {
       await this.syncDiskFileWithExplorer(fsPath, true, true);
     }
+  }
+
+  private scheduleStructureRefresh(_reason = ''): void {
+    if (this.structureRefreshTimer) clearTimeout(this.structureRefreshTimer);
+    this.structureRefreshTimer = setTimeout(() => {
+      this.structureRefreshTimer = undefined;
+      this.refresh();
+    }, 160);
+  }
+
+  private async scheduleExplorerFileOperationRefresh(uris: readonly vscode.Uri[]): Promise<void> {
+    const fileUris = uris.filter(uri => uri.scheme === 'file');
+    if (fileUris.length === 0) return;
+    if (fileUris.some(uri => path.basename(uri.fsPath).toLowerCase() === PVF_MANIFEST_FILE.toLowerCase())) {
+      this.scheduleStructureRefresh('manifest');
+      return;
+    }
+    const roots = await readUnpackExplorerRoots(this.context).catch((err: any) => {
+      this.output?.appendLine(`[PVF] failed to read unpack roots for file operation sync: ${String(err && err.message || err)}`);
+      return [] as string[];
+    });
+    const affectsRoot = fileUris.some(uri => roots.some(root => pathContains(root, uri.fsPath)));
+    if (affectsRoot) this.scheduleStructureRefresh('explorer-file-operation');
+  }
+
+  private scheduleChangedFileSync(fsPath: string): void {
+    const resolved = path.resolve(fsPath);
+    if (path.basename(resolved).toLowerCase() === PVF_MANIFEST_FILE.toLowerCase()) {
+      this.scheduleStructureRefresh(`manifest:${resolved}`);
+      return;
+    }
+    this.pendingChangedFiles.add(resolved);
+    if (this.changedFileTimer) clearTimeout(this.changedFileTimer);
+    this.changedFileTimer = setTimeout(() => {
+      this.changedFileTimer = undefined;
+      const files = Array.from(this.pendingChangedFiles);
+      this.pendingChangedFiles.clear();
+      void this.syncChangedDiskFiles(files);
+    }, 120);
+  }
+
+  private async syncChangedDiskFiles(files: string[]): Promise<void> {
+    let needsFullRefresh = false;
+    const changedElements: UnpackExplorerEntry[] = [];
+    for (const fsPath of files) {
+      const element = await this.entryFromDiskFile(fsPath);
+      if (!element) continue;
+      if (affectsSharedUnpackMetadata(element.key)) {
+        needsFullRefresh = true;
+        break;
+      }
+      this.metadata.invalidate(element);
+      this.preview.invalidate(element);
+      changedElements.push(element);
+    }
+    if (needsFullRefresh) {
+      this.refresh();
+      return;
+    }
+    for (const element of changedElements) this.queueRowRefresh(element);
   }
 
   private async syncDiskFileWithExplorer(fsPath: string, openPreview: boolean, forceRefresh: boolean, requireActive = false): Promise<void> {
@@ -558,6 +644,7 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
     if (!forceRefresh && this.activeEditorPreviewPath === resolved) return;
     this.activeEditorPreviewPath = resolved;
     if (forceRefresh) {
+      this.metadata.invalidate(element);
       this.preview.invalidate(element);
       this.queueRowRefresh(element);
     }
@@ -778,7 +865,7 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
   }
 
   private async loadRoots(): Promise<UnpackExplorerEntry[]> {
-    const roots = await readConfiguredUnpackRoots(this.context);
+    const roots = await readUnpackExplorerRoots(this.context);
     const entries: UnpackExplorerEntry[] = [];
     for (const root of roots) {
       try {
@@ -904,7 +991,7 @@ export class UnpackExplorerWebviewProvider implements vscode.WebviewViewProvider
   }
 
   private pumpMetadataQueue(): void {
-    const limit = 8;
+    const limit = 3;
     while (this.activeMetadataTasks < limit && this.metadataQueue.length > 0) {
       const element = this.metadataQueue.shift()!;
       const key = this.queueKey(element);

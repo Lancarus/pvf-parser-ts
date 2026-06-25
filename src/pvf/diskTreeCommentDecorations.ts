@@ -3,7 +3,7 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { PVF_MANIFEST_FILE, PvfDirectoryManifest } from './directoryArchive';
 import { normalizeTreeCommentPath, normalizeTreeCommentVersion, PvfTreeCommentService } from './treeComments';
-import { pathContains, readConfiguredUnpackRoots } from './unpackEnv';
+import { pathContains, readUnpackExplorerRoots } from './unpackEnv';
 
 export interface DiskTreeCommentTarget {
   uri: string;
@@ -44,12 +44,12 @@ export function registerDiskTreeCommentDecorations(
     readonly onDidChangeFileDecorations = this._emitter.event;
     private readonly infoCache = new Map<string, PvfDiskPathInfo | undefined>();
     private readonly manifestCache = new Map<string, Promise<PvfDirectoryManifest | undefined>>();
-    private envRootsPromise: Promise<string[]> | undefined;
+    private explorerRootsPromise: Promise<string[]> | undefined;
 
     refreshAll() {
       this.infoCache.clear();
       this.manifestCache.clear();
-      this.envRootsPromise = undefined;
+      this.explorerRootsPromise = undefined;
       this._emitter.fire(undefined);
     }
 
@@ -95,8 +95,8 @@ export function registerDiskTreeCommentDecorations(
     }
 
     private async findPvfPathInfo(filePath: string): Promise<PvfDiskPathInfo | undefined> {
-      const envInfo = await this.findEnvRootPathInfo(filePath);
-      if (envInfo) return envInfo;
+      const explorerInfo = await this.findExplorerRootPathInfo(filePath);
+      if (explorerInfo) return explorerInfo;
 
       let current = path.resolve(filePath);
       try {
@@ -125,8 +125,8 @@ export function registerDiskTreeCommentDecorations(
       }
     }
 
-    private async findEnvRootPathInfo(filePath: string): Promise<PvfDiskPathInfo | undefined> {
-      const roots = await this.getEnvUnpackRoots();
+    private async findExplorerRootPathInfo(filePath: string): Promise<PvfDiskPathInfo | undefined> {
+      const roots = await this.getUnpackExplorerRoots();
       const root = roots
         .filter(item => pathContains(item, filePath))
         .sort((a, b) => b.length - a.length)[0];
@@ -141,15 +141,15 @@ export function registerDiskTreeCommentDecorations(
       };
     }
 
-    private async getEnvUnpackRoots(): Promise<string[]> {
-      if (!this.envRootsPromise) {
-        this.envRootsPromise = this.readEnvUnpackRoots();
+    private async getUnpackExplorerRoots(): Promise<string[]> {
+      if (!this.explorerRootsPromise) {
+        this.explorerRootsPromise = this.readUnpackExplorerRoots();
       }
-      return this.envRootsPromise;
+      return this.explorerRootsPromise;
     }
 
-    private async readEnvUnpackRoots(): Promise<string[]> {
-      return readConfiguredUnpackRoots(context);
+    private async readUnpackExplorerRoots(): Promise<string[]> {
+      return readUnpackExplorerRoots(context);
     }
 
     private async getManifestIfExists(file: string): Promise<PvfDirectoryManifest | undefined> {

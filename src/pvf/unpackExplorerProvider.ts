@@ -3,7 +3,7 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { PVF_MANIFEST_FILE, PvfDirectoryManifest } from './directoryArchive';
 import { normalizeTreeCommentPath, normalizeTreeCommentVersion, PvfTreeCommentService } from './treeComments';
-import { readConfiguredUnpackRoots } from './unpackEnv';
+import { readUnpackExplorerRoots } from './unpackEnv';
 import { UnpackMetadataService, UnpackResolvedMetadata, normalizeUnpackKey, rarityLabel, shouldResolveUnpackMetadataKey } from './unpackMetadata';
 
 export interface UnpackExplorerEntry {
@@ -120,7 +120,7 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
   }
 
   private async loadRoots(): Promise<UnpackExplorerEntry[]> {
-    const roots = await readConfiguredUnpackRoots(this.context);
+    const roots = await readUnpackExplorerRoots(this.context);
     const entries: UnpackExplorerEntry[] = [];
     for (const root of roots) {
       try {
@@ -204,7 +204,7 @@ export class UnpackExplorerProvider implements vscode.TreeDataProvider<UnpackExp
   }
 
   private pumpMetadataQueue(): void {
-    const limit = 8;
+    const limit = 3;
     while (this.activeMetadataTasks < limit && this.metadataQueue.length > 0) {
       const element = this.metadataQueue.shift()!;
       const key = this.queueKey(element);
